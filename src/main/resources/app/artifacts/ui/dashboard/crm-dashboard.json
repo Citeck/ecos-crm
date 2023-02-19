@@ -46,7 +46,8 @@
             "id": "ecbede90-a55d-423a-9b6b-3ac523600335",
             "config": {
               "widgetDisplayCondition": "",
-              "elementsDisplayCondition": {}
+              "elementsDisplayCondition": {},
+              "formMode": "EDIT"
             }
           },
           "description": "Основное"

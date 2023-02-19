@@ -9,7 +9,7 @@ journalRef: uiserv/journal@deals-journal
 boardRef: uiserv/board@deal-board
 inheritForm: false
 dispNameTemplate:
-  ru: Сделка №${number} c ${company}
+  ru: Сделка №${number} ${company}
 numTemplateRef: emodel/num-template@deal-num-template
 actions:
   - uiserv/action@tasks-actions

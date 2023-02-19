@@ -178,20 +178,15 @@
                       },
                       {
                         "label": {
-                          "ru": "E-mail"
-                        },
-                        "key": "email",
-                        "defaultValue": "",
-                        "refreshOn": [],
-                        "optionalWhenDisabled": false,
-                        "type": "textfield",
-                        "input": true
-                      },
-                      {
-                        "label": {
-                          "ru": "E-mail отправителя с сайта"
+                          "ru": "E-mail отправителя"
                         },
                         "key": "siteEmail",
+                        "inputMasks": [
+                          {
+                            "label": "",
+                            "mask": ""
+                          }
+                        ],
                         "defaultValue": "",
                         "refreshOn": [],
                         "optionalWhenDisabled": false,
@@ -246,25 +241,68 @@
                         "defaultValue": ""
                       },
                       {
-                        "label": "",
-                        "key": "ga_client_id",
-                        "defaultValue": "",
+                        "label": {
+                          "ru": "Panel"
+                        },
+                        "key": "panel4",
+                        "title": {
+                          "ru": "Заявка с сайта"
+                        },
+                        "collapsible": true,
+                        "collapsed": true,
                         "refreshOn": [],
                         "optionalWhenDisabled": false,
-                        "type": "textfield",
-                        "input": true,
-                        "inputMasks": [
-                          {}
+                        "type": "panel",
+                        "input": false,
+                        "components": [
+                          {
+                            "label": {
+                              "ru": "E-mail"
+                            },
+                            "key": "email",
+                            "defaultValue": "",
+                            "refreshOn": [],
+                            "optionalWhenDisabled": false,
+                            "type": "textfield",
+                            "input": true
+                          },
+                          {
+                            "label": "",
+                            "key": "siteFrom",
+                            "inputMasks": [
+                              {
+                                "label": "",
+                                "mask": ""
+                              }
+                            ],
+                            "defaultValue": "",
+                            "refreshOn": [],
+                            "optionalWhenDisabled": false,
+                            "type": "textfield",
+                            "input": true
+                          },
+                          {
+                            "label": "",
+                            "key": "ga_client_id",
+                            "defaultValue": "",
+                            "refreshOn": [],
+                            "optionalWhenDisabled": false,
+                            "type": "textfield",
+                            "input": true,
+                            "inputMasks": [
+                              {}
+                            ]
+                          },
+                          {
+                            "label": "",
+                            "key": "ym_client_id",
+                            "defaultValue": "",
+                            "refreshOn": [],
+                            "optionalWhenDisabled": false,
+                            "type": "textfield",
+                            "input": true
+                          }
                         ]
-                      },
-                      {
-                        "label": "",
-                        "key": "ym_client_id",
-                        "defaultValue": "",
-                        "refreshOn": [],
-                        "optionalWhenDisabled": false,
-                        "type": "textfield",
-                        "input": true
                       }
                     ]
                   }
