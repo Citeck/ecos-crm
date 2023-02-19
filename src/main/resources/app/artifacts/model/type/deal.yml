@@ -1,0 +1,123 @@
+---
+id: deal
+name:
+  ru: Сделка
+storageType: ECOS_MODEL
+parentRef: emodel/type@case
+formRef: uiserv/form@deal-form
+journalRef: uiserv/journal@deals-journal
+boardRef: uiserv/board@deal-board
+inheritForm: false
+dispNameTemplate:
+  ru: Сделка №${number} c ${company}
+numTemplateRef: emodel/num-template@deal-num-template
+actions:
+  - uiserv/action@tasks-actions
+  - uiserv/action@change-status-to-refusal
+  - uiserv/action@edit
+  - uiserv/action@delete
+defaultCreateVariant: true
+model:
+  roles:
+    - id: manager
+      name:
+        ru: Менеджер по продажам
+      assignees:
+        - GROUP_crm-manager
+    - id: cco
+      name:
+        ru: Коммерческий директор
+      assignees:
+        - GROUP_crm-cco
+  statuses:
+    - id: new
+      name:
+        ru: не обработана
+    - id: firstContact
+      name:
+        ru: первичный контакт
+    - id: identifyNeeds
+      name:
+        ru: сбор потребностей
+    - id: presentation
+      name:
+        ru: презентация
+    - id: offerPreparation
+      name:
+        ru: подготовка КП
+    - id: prototype
+      name:
+        ru: прототип
+    - id: decision
+      name:
+        ru: принятие решения
+    - id: completed
+      name:
+        ru: завершена
+    - id: pause
+      name:
+        ru: пауза
+    - id: refusal
+      name:
+        ru: отказ
+  attributes:
+    - id: number
+      name:
+        ru: Номер
+      computed:
+        type: COUNTER
+        config:
+          numTemplateRef: emodel/num-template@deal-num-template
+        storingType: ON_CREATE
+    - id: amount
+      name:
+        ru: Бюджет
+      type: NUMBER
+    - id: description
+      name:
+        ru: Описание
+    - id: fio
+      name:
+        ru: ФИО
+    - id: email
+      name:
+        ru: E-mail
+    - id: phone
+      name:
+        ru: Телефон
+    - id: company
+      name:
+        ru: Компания
+    - id: counterparty
+      name:
+        ru: Контрагент
+      type: ASSOC
+      config:
+        typeRef: emodel/type@idocs-contractor
+        child: false
+    - id: manager
+      name:
+        ru: Ответственный
+      type: PERSON
+    - id: dateReceived
+      name:
+        ru: Дата создания
+      type: DATETIME
+    - id: siteEmail
+      name:
+        ru: E-mail заявки с сайта
+    - id: siteFrom
+      name:
+        ru: Откуда пришел на сайт
+    - id: source
+      name:
+        ru: Источник обращения
+    - id: emessage
+      name:
+        ru: Почтовое сообщение
+    - id: ga_client_id
+      name:
+        ru: Идентификатор GA
+    - id: ym_client_id
+      name:
+        ru: Идентификатор YM

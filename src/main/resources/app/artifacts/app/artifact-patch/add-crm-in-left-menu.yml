@@ -1,0 +1,48 @@
+id: add-crm-in-left-menu
+name: {ru: Добавить раздел "CRM", en: Add section "CRM" }
+
+target: 'ui/menu$default-menu-v1'
+
+type: json
+config:
+  operations:
+    - op: add
+      path: '$..[?(@.id == "sections")].items'
+      value: {
+        "id": "crm-section",
+        "label": {
+          "ru": "CRM",
+          "en": "CRM"
+        },
+        "icon": "ui/icon@i-leftmenu-hr-department",
+        "hidden": false,
+        "type": "SECTION",
+        "config": {},
+        "action": {
+          "type": "",
+          "config": {}
+        },
+        "items": [
+          {
+            "id": "crm",
+            "label": {
+              "ru": "Сделки",
+              "en": "Deals"
+            },
+            "icon": "",
+            "hidden": false,
+            "type": "JOURNAL",
+            "config": {
+              "recordRef": "uiserv/journal@deals-journal",
+              "displayCount": false
+            },
+            "action": {
+              "type": "",
+              "config": {}
+            },
+            "items": [],
+            "allowedFor": []
+          }
+        ],
+        "allowedFor": []
+      }

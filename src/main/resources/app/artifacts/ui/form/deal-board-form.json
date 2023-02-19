@@ -1,0 +1,176 @@
+{
+  "id" : "deal-board-form",
+  "formKey" : "",
+  "title" : {
+    "en" : "Deal board form"
+  },
+  "description" : { },
+  "customModule" : null,
+  "typeRef" : "emodel/type@deal",
+  "width" : "lg",
+  "system" : false,
+  "i18n" : { },
+  "definition" : {
+    "components" : [ {
+      "scrollableContent" : true,
+      "key" : "panel2",
+      "type" : "panel",
+      "input" : false,
+      "components" : [ {
+        "label" : {
+          "ru" : "Компания"
+        },
+        "key" : "company",
+        "hideLabel" : true,
+        "defaultValue" : "",
+        "refreshOn" : [ ],
+        "optionalWhenDisabled" : false,
+        "customConditional" : "show = value !== ''",
+        "type" : "textfield",
+        "input" : true
+      }, {
+        "label" : {
+          "ru" : "Контрагент"
+        },
+        "key" : "counterparty",
+        "hideLabel" : true,
+        "modalTitle" : "",
+        "journalId" : "counterparty",
+        "queryData" : "",
+        "refreshOn" : [ ],
+        "optionalWhenDisabled" : false,
+        "customConditional" : "show = !_.isEmpty(value)",
+        "type" : "selectJournal",
+        "input" : true
+      }, {
+        "label" : {
+          "ru" : "Бюджет"
+        },
+        "key" : "amount",
+        "hideLabel" : true,
+        "validate" : {
+          "integer" : false
+        },
+        "isBigNumber" : false,
+        "delimiterValue" : " ",
+        "refreshOn" : [ ],
+        "optionalWhenDisabled" : false,
+        "customConditional" : "show = !_.isEmpty(value)",
+        "type" : "number",
+        "input" : true,
+        "defaultValue" : ""
+      }, {
+        "label" : {
+          "ru" : "Ответственный"
+        },
+        "key" : "manager",
+        "hideLabel" : true,
+        "allowedAuthorityType" : "USER",
+        "currentUserByDefault" : true,
+        "dataType" : "authority",
+        "refreshOn" : [ ],
+        "optionalWhenDisabled" : false,
+        "customConditional" : "show = !_.isEmpty(value)",
+        "type" : "selectOrgstruct",
+        "input" : true
+      }, {
+        "label" : {
+          "ru" : "Status"
+        },
+        "key" : "_status",
+        "disabled" : true,
+        "hidden" : true,
+        "defaultValue" : "new",
+        "refreshOn" : [ ],
+        "optionalWhenDisabled" : false,
+        "type" : "textfield",
+        "input" : true
+      } ]
+    }, {
+      "label" : {
+        "ru" : "Columns"
+      },
+      "key" : "columns2",
+      "columns" : [ {
+        "components" : [ {
+          "label" : "Cancel",
+          "action" : "event",
+          "state" : "",
+          "showValidations" : false,
+          "event" : "cancel",
+          "block" : true,
+          "type" : "button",
+          "input" : true,
+          "key" : "submit2",
+          "conditional" : {
+            "show" : null,
+            "when" : null
+          }
+        } ],
+        "type" : "column",
+        "input" : false,
+        "key" : "column",
+        "label" : "Column",
+        "md" : 3,
+        "clearOnHide" : true,
+        "conditional" : {
+          "show" : null,
+          "when" : null
+        },
+        "index" : 0
+      }, {
+        "components" : [ ],
+        "type" : "column",
+        "input" : false,
+        "key" : "column",
+        "label" : "Column",
+        "clearOnHide" : true,
+        "conditional" : {
+          "show" : null,
+          "when" : null
+        },
+        "index" : 1,
+        "md" : 3
+      }, {
+        "md" : 3,
+        "type" : "column",
+        "input" : false,
+        "key" : "column",
+        "label" : "Column",
+        "components" : [ ],
+        "clearOnHide" : true,
+        "conditional" : {
+          "show" : null,
+          "when" : null
+        },
+        "index" : 2
+      }, {
+        "md" : 3,
+        "type" : "column",
+        "input" : false,
+        "key" : "column",
+        "index" : 3,
+        "components" : [ {
+          "label" : {
+            "ru" : "Создать",
+            "en" : "Submit"
+          },
+          "key" : "submit",
+          "state" : "",
+          "theme" : "primary",
+          "block" : true,
+          "disableOnInvalid" : true,
+          "refreshOn" : [ ],
+          "optionalWhenDisabled" : false,
+          "type" : "button",
+          "input" : true
+        } ]
+      } ],
+      "oneColumnInViewMode" : false,
+      "type" : "columns",
+      "input" : false
+    } ],
+    "formId" : "deal-board-form"
+  },
+  "attributes" : { }
+}

@@ -1,0 +1,10 @@
+---
+id: delete
+name:
+  ru: Удалить
+  en: Delete
+type: delete
+evaluator:
+  type: has-permission
+  config:
+    permission: Write

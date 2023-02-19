@@ -1,0 +1,19 @@
+---
+id: change-status-to-refusal
+name:
+  ru: Поменять статус на Отказ
+  en: Change status to Refusal
+type: mutate
+config:
+  record:
+    id: ${?id}
+    attributes:
+      _status: refusal
+predicate:
+  t: and
+  val:
+    - t: and
+      val:
+        - t: eq
+          att: _roles.isCurrentUserMemberOf.cco?bool
+          val: true

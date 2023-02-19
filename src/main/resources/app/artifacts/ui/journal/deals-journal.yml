@@ -1,0 +1,57 @@
+---
+id: deals-journal
+name:
+  ru: Сделки
+typeRef: emodel/type@deal
+actions:
+  - uiserv/action@view-dashboard
+  - uiserv/action@view-dashboard-in-background
+  - uiserv/action@record-copy
+  - uiserv/action@delete
+columns:
+  - id: _disp
+    name:
+      ru: Имя
+      en: Name
+    type: TEXT
+  - id: company
+    name:
+      ru: Компания
+    type: TEXT
+  - id: counterparty
+    name:
+      ru: Контрагент
+    type: ASSOC
+  - id: amount
+    name:
+      ru: Бюджет
+    type: NUMBER
+  - id: description
+    name:
+      ru: Описание
+    type: TEXT
+  - id: fio
+    name:
+      ru: ФИО
+    type: TEXT
+  - id: email
+    name:
+      ru: E-mail
+    type: TEXT
+  - id: phone
+    name:
+      ru: Телефон
+    type: TEXT
+  - id: manager
+    name:
+      ru: Ответственный
+    type: PERSON
+  - id: dateReceived
+    name:
+      ru: Дата создания
+    type: DATETIME
+  - id: source
+    name:
+      ru: Источник обращения
+    type: TEXT
+

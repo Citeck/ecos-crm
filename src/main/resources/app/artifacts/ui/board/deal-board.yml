@@ -1,0 +1,41 @@
+---
+id: deal-board
+typeRef: emodel/type@deal
+journalRef: uiserv/journal@type$deal
+cardFormRef: uiserv/form@deal-board-form
+readOnly: false
+name:
+  ru: Доска Сделок
+  en: Board
+actions: null
+columns:
+  - id: new
+    name:
+      ru: не обработана
+  - id: firstContact
+    name:
+      ru: первичный контакт
+  - id: identifyNeeds
+    name:
+      ru: сбор потребностей
+  - id: presentation
+    name:
+      ru: презентация
+  - id: offerPreparation
+    name:
+      ru: подготовка КП
+  - id: prototype
+    name:
+      ru: прототип
+  - id: decision
+    name:
+      ru: принятие решения
+  - id: completed
+    name:
+      ru: завершена
+  - id: pause
+    name:
+      ru: пауза
+  - id: refusal
+    name:
+      ru: отказ
