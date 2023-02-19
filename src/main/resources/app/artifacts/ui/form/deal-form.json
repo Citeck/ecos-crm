@@ -1,346 +1,430 @@
 {
-  "id" : "deal-form",
-  "title" : {
-    "en" : "Deal form"
+  "id": "deal-form",
+  "formKey": "",
+  "title": {
+    "en": "Deal form"
   },
-  "typeRef" : "emodel/type@deal",
-  "width" : "lg",
-  "definition" : {
-    "components" : [ {
-      "scrollableContent" : true,
-      "key" : "panel2",
-      "type" : "panel",
-      "input" : false,
-      "components" : [ {
-        "label" : {
-          "ru" : "Columns"
-        },
-        "key" : "columns",
-        "columns" : [ {
-          "components" : [ {
-            "label" : {
-              "ru" : "Panel"
+  "description": {},
+  "customModule": "",
+  "typeRef": "emodel/type@deal",
+  "width": "lg",
+  "system": false,
+  "i18n": {},
+  "definition": {
+    "components": [
+      {
+        "scrollableContent": true,
+        "key": "panel2",
+        "type": "panel",
+        "input": false,
+        "components": [
+          {
+            "label": {
+              "ru": "Columns"
             },
-            "key" : "panel",
-            "title" : {
-              "ru" : "Основное"
-            },
-            "refreshOn" : [ ],
-            "optionalWhenDisabled" : false,
-            "type" : "panel",
-            "input" : false,
-            "components" : [ {
-              "label" : {
-                "en" : "Title",
-                "ru" : "Номер"
+            "key": "columns",
+            "columns": [
+              {
+                "components": [
+                  {
+                    "label": {
+                      "ru": "Panel"
+                    },
+                    "key": "panel",
+                    "title": {
+                      "ru": "Основное"
+                    },
+                    "refreshOn": [],
+                    "optionalWhenDisabled": false,
+                    "type": "panel",
+                    "input": false,
+                    "components": [
+                      {
+                        "label": {
+                          "en": "Title",
+                          "ru": "Номер"
+                        },
+                        "key": "number",
+                        "disabled": true,
+                        "defaultValue": "",
+                        "refreshOn": [],
+                        "optionalWhenDisabled": false,
+                        "type": "textfield",
+                        "input": true
+                      },
+                      {
+                        "label": {
+                          "ru": "Компания"
+                        },
+                        "key": "company",
+                        "defaultValue": "",
+                        "refreshOn": [],
+                        "optionalWhenDisabled": false,
+                        "type": "textfield",
+                        "input": true
+                      },
+                      {
+                        "label": {
+                          "ru": "Контрагент"
+                        },
+                        "key": "counterparty",
+                        "modalTitle": "",
+                        "journalId": "counterparty",
+                        "refreshOn": [],
+                        "optionalWhenDisabled": false,
+                        "type": "selectJournal",
+                        "input": true,
+                        "queryData": ""
+                      },
+                      {
+                        "label": {
+                          "ru": "Бюджет"
+                        },
+                        "key": "amount",
+                        "validate": {
+                          "integer": false
+                        },
+                        "isBigNumber": false,
+                        "delimiterValue": " ",
+                        "refreshOn": [],
+                        "optionalWhenDisabled": false,
+                        "defaultValue": "",
+                        "type": "number",
+                        "input": true
+                      },
+                      {
+                        "label": {
+                          "ru": "Ответственный"
+                        },
+                        "key": "manager",
+                        "allowedAuthorityType": "USER",
+                        "currentUserByDefault": true,
+                        "dataType": "authority",
+                        "refreshOn": [],
+                        "optionalWhenDisabled": false,
+                        "type": "selectOrgstruct",
+                        "input": true,
+                        "defaultValue": ""
+                      },
+                      {
+                        "label": {
+                          "ru": "Дата создания"
+                        },
+                        "key": "dateReceived",
+                        "format": "dd-MM-yyyy HH:mm",
+                        "datePicker": {
+                          "minDate": "",
+                          "maxDate": ""
+                        },
+                        "timePicker": {
+                          "showMeridian": false
+                        },
+                        "defaultValue": "",
+                        "refreshOn": [],
+                        "customDefaultValue": "value = new Date();",
+                        "optionalWhenDisabled": false,
+                        "type": "datetime",
+                        "input": true,
+                        "suffix": true
+                      }
+                    ]
+                  }
+                ],
+                "type": "column",
+                "input": false,
+                "key": "column",
+                "index": 0
               },
-              "key" : "number",
-              "disabled" : true,
-              "defaultValue" : "",
-              "refreshOn" : [ ],
-              "optionalWhenDisabled" : false,
-              "type" : "textfield",
-              "input" : true
-            }, {
-              "label" : {
-                "ru" : "Компания"
-              },
-              "key" : "company",
-              "defaultValue" : "",
-              "refreshOn" : [ ],
-              "optionalWhenDisabled" : false,
-              "type" : "textfield",
-              "input" : true
-            }, {
-              "label" : {
-                "ru" : "Контрагент"
-              },
-              "key" : "counterparty",
-              "modalTitle" : "",
-              "journalId" : "counterparty",
-              "refreshOn" : [ ],
-              "optionalWhenDisabled" : false,
-              "type" : "selectJournal",
-              "input" : true,
-              "queryData" : ""
-            }, {
-              "label" : {
-                "ru" : "Бюджет"
-              },
-              "key" : "amount",
-              "validate" : {
-                "integer" : false
-              },
-              "isBigNumber" : false,
-              "delimiterValue" : " ",
-              "refreshOn" : [ ],
-              "optionalWhenDisabled" : false,
-              "defaultValue" : "",
-              "type" : "number",
-              "input" : true
-            }, {
-              "label" : {
-                "ru" : "Ответственный"
-              },
-              "key" : "manager",
-              "allowedAuthorityType" : "USER",
-              "currentUserByDefault" : true,
-              "dataType" : "authority",
-              "refreshOn" : [ ],
-              "optionalWhenDisabled" : false,
-              "type" : "selectOrgstruct",
-              "input" : true,
-              "defaultValue" : ""
-            }, {
-              "label" : {
-                "ru" : "Дата создания"
-              },
-              "key" : "dateReceived",
-              "format" : "dd-MM-yyyy HH:mm",
-              "datePicker" : {
-                "minDate" : "",
-                "maxDate" : ""
-              },
-              "timePicker" : {
-                "showMeridian" : false
-              },
-              "defaultValue" : "",
-              "refreshOn" : [ ],
-              "customDefaultValue" : "value = new Date();",
-              "optionalWhenDisabled" : false,
-              "type" : "datetime",
-              "input" : true,
-              "suffix" : true
-            } ]
-          } ],
-          "type" : "column",
-          "input" : false,
-          "key" : "column",
-          "index" : 0
-        }, {
-          "index" : 1,
-          "type" : "column",
-          "input" : false,
-          "key" : "column",
-          "components" : [ {
-            "label" : {
-              "ru" : "Panel"
-            },
-            "key" : "contact",
-            "title" : {
-              "ru" : "Контакт"
-            },
-            "refreshOn" : [ ],
-            "optionalWhenDisabled" : false,
-            "type" : "panel",
-            "input" : false,
-            "components" : [ {
-              "label" : {
-                "ru" : "ФИО"
-              },
-              "key" : "fio",
-              "defaultValue" : "",
-              "refreshOn" : [ ],
-              "optionalWhenDisabled" : false,
-              "type" : "textfield",
-              "input" : true
-            }, {
-              "label" : {
-                "ru" : "Телефон"
-              },
-              "key" : "phone",
-              "defaultValue" : "",
-              "refreshOn" : [ ],
-              "optionalWhenDisabled" : false,
-              "type" : "textfield",
-              "input" : true
-            }, {
-              "label" : {
-                "ru" : "E-mail"
-              },
-              "key" : "email",
-              "defaultValue" : "",
-              "refreshOn" : [ ],
-              "optionalWhenDisabled" : false,
-              "type" : "textfield",
-              "input" : true
-            }, {
-              "label" : {
-                "ru" : "E-mail отправителя с сайта"
-              },
-              "key" : "siteEmail",
-              "defaultValue" : "",
-              "refreshOn" : [ ],
-              "optionalWhenDisabled" : false,
-              "type" : "textfield",
-              "input" : true
-            }, {
-              "label" : {
-                "ru" : "Источник обращения"
-              },
-              "key" : "source",
-              "dataSrc" : "values",
-              "data" : {
-                "values" : [ {
-                  "label" : "Сайт - демо доступ",
-                  "value" : "demo"
-                }, {
-                  "label" : "Сайт - консультация",
-                  "value" : "consult"
-                }, {
-                  "label" : "Сайт - запрос стоимости",
-                  "value" : "price"
-                }, {
-                  "label" : "Сайт - скачивание com",
-                  "value" : "community"
-                }, {
-                  "label" : "Почта",
-                  "value" : "email"
-                }, {
-                  "label" : "Телефон",
-                  "value" : "phone"
-                }, {
-                  "label" : "Cарафанное радио",
-                  "value" : "wom"
-                }, {
-                  "label" : "Другое",
-                  "value" : "other"
-                } ]
-              },
-              "optionalWhenDisabled" : false,
-              "type" : "ecosSelect",
-              "input" : true,
-              "defaultValue" : ""
-            }, {
-              "label" : "",
-              "key" : "ga_client_id",
-              "defaultValue" : "",
-              "refreshOn" : [ ],
-              "optionalWhenDisabled" : false,
-              "type" : "textfield",
-              "input" : true,
-              "inputMasks" : [ { } ]
-            }, {
-              "label" : "",
-              "key" : "ym_client_id",
-              "defaultValue" : "",
-              "refreshOn" : [ ],
-              "optionalWhenDisabled" : false,
-              "type" : "textfield",
-              "input" : true
-            } ]
-          } ]
-        } ],
-        "oneColumnInViewMode" : false,
-        "type" : "columns",
-        "input" : false
-      }, {
-        "label" : {
-          "ru" : "Описание"
-        },
-        "key" : "description",
-        "defaultValue" : "",
-        "refreshOn" : [ ],
-        "optionalWhenDisabled" : false,
-        "type" : "textarea",
-        "input" : true
-      }, {
-        "label" : {
-          "ru" : "Status"
-        },
-        "key" : "_status",
-        "disabled" : true,
-        "hidden" : true,
-        "defaultValue" : "new",
-        "refreshOn" : [ ],
-        "optionalWhenDisabled" : false,
-        "type" : "textfield",
-        "input" : true
-      } ]
-    }, {
-      "label" : {
-        "ru" : "Columns"
-      },
-      "key" : "columns2",
-      "columns" : [ {
-        "components" : [ {
-          "label" : "Cancel",
-          "action" : "event",
-          "state" : "",
-          "showValidations" : false,
-          "event" : "cancel",
-          "block" : true,
-          "type" : "button",
-          "input" : true,
-          "key" : "submit2",
-          "conditional" : {
-            "show" : null,
-            "when" : null
-          }
-        } ],
-        "type" : "column",
-        "input" : false,
-        "key" : "column",
-        "label" : "Column",
-        "md" : 3,
-        "clearOnHide" : true,
-        "conditional" : {
-          "show" : null,
-          "when" : null
-        },
-        "index" : 0
-      }, {
-        "components" : [ ],
-        "type" : "column",
-        "input" : false,
-        "key" : "column",
-        "label" : "Column",
-        "clearOnHide" : true,
-        "conditional" : {
-          "show" : null,
-          "when" : null
-        },
-        "index" : 1,
-        "md" : 3
-      }, {
-        "md" : 3,
-        "type" : "column",
-        "input" : false,
-        "key" : "column",
-        "label" : "Column",
-        "components" : [ ],
-        "clearOnHide" : true,
-        "conditional" : {
-          "show" : null,
-          "when" : null
-        },
-        "index" : 2
-      }, {
-        "md" : 3,
-        "type" : "column",
-        "input" : false,
-        "key" : "column",
-        "index" : 3,
-        "components" : [ {
-          "label" : {
-            "ru" : "Создать",
-            "en" : "Submit"
+              {
+                "index": 1,
+                "type": "column",
+                "input": false,
+                "key": "column",
+                "components": [
+                  {
+                    "label": {
+                      "ru": "Panel"
+                    },
+                    "key": "contact",
+                    "title": {
+                      "ru": "Контакт"
+                    },
+                    "refreshOn": [],
+                    "optionalWhenDisabled": false,
+                    "type": "panel",
+                    "input": false,
+                    "components": [
+                      {
+                        "label": {
+                          "ru": "ФИО"
+                        },
+                        "key": "fio",
+                        "defaultValue": "",
+                        "refreshOn": [],
+                        "optionalWhenDisabled": false,
+                        "type": "textfield",
+                        "input": true
+                      },
+                      {
+                        "label": {
+                          "ru": "Телефон"
+                        },
+                        "key": "phone",
+                        "defaultValue": "",
+                        "refreshOn": [],
+                        "optionalWhenDisabled": false,
+                        "type": "textfield",
+                        "input": true
+                      },
+                      {
+                        "label": {
+                          "ru": "E-mail"
+                        },
+                        "key": "email",
+                        "defaultValue": "",
+                        "refreshOn": [],
+                        "optionalWhenDisabled": false,
+                        "type": "textfield",
+                        "input": true
+                      },
+                      {
+                        "label": {
+                          "ru": "E-mail отправителя с сайта"
+                        },
+                        "key": "siteEmail",
+                        "defaultValue": "",
+                        "refreshOn": [],
+                        "optionalWhenDisabled": false,
+                        "type": "textfield",
+                        "input": true
+                      },
+                      {
+                        "label": {
+                          "ru": "Источник обращения"
+                        },
+                        "key": "source",
+                        "dataSrc": "values",
+                        "data": {
+                          "values": [
+                            {
+                              "label": "Сайт - демо доступ",
+                              "value": "demo"
+                            },
+                            {
+                              "label": "Сайт - консультация",
+                              "value": "consult"
+                            },
+                            {
+                              "label": "Сайт - запрос стоимости",
+                              "value": "price"
+                            },
+                            {
+                              "label": "Сайт - скачивание com",
+                              "value": "community"
+                            },
+                            {
+                              "label": "Почта",
+                              "value": "email"
+                            },
+                            {
+                              "label": "Телефон",
+                              "value": "phone"
+                            },
+                            {
+                              "label": "Cарафанное радио",
+                              "value": "wom"
+                            },
+                            {
+                              "label": "Другое",
+                              "value": "other"
+                            }
+                          ]
+                        },
+                        "optionalWhenDisabled": false,
+                        "type": "ecosSelect",
+                        "input": true,
+                        "defaultValue": ""
+                      },
+                      {
+                        "label": "",
+                        "key": "ga_client_id",
+                        "defaultValue": "",
+                        "refreshOn": [],
+                        "optionalWhenDisabled": false,
+                        "type": "textfield",
+                        "input": true,
+                        "inputMasks": [
+                          {}
+                        ]
+                      },
+                      {
+                        "label": "",
+                        "key": "ym_client_id",
+                        "defaultValue": "",
+                        "refreshOn": [],
+                        "optionalWhenDisabled": false,
+                        "type": "textfield",
+                        "input": true
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "oneColumnInViewMode": false,
+            "type": "columns",
+            "input": false
           },
-          "key" : "submit",
-          "state" : "",
-          "theme" : "primary",
-          "block" : true,
-          "disableOnInvalid" : true,
-          "refreshOn" : [ ],
-          "optionalWhenDisabled" : false,
-          "type" : "button",
-          "input" : true
-        } ]
-      } ],
-      "oneColumnInViewMode" : false,
-      "type" : "columns",
-      "input" : false
-    } ],
-    "formId" : "deal-form"
-  }
+          {
+            "label": {
+              "ru": "Описание"
+            },
+            "key": "description",
+            "defaultValue": "",
+            "refreshOn": [],
+            "optionalWhenDisabled": false,
+            "type": "textarea",
+            "input": true
+          },
+          {
+            "label": {
+              "ru": "Panel"
+            },
+            "key": "panel3",
+            "title": {
+              "ru": "Почтовое сообщение"
+            },
+            "collapsible": true,
+            "collapsed": true,
+            "refreshOn": [],
+            "optionalWhenDisabled": false,
+            "type": "panel",
+            "input": false,
+            "components": [
+              {
+                "label": "",
+                "key": "emessage",
+                "disabled": true,
+                "defaultValue": "",
+                "refreshOn": [],
+                "optionalWhenDisabled": false,
+                "rows": 7,
+                "type": "textarea",
+                "input": true
+              }
+            ]
+          },
+          {
+            "label": {
+              "ru": "Status"
+            },
+            "key": "_status",
+            "disabled": true,
+            "hidden": true,
+            "defaultValue": "new",
+            "refreshOn": [],
+            "optionalWhenDisabled": false,
+            "type": "textfield",
+            "input": true
+          }
+        ]
+      },
+      {
+        "label": {
+          "ru": "Columns"
+        },
+        "key": "columns2",
+        "columns": [
+          {
+            "components": [
+              {
+                "label": "Cancel",
+                "action": "event",
+                "state": "",
+                "showValidations": false,
+                "event": "cancel",
+                "block": true,
+                "type": "button",
+                "input": true,
+                "key": "submit2",
+                "conditional": {
+                  "show": null,
+                  "when": null
+                }
+              }
+            ],
+            "type": "column",
+            "input": false,
+            "key": "column",
+            "label": "Column",
+            "md": 3,
+            "clearOnHide": true,
+            "conditional": {
+              "show": null,
+              "when": null
+            },
+            "index": 0
+          },
+          {
+            "components": [],
+            "type": "column",
+            "input": false,
+            "key": "column",
+            "label": "Column",
+            "clearOnHide": true,
+            "conditional": {
+              "show": null,
+              "when": null
+            },
+            "index": 1,
+            "md": 3
+          },
+          {
+            "md": 3,
+            "type": "column",
+            "input": false,
+            "key": "column",
+            "label": "Column",
+            "components": [],
+            "clearOnHide": true,
+            "conditional": {
+              "show": null,
+              "when": null
+            },
+            "index": 2
+          },
+          {
+            "md": 3,
+            "type": "column",
+            "input": false,
+            "key": "column",
+            "index": 3,
+            "components": [
+              {
+                "label": {
+                  "ru": "Создать",
+                  "en": "Submit"
+                },
+                "key": "submit",
+                "state": "",
+                "theme": "primary",
+                "block": true,
+                "disableOnInvalid": true,
+                "refreshOn": [],
+                "optionalWhenDisabled": false,
+                "type": "button",
+                "input": true
+              }
+            ]
+          }
+        ],
+        "oneColumnInViewMode": false,
+        "type": "columns",
+        "input": false
+      }
+    ],
+    "formId": "deal-form"
+  },
+  "attributes": {},
+  "notExists": false
 }
