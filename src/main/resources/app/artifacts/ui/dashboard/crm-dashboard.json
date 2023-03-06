@@ -12,16 +12,15 @@
         {
           "name": "stages",
           "label": "dashboard-settings.widget.stages",
-          "dndId": "b2b37c62-ae50-4c67-b3b8-3020030d2d3e",
-          "id": "080ef1a6-24f9-41eb-bff9-485680757d77",
+          "dndId": "e1d87f9d-c2f0-455e-863b-73c1aa4d22cb",
+          "id": "7194460e-6e57-4e9b-9696-d6ad4ad0242d",
           "props": {
-            "id": "080ef1a6-24f9-41eb-bff9-485680757d77",
+            "id": "7194460e-6e57-4e9b-9696-d6ad4ad0242d",
             "config": {
               "widgetDisplayCondition": null,
               "elementsDisplayCondition": {}
             }
-          },
-          "description": "Основное"
+          }
         },
         {
           "dndId": "077bcf0e-5f7e-4f6d-abca-f996d243ea1d",

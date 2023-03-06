@@ -60,6 +60,38 @@ model:
     - id: refusal
       name:
         ru: отказ
+    - id: old
+      name:
+        ru: исторические заявки
+  stages:
+    - name:
+        ru: 0% - Обработка
+      statuses:
+        - new
+    - name:
+        ru: 20% - Квалификация
+      statuses:
+        - firstContact
+        - identifyNeeds
+    - name:
+        ru: 40% - Развитие
+      statuses:
+        - presentation
+        - offerPreparation
+        - prototype
+    - name:
+        ru: 60% - Подтверждение
+      statuses:
+        - decision
+    - name:
+        ru: 100% - Победа
+      statuses:
+        - completed
+    - name:
+        ru: Отказ/Пауза
+      statuses:
+        - refusal
+        - pause
   attributes:
     - id: number
       name:

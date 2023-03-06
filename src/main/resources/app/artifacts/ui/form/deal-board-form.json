@@ -99,6 +99,62 @@
             "suffix": true
           },
           {
+            "label": "",
+            "key": "source",
+            "hideLabel": true,
+            "dataSrc": "values",
+            "data": {
+              "values": [
+                {
+                  "label": "Сайт - демо доступ",
+                  "value": "demo"
+                },
+                {
+                  "label": "Сайт - консультация",
+                  "value": "consult"
+                },
+                {
+                  "label": "Сайт - запрос стоимости",
+                  "value": "price"
+                },
+                {
+                  "label": "Сайт - демо-доступ в облаке",
+                  "value": "cloud"
+                },
+                {
+                  "label": "Сайт - скачивание com",
+                  "value": "community"
+                },
+                {
+                  "label": "Почта",
+                  "value": "email"
+                },
+                {
+                  "label": "Телефон",
+                  "value": "phone"
+                },
+                {
+                  "label": "Cарафанное радио",
+                  "value": "wom"
+                },
+                {
+                  "label": "Другое",
+                  "value": "other"
+                }
+              ],
+              "headers": [
+                {
+                  "key": "",
+                  "value": ""
+                }
+              ]
+            },
+            "defaultValue": "",
+            "optionalWhenDisabled": false,
+            "type": "ecosSelect",
+            "input": true
+          },
+          {
             "label": {
               "ru": "Status"
             },

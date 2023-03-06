@@ -214,6 +214,10 @@
                               "value": "price"
                             },
                             {
+                              "label": "Сайт - демо-доступ в облаке",
+                              "value": "cloud"
+                            },
+                            {
                               "label": "Сайт - скачивание com",
                               "value": "community"
                             },
@@ -233,12 +237,18 @@
                               "label": "Другое",
                               "value": "other"
                             }
+                          ],
+                          "headers": [
+                            {
+                              "key": "",
+                              "value": ""
+                            }
                           ]
                         },
+                        "defaultValue": "",
                         "optionalWhenDisabled": false,
                         "type": "ecosSelect",
-                        "input": true,
-                        "defaultValue": ""
+                        "input": true
                       },
                       {
                         "label": {

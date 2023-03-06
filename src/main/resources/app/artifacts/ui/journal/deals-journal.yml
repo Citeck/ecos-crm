@@ -2,7 +2,19 @@
 id: deals-journal
 name:
   ru: Сделки
+defaultFilters:
+  - t: and
+    val:
+      - t: contains
+        att: _status
+        val: new
+      - t: contains
+        att: _status
+        val: firstContact
 typeRef: emodel/type@deal
+defaultSortBy:
+  - attribute: dateReceived
+    ascending: false
 actions:
   - uiserv/action@view-dashboard
   - uiserv/action@view-dashboard-in-background
@@ -54,4 +66,11 @@ columns:
     name:
       ru: Источник обращения
     type: TEXT
-
+  - id: _status
+    name:
+      ru: Статус
+    type: TEXT
+  - id: emessage
+    name:
+      ru: Письмо
+    type: TEXT
