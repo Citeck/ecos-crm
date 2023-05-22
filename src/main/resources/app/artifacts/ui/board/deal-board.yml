@@ -1,7 +1,7 @@
 ---
 id: deal-board
 typeRef: emodel/type@deal
-journalRef: uiserv/journal@type$deal
+journalRef: uiserv/journal@deals-journal
 cardFormRef: uiserv/form@deal-board-form
 readOnly: false
 name:
