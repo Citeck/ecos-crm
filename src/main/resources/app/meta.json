@@ -1,9 +1,6 @@
 {
   "id" : "ecos-crm",
   "name" : {
-    "ru" : "CRM"
-  },
-  "version" : "0.0.1",
-  "typeRefs" : [ "emodel/type@deal" ],
-  "artifacts" : [ "eapps/artifact@model/num-template$deal-num-template", "eapps/artifact@ui/board$deal-board", "eapps/artifact@ui/form$deal-form", "eapps/artifact@ui/form$deal-board-form", "eapps/artifact@ui/action$delete" ]
+    "en" : "CRM"
+  }
 }
