@@ -94,7 +94,6 @@
                         "key": "manager",
                         "allowedAuthorityType": "USER",
                         "currentUserByDefault": true,
-                        "dataType": "authority",
                         "refreshOn": [],
                         "optionalWhenDisabled": false,
                         "type": "selectOrgstruct",
