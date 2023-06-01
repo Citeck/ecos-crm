@@ -11,7 +11,7 @@ config:
         name:
           ru: Менеджер CRM
           en: CRM manager
-        authorityGroups:
+        att_add_authorityGroups:
           - emodel/authority-group@_orgstruct_home_
 
     - id: emodel/authority-group@
@@ -20,5 +20,5 @@ config:
         name:
           ru: Коммерческий директор
           en: CRM CCO
-        authorityGroups:
+        att_add_authorityGroups:
           - emodel/authority-group@_orgstruct_home_

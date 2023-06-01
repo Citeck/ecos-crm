@@ -3,14 +3,11 @@ id: deals-journal
 name:
   ru: Сделки
 defaultFilters:
-  - t: and
+  - t: not
     val:
-      - t: contains
-        att: _status
-        val: new
-      - t: contains
-        att: _status
-        val: firstContact
+      t: eq
+      att: _status
+      val: old
 typeRef: emodel/type@deal
 defaultSortBy:
   - attribute: dateReceived
@@ -20,6 +17,7 @@ actions:
   - uiserv/action@view-dashboard-in-background
   - uiserv/action@record-copy
   - uiserv/action@delete
+  - uiserv/action@change-source-to-community
 columns:
   - id: _disp
     name:
@@ -66,11 +64,11 @@ columns:
     name:
       ru: Источник обращения
     type: TEXT
-  - id: _status
-    name:
-      ru: Статус
-    type: TEXT
   - id: emessage
     name:
       ru: Письмо
+    type: TEXT
+  - id: _status
+    name:
+      ru: Статус
     type: TEXT

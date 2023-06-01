@@ -1,15 +1,10 @@
 {
   "id": "deal-form",
-  "formKey": "",
   "title": {
     "en": "Deal form"
   },
-  "description": {},
-  "customModule": "",
   "typeRef": "emodel/type@deal",
   "width": "lg",
-  "system": false,
-  "i18n": {},
   "definition": {
     "components": [
       {
@@ -473,6 +468,5 @@
     ],
     "formId": "deal-form"
   },
-  "attributes": {},
   "notExists": false
 }

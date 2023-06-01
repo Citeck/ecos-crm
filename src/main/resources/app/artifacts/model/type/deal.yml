@@ -9,13 +9,15 @@ journalRef: uiserv/journal@deals-journal
 boardRef: uiserv/board@deal-board
 inheritForm: false
 dispNameTemplate:
-  ru: Сделка №${number} ${company}
+  ru: Сделка ${company}
 numTemplateRef: emodel/num-template@deal-num-template
 actions:
   - uiserv/action@tasks-actions
   - uiserv/action@change-status-to-refusal
   - uiserv/action@edit
   - uiserv/action@delete
+  - uiserv/action@change-source-to-community
+  - uiserv/action@return-deal-to-new
 defaultCreateVariant: true
 model:
   roles:

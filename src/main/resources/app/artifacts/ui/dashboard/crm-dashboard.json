@@ -2,9 +2,6 @@
   "id": "crm-dashboard",
   "typeRef": "emodel/type@deal",
   "appliedToRef": "",
-  "authority": null,
-  "scope": "",
-  "priority": 0,
   "config": {
     "version": "v2",
     "v2": {
@@ -12,11 +9,10 @@
         {
           "name": "stages",
           "label": "dashboard-settings.widget.stages",
-          "additionalProps": {},
-          "dndId": "d377b23f-9afd-4b79-b3b5-bcb56d74d28b",
-          "id": "54ed9d6d-be77-4e55-b37a-bad7e227f94e",
+          "dndId": "e1d87f9d-c2f0-455e-863b-73c1aa4d22cb",
+          "id": "7194460e-6e57-4e9b-9696-d6ad4ad0242d",
           "props": {
-            "id": "54ed9d6d-be77-4e55-b37a-bad7e227f94e",
+            "id": "7194460e-6e57-4e9b-9696-d6ad4ad0242d",
             "config": {
               "widgetDisplayCondition": null,
               "elementsDisplayCondition": {}
@@ -190,7 +186,7 @@
           "columns": [
             {
               "widgets": [
-                "54ed9d6d-be77-4e55-b37a-bad7e227f94e",
+                "7194460e-6e57-4e9b-9696-d6ad4ad0242d",
                 "d5b4372a-cb41-4370-b66e-5580a52aaa6f",
                 "ecbede90-a55d-423a-9b6b-3ac523600335",
                 "291afa3a-50c1-4a3a-9700-8b85767926af"
@@ -324,6 +320,5 @@
         }
       ]
     }
-  },
-  "attributes": {}
+  }
 }
