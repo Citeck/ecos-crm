@@ -64,7 +64,7 @@
                         },
                         "key": "counterparty",
                         "modalTitle": "",
-                        "journalId": "counterparty",
+                        "journalId": "ecos-counterparty",
                         "refreshOn": [],
                         "optionalWhenDisabled": false,
                         "type": "selectJournal",

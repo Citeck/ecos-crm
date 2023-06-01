@@ -127,7 +127,7 @@ model:
         ru: Контрагент
       type: ASSOC
       config:
-        typeRef: emodel/type@idocs-contractor
+        typeRef: emodel/type@ecos-counterparty
         child: false
     - id: manager
       name:

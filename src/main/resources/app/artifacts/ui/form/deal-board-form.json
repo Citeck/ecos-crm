@@ -33,7 +33,7 @@
             "key": "counterparty",
             "hideLabel": true,
             "modalTitle": "",
-            "journalId": "counterparty",
+            "journalId": "ecos-counterparty",
             "queryData": "",
             "refreshOn": [],
             "optionalWhenDisabled": false,
