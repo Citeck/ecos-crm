@@ -160,13 +160,13 @@
                 {
                   "formId": null,
                   "multiple": false,
-                  "type": "emodel/type@category-document-type/kind-d-scan-documents",
+                  "type": "emodel/type@scan-document",
                   "mandatory": false
                 },
                 {
                   "formId": null,
                   "multiple": false,
-                  "type": "emodel/type@category-document-type/kind-d-counterparty-documents",
+                  "type": "emodel/type@counterparty-document",
                   "mandatory": false
                 }
               ]
