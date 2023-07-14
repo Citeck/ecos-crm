@@ -2,6 +2,7 @@
 id: deal
 name:
   ru: Сделка
+  en: Deal
 storageType: ECOS_MODEL
 parentRef: emodel/type@case
 formRef: uiserv/form@deal-form
@@ -24,73 +25,92 @@ model:
     - id: manager
       name:
         ru: Менеджер по продажам
+        en: Manager
       assignees:
         - GROUP_crm-manager
     - id: cco
       name:
         ru: Коммерческий директор
+        en: CCO
       assignees:
         - GROUP_crm-cco
   statuses:
     - id: new
       name:
         ru: не обработана
+        en: new
     - id: firstContact
       name:
         ru: первичный контакт
+        en: first contact
     - id: identifyNeeds
       name:
         ru: сбор потребностей
+        en: identify needs
     - id: presentation
       name:
         ru: презентация
+        en: presentation
     - id: offerPreparation
       name:
         ru: подготовка КП
+        en: offer preparation
     - id: prototype
       name:
         ru: прототип
+        en: prototype
     - id: decision
       name:
         ru: принятие решения
+        en: decision
     - id: completed
       name:
         ru: завершена
+        en: completed
     - id: pause
       name:
         ru: пауза
+        en: pause
     - id: refusal
       name:
         ru: отказ
+        en: refusal
     - id: old
       name:
         ru: исторические заявки
+        en: old
   stages:
     - name:
         ru: 0% - Обработка
+        en: 0% - Processing
       statuses:
         - new
     - name:
         ru: 20% - Квалификация
+        en: 20% - Qualification
       statuses:
         - firstContact
         - identifyNeeds
     - name:
         ru: 40% - Развитие
+        en: 40% - Promotion
       statuses:
         - presentation
         - offerPreparation
         - prototype
     - name:
         ru: 60% - Подтверждение
+        en: 60% - Confirmation
       statuses:
         - decision
     - name:
         ru: 100% - Победа
+        en: 100% - Victory
       statuses:
         - completed
     - name:
         ru: Отказ/Пауза
+        en: Refusal/Pause
       statuses:
         - refusal
         - pause
@@ -98,6 +118,7 @@ model:
     - id: number
       name:
         ru: Номер
+        en: Number
       computed:
         type: COUNTER
         config:
@@ -106,25 +127,31 @@ model:
     - id: amount
       name:
         ru: Бюджет
+        en: Budget
       type: NUMBER
     - id: description
       name:
         ru: Описание
+        en: Description
     - id: fio
       name:
         ru: ФИО
+        en: Full name
     - id: email
       name:
         ru: E-mail
     - id: phone
       name:
         ru: Телефон
+        en: Phone
     - id: company
       name:
         ru: Компания
+        en: Company
     - id: counterparty
       name:
         ru: Контрагент
+        en: Counterparty
       type: ASSOC
       config:
         typeRef: emodel/type@ecos-counterparty
@@ -132,26 +159,33 @@ model:
     - id: manager
       name:
         ru: Ответственный
+        en: Manager
       type: PERSON
     - id: dateReceived
       name:
         ru: Дата создания
+        en: Received date
       type: DATETIME
     - id: siteEmail
       name:
         ru: E-mail заявки с сайта
+        en: Site e-mail
     - id: siteFrom
       name:
         ru: Откуда пришел на сайт
+        en: Site from
     - id: source
       name:
         ru: Источник обращения
     - id: emessage
       name:
         ru: Почтовое сообщение
+        en: Post message
     - id: ga_client_id
       name:
         ru: Идентификатор GA
+        en: GA ID
     - id: ym_client_id
       name:
         ru: Идентификатор YM
+        en: YM ID

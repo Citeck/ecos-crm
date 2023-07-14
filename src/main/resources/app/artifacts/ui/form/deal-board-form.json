@@ -15,7 +15,8 @@
         "components": [
           {
             "label": {
-              "ru": "Компания"
+              "ru": "Компания",
+              "en": "Company"
             },
             "key": "company",
             "hideLabel": true,
@@ -28,7 +29,8 @@
           },
           {
             "label": {
-              "ru": "Контрагент"
+              "ru": "Контрагент",
+              "en": "Counterparty"
             },
             "key": "counterparty",
             "hideLabel": true,
@@ -43,7 +45,8 @@
           },
           {
             "label": {
-              "ru": "Бюджет"
+              "ru": "Бюджет",
+              "en": "Budget"
             },
             "key": "amount",
             "hideLabel": true,
@@ -60,7 +63,8 @@
           },
           {
             "label": {
-              "ru": "Ответственный"
+              "ru": "Ответственный",
+              "en": "Responsible"
             },
             "key": "manager",
             "hideLabel": true,
@@ -74,7 +78,8 @@
           },
           {
             "label": {
-              "ru": "Дата создания"
+              "ru": "Дата создания",
+              "en": "Received date"
             },
             "key": "dateReceived",
             "hideLabel": true,

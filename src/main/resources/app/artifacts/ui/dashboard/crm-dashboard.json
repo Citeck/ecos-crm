@@ -179,7 +179,10 @@
         {
           "id": "layout_799ac5e5-9eab-4c08-af80-5ed48d768229",
           "tab": {
-            "label": "Основное",
+            "label": {
+              "ru": "Основное",
+              "en": "General"
+            },
             "idLayout": "layout_799ac5e5-9eab-4c08-af80-5ed48d768229"
           },
           "type": "2-columns-big-small",
@@ -206,7 +209,10 @@
         {
           "id": "layout_18a3a08f-e70d-476b-911e-0730c58f97ed",
           "tab": {
-            "label": "История",
+            "label": {
+              "ru": "История",
+              "en": "History"
+            },
             "idLayout": "layout_18a3a08f-e70d-476b-911e-0730c58f97ed"
           },
           "type": "2-columns-big-small",
@@ -227,7 +233,10 @@
         {
           "id": "layout_35cd006c-9ae1-4148-9e25-3a78989fd690",
           "tab": {
-            "label": "Документы",
+            "label": {
+              "ru": "Документы",
+              "en": "Documents"
+            },
             "idLayout": "layout_35cd006c-9ae1-4148-9e25-3a78989fd690"
           },
           "type": "1-column",
