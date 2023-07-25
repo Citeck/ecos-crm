@@ -37,48 +37,48 @@ model:
   statuses:
     - id: new
       name:
-        ru: не обработана
-        en: new
+        ru: Не обработана
+        en: New
     - id: firstContact
       name:
-        ru: первичный контакт
-        en: first contact
+        ru: Первичный контакт
+        en: First contact
     - id: identifyNeeds
       name:
-        ru: сбор потребностей
-        en: identify needs
+        ru: Сбор потребностей
+        en: Identify needs
     - id: presentation
       name:
-        ru: презентация
-        en: presentation
+        ru: Презентация
+        en: Presentation
     - id: offerPreparation
       name:
-        ru: подготовка КП
-        en: offer preparation
+        ru: Подготовка КП
+        en: Offer preparation
     - id: prototype
       name:
-        ru: прототип
-        en: prototype
+        ru: Прототип
+        en: Prototype
     - id: decision
       name:
-        ru: принятие решения
-        en: decision
+        ru: Принятие решения
+        en: Decision
     - id: completed
       name:
-        ru: завершена
-        en: completed
+        ru: Завершена
+        en: Completed
     - id: pause
       name:
-        ru: пауза
-        en: pause
+        ru: Пауза
+        en: Pause
     - id: refusal
       name:
-        ru: отказ
-        en: refusal
+        ru: Отказ
+        en: Refusal
     - id: old
       name:
-        ru: исторические заявки
-        en: old
+        ru: Исторические заявки
+        en: Old
   stages:
     - name:
         ru: 0% - Обработка
