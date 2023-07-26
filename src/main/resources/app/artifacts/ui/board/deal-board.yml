@@ -6,36 +6,46 @@ cardFormRef: uiserv/form@deal-board-form
 readOnly: false
 name:
   ru: Доска Сделок
-  en: Board
+  en: Deals board
 actions: null
 columns:
   - id: new
     name:
-      ru: не обработана
+      ru: Не обработана
+      en: New
   - id: firstContact
     name:
-      ru: первичный контакт
+      ru: Первичный контакт
+      en: First contact
   - id: identifyNeeds
     name:
-      ru: сбор потребностей
+      ru: Сбор потребностей
+      en: Identify needs
   - id: presentation
     name:
-      ru: презентация
+      ru: Презентация
+      en: Presentation
   - id: offerPreparation
     name:
-      ru: подготовка КП
+      ru: Подготовка КП
+      en: Offer preparation
   - id: prototype
     name:
-      ru: прототип
+      ru: Прототип
+      en: Prototype
   - id: decision
     name:
-      ru: принятие решения
+      ru: Принятие решения
+      en: Decision
   - id: completed
     name:
-      ru: завершена
+      ru: Завершена
+      en: Completed
   - id: pause
     name:
-      ru: пауза
+      ru: Пауза
+      en: Pause
   - id: refusal
     name:
-      ru: отказ
+      ru: Отказ
+      en: Refusal
