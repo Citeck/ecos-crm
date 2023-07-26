@@ -27,7 +27,8 @@
                     },
                     "key": "panel",
                     "title": {
-                      "ru": "Основное"
+                      "ru": "Основное",
+                      "en": "General"
                     },
                     "refreshOn": [],
                     "optionalWhenDisabled": false,
@@ -49,7 +50,8 @@
                       },
                       {
                         "label": {
-                          "ru": "Компания"
+                          "ru": "Компания",
+                          "en": "Company"
                         },
                         "key": "company",
                         "defaultValue": "",
@@ -60,7 +62,8 @@
                       },
                       {
                         "label": {
-                          "ru": "Контрагент"
+                          "ru": "Контрагент",
+                          "en": "Counterparty"
                         },
                         "key": "counterparty",
                         "modalTitle": "",
@@ -73,7 +76,8 @@
                       },
                       {
                         "label": {
-                          "ru": "Бюджет"
+                          "ru": "Бюджет",
+                          "en": "Budget"
                         },
                         "key": "amount",
                         "validate": {
@@ -89,7 +93,8 @@
                       },
                       {
                         "label": {
-                          "ru": "Ответственный"
+                          "ru": "Ответственный",
+                          "en": "Responsible"
                         },
                         "key": "manager",
                         "allowedAuthorityType": "USER",
@@ -102,7 +107,8 @@
                       },
                       {
                         "label": {
-                          "ru": "Дата создания"
+                          "ru": "Дата создания",
+                          "en": "Received date"
                         },
                         "key": "dateReceived",
                         "format": "dd-MM-yyyy HH:mm",
@@ -141,7 +147,8 @@
                     },
                     "key": "contact",
                     "title": {
-                      "ru": "Контакт"
+                      "ru": "Контакт",
+                      "en": "Contact"
                     },
                     "refreshOn": [],
                     "optionalWhenDisabled": false,
@@ -161,7 +168,8 @@
                       },
                       {
                         "label": {
-                          "ru": "Телефон"
+                          "ru": "Телефон",
+                          "en": "Phone"
                         },
                         "key": "phone",
                         "defaultValue": "",
@@ -172,7 +180,8 @@
                       },
                       {
                         "label": {
-                          "ru": "E-mail отправителя"
+                          "ru": "E-mail отправителя",
+                          "en": "Site email"
                         },
                         "key": "siteEmail",
                         "inputMasks": [
@@ -189,7 +198,8 @@
                       },
                       {
                         "label": {
-                          "ru": "Источник обращения"
+                          "ru": "Источник обращения",
+                          "en": "Source"
                         },
                         "key": "source",
                         "dataSrc": "values",
@@ -250,7 +260,8 @@
                         },
                         "key": "panel4",
                         "title": {
-                          "ru": "Заявка с сайта"
+                          "ru": "Заявка с сайта",
+                          "en": "Request from site"
                         },
                         "collapsible": true,
                         "collapsed": true,
@@ -319,7 +330,8 @@
           },
           {
             "label": {
-              "ru": "Описание"
+              "ru": "Описание",
+              "en": "Description"
             },
             "key": "description",
             "defaultValue": "",
@@ -334,7 +346,8 @@
             },
             "key": "panel3",
             "title": {
-              "ru": "Почтовое сообщение"
+              "ru": "Почтовое сообщение",
+              "en": "Post message"
             },
             "collapsible": true,
             "collapsed": true,
