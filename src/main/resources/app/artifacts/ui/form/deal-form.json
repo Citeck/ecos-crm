@@ -5,6 +5,31 @@
   },
   "typeRef": "emodel/type@deal",
   "width": "lg",
+  "system": false,
+  "i18n": {
+    "en": {
+      "site_demo": "Site - demo",
+      "site_consult": "Site - consulting",
+      "site_price_request": "Site - price request",
+      "site_load_com": "Site - download com",
+      "email": "Email",
+      "phone": "Phone",
+      "other": "Other",
+      "wom": "Word of mouth",
+      "site_demo_cloud": "Site - demo in cloud"
+    },
+    "ru": {
+      "site_demo": "Сайт - демо доступ",
+      "site_consult": "Сайт - консультация",
+      "site_price_request": "Сайт - запрос стоимости",
+      "site_load_com": "Сайт - скачивание com",
+      "email": "Почта",
+      "phone": "Телефон",
+      "other": "Другое",
+      "wom": "Сарафанное радио",
+      "site_demo_cloud": "Сайт - демо-доступ в облаке"
+    }
+  },
   "definition": {
     "components": [
       {
@@ -157,7 +182,8 @@
                     "components": [
                       {
                         "label": {
-                          "ru": "ФИО"
+                          "ru": "ФИО",
+                          "en": "Full name"
                         },
                         "key": "fio",
                         "defaultValue": "",
@@ -206,39 +232,39 @@
                         "data": {
                           "values": [
                             {
-                              "label": "Сайт - демо доступ",
+                              "label": "site_demo",
                               "value": "demo"
                             },
                             {
-                              "label": "Сайт - консультация",
+                              "label": "site_consult",
                               "value": "consult"
                             },
                             {
-                              "label": "Сайт - запрос стоимости",
+                              "label": "site_price_request",
                               "value": "price"
                             },
                             {
-                              "label": "Сайт - демо-доступ в облаке",
+                              "label": "site_demo_cloud",
                               "value": "cloud"
                             },
                             {
-                              "label": "Сайт - скачивание com",
+                              "label": "site_load_com",
                               "value": "community"
                             },
                             {
-                              "label": "Почта",
+                              "label": "email",
                               "value": "email"
                             },
                             {
-                              "label": "Телефон",
+                              "label": "phone",
                               "value": "phone"
                             },
                             {
-                              "label": "Cарафанное радио",
+                              "label": "wom",
                               "value": "wom"
                             },
                             {
-                              "label": "Другое",
+                              "label": "other",
                               "value": "other"
                             }
                           ],
