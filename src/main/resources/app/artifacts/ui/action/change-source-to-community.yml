@@ -1,0 +1,26 @@
+{
+  "id": "change-source-to-community",
+  "name": {
+    "ru": "Поменять источник на Community",
+    "en": "Change source to Community"
+  },
+  "type": "mutate",
+  "config": {
+    "record": {
+      "id": "${?id}",
+      "attributes": {
+        "source": "community"
+      }
+    }
+  },
+  "predicate": {
+    "t": "eq",
+    "att": "_roles.isCurrentUserMemberOf.manager?bool",
+    "val": true
+  },
+  "features": {
+    "execForRecords": true,
+    "execForQuery": false,
+    "execForRecord": true
+  }
+}

@@ -14,11 +14,10 @@ dispNameTemplate:
 numTemplateRef: emodel/num-template@deal-num-template
 actions:
   - uiserv/action@tasks-actions
-  - uiserv/action@change-status-to-refusal
+  - uiserv/action@change-status
   - uiserv/action@edit
   - uiserv/action@delete
   - uiserv/action@change-source-to-community
-  - uiserv/action@return-deal-to-new
 defaultCreateVariant: true
 model:
   roles:

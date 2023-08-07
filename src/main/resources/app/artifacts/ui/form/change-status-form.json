@@ -1,0 +1,165 @@
+{
+  "id": "change-status-form",
+  "formKey": "change-status-form",
+  "title": {
+    "en": "change-status-form"
+  },
+  "description": {},
+  "customModule": "",
+  "typeRef": "",
+  "width": "",
+  "system": false,
+  "i18n": {},
+  "definition": {
+    "components": [
+      {
+        "scrollableContent": true,
+        "key": "panel2",
+        "type": "panel",
+        "input": false,
+        "components": [
+          {
+            "label": {
+              "ru": "Статус, в который хотите перевести сделку:",
+              "en": "Choose status:"
+            },
+            "key": "statuses",
+            "clearOnHide": false,
+            "dataSrc": "custom",
+            "data": {
+              "headers": [
+                {
+                  "key": "",
+                  "value": ""
+                }
+              ],
+              "custom": "var statuses  = _.get(data, \"stats.statuses\");\nvar arr = [];\n\nfor(var i = 0; i < statuses.length; i++) {\n  var val = { value: statuses[i].id, label: statuses[i].name[\"ru\"] };\n  arr.push(val);\n}\n\nvalues = arr;"
+            },
+            "defaultValue": "",
+            "refreshOn": [
+              "stats"
+            ],
+            "optionalWhenDisabled": false,
+            "type": "ecosSelect",
+            "input": true
+          }
+        ]
+      },
+      {
+        "label": {
+          "ru": "Columns"
+        },
+        "key": "columns2",
+        "columns": [
+          {
+            "components": [
+              {
+                "label": "Cancel",
+                "action": "event",
+                "state": "",
+                "showValidations": false,
+                "event": "cancel",
+                "block": true,
+                "type": "button",
+                "input": true,
+                "key": "submit2",
+                "conditional": {
+                  "show": null,
+                  "when": null
+                }
+              }
+            ],
+            "type": "column",
+            "input": false,
+            "key": "column",
+            "label": "Column",
+            "md": 3,
+            "clearOnHide": true,
+            "conditional": {
+              "show": null,
+              "when": null
+            },
+            "index": 0
+          },
+          {
+            "components": [
+              {
+                "source": {
+                  "type": "record",
+                  "record": {
+                    "id": "emodel/type@deal",
+                    "attributes": {
+                      "statuses": "model.statuses[]?json"
+                    }
+                  },
+                  "forceLoad": false
+                },
+                "update": {
+                  "type": "once"
+                },
+                "key": "stats",
+                "type": "asyncData",
+                "input": true
+              }
+            ],
+            "type": "column",
+            "input": false,
+            "key": "column",
+            "label": "Column",
+            "clearOnHide": true,
+            "conditional": {
+              "show": null,
+              "when": null
+            },
+            "index": 1,
+            "md": 3
+          },
+          {
+            "md": 3,
+            "type": "column",
+            "input": false,
+            "key": "column",
+            "label": "Column",
+            "components": [],
+            "clearOnHide": true,
+            "conditional": {
+              "show": null,
+              "when": null
+            },
+            "index": 2
+          },
+          {
+            "md": 3,
+            "type": "column",
+            "input": false,
+            "key": "column",
+            "index": 3,
+            "components": [
+              {
+                "label": {
+                  "ru": "Отправить",
+                  "en": "Submit"
+                },
+                "key": "submit",
+                "state": "",
+                "theme": "primary",
+                "block": true,
+                "disableOnInvalid": true,
+                "refreshOn": [],
+                "optionalWhenDisabled": false,
+                "type": "button",
+                "input": true
+              }
+            ]
+          }
+        ],
+        "oneColumnInViewMode": false,
+        "type": "columns",
+        "input": false
+      }
+    ],
+    "formId": "change-status-form"
+  },
+  "attributes": {},
+  "notExists": false
+}
