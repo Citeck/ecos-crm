@@ -13,37 +13,29 @@
   "definition": {
     "components": [
       {
-        "scrollableContent": true,
-        "key": "panel2",
-        "type": "panel",
-        "input": false,
-        "components": [
-          {
-            "label": {
-              "ru": "Статус, в который хотите перевести сделку:",
-              "en": "Choose status:"
-            },
-            "key": "statuses",
-            "clearOnHide": false,
-            "dataSrc": "custom",
-            "data": {
-              "headers": [
-                {
-                  "key": "",
-                  "value": ""
-                }
-              ],
-              "custom": "var statuses  = _.get(data, \"stats.statuses\");\nvar arr = [];\n\nfor(var i = 0; i < statuses.length; i++) {\n  var val = { value: statuses[i].id, label: statuses[i].name[\"ru\"] };\n  arr.push(val);\n}\n\nvalues = arr;"
-            },
-            "defaultValue": "",
-            "refreshOn": [
-              "stats"
-            ],
-            "optionalWhenDisabled": false,
-            "type": "ecosSelect",
-            "input": true
-          }
-        ]
+        "label": {
+          "ru": "Статус, в который хотите перевести сделку:",
+          "en": "Choose status:"
+        },
+        "key": "statuses",
+        "clearOnHide": false,
+        "dataSrc": "custom",
+        "data": {
+          "headers": [
+            {
+              "key": "",
+              "value": ""
+            }
+          ],
+          "custom": "var statuses  = _.get(data, \"stats.statuses\");\nvar arr = [];\n\nfor(var i = 0; i < statuses.length; i++) {\n  var val = { value: statuses[i].id, label: Citeck.helpers.getMLValue(statuses[i].name) };\n  arr.push(val);\n}\n\nvalues = arr;"
+        },
+        "defaultValue": "",
+        "refreshOn": [
+          "stats"
+        ],
+        "optionalWhenDisabled": false,
+        "type": "ecosSelect",
+        "input": true
       },
       {
         "label": {
