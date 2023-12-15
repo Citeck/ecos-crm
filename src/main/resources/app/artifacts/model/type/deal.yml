@@ -173,9 +173,14 @@ model:
       name:
         ru: Откуда пришел на сайт
         en: Site from
-    - id: source
+    - id: requestCategory
       name:
-        ru: Источник обращения
+        ru: Категория обращения
+        en: Request category
+      type: ASSOC
+      config:
+        typeRef: emodel/type@deal-request-category
+        child: false
     - id: emessage
       name:
         ru: Почтовое сообщение

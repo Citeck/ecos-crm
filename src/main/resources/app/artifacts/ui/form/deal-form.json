@@ -6,30 +6,7 @@
   "typeRef": "emodel/type@deal",
   "width": "lg",
   "system": false,
-  "i18n": {
-    "en": {
-      "site_demo": "Site - demo",
-      "site_consult": "Site - consulting",
-      "site_price_request": "Site - price request",
-      "site_load_com": "Site - download com",
-      "email": "Email",
-      "phone": "Phone",
-      "other": "Other",
-      "wom": "Word of mouth",
-      "site_demo_cloud": "Site - demo in cloud"
-    },
-    "ru": {
-      "site_demo": "Сайт - демо доступ",
-      "site_consult": "Сайт - консультация",
-      "site_price_request": "Сайт - запрос стоимости",
-      "site_load_com": "Сайт - скачивание com",
-      "email": "Почта",
-      "phone": "Телефон",
-      "other": "Другое",
-      "wom": "Сарафанное радио",
-      "site_demo_cloud": "Сайт - демо-доступ в облаке"
-    }
-  },
+  "i18n": {},
   "definition": {
     "components": [
       {
@@ -224,60 +201,15 @@
                       },
                       {
                         "label": {
-                          "ru": "Источник обращения",
-                          "en": "Source"
+                          "ru": "Категория обращения"
                         },
-                        "key": "source",
-                        "dataSrc": "values",
-                        "data": {
-                          "values": [
-                            {
-                              "label": "site_demo",
-                              "value": "demo"
-                            },
-                            {
-                              "label": "site_consult",
-                              "value": "consult"
-                            },
-                            {
-                              "label": "site_price_request",
-                              "value": "price"
-                            },
-                            {
-                              "label": "site_demo_cloud",
-                              "value": "cloud"
-                            },
-                            {
-                              "label": "site_load_com",
-                              "value": "community"
-                            },
-                            {
-                              "label": "email",
-                              "value": "email"
-                            },
-                            {
-                              "label": "phone",
-                              "value": "phone"
-                            },
-                            {
-                              "label": "wom",
-                              "value": "wom"
-                            },
-                            {
-                              "label": "other",
-                              "value": "other"
-                            }
-                          ],
-                          "headers": [
-                            {
-                              "key": "",
-                              "value": ""
-                            }
-                          ]
-                        },
-                        "defaultValue": "",
+                        "key": "requestCategory",
+                        "modalTitle": "",
+                        "journalId": "deal-request-category-journal",
+                        "queryData": "",
+                        "refreshOn": [],
                         "optionalWhenDisabled": false,
-                        "type": "ecosSelect",
+                        "type": "selectJournal",
                         "input": true
                       },
                       {

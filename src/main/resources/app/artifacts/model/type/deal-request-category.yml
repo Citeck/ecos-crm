@@ -1,0 +1,21 @@
+---
+id: deal-request-category
+name:
+  ru: Категория обращения
+storageType: ECOS_MODEL
+parentRef: emodel/type@data-list
+formRef: uiserv/form@deal-request-category-form
+journalRef: uiserv/journal@deal-request-category-journal
+inheritForm: false
+defaultCreateVariant: true
+model:
+  attributes:
+    - id: type
+      name:
+        ru: Тип
+        en: Type
+    - id: name
+      name:
+        ru: Название
+        en: Name
+      type: MLTEXT
