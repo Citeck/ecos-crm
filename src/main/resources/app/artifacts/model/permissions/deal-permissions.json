@@ -1,0 +1,37 @@
+{
+  "id": "b29e0533-a5ed-4395-9116-4fd76a028971",
+  "typeRef": "emodel/type@deal",
+  "permissions": {
+    "matrix": {
+      "manager": {
+        "new": "READ",
+        "firstContact": "READ",
+        "identifyNeeds": "READ",
+        "presentation": "READ",
+        "offerPreparation": "READ",
+        "prototype": "READ",
+        "decision": "READ",
+        "completed": "READ",
+        "pause": "READ",
+        "refusal": "READ",
+        "old": "READ",
+        "ANY": "WRITE"
+      },
+      "cco": {
+        "new": "READ",
+        "firstContact": "READ",
+        "identifyNeeds": "READ",
+        "presentation": "READ",
+        "offerPreparation": "READ",
+        "prototype": "READ",
+        "decision": "READ",
+        "completed": "READ",
+        "pause": "READ",
+        "refusal": "READ",
+        "old": "READ",
+        "ANY": "WRITE"
+      }
+    }
+  },
+  "attributes": {}
+}

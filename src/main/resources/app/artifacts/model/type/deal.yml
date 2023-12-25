@@ -25,8 +25,8 @@ model:
       name:
         ru: Менеджер по продажам
         en: Manager
-      assignees:
-        - GROUP_crm-manager
+      attributes:
+        - manager
     - id: cco
       name:
         ru: Коммерческий директор
@@ -78,6 +78,7 @@ model:
       name:
         ru: Исторические заявки
         en: Old
+    - id: ANY
   stages:
     - name:
         ru: 0% - Обработка
@@ -132,17 +133,6 @@ model:
       name:
         ru: Описание
         en: Description
-    - id: fio
-      name:
-        ru: ФИО
-        en: Full name
-    - id: email
-      name:
-        ru: E-mail
-    - id: phone
-      name:
-        ru: Телефон
-        en: Phone
     - id: company
       name:
         ru: Компания
@@ -193,3 +183,9 @@ model:
       name:
         ru: Идентификатор YM
         en: YM ID
+    - id: contacts
+      name:
+        ru: Контакты
+        en: Contacts
+      type: JSON
+      multiple: true

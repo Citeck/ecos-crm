@@ -45,20 +45,6 @@ columns:
       ru: Описание
       en: Description
     type: TEXT
-  - id: fio
-    name:
-      ru: ФИО
-      en: Full name
-    type: TEXT
-  - id: email
-    name:
-      ru: E-mail
-    type: TEXT
-  - id: phone
-    name:
-      ru: Телефон
-      en: Phone
-    type: TEXT
   - id: manager
     name:
       ru: Ответственный
