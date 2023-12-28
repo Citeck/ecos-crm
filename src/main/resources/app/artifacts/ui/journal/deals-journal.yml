@@ -73,6 +73,10 @@ columns:
     name:
       ru: Источник обращения
       en: Source
+  - id: requestCategory
+    name:
+      ru: Категория обращения
+      en: Request category
     type: TEXT
   - id: emessage
     name:

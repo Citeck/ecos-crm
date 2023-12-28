@@ -18,6 +18,7 @@ actions:
   - uiserv/action@edit
   - uiserv/action@delete
   - uiserv/action@change-source-to-community
+  - uiserv/action@create-counterparty
 defaultCreateVariant: true
 model:
   roles:
@@ -25,8 +26,8 @@ model:
       name:
         ru: Менеджер по продажам
         en: Manager
-      assignees:
-        - GROUP_crm-manager
+      attributes:
+        - manager
     - id: cco
       name:
         ru: Коммерческий директор
@@ -78,6 +79,7 @@ model:
       name:
         ru: Исторические заявки
         en: Old
+    - id: ANY
   stages:
     - name:
         ru: 0% - Обработка
@@ -132,13 +134,16 @@ model:
       name:
         ru: Описание
         en: Description
+    #Deprecated
     - id: fio
       name:
         ru: ФИО
         en: Full name
+    #Deprecated
     - id: email
       name:
         ru: E-mail
+    #Deprecated
     - id: phone
       name:
         ru: Телефон
@@ -176,6 +181,14 @@ model:
     - id: source
       name:
         ru: Источник обращения
+    - id: requestCategory
+      name:
+        ru: Категория обращения
+        en: Request category
+      type: ASSOC
+      config:
+        typeRef: emodel/type@deal-request-category
+        child: false
     - id: emessage
       name:
         ru: Почтовое сообщение
@@ -188,3 +201,9 @@ model:
       name:
         ru: Идентификатор YM
         en: YM ID
+    - id: contacts
+      name:
+        ru: Контакты
+        en: Contacts
+      type: JSON
+      multiple: true

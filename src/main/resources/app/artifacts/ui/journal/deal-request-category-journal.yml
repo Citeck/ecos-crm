@@ -1,0 +1,18 @@
+---
+id: deal-request-category-journal
+name:
+  ru: Категория обращения
+typeRef: emodel/type@deal-request-category
+actions:
+  - uiserv/action@view-dashboard
+columns:
+  - id: type
+    name:
+      ru: Тип
+      en: Type
+    type: TEXT
+  - id: name
+    name:
+      ru: Название
+      en: Name
+    type: MLTEXT

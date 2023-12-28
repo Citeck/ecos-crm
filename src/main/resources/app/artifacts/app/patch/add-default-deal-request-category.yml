@@ -1,0 +1,67 @@
+---
+id: add-default-deal-request-category
+date: 2023-12-15T00:00:00Z
+type: mutate
+targetApp: emodel
+config:
+  records:
+    - id: emodel/deal-request-category@
+      attributes:
+        type: other
+        name:
+          ru: Другое
+          en: Other
+    - id: emodel/deal-request-category@
+      attributes:
+        type: wom
+        name:
+          ru: Сарафанное радио
+          en: Word of mouth
+    - id: emodel/deal-request-category@
+      attributes:
+        type: phone
+        name:
+          ru: Телефон
+          en: Phone
+    - id: emodel/deal-request-category@
+      attributes:
+        type: email
+        name:
+          ru: Почта
+          en: Email
+    - id: emodel/deal-request-category@
+      attributes:
+        type: community
+        name:
+          ru: Сайт - скачивание com
+          en: Site - download com
+    - id: emodel/deal-request-category@
+      attributes:
+        type: cloud
+        name:
+          ru: Сайт - демо-доступ в облаке
+          en: Site - demo access in cloud
+    - id: emodel/deal-request-category@
+      attributes:
+        type: price
+        name:
+          ru: Сайт - запрос стоимости
+          en: Site - price request
+    - id: emodel/deal-request-category@
+      attributes:
+        type: consult
+        name:
+          ru: Сайт - консультация
+          en: Site - consulting
+    - id: emodel/deal-request-category@
+      attributes:
+        type: demonstration
+        name:
+          ru: Сайт - запрос демонстрации
+          en: Site - demonstration
+    - id: emodel/deal-request-category@
+      attributes:
+        type: demo-access
+        name:
+          ru: Сайт - демо-доступ
+          en: Site - demo access

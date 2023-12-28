@@ -1,0 +1,97 @@
+{
+  "id": "deal-request-category-form",
+  "formKey": "",
+  "title": {
+    "ru": "Категория обращения",
+    "en": "Request category"
+  },
+  "description": {},
+  "customModule": "",
+  "typeRef": "",
+  "width": "m",
+  "system": false,
+  "i18n": {},
+  "definition": {
+    "components": [
+      {
+        "type": "textfield",
+        "input": true,
+        "multiple": false,
+        "key": "type",
+        "label": {
+          "ru": "Тип",
+          "en": "Type"
+        }
+      },
+      {
+        "type": "mlText",
+        "input": true,
+        "multiple": false,
+        "key": "name",
+        "label": {
+          "ru": "Название",
+          "en": "Name"
+        }
+      },
+      {
+        "type": "columns",
+        "key": "buttons-columns",
+        "columns": [
+          {
+            "md": 3,
+            "type": "column",
+            "input": false,
+            "index": 0
+          },
+          {
+            "md": 3,
+            "type": "column",
+            "input": false,
+            "index": 1
+          },
+          {
+            "md": 3,
+            "type": "column",
+            "input": false,
+            "index": 2,
+            "components": [
+              {
+                "type": "button",
+                "key": "cancel",
+                "label": {
+                  "ru": "Отменить",
+                  "en": "Cancel"
+                },
+                "action": "event",
+                "event": "cancel",
+                "block": true,
+                "input": true
+              }
+            ]
+          },
+          {
+            "md": 3,
+            "type": "column",
+            "input": false,
+            "index": 3,
+            "components": [
+              {
+                "type": "button",
+                "theme": "primary",
+                "key": "submit",
+                "label": {
+                  "ru": "Сохранить",
+                  "en": "Save"
+                },
+                "block": true,
+                "input": true
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "attributes": {},
+  "notExists": false
+}
