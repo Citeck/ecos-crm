@@ -45,6 +45,20 @@ columns:
       ru: Описание
       en: Description
     type: TEXT
+  - id: fio
+    name:
+      ru: ФИО
+      en: Full name
+    type: TEXT
+  - id: email
+    name:
+      ru: E-mail
+    type: TEXT
+  - id: phone
+    name:
+      ru: Телефон
+      en: Phone
+    type: TEXT
   - id: manager
     name:
       ru: Ответственный
@@ -55,6 +69,10 @@ columns:
       ru: Дата создания
       en: Received date
     type: DATETIME
+  - id: source
+    name:
+      ru: Источник обращения
+      en: Source
   - id: requestCategory
     name:
       ru: Категория обращения

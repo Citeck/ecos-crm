@@ -1,0 +1,11 @@
+---
+id: create-counterparty
+name:
+  ru: Создать контрагента
+  en: Create counterparty
+type: create
+config:
+  typeRef: emodel/type@ecos-counterparty
+  attributes:
+    contacts: ${contacts[]?json}
+    fullOrganizationName: ${company}

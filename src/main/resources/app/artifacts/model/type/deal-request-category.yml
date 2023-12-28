@@ -2,6 +2,7 @@
 id: deal-request-category
 name:
   ru: Категория обращения
+  en: Request category
 storageType: ECOS_MODEL
 parentRef: emodel/type@data-list
 formRef: uiserv/form@deal-request-category-form
