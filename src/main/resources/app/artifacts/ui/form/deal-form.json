@@ -148,6 +148,34 @@
                 "components": [
                   {
                     "label": {
+                      "ru": "Категория обращения",
+                      "en": "Request category"
+                    },
+                    "key": "requestCategory",
+                    "modalTitle": "",
+                    "journalId": "deal-request-category-journal",
+                    "refreshOn": [],
+                    "optionalWhenDisabled": false,
+                    "type": "selectJournal",
+                    "input": true,
+                    "queryData": ""
+                  },
+                  {
+                    "label": {
+                      "ru": "Источник обращения",
+                      "en": "Request source"
+                    },
+                    "key": "requestSource",
+                    "modalTitle": "",
+                    "journalId": "deal-request-source-journal",
+                    "refreshOn": [],
+                    "optionalWhenDisabled": false,
+                    "type": "selectJournal",
+                    "input": true,
+                    "queryData": ""
+                  },
+                  {
+                    "label": {
                       "ru": "Panel"
                     },
                     "key": "panel6",

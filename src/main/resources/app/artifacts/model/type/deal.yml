@@ -179,9 +179,18 @@ model:
       name:
         ru: Откуда пришел на сайт
         en: Site from
+    #Deprecated
     - id: source
       name:
         ru: Источник обращения
+    - id: requestSource
+      name:
+        ru: Источник обращения
+        en: Request source
+      type: ASSOC
+      config:
+        typeRef: emodel/type@deal-request-source
+        child: false
     - id: requestCategory
       name:
         ru: Категория обращения
