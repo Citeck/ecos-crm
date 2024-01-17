@@ -1,9 +1,9 @@
 ---
-id: deal-request-category-journal
+id: deal-request-source-journal
 name:
-  ru: Категория обращения
-  en: Request category
-typeRef: emodel/type@deal-request-category
+  ru: Источник обращения
+  en: Request source
+typeRef: emodel/type@deal-request-source
 actions:
   - uiserv/action@view-dashboard
 columns:
