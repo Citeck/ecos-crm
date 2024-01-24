@@ -20,6 +20,7 @@ actions:
   - uiserv/action@change-source-to-community
   - uiserv/action@create-counterparty
   - uiserv/action@merge-deal
+  - uiserv/action@assign-manager
 defaultCreateVariant: true
 model:
   roles:
@@ -27,8 +28,15 @@ model:
       name:
         ru: Менеджер по продажам
         en: Manager
-      attributes:
-        - manager
+      computed:
+        type: SCRIPT
+        config:
+          fn: "var manager = value.load('manager?id');\r\nif (manager === null) {\r\
+            \n    var personResult = Records.query({\r\n        sourceId: \"emodel/person\"\
+            ,\r\n        query: {\r\n            \"t\": \"contains\",\r\n        \
+            \    \"att\": \"authorityGroups\",\r\n            \"val\": \"emodel/authority-group@crm-manager\"\
+            \r\n        },\r\n        language: 'predicate'\r\n    });\r\n    return\
+            \ personResult.records;\r\n}\r\nreturn manager;"
     - id: cco
       name:
         ru: Коммерческий директор

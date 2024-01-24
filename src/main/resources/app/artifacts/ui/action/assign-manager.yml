@@ -1,0 +1,26 @@
+---
+id: assign-manager
+name:
+  ru: Назначить ответственного
+  en: Assign a manager
+type: mutate
+confirm:
+  title:
+    ru: Назначить ответственного
+    en: Assign a manager
+  "formRef": uiserv/form@deal-assign-manager
+  attributesMapping:
+    record.attributes.manager: manager
+config:
+  record:
+    id: ${recordRef}
+    attributes:
+      manager: manager
+features:
+  execForQuery: false
+  execForRecord: true
+  execForRecords: false
+predicate:
+  t: eq
+  att: _roles.isCurrentUserMemberOf.cco?bool
+  val: true
