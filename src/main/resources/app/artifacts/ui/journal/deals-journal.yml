@@ -69,15 +69,16 @@ columns:
       ru: Дата создания
       en: Received date
     type: DATETIME
-  - id: source
+  - id: requestSource
     name:
       ru: Источник обращения
-      en: Source
+      en: Request source
+    type: ASSOC
   - id: requestCategory
     name:
       ru: Категория обращения
       en: Request category
-    type: TEXT
+    type: ASSOC
   - id: emessage
     name:
       ru: Письмо
