@@ -3,12 +3,12 @@ id: deals-journal
 name:
   ru: Сделки
   en: Deals
-defaultFilters:
-  - t: not
-    val:
-      t: eq
-      att: _status
-      val: old
+predicate:
+  t: not
+  val:
+    t: eq
+    att: _status
+    val: old
 typeRef: emodel/type@deal
 defaultSortBy:
   - attribute: dateReceived
