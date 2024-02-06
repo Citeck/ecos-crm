@@ -11,7 +11,6 @@ boardRef: uiserv/board@deal-board
 inheritForm: false
 dispNameTemplate:
   ru: Сделка ${company}
-numTemplateRef: emodel/num-template@deal-num-template
 actions:
   - uiserv/action@tasks-actions
   - uiserv/action@change-status
@@ -19,6 +18,8 @@ actions:
   - uiserv/action@delete
   - uiserv/action@change-source-to-community
   - uiserv/action@create-counterparty
+  - uiserv/action@merge-deal
+  - uiserv/action@assign-manager
 defaultCreateVariant: true
 model:
   roles:
@@ -26,8 +27,11 @@ model:
       name:
         ru: Менеджер по продажам
         en: Manager
-      attributes:
-        - manager
+      computed:
+        type: SCRIPT
+        config:
+          fn: "var manager = value.load('manager?id');\r\nif (manager === null) {\r\
+            \n  return \"GROUP_crm-manager\";\r\n}\r\nreturn manager;"
     - id: cco
       name:
         ru: Коммерческий директор
@@ -178,9 +182,18 @@ model:
       name:
         ru: Откуда пришел на сайт
         en: Site from
+    #Deprecated
     - id: source
       name:
         ru: Источник обращения
+    - id: requestSource
+      name:
+        ru: Источник обращения
+        en: Request source
+      type: ASSOC
+      config:
+        typeRef: emodel/type@deal-request-source
+        child: false
     - id: requestCategory
       name:
         ru: Категория обращения

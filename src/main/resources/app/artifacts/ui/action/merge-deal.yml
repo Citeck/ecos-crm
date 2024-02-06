@@ -1,0 +1,23 @@
+---
+id: merge-deal
+name:
+  ru: Объединить с основной сделкой
+  en: Merge with main deal
+type: mutate
+confirm:
+  title:
+    ru: Объединить с основной сделкой
+    en: Merge with main deal
+  "formRef": uiserv/form@deal-merge-form
+  attributesMapping:
+    record.attributes.mergeIn: mergeIn
+config:
+  record:
+    id: ecom/merge-deal@
+    attributes:
+      mergeFrom: ${recordRef}
+      mergeIn: mergeIn
+features:
+  execForQuery: false
+  execForRecord: true
+  execForRecords: false

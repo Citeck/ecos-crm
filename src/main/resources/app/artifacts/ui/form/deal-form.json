@@ -102,13 +102,14 @@
                           "en": "Responsible"
                         },
                         "key": "manager",
+                        "disabled": true,
                         "allowedAuthorityType": "USER",
                         "currentUserByDefault": true,
+                        "defaultValue": "",
                         "refreshOn": [],
                         "optionalWhenDisabled": false,
                         "type": "selectOrgstruct",
-                        "input": true,
-                        "defaultValue": ""
+                        "input": true
                       },
                       {
                         "label": {
@@ -148,6 +149,34 @@
                 "components": [
                   {
                     "label": {
+                      "ru": "Категория обращения",
+                      "en": "Request category"
+                    },
+                    "key": "requestCategory",
+                    "modalTitle": "",
+                    "journalId": "deal-request-category-journal",
+                    "refreshOn": [],
+                    "optionalWhenDisabled": false,
+                    "type": "selectJournal",
+                    "input": true,
+                    "queryData": ""
+                  },
+                  {
+                    "label": {
+                      "ru": "Источник обращения",
+                      "en": "Request source"
+                    },
+                    "key": "requestSource",
+                    "modalTitle": "",
+                    "journalId": "deal-request-source-journal",
+                    "refreshOn": [],
+                    "optionalWhenDisabled": false,
+                    "type": "selectJournal",
+                    "input": true,
+                    "queryData": ""
+                  },
+                  {
+                    "label": {
                       "ru": "Panel"
                     },
                     "key": "panel6",
@@ -160,6 +189,18 @@
                     "type": "panel",
                     "input": false,
                     "components": [
+                      {
+                        "label": {
+                          "ru": "Sync contacts",
+                          "en": "Sync contacts"
+                        },
+                        "key": "syncContacts",
+                        "refreshOn": [],
+                        "calculateValue": "let checkMainContact = false;\r\nfor (const contact of data.contacts) {\r\n  if (contact.contactMain) {\r\n    checkMainContact = true;\r\n    break;\r\n  }\r\n}\r\n\r\nif (checkMainContact && !data.contacts[0].contactMain) {\r\n  const sortedContacts = data.contacts;\r\n  sortedContacts.sort((a, b) => b.contactMain - a.contactMain);\r\n  var dataGridInst = util.searchComponents(instance.parent.components, \"contacts\");\r\n  dataGridInst[0].setValue(sortedContacts);\r\n}",
+                        "optionalWhenDisabled": false,
+                        "type": "hidden",
+                        "input": true
+                      },
                       {
                         "label": {
                           "ru": "Контакты",
@@ -263,10 +304,10 @@
                                         "optionalWhenDisabled": false,
                                         "logic": [
                                           {
-                                            "name": "Sort contacts by main-contact",
+                                            "name": "Disable checkbox",
                                             "trigger": {
                                               "type": "javascript",
-                                              "javascript": "result = false;\nif (value) {\n  if (data.contacts[0] != row) {\n    const index = data.contacts.indexOf(row);\n    if (index > -1) {\n      data.contacts.splice(index, 1);\n      data.contacts.unshift(row);\n    } \n  }\n} else {\n  for (const contact of data.contacts) {\n    if (contact.contactMain) {\n      result = true;\n      break;\n    }\n  }\n}"
+                                              "javascript": "result = false;\r\nif (!value) {\r\n  for (const contact of data.contacts) {\r\n  if (contact.contactMain) {\r\n    result = true;\r\n    break;\r\n  }\r\n}\r\n}"
                                             },
                                             "actions": [
                                               {

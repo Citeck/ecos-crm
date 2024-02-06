@@ -9,3 +9,6 @@ config:
   attributes:
     contacts: ${contacts[]?json}
     fullOrganizationName: ${company}
+predicate:
+  t: empty
+  att: counterparty
