@@ -7,49 +7,49 @@ config:
   records:
     - id: emodel/deal-request-source@
       attributes:
-        type: Google
+        type: google_search
         name:
           ru: Google поиск
           en: Google search
     - id: emodel/deal-request-source@
       attributes:
-        type: Yandex
+        type: yandex_search
         name:
           ru: Яндекс поиск
           en: Yandex search
     - id: emodel/deal-request-source@
       attributes:
-        type: Web
+        type: referral
         name:
           ru: Переход со стороннего сайта
           en: Transition from a third-party site
     - id: emodel/deal-request-source@
       attributes:
-        type: Direct
+        type: ad
         name:
           ru: Реклама в Яндекс.Директ
           en: Advertising in Yandex.Direct
     - id: emodel/deal-request-source@
       attributes:
-        type: Link
+        type: direct
         name:
           ru: Прямая ссылка
           en: Direct link
     - id: emodel/deal-request-source@
       attributes:
-        type: Mail
+        type: mail
         name:
           ru: Письмо с почты
           en: Letter from mail
     - id: emodel/deal-request-source@
       attributes:
-        type: Relations
+        type: relations
         name:
           ru: По знакомству
           en: By acquaintance
     - id: emodel/deal-request-source@
       attributes:
-        type: Other
+        type: other
         name:
           ru: Другое
           en: Other
