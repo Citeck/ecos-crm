@@ -1,0 +1,15 @@
+---
+id: add-yandex-metrika-api-endpoint
+date: 2024-02-15T00:00:00Z
+type: mutate
+targetApp: emodel
+config:
+  records:
+    - id: emodel/endpoint@
+      attributes:
+        id: yandex-metrika-api
+        name:
+          ru: Яндекс.Метрика API
+          en: Yandex.Metrica API
+        url: https://api-metrika.yandex.net/stat/v1/data?ids={ids}
+        credentials: emodel/secret@yandex-metrika-api-token
