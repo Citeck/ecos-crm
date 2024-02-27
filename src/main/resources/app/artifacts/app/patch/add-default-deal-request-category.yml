@@ -67,7 +67,7 @@ config:
           en: Site - demo access
     - id: emodel/deal-request-category@
       attributes:
-        id: subscription-com
+        id: community-subscription
         name:
           ru: Сайт - подписка com
           en: Site - subscription com
