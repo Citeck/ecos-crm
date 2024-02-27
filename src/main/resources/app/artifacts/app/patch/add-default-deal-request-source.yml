@@ -1,6 +1,6 @@
 ---
 id: add-default-deal-request-source
-date: 2024-02-16T00:00:00Z
+date: 2024-02-17T00:00:00Z
 type: mutate
 targetApp: emodel
 config:
@@ -53,3 +53,9 @@ config:
         name:
           ru: Другое
           en: Other
+    - id: emodel/deal-request-source@
+      attributes:
+        id: unknown
+        name:
+          ru: Неизвестный
+          en: Unknown
