@@ -7,11 +7,10 @@ typeRef: emodel/type@deal-request-source
 actions:
   - uiserv/action@view-dashboard
 columns:
-  - id: type
+  - id: id
     name:
-      ru: Тип
-      en: Type
-    type: TEXT
+      ru: Id
+      en: Id
   - id: name
     name:
       ru: Название
