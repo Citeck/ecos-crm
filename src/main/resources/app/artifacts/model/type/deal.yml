@@ -186,6 +186,15 @@ model:
     - id: source
       name:
         ru: Источник обращения
+    - id: syncRequestSourceCount
+      name:
+        ru: Количество попыток синхронизации с YM
+      type: NUMBER
+      computed:
+        type: VALUE
+        config:
+          value: '0'
+        storingType: ON_CREATE
     - id: requestSource
       name:
         ru: Источник обращения

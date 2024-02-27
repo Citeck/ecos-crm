@@ -11,10 +11,6 @@ inheritForm: false
 defaultCreateVariant: true
 model:
   attributes:
-    - id: type
-      name:
-        ru: Тип
-        en: Type
     - id: name
       name:
         ru: Название
