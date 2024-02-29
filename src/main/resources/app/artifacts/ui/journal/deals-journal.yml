@@ -50,15 +50,18 @@ columns:
       ru: ФИО
       en: Full name
     type: TEXT
+    attribute: contacts.contactFio
   - id: email
     name:
       ru: E-mail
     type: TEXT
+    attribute: contacts.contactEmail
   - id: phone
     name:
       ru: Телефон
       en: Phone
     type: TEXT
+    attribute: contacts.contactPhone
   - id: manager
     name:
       ru: Ответственный
