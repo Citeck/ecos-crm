@@ -17,10 +17,10 @@
         "type": "textfield",
         "input": true,
         "multiple": false,
-        "key": "type",
+        "key": "id",
         "label": {
-          "ru": "Тип",
-          "en": "Type"
+          "ru": "Id",
+          "en": "Id"
         }
       },
       {

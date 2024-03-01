@@ -1,0 +1,7 @@
+---
+id: yandex-metrika-api
+name:
+  ru: Яндекс.Метрика API
+  en: Yandex.Metrica API
+url: https://api-metrika.yandex.net/stat/v1/data?ids={ids}
+credentials: emodel/secret@yandex-metrika-api-token
