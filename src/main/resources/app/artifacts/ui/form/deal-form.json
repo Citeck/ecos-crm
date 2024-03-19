@@ -98,6 +98,21 @@
                       },
                       {
                         "label": {
+                          "ru": "Количества пользователей",
+                          "en": "Number of users"
+                        },
+                        "key": "numberOfUsers",
+                        "defaultValue": "",
+                        "refreshOn": [],
+                        "optionalWhenDisabled": false,
+                        "type": "textfield",
+                        "input": true,
+                        "inputMasks": [
+                          {}
+                        ]
+                      },
+                      {
+                        "label": {
                           "ru": "Ответственный",
                           "en": "Responsible"
                         },

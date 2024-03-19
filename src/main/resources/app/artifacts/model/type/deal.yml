@@ -229,3 +229,7 @@ model:
         en: Contacts
       type: JSON
       multiple: true
+    - id: numberOfUsers
+      name:
+        ru: Количества пользователей
+        en: Number of users
