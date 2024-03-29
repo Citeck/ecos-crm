@@ -42,7 +42,7 @@ columns:
     type: NUMBER
   - id: numberOfUsers
     name:
-      ru: Количества пользователей
+      ru: Количество пользователей
       en: Number of users
     type: TEXT
   - id: description

@@ -231,5 +231,5 @@ model:
       multiple: true
     - id: numberOfUsers
       name:
-        ru: Количества пользователей
+        ru: Количество пользователей
         en: Number of users
