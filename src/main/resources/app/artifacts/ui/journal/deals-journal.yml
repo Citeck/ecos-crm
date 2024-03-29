@@ -40,6 +40,11 @@ columns:
       ru: Бюджет
       en: Budget
     type: NUMBER
+  - id: numberOfUsers
+    name:
+      ru: Количество пользователей
+      en: Number of users
+    type: TEXT
   - id: description
     name:
       ru: Описание

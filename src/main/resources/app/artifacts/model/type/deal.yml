@@ -180,8 +180,8 @@ model:
         en: Site e-mail
     - id: siteFrom
       name:
-        ru: Откуда пришел на сайт
-        en: Site from
+        ru: Страница заполнения заявки
+        en: Deal request page
     #Deprecated
     - id: source
       name:
@@ -229,3 +229,7 @@ model:
         en: Contacts
       type: JSON
       multiple: true
+    - id: numberOfUsers
+      name:
+        ru: Количество пользователей
+        en: Number of users
