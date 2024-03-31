@@ -1,15 +1,15 @@
 {
-  "id": "change-source-to-community",
+  "id": "change-request-category-to-community",
   "name": {
-    "ru": "Поменять источник на Community",
-    "en": "Change source to Community"
+    "ru": "Поменять категорию на Community",
+    "en": "Change category to Community"
   },
   "type": "mutate",
   "config": {
     "record": {
       "id": "${?id}",
       "attributes": {
-        "source": "community"
+        "requestCategory": "emodel/deal-request-category@community"
       }
     }
   },

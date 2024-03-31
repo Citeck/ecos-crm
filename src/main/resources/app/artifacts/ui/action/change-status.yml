@@ -19,10 +19,11 @@ config:
     attributes:
       _status: statuses
 predicate:
-  t: and
+  t: or
   val:
-    - t: and
-      val:
-        - t: eq
-          att: _roles.isCurrentUserMemberOf.manager?bool
-          val: true
+    - t: eq
+      att: _roles.isCurrentUserMemberOf.manager?bool
+      val: true
+    - t: eq
+      att: _roles.isCurrentUserMemberOf.cco?bool
+      val: true

@@ -18,12 +18,12 @@ actions:
   - uiserv/action@view-dashboard-in-background
   - uiserv/action@record-copy
   - uiserv/action@delete
-  - uiserv/action@change-source-to-community
+  - uiserv/action@change-request-category-to-community
 columns:
-  - id: _disp
+  - id: number
     name:
-      ru: Имя
-      en: Name
+      ru: Номер
+      en: Number
     type: TEXT
   - id: company
     name:
@@ -74,9 +74,9 @@ columns:
     type: PERSON
   - id: dateReceived
     name:
-      ru: Дата создания
-      en: Received date
-    type: DATETIME
+      ru: Дата
+      en: Date
+    type: DATE
   - id: requestSource
     name:
       ru: Источник обращения

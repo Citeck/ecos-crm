@@ -16,7 +16,7 @@ actions:
   - uiserv/action@change-status
   - uiserv/action@edit
   - uiserv/action@delete
-  - uiserv/action@change-source-to-community
+  - uiserv/action@change-request-category-to-community
   - uiserv/action@create-counterparty
   - uiserv/action@merge-deal
   - uiserv/action@assign-manager

@@ -1,0 +1,98 @@
+---
+id: deal-in-work-template
+name:
+  ru: Сделки в работе
+  en: Deal in work
+journalId: deals-journal
+authority: "GROUP_crm-manager"
+settings:
+  predicate: {
+    "t": "or",
+    "val": [
+      {
+        "t": "or",
+        "val": [
+          {
+            "t": "and",
+            "val": [
+              {
+                "att": "number",
+                "t": "contains",
+                "val": ""
+              },
+              {
+                "att": "company",
+                "t": "contains",
+                "val": ""
+              },
+              {
+                "att": "counterparty",
+                "t": "contains",
+                "val": ""
+              },
+              {
+                "att": "amount",
+                "t": "eq",
+                "val": ""
+              },
+              {
+                "att": "numberOfUsers",
+                "t": "contains",
+                "val": ""
+              },
+              {
+                "att": "description",
+                "t": "contains",
+                "val": ""
+              },
+              {
+                "att": "contacts.contactFio",
+                "t": "contains",
+                "val": ""
+              },
+              {
+                "att": "contacts.contactEmail",
+                "t": "contains",
+                "val": ""
+              },
+              {
+                "att": "contacts.contactPhone",
+                "t": "contains",
+                "val": ""
+              },
+              {
+                "att": "manager",
+                "t": "not-empty",
+                "val": ""
+              },
+              {
+                "att": "dateReceived",
+                "t": "eq",
+                "val": ""
+              },
+              {
+                "att": "requestSource",
+                "t": "contains",
+                "val": ""
+              },
+              {
+                "att": "requestCategory",
+                "t": "contains",
+                "val": ""
+              },
+              {
+                "att": "emessage",
+                "t": "contains",
+                "val": ""
+              },
+              {
+                "att": "_status",
+                "t": "not-eq",
+                "val": "old"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
