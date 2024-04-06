@@ -79,6 +79,10 @@ model:
       name:
         ru: Отказ
         en: Refusal
+    - id: dropout
+      name:
+        ru: Отсев
+        en: Dropout
     - id: old
       name:
         ru: Исторические заявки
