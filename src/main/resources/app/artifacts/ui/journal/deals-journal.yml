@@ -9,6 +9,16 @@ defaultFilters:
       t: eq
       att: _status
       val: old
+  - t: not
+    val:
+      t: eq
+      att: source
+      val: community
+  - t: not
+    val:
+      t: eq
+      att: _status
+      val: unqualified
 typeRef: emodel/type@deal
 defaultSortBy:
   - attribute: dateReceived
@@ -18,13 +28,15 @@ actions:
   - uiserv/action@view-dashboard-in-background
   - uiserv/action@record-copy
   - uiserv/action@delete
-  - uiserv/action@change-source-to-community
+  - uiserv/action@change-status
 columns:
-  - id: _disp
+  - id: number
     name:
-      ru: Имя
-      en: Name
-    type: TEXT
+      ru: Номер
+      en: Number
+    type: NUMBER
+    formatter:
+      type: link
   - id: company
     name:
       ru: Компания
@@ -35,11 +47,31 @@ columns:
       ru: Контрагент
       en: Counterparty
     type: ASSOC
+  - id: _status
+    name:
+      ru: Статус
+      en: Status
+    type: TEXT
+  - id: dateReceived
+    name:
+      ru: Дата создания
+      en: Received date
+    type: DATETIME
   - id: amount
     name:
       ru: Бюджет
       en: Budget
     type: NUMBER
+  - id: numberOfUsers
+    name:
+      ru: Количество пользователей
+      en: Number of users
+    type: TEXT
+  - id: manager
+    name:
+      ru: Ответственный
+      en: Responsible
+    type: PERSON
   - id: description
     name:
       ru: Описание
@@ -62,16 +94,6 @@ columns:
       en: Phone
     type: TEXT
     attribute: contacts.contactPhone
-  - id: manager
-    name:
-      ru: Ответственный
-      en: Responsible
-    type: PERSON
-  - id: dateReceived
-    name:
-      ru: Дата создания
-      en: Received date
-    type: DATETIME
   - id: requestSource
     name:
       ru: Источник обращения
@@ -87,8 +109,4 @@ columns:
       ru: Письмо
       en: Message
     type: TEXT
-  - id: _status
-    name:
-      ru: Статус
-      en: Status
-    type: TEXT
+

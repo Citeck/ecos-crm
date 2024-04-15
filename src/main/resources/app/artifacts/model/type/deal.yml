@@ -16,7 +16,6 @@ actions:
   - uiserv/action@change-status
   - uiserv/action@edit
   - uiserv/action@delete
-  - uiserv/action@change-source-to-community
   - uiserv/action@create-counterparty
   - uiserv/action@merge-deal
   - uiserv/action@assign-manager
@@ -79,10 +78,18 @@ model:
       name:
         ru: Отказ
         en: Refusal
+    - id: dropout
+      name:
+        ru: Отсев
+        en: Dropout
     - id: old
       name:
         ru: Исторические заявки
         en: Old
+    - id: Community
+      name:
+        ru: Community версия
+        en: Community version
     - id: ANY
   stages:
     - name:
@@ -180,8 +187,8 @@ model:
         en: Site e-mail
     - id: siteFrom
       name:
-        ru: Откуда пришел на сайт
-        en: Site from
+        ru: Страница заполнения заявки
+        en: Deal request page
     #Deprecated
     - id: source
       name:
@@ -229,3 +236,7 @@ model:
         en: Contacts
       type: JSON
       multiple: true
+    - id: numberOfUsers
+      name:
+        ru: Количество пользователей
+        en: Number of users

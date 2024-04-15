@@ -18,6 +18,10 @@ config:
     id: '${recordRef}'
     attributes:
       _status: statuses
+features:
+  execForQuery: false
+  execForRecord: true
+  execForRecords: true
 predicate:
   t: and
   val:
