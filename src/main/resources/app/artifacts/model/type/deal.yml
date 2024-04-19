@@ -86,7 +86,7 @@ model:
       name:
         ru: Исторические заявки
         en: Old
-    - id: Community
+    - id: community
       name:
         ru: Community версия
         en: Community version
