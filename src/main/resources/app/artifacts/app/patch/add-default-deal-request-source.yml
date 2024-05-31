@@ -1,6 +1,6 @@
 ---
 id: add-default-deal-request-source
-date: 2024-02-17T00:00:00Z
+date: 2024-05-30T00:00:00Z
 type: mutate
 targetApp: emodel
 config:
@@ -47,6 +47,12 @@ config:
         name:
           ru: По знакомству
           en: By acquaintance
+    - id: emodel/deal-request-source@
+      attributes:
+        id: articles_and_ratings
+        name:
+          ru: Статьи и рейтинги
+          en: Articles and Ratings
     - id: emodel/deal-request-source@
       attributes:
         id: other
