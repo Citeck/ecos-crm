@@ -17,6 +17,10 @@
               "widgetDisplayCondition": null,
               "elementsDisplayCondition": {}
             }
+          },
+          "description": {
+            "ru": "Основное",
+            "en": "General"
           }
         },
         {
@@ -31,7 +35,10 @@
               "elementsDisplayCondition": {}
             }
           },
-          "description": "Основное"
+          "description": {
+            "ru": "Основное",
+            "en": "General"
+          }
         },
         {
           "dndId": "9b8f6180-1a68-4c8f-9e21-249ef2f1143d",
@@ -46,7 +53,10 @@
               "formMode": "EDIT"
             }
           },
-          "description": "Основное"
+          "description": {
+            "ru": "Основное",
+            "en": "General"
+          }
         },
         {
           "dndId": "aa0deb44-527e-4244-85cc-89757c0e07eb",
@@ -60,7 +70,10 @@
               "elementsDisplayCondition": {}
             }
           },
-          "description": "Основное"
+          "description": {
+            "ru": "Основное",
+            "en": "General"
+          }
         },
         {
           "dndId": "38403ec8-6589-4747-beef-53e182ea14a5",
@@ -74,7 +87,10 @@
               "elementsDisplayCondition": {}
             }
           },
-          "description": "Основное"
+          "description": {
+            "ru": "Основное",
+            "en": "General"
+          }
         },
         {
           "dndId": "68d2228b-5972-4b90-b465-d317e5f3d0a6",
@@ -88,7 +104,10 @@
               "elementsDisplayCondition": {}
             }
           },
-          "description": "Основное"
+          "description": {
+            "ru": "Основное",
+            "en": "General"
+          }
         },
         {
           "dndId": "8ecb125c-7a47-4d3b-b871-5868fbe76498",
@@ -102,7 +121,28 @@
               "elementsDisplayCondition": {}
             }
           },
-          "description": "Основное"
+          "description": {
+            "ru": "Основное",
+            "en": "General"
+          }
+        },
+        {
+          "name": "activities",
+          "label": "dashboard-settings.widget.activities",
+          "additionalProps": {},
+          "dndId": "380bb7a4-09cc-4c8c-a30a-f042a44e09c3",
+          "id": "865650d9-ded7-467a-b3e4-388105c0b26e",
+          "props": {
+            "id": "865650d9-ded7-467a-b3e4-388105c0b26e",
+            "config": {
+              "widgetDisplayCondition": null,
+              "elementsDisplayCondition": {}
+            }
+          },
+          "description": {
+            "ru": "Основное",
+            "en": "General"
+          }
         },
         {
           "dndId": "951e31ba-70c0-4cab-988b-9d271cfa3632",
@@ -116,7 +156,10 @@
               "elementsDisplayCondition": {}
             }
           },
-          "description": "Основное"
+          "description": {
+            "ru": "Основное",
+            "en": "General"
+          }
         },
         {
           "name": "events-history",
@@ -130,7 +173,10 @@
               "elementsDisplayCondition": {}
             }
           },
-          "description": "История"
+          "description": {
+            "ru": "История",
+            "en": "History"
+          }
         },
         {
           "name": "versions-journal",
@@ -144,7 +190,10 @@
               "elementsDisplayCondition": {}
             }
           },
-          "description": "История"
+          "description": {
+            "ru": "История",
+            "en": "History"
+          }
         },
         {
           "dndId": "9818c1d8-bc41-464f-9824-8d3cd2cf03f2",
@@ -172,7 +221,10 @@
               ]
             }
           },
-          "description": "Документы"
+          "description": {
+            "ru": "Документы",
+            "en": "Documents"
+          }
         }
       ],
       "desktop": [
@@ -200,6 +252,7 @@
                 "b4bcb077-ed4f-498a-b152-97798fddd8fb",
                 "6d9d1e54-0c77-4990-9aed-228bec1614f4",
                 "6cb0726f-07c2-4388-84bc-6651823e2ba9",
+                "865650d9-ded7-467a-b3e4-388105c0b26e",
                 "c0a9aeee-a536-400d-ae80-326e77ce5202"
               ],
               "width": "25%"
