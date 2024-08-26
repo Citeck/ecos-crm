@@ -12,7 +12,6 @@ inheritForm: false
 dispNameTemplate:
   ru: Сделка ${company}
 actions:
-  - uiserv/action@tasks-actions
   - uiserv/action@change-status
   - uiserv/action@edit
   - uiserv/action@delete
