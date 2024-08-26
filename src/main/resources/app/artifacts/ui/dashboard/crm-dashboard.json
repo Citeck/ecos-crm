@@ -59,23 +59,6 @@
           }
         },
         {
-          "dndId": "aa0deb44-527e-4244-85cc-89757c0e07eb",
-          "name": "comments",
-          "label": "dashboard-settings.widget.comments",
-          "id": "291afa3a-50c1-4a3a-9700-8b85767926af",
-          "props": {
-            "id": "291afa3a-50c1-4a3a-9700-8b85767926af",
-            "config": {
-              "widgetDisplayCondition": "",
-              "elementsDisplayCondition": {}
-            }
-          },
-          "description": {
-            "ru": "Основное",
-            "en": "General"
-          }
-        },
-        {
           "dndId": "38403ec8-6589-4747-beef-53e182ea14a5",
           "name": "doc-status",
           "label": "dashboard-settings.widget.doc-status",
@@ -243,8 +226,7 @@
               "widgets": [
                 "7194460e-6e57-4e9b-9696-d6ad4ad0242d",
                 "d5b4372a-cb41-4370-b66e-5580a52aaa6f",
-                "ecbede90-a55d-423a-9b6b-3ac523600335",
-                "291afa3a-50c1-4a3a-9700-8b85767926af"
+                "ecbede90-a55d-423a-9b6b-3ac523600335"
               ]
             },
             {
@@ -329,9 +311,7 @@
           "type": "mobile",
           "columns": [
             {
-              "widgets": [
-                "291afa3a-50c1-4a3a-9700-8b85767926af"
-              ]
+              "widgets": []
             }
           ]
         },
