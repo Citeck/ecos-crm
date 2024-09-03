@@ -1,0 +1,28 @@
+---
+id: change-status-to-dropout
+name:
+  ru: Отсев
+  en: Dropout
+confirm:
+  title:
+    ru: Отсев
+    en: Dropout
+  message: {}
+type: mutate
+config:
+  record:
+    id: '${recordRef}'
+    attributes:
+      _status: 'dropout'
+features:
+  execForQuery: false
+  execForRecord: true
+  execForRecords: true
+predicate:
+  t: and
+  val:
+    - t: and
+      val:
+        - t: eq
+          att: _roles.isCurrentUserMemberOf.manager?bool
+          val: true

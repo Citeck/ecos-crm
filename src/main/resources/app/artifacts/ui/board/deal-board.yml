@@ -4,6 +4,7 @@ typeRef: emodel/type@deal
 journalRef: uiserv/journal@deals-journal
 cardFormRef: uiserv/form@deal-board-form
 readOnly: false
+disableTitle: true
 name:
   ru: Доска Сделок
   en: Deals board

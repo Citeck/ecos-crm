@@ -1,97 +1,92 @@
 {
-  "id": "deal-take-to-work-process-form",
-  "formKey": "",
-  "title": {
-    "ru": "Форма взятия сделки в работу",
-    "en": "Taking to work form"
+  "id" : "deal-take-to-work-process-form",
+  "title" : {
+    "ru" : "Форма взятия сделки в работу",
+    "en" : "Taking to work form"
   },
-  "description": {},
-  "customModule": "",
-  "typeRef": "",
-  "width": "",
-  "system": false,
-  "i18n": {},
-  "definition": {
-    "components": [
-      {
-        "label": {
-          "ru": "Columns"
+  "definition" : {
+    "components" : [ {
+      "label" : {
+        "ru" : "Columns"
+      },
+      "key" : "columns2",
+      "columns" : [ {
+        "components" : [ ],
+        "type" : "column",
+        "input" : false,
+        "key" : "column",
+        "label" : "Column",
+        "md" : 3,
+        "clearOnHide" : true,
+        "conditional" : {
+          "show" : null,
+          "when" : null
         },
-        "key": "columns2",
-        "columns": [
-          {
-            "components": [],
-            "type": "column",
-            "input": false,
-            "key": "column",
-            "label": "Column",
-            "md": 3,
-            "clearOnHide": true,
-            "conditional": {
-              "show": null,
-              "when": null
-            },
-            "index": 0
+        "index" : 0
+      }, {
+        "components" : [ ],
+        "type" : "column",
+        "input" : false,
+        "key" : "column",
+        "label" : "Column",
+        "clearOnHide" : true,
+        "conditional" : {
+          "show" : null,
+          "when" : null
+        },
+        "index" : 1,
+        "md" : 3
+      }, {
+        "md" : 3,
+        "type" : "column",
+        "input" : false,
+        "key" : "column",
+        "label" : "Column",
+        "components" : [ {
+          "label" : {
+            "ru" : "Перевести в статус Отказ"
           },
-          {
-            "components": [],
-            "type": "column",
-            "input": false,
-            "key": "column",
-            "label": "Column",
-            "clearOnHide": true,
-            "conditional": {
-              "show": null,
-              "when": null
-            },
-            "index": 1,
-            "md": 3
+          "key" : "outcome_refuse",
+          "state" : "",
+          "refreshOn" : [ ],
+          "optionalWhenDisabled" : false,
+          "type" : "button",
+          "input" : true,
+          "headers" : [ { } ]
+        } ],
+        "clearOnHide" : true,
+        "conditional" : {
+          "show" : null,
+          "when" : null
+        },
+        "index" : 2
+      }, {
+        "md" : 3,
+        "type" : "column",
+        "input" : false,
+        "key" : "column",
+        "index" : 3,
+        "components" : [ {
+          "label" : {
+            "ru" : "Взять в работу",
+            "en" : "Take to work"
           },
-          {
-            "md": 3,
-            "type": "column",
-            "input": false,
-            "key": "column",
-            "label": "Column",
-            "components": [],
-            "clearOnHide": true,
-            "conditional": {
-              "show": null,
-              "when": null
-            },
-            "index": 2
-          },
-          {
-            "md": 3,
-            "type": "column",
-            "input": false,
-            "key": "column",
-            "index": 3,
-            "components": [
-              {
-                "label": {
-                  "ru": "Взять в работу",
-                  "en": "Take to work"
-                },
-                "key": "outcome_takeToWork",
-                "state": "",
-                "theme": "primary",
-                "block": true,
-                "disableOnInvalid": true,
-                "refreshOn": [],
-                "optionalWhenDisabled": false,
-                "type": "button",
-                "input": true
-              }
-            ]
-          }
-        ],
-        "oneColumnInViewMode": false,
-        "type": "columns",
-        "input": false
-      }
-    ],
-    "formId": "deal-take-to-work-process-form"
+          "key" : "outcome_takeToWork",
+          "state" : "",
+          "theme" : "primary",
+          "block" : true,
+          "disableOnInvalid" : true,
+          "refreshOn" : [ ],
+          "optionalWhenDisabled" : false,
+          "type" : "button",
+          "input" : true
+        } ]
+      } ],
+      "oneColumnInViewMode" : false,
+      "type" : "columns",
+      "input" : false
+    } ],
+    "formId" : "deal-take-to-work-process-form"
   },
-  "attributes": {}
+  "notExists" : false
 }

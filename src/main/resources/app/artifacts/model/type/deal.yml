@@ -10,7 +10,7 @@ journalRef: uiserv/journal@deals-journal
 boardRef: uiserv/board@deal-board
 inheritForm: false
 dispNameTemplate:
-  ru: Сделка ${company}
+  ru: Сделка ${name}
 actions:
   - uiserv/action@change-status
   - uiserv/action@edit
@@ -239,3 +239,8 @@ model:
       name:
         ru: Количество пользователей
         en: Number of users
+    - id: name
+      name:
+        ru: Название
+        en: Name
+      mandatory: true
