@@ -192,6 +192,12 @@
                 {
                   "formId": null,
                   "multiple": false,
+                  "type": "emodel/type@commercial-offer-document",
+                  "mandatory": false
+                },
+                {
+                  "formId": null,
+                  "multiple": false,
                   "type": "emodel/type@doclib-file",
                   "mandatory": false
                 },
