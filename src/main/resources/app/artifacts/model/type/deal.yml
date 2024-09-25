@@ -243,4 +243,3 @@ model:
       name:
         ru: Название
         en: Name
-      mandatory: true
