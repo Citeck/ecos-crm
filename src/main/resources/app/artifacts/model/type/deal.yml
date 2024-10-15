@@ -243,3 +243,7 @@ model:
       name:
         ru: Название
         en: Name
+    - id: bitrixId
+      name:
+        ru: Id сделки из Bitrix
+        en: Deal id from Bitrix
