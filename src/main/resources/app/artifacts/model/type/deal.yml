@@ -7,6 +7,7 @@ storageType: ECOS_MODEL
 parentRef: emodel/type@case
 formRef: uiserv/form@deal-form
 journalRef: uiserv/journal@deals-journal
+defaultStatus: new
 boardRef: uiserv/board@deal-board
 inheritForm: false
 dispNameTemplate:
