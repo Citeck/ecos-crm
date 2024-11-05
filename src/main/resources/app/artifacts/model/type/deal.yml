@@ -90,7 +90,6 @@ model:
       name:
         ru: Community версия
         en: Community version
-    - id: ANY
   stages:
     - name:
         ru: 0% - Обработка
