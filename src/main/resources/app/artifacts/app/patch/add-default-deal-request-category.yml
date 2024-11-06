@@ -1,6 +1,6 @@
 ---
 id: add-default-deal-request-category
-date: 2024-02-16T00:00:00Z
+date: 2024-06-11T00:00:00Z
 type: mutate
 targetApp: emodel
 config:
@@ -71,3 +71,9 @@ config:
         name:
           ru: Сайт - подписка com
           en: Site - subscription com
+    - id: emodel/deal-request-category@
+      attributes:
+        id: partnership-request
+        name:
+          ru: Сайт - заявка на партнерство
+          en: Site - partnership request
