@@ -77,6 +77,12 @@ columns:
       en: Responsible
     type: PERSON
     groupable: true
+  - id: viewers
+    name:
+      en: Viewers
+      ru: Наблюдатели
+    type: PERSON
+    groupable: true
   - id: description
     name:
       ru: Описание
