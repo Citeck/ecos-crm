@@ -175,6 +175,12 @@ model:
         ru: Ответственный
         en: Manager
       type: PERSON
+    - id: viewers
+      name:
+        ru: Наблюдатели
+        en: Viewers
+      type: PERSON
+      multiple: true
     - id: dateReceived
       name:
         ru: Дата создания
