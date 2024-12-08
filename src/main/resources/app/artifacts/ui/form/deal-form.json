@@ -89,14 +89,7 @@
                         "optionalWhenDisabled": false,
                         "type": "selectJournal",
                         "input": true,
-                        "queryData": "",
-                        "source": {
-                          "custom": {
-                            "columns": []
-                          },
-                          "type": "journal",
-                          "customValues": []
-                        }
+                        "queryData": ""
                       },
                       {
                         "label": {
@@ -108,6 +101,7 @@
                           "integer": false
                         },
                         "isBigNumber": false,
+                        "delimiter": true,
                         "delimiterValue": " ",
                         "refreshOn": [],
                         "optionalWhenDisabled": false,
@@ -121,7 +115,6 @@
                           "en": "Responsible"
                         },
                         "key": "manager",
-                        "disabled": true,
                         "allowedAuthorityType": "USER",
                         "currentUserByDefault": true,
                         "defaultValue": "",
@@ -444,14 +437,7 @@
                     "optionalWhenDisabled": false,
                     "type": "selectJournal",
                     "input": true,
-                    "queryData": "",
-                    "source": {
-                      "custom": {
-                        "columns": []
-                      },
-                      "type": "journal",
-                      "customValues": []
-                    }
+                    "queryData": ""
                   },
                   {
                     "label": {
@@ -465,14 +451,7 @@
                     "optionalWhenDisabled": false,
                     "type": "selectJournal",
                     "input": true,
-                    "queryData": "",
-                    "source": {
-                      "custom": {
-                        "columns": []
-                      },
-                      "type": "journal",
-                      "customValues": []
-                    }
+                    "queryData": ""
                   },
                   {
                     "label": {

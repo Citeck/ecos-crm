@@ -37,6 +37,20 @@ model:
         en: CCO
       assignees:
         - GROUP_crm-cco
+    - id: viewers
+      name:
+        en: Viewers
+        ru: Наблюдатели
+      computed:
+        type: ATTRIBUTE
+        config:
+          attribute: viewers
+    - id: allCRMManagers
+      name:
+        en: All CRM Managers
+        ru: Все менеджеры CRM
+      assignees:
+        - GROUP_crm-manager
   statuses:
     - id: new
       name:

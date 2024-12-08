@@ -4,20 +4,36 @@
   "permissions": {
     "matrix": {
       "manager": {
-        "new": "READ",
-        "firstContact": "READ",
-        "identifyNeeds": "READ",
-        "presentation": "READ",
-        "offerPreparation": "READ",
-        "prototype": "READ",
-        "decision": "READ",
-        "completed": "READ",
-        "pause": "READ",
-        "refusal": "READ",
-        "old": "READ",
-        "ANY": "WRITE"
+        "new": "WRITE",
+        "firstContact": "WRITE",
+        "identifyNeeds": "WRITE",
+        "presentation": "WRITE",
+        "offerPreparation": "WRITE",
+        "prototype": "WRITE",
+        "decision": "WRITE",
+        "completed": "WRITE",
+        "pause": "WRITE",
+        "refusal": "WRITE",
+        "dropout": "WRITE",
+        "old": "WRITE",
+        "community": "WRITE"
       },
       "cco": {
+        "new": "WRITE",
+        "firstContact": "WRITE",
+        "identifyNeeds": "WRITE",
+        "presentation": "WRITE",
+        "offerPreparation": "WRITE",
+        "prototype": "WRITE",
+        "decision": "WRITE",
+        "completed": "WRITE",
+        "pause": "WRITE",
+        "refusal": "WRITE",
+        "dropout": "WRITE",
+        "old": "WRITE",
+        "community": "WRITE"
+      },
+      "viewers": {
         "new": "READ",
         "firstContact": "READ",
         "identifyNeeds": "READ",
@@ -28,8 +44,24 @@
         "completed": "READ",
         "pause": "READ",
         "refusal": "READ",
+        "dropout": "READ",
         "old": "READ",
-        "ANY": "WRITE"
+        "community": "READ"
+      },
+      "allCRMManagers": {
+        "new": "READ",
+        "firstContact": "READ",
+        "identifyNeeds": "READ",
+        "presentation": "READ",
+        "offerPreparation": "READ",
+        "prototype": "READ",
+        "decision": "READ",
+        "completed": "READ",
+        "pause": "READ",
+        "refusal": "READ",
+        "dropout": "READ",
+        "old": "READ",
+        "community": "READ"
       }
     }
   },
