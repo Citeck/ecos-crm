@@ -1,13 +1,15 @@
 {
   "id": "deal-board-form",
+  "formKey": "",
   "title": {
     "en": "Deal board form"
   },
-  "description": {
-    "en": "123"
-  },
+  "description": {},
+  "customModule": "",
   "typeRef": "emodel/type@deal",
   "width": "lg",
+  "system": false,
+  "i18n": {},
   "definition": {
     "components": [
       {
@@ -104,9 +106,9 @@
           },
           {
             "label": {
-              "ru": "К"
+              "ru": "Категория обращения"
             },
-            "key": "к",
+            "key": "requestCategory",
             "modalTitle": "",
             "journalId": "deal-request-category-journal",
             "queryData": "",
@@ -114,74 +116,6 @@
             "optionalWhenDisabled": false,
             "type": "selectJournal",
             "input": true
-          },
-          {
-            "label": {
-              "ru": "Категория"
-            },
-            "key": "requestCategory",
-            "dataSrc": "values",
-            "data": {
-              "values": [
-                {
-                  "label": "Сайт - демо доступ",
-                  "value": "demo"
-                },
-                {
-                  "label": "Сайт - консультация",
-                  "value": "consult"
-                },
-                {
-                  "label": "Сайт - запрос стоимости",
-                  "value": "price"
-                },
-                {
-                  "label": "Сайт - демо-доступ в облаке",
-                  "value": "cloud"
-                },
-                {
-                  "label": "Сайт - скачивание com",
-                  "value": "community"
-                },
-                {
-                  "label": "Почта",
-                  "value": "email"
-                },
-                {
-                  "label": "Телефон",
-                  "value": "phone"
-                },
-                {
-                  "label": "Cарафанное радио",
-                  "value": "wom"
-                },
-                {
-                  "label": "Другое",
-                  "value": "other"
-                }
-              ],
-              "headers": [
-                {}
-              ]
-            },
-            "defaultValue": "",
-            "optionalWhenDisabled": false,
-            "type": "ecosSelect",
-            "input": true
-          },
-          {
-            "label": {
-              "ru": "Кат"
-            },
-            "key": "requestCategory2",
-            "defaultValue": "",
-            "refreshOn": [],
-            "optionalWhenDisabled": false,
-            "type": "textfield",
-            "input": true,
-            "inputMasks": [
-              {}
-            ]
           },
           {
             "label": {
@@ -294,5 +228,6 @@
     ],
     "formId": "deal-board-form"
   },
+  "attributes": {},
   "notExists": false
 }
