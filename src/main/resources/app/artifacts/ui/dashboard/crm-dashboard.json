@@ -1,7 +1,12 @@
 {
   "id": "crm-dashboard",
+  "name": {},
   "typeRef": "emodel/type@deal",
   "appliedToRef": "",
+  "authority": "",
+  "scope": "",
+  "priority": 0,
+  "workspace": "",
   "config": {
     "version": "v2",
     "v2": {
@@ -190,30 +195,42 @@
               "elementsDisplayCondition": {},
               "types": [
                 {
-                  "formId": null,
-                  "multiple": false,
-                  "type": "emodel/type@commercial-offer-document",
-                  "mandatory": false
-                },
-                {
-                  "formId": null,
-                  "multiple": false,
                   "type": "emodel/type@doclib-file",
-                  "mandatory": false
+                  "multiple": false,
+                  "mandatory": false,
+                  "canUpload": true,
+                  "journalId": ""
                 },
                 {
-                  "formId": null,
+                  "type": "emodel/type@attachment",
                   "multiple": false,
+                  "mandatory": false,
+                  "canUpload": true,
+                  "journalId": ""
+                },
+                {
+                  "type": "emodel/type@commercial-offer-document",
+                  "multiple": false,
+                  "mandatory": false,
+                  "canUpload": true,
+                  "journalId": ""
+                },
+                {
                   "type": "emodel/type@scan-document",
-                  "mandatory": false
+                  "multiple": false,
+                  "mandatory": false,
+                  "canUpload": true,
+                  "journalId": ""
                 },
                 {
-                  "formId": null,
-                  "multiple": false,
                   "type": "emodel/type@counterparty-document",
-                  "mandatory": false
+                  "multiple": false,
+                  "mandatory": false,
+                  "canUpload": true,
+                  "journalId": ""
                 }
-              ]
+              ],
+              "isLoadChecklist": true
             }
           },
           "description": {
@@ -374,5 +391,6 @@
         }
       ]
     }
-  }
+  },
+  "attributes": {}
 }
