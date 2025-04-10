@@ -1,7 +1,8 @@
+---
 id: extend-data-lists-workspace-menu
 name:
-  - ru: Добавить справочники "CRM"
-  - en: Add "CRM" data lists
+  ru: Добавить справочники "CRM"
+  en: Add "CRM" data lists
 
 target: 'ui/menu$data-lists-menu'
 
@@ -9,7 +10,7 @@ type: json
 config:
   operations:
     - op: add
-      path: '$..[?(@.id == "data-lists")].items'
+      path: '$.subMenu.left.items'
       value:
         id: crm-data-lists
         label:
@@ -27,7 +28,7 @@ config:
             label:
               ru: Категории обращений
               en: Request categories
-            icon: ''
+            icon: ui/icon@i-leftmenu-groups
             hidden: false
             type: JOURNAL
             config:
@@ -42,7 +43,7 @@ config:
             label:
               ru: Источники обращений
               en: Request sources
-            icon: ''
+            icon: ui/icon@i-leftmenu-groups
             hidden: false
             type: JOURNAL
             config:
