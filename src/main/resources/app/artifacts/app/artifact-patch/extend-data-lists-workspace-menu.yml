@@ -1,0 +1,57 @@
+id: extend-data-lists-workspace-menu
+name:
+  - ru: Добавить справочники "CRM"
+  - en: Add "CRM" data lists
+
+target: 'ui/menu$data-lists-menu'
+
+type: json
+config:
+  operations:
+    - op: add
+      path: '$..[?(@.id == "data-lists")].items'
+      value:
+        id: crm-data-lists
+        label:
+          ru: CRM
+          en: CRM
+        icon: ui/icon@i-leftmenu-hr-department
+        hidden: false
+        type: SECTION
+        config: {}
+        action:
+          type: ''
+          config: {}
+        items:
+          - id: crm-request-categories
+            label:
+              ru: Категории обращений
+              en: Request categories
+            icon: ''
+            hidden: false
+            type: JOURNAL
+            config:
+              recordRef: uiserv/journal@deal-request-category-journal
+              displayCount: false
+            action:
+              type: ''
+              config: {}
+            items: []
+            allowedFor: []
+          - id: crm-request-sources
+            label:
+              ru: Источники обращений
+              en: Request sources
+            icon: ''
+            hidden: false
+            type: JOURNAL
+            config:
+              recordRef: uiserv/journal@deal-request-source-journal
+              displayCount: false
+            action:
+              type: ''
+              config: {}
+            items: []
+            allowedFor: []
+        allowedFor: []
+

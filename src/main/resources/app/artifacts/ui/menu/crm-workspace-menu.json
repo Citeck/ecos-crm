@@ -1,0 +1,140 @@
+{
+  "id": "crm-workspace-menu",
+  "type": "LEFT_MENU",
+  "authorities": [
+    "GROUP_EVERYONE"
+  ],
+  "version": 1,
+  "workspace": "crm-workspace",
+  "subMenu": {
+    "left": {
+      "config": {},
+      "items": [
+        {
+          "id": "sections",
+          "label": {
+            "ru": "Разделы",
+            "en": "Sections"
+          },
+          "icon": "",
+          "hidden": false,
+          "type": "SECTION",
+          "config": {},
+          "action": {
+            "type": "",
+            "config": {}
+          },
+          "items": [
+            {
+              "id": "15fb35cc-5c64-42e4-aef1-3536adbffed6",
+              "label": {
+                "ru": "Сделки",
+                "en": "Deals"
+              },
+              "icon": "ui/icon@i-leftmenu-hr-department",
+              "hidden": false,
+              "type": "JOURNAL",
+              "config": {
+                "recordRef": "uiserv/journal@deals-journal"
+              },
+              "action": {
+                "type": "",
+                "config": {}
+              },
+              "items": [],
+              "allowedFor": []
+            },
+            {
+              "id": "workspace-files",
+              "label": {
+                "ru": "Библиотека документов",
+                "en": "Documents library"
+              },
+              "icon": "ui/icon@i-leftmenu-controlled",
+              "hidden": false,
+              "type": "DOCLIB",
+              "config": {
+                "recordRef": "uiserv/journal@type$workspace-file"
+              },
+              "action": {
+                "type": "",
+                "config": {}
+              },
+              "items": [],
+              "allowedFor": []
+            },
+            {
+              "id": "assignments",
+              "label": {
+                "ru": "Доска поручений",
+                "en": "Assignment board"
+              },
+              "icon": "ui/icon@i-leftmenu-subordinate-tasks",
+              "hidden": false,
+              "type": "KANBAN",
+              "config": {
+                "recordRef": "uiserv/board@assignments-kanban"
+              },
+              "action": {
+                "type": "",
+                "config": {}
+              },
+              "items": [],
+              "allowedFor": []
+            }
+          ],
+          "allowedFor": []
+        }
+      ]
+    },
+    "create": {
+      "config": {},
+      "items": [
+        {
+          "id": "create-123",
+          "label": {
+            "ru": "Разделы",
+            "en": "Sections"
+          },
+          "icon": "",
+          "hidden": false,
+          "type": "CREATE_IN_SECTION",
+          "config": {
+            "sectionId": "sections"
+          },
+          "action": {
+            "type": "",
+            "config": {}
+          },
+          "items": [],
+          "allowedFor": []
+        },
+        {
+          "id": "create-assignments",
+          "label": {
+            "ru": "Поручение",
+            "en": "Assignment"
+          },
+          "icon": "",
+          "hidden": false,
+          "type": "LINK-CREATE-CASE",
+          "config": {
+            "typeRef": "emodel/type@assignment-type",
+            "variantId": "DEFAULT",
+            "variantTypeRef": "emodel/type@assignment-type"
+          },
+          "action": {
+            "type": "",
+            "config": {}
+          },
+          "items": [],
+          "allowedFor": []
+        }
+      ]
+    },
+    "user": {
+      "config": {},
+      "items": []
+    }
+  }
+}

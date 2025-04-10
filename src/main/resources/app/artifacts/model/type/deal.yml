@@ -12,6 +12,7 @@ boardRef: uiserv/board@deal-board
 inheritForm: false
 dispNameTemplate:
   ru: Сделка ${name}
+workspaceScope: PRIVATE
 actions:
   - uiserv/action@change-status
   - uiserv/action@edit

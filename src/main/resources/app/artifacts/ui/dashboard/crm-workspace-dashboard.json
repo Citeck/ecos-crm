@@ -1,0 +1,215 @@
+{
+  "id": "crm-workspace-dashboard",
+  "name": {},
+  "typeRef": "emodel/type@workspace-dashboard",
+  "appliedToRef": "",
+  "authority": "",
+  "scope": "",
+  "priority": 0,
+  "workspace": "crm-workspace",
+  "config": {
+    "version": "v2",
+    "v2": {
+      "widgets": [
+        {
+          "name": "charts",
+          "label": "dashboard-settings.widget.charts",
+          "additionalProps": {},
+          "dndId": "c45729f9-f510-42a4-974b-053921902033",
+          "id": "72eeb92f-cc9f-4bb8-80a5-3b83da7846a0",
+          "props": {
+            "id": "72eeb92f-cc9f-4bb8-80a5-3b83da7846a0",
+            "config": {
+              "widgetDisplayCondition": null,
+              "elementsDisplayCondition": {},
+              "crm-workspace-dashboard": {
+                "title": {
+                  "ru": "Категории обращений",
+                  "en": "Categories of requests"
+                },
+                "graphicTypeId": "doughnut",
+                "journalId": "uiserv/journal@deals-journal",
+                "typeRef": "emodel/type@deal",
+                "groupByParams": [
+                  {
+                    "attribute": "requestCategory",
+                    "label": "Категория обращения",
+                    "isDateColumn": false,
+                    "dateParam": null,
+                    "dateRange": null,
+                    "type": "assoc"
+                  }
+                ],
+                "aggregationParam": "count(*)",
+                "selectedPreset": {
+                  "id": "default",
+                  "displayName": "По умолчанию",
+                  "settings": {
+                    "predicate": {
+                      "t": "eq",
+                      "att": "_type",
+                      "val": "emodel/type@deal"
+                    }
+                  }
+                },
+                "doughnut": {}
+              }
+            }
+          }
+        },
+        {
+          "name": "charts",
+          "label": "dashboard-settings.widget.charts",
+          "additionalProps": {},
+          "dndId": "8913af68-ad11-40b8-b10d-7ecd358d6049",
+          "id": "5618504e-1e21-446d-a3f3-7828878cec04",
+          "props": {
+            "id": "5618504e-1e21-446d-a3f3-7828878cec04",
+            "config": {
+              "widgetDisplayCondition": null,
+              "elementsDisplayCondition": {},
+              "crm-workspace-dashboard": {
+                "title": {
+                  "ru": "Источники, контрагенты и бюджет",
+                  "en": "Sources, counterparties, and budget"
+                },
+                "graphicTypeId": "vertical-bar",
+                "journalId": "uiserv/journal@deals-journal",
+                "typeRef": "emodel/type@deal",
+                "groupByParams": [
+                  {
+                    "attribute": "requestSource",
+                    "label": "Источник обращения",
+                    "isDateColumn": false,
+                    "dateParam": null,
+                    "dateRange": null,
+                    "type": "assoc"
+                  },
+                  {
+                    "attribute": "counterparty",
+                    "label": "Контрагент",
+                    "isDateColumn": false,
+                    "dateParam": null,
+                    "dateRange": null,
+                    "type": "assoc"
+                  }
+                ],
+                "aggregationParam": "sum(amount)",
+                "selectedPreset": {
+                  "id": "default",
+                  "displayName": "По умолчанию",
+                  "settings": {
+                    "predicate": {
+                      "t": "eq",
+                      "att": "_type",
+                      "val": "emodel/type@deal"
+                    }
+                  }
+                },
+                "vertical-bar": {}
+              }
+            }
+          }
+        },
+        {
+          "name": "charts",
+          "label": "dashboard-settings.widget.charts",
+          "additionalProps": {},
+          "dndId": "30a831e3-7a41-4bd2-ba48-c9f2617e6c57",
+          "id": "828943aa-76ec-4d43-9e55-4b5e3f93b15e",
+          "props": {
+            "id": "828943aa-76ec-4d43-9e55-4b5e3f93b15e",
+            "config": {
+              "widgetDisplayCondition": null,
+              "elementsDisplayCondition": {},
+              "crm-workspace-dashboard": {
+                "title": {
+                  "ru": "Бюджет по источникам",
+                  "en": "Budget by sources"
+                },
+                "graphicTypeId": "line",
+                "journalId": "uiserv/journal@deals-journal",
+                "typeRef": "emodel/type@deal",
+                "groupByParams": [
+                  {
+                    "attribute": "counterparty",
+                    "label": "Контрагент",
+                    "isDateColumn": false,
+                    "dateParam": null,
+                    "dateRange": null,
+                    "type": "assoc"
+                  }
+                ],
+                "aggregationParam": "sum(amount)",
+                "selectedPreset": {
+                  "id": "default",
+                  "displayName": "По умолчанию",
+                  "settings": {
+                    "predicate": {
+                      "t": "eq",
+                      "att": "_type",
+                      "val": "emodel/type@deal"
+                    }
+                  }
+                },
+                "line": {}
+              }
+            }
+          }
+        }
+      ],
+      "desktop": [
+        {
+          "id": "layout_a0ee8ffa-f44b-4ef6-9978-a755e2d12efb",
+          "tab": {
+            "label": "Вкладка",
+            "idLayout": "layout_a0ee8ffa-f44b-4ef6-9978-a755e2d12efb"
+          },
+          "type": "2-columns-small-big-with-footer",
+          "columns": [
+            [
+              {
+                "widgets": [
+                  "72eeb92f-cc9f-4bb8-80a5-3b83da7846a0"
+                ],
+                "width": "25%"
+              },
+              {
+                "widgets": [
+                  "5618504e-1e21-446d-a3f3-7828878cec04"
+                ]
+              }
+            ],
+            [
+              {
+                "widgets": [
+                  "828943aa-76ec-4d43-9e55-4b5e3f93b15e"
+                ]
+              }
+            ]
+          ]
+        }
+      ],
+      "mobile": [
+        {
+          "id": "layout_a0ee8ffa-f44b-4ef6-9978-a755e2d12efb",
+          "tab": {
+            "label": "Вкладка",
+            "idLayout": "layout_a0ee8ffa-f44b-4ef6-9978-a755e2d12efb"
+          },
+          "type": "mobile",
+          "columns": [
+            {
+              "widgets": [
+                "72eeb92f-cc9f-4bb8-80a5-3b83da7846a0",
+                "5618504e-1e21-446d-a3f3-7828878cec04",
+                "828943aa-76ec-4d43-9e55-4b5e3f93b15e"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "attributes": {}
+}

@@ -6,3 +6,4 @@ name:
 storageType: ECOS_MODEL
 parentRef: emodel/type@document
 inheritForm: false
+workspaceScope: PRIVATE
