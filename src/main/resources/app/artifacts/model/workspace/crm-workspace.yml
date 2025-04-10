@@ -1,9 +1,7 @@
 ---
 id: crm-workspace
 name:
-  ru: Рабочее пространство CRM
-  en: CRM Workspace
+  en: CRM
 description:
-  ru: Рабочее пространство CRM
-  en: CRM Workspace
+  en: CRM
 workspaceMembers: []
