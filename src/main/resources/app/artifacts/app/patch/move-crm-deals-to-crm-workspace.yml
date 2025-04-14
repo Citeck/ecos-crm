@@ -1,5 +1,5 @@
 ---
-id: move-crm-deals-crm-workspace
+id: move-crm-deals-to-crm-workspace
 date: 2025-04-14T00:00:00Z
 type: mutate
 manual: true
