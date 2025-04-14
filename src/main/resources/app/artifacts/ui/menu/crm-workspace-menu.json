@@ -11,6 +11,18 @@
       "config": {},
       "items": [
         {
+          "id": "tasks",
+          "label": {
+            "ru": "Задачи",
+            "en": "Tasks"
+          },
+          "hidden": false,
+          "type": "INCLUDE_MENU",
+          "config": {
+            "menuRef": "uiserv/menu@default-tasks"
+          }
+        },
+        {
           "id": "sections",
           "label": {
             "ru": "Разделы",
