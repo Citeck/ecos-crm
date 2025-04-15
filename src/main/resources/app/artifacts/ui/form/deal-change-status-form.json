@@ -1,8 +1,8 @@
 {
-  "id": "change-status-form",
-  "formKey": "change-status-form",
+  "id": "deal-change-status-form",
+  "formKey": "",
   "title": {
-    "en": "change-status-form"
+    "en": "Deal change status form"
   },
   "description": {},
   "customModule": "",

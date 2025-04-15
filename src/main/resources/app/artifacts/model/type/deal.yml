@@ -4,17 +4,17 @@ name:
   ru: Сделка
   en: Deal
 storageType: ECOS_MODEL
-parentRef: emodel/type@case
+parentRef: emodel/type@opportunity
 formRef: uiserv/form@deal-form
 journalRef: uiserv/journal@deals-journal
 defaultStatus: new
 boardRef: uiserv/board@deal-board
 inheritForm: false
 dispNameTemplate:
-  ru: Сделка ${name}
+  ru: "Сделка: ${name}"
 workspaceScope: PRIVATE
 actions:
-  - uiserv/action@change-status
+  - uiserv/action@deal-change-status
   - uiserv/action@edit
   - uiserv/action@delete
   - uiserv/action@create-counterparty
@@ -22,36 +22,6 @@ actions:
   - uiserv/action@assign-manager
 defaultCreateVariant: true
 model:
-  roles:
-    - id: manager
-      name:
-        ru: Менеджер по продажам
-        en: Manager
-      computed:
-        type: SCRIPT
-        config:
-          fn: "var manager = value.load('manager?id');\r\nif (manager === null) {\r\
-            \n  return \"GROUP_crm-manager\";\r\n}\r\nreturn manager;"
-    - id: cco
-      name:
-        ru: Коммерческий директор
-        en: CCO
-      assignees:
-        - GROUP_crm-cco
-    - id: viewers
-      name:
-        en: Viewers
-        ru: Наблюдатели
-      computed:
-        type: ATTRIBUTE
-        config:
-          attribute: viewers
-    - id: allCRMManagers
-      name:
-        en: All CRM Managers
-        ru: Все менеджеры CRM
-      assignees:
-        - GROUP_crm-manager
   statuses:
     - id: new
       name:
@@ -150,15 +120,6 @@ model:
         config:
           numTemplateRef: emodel/num-template@deal-num-template
         storingType: ON_CREATE
-    - id: amount
-      name:
-        ru: Бюджет
-        en: Budget
-      type: NUMBER
-    - id: description
-      name:
-        ru: Описание
-        en: Description
     #Deprecated
     - id: fio
       name:
@@ -173,98 +134,20 @@ model:
       name:
         ru: Телефон
         en: Phone
+    #Deprecated
     - id: company
       name:
         ru: Компания
         en: Company
-    - id: counterparty
-      name:
-        ru: Контрагент
-        en: Counterparty
-      type: ASSOC
-      config:
-        typeRef: emodel/type@ecos-counterparty
-        child: false
-    - id: manager
-      name:
-        ru: Ответственный
-        en: Manager
-      type: PERSON
-    - id: viewers
-      name:
-        ru: Наблюдатели
-        en: Viewers
-      type: PERSON
-      multiple: true
-    - id: dateReceived
-      name:
-        ru: Дата создания
-        en: Received date
-      type: DATETIME
-    - id: siteEmail
-      name:
-        ru: E-mail заявки с сайта
-        en: Site e-mail
-    - id: siteFrom
-      name:
-        ru: Страница заполнения заявки
-        en: Deal request page
     #Deprecated
     - id: source
       name:
         ru: Источник обращения
-    - id: syncRequestSourceCount
+    - id: createdFromLead
       name:
-        ru: Количество попыток синхронизации с YM
-      type: NUMBER
-      computed:
-        type: VALUE
-        config:
-          value: '0'
-        storingType: ON_CREATE
-    - id: requestSource
-      name:
-        ru: Источник обращения
-        en: Request source
+        ru: Создана из лида
+        en: Created from lead
       type: ASSOC
+      multiple: false
       config:
-        typeRef: emodel/type@deal-request-source
-        child: false
-    - id: requestCategory
-      name:
-        ru: Категория обращения
-        en: Request category
-      type: ASSOC
-      config:
-        typeRef: emodel/type@deal-request-category
-        child: false
-    - id: emessage
-      name:
-        ru: Почтовое сообщение
-        en: Post message
-    - id: ga_client_id
-      name:
-        ru: Идентификатор GA
-        en: GA ID
-    - id: ym_client_id
-      name:
-        ru: Идентификатор YM
-        en: YM ID
-    - id: contacts
-      name:
-        ru: Контакты
-        en: Contacts
-      type: JSON
-      multiple: true
-    - id: numberOfUsers
-      name:
-        ru: Количество пользователей
-        en: Number of users
-    - id: name
-      name:
-        ru: Название
-        en: Name
-    - id: bitrixId
-      name:
-        ru: Id сделки из Bitrix
-        en: Deal id from Bitrix
+        typeRef: emodel/type@lead

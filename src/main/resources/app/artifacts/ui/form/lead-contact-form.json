@@ -1,0 +1,341 @@
+{
+  "id": "lead-contact-form",
+  "formKey": "",
+  "title": {
+    "en": "Контакты"
+  },
+  "description": {},
+  "customModule": "",
+  "typeRef": "emodel/type@lead",
+  "width": "",
+  "system": false,
+  "i18n": {},
+  "definition": {
+    "components": [
+      {
+        "scrollableContent": true,
+        "key": "panel2",
+        "type": "panel",
+        "input": false,
+        "components": [
+          {
+            "label": {
+              "ru": "Sync contacts",
+              "en": "Sync contacts"
+            },
+            "key": "syncContacts",
+            "refreshOn": [],
+            "calculateValue": "let checkMainContact = false;\r\nfor (const contact of data.contacts) {\r\n  if (contact.contactMain) {\r\n    checkMainContact = true;\r\n    break;\r\n  }\r\n}\r\n\r\nif (checkMainContact && !data.contacts[0].contactMain) {\r\n  const sortedContacts = data.contacts;\r\n  sortedContacts.sort((a, b) => b.contactMain - a.contactMain);\r\n  var dataGridInst = util.searchComponents(instance.parent.components, \"contacts\");\r\n  dataGridInst[0].setValue(sortedContacts);\r\n}",
+            "optionalWhenDisabled": false,
+            "type": "hidden",
+            "input": true
+          },
+          {
+            "label": {
+              "ru": "Контакты",
+              "en": "Contacts"
+            },
+            "key": "contacts",
+            "hideLabel": true,
+            "multiple": true,
+            "validate": {
+              "minLength": "",
+              "maxLength": ""
+            },
+            "disableAddingRemovingRows": false,
+            "addAnotherPosition": "bottom",
+            "removePlacement": "col",
+            "defaultOpen": false,
+            "layoutFixed": false,
+            "enableRowGroups": false,
+            "reorder": false,
+            "defaultValue": [
+              {
+                "contactFio": "",
+                "contactPosition": "",
+                "contactDepartment": "",
+                "contactPhone": "",
+                "contactEmail": "",
+                "contactMain": false,
+                "contactComment": ""
+              }
+            ],
+            "refreshOn": [],
+            "optionalWhenDisabled": false,
+            "type": "datagrid",
+            "input": true,
+            "options": {
+              "hideHeader": true
+            },
+            "components": [
+              {
+                "label": {
+                  "ru": "Контактные лица",
+                  "en": "Contacts"
+                },
+                "key": "panel5",
+                "title": {
+                  "ru": "Контакт: ${contactFio}",
+                  "en": "Contact: ${contactFio}"
+                },
+                "collapsible": true,
+                "collapsed": true,
+                "refreshOn": [],
+                "optionalWhenDisabled": false,
+                "type": "panel",
+                "input": false,
+                "components": [
+                  {
+                    "label": {
+                      "ru": "Columns"
+                    },
+                    "key": "columns3",
+                    "columns": [
+                      {
+                        "components": [
+                          {
+                            "label": {
+                              "ru": "ФИО",
+                              "en": "Full name"
+                            },
+                            "key": "contactFio",
+                            "defaultValue": "",
+                            "refreshOn": [],
+                            "optionalWhenDisabled": false,
+                            "type": "textfield",
+                            "input": true,
+                            "inputMasks": [
+                              {}
+                            ]
+                          },
+                          {
+                            "label": {
+                              "ru": "Должность",
+                              "en": "Position"
+                            },
+                            "key": "contactPosition",
+                            "defaultValue": "",
+                            "refreshOn": [],
+                            "optionalWhenDisabled": false,
+                            "type": "textfield",
+                            "input": true,
+                            "inputMasks": [
+                              {}
+                            ]
+                          },
+                          {
+                            "label": {
+                              "ru": "Основной",
+                              "en": "Main"
+                            },
+                            "key": "contactMain",
+                            "refreshOn": [],
+                            "optionalWhenDisabled": false,
+                            "logic": [
+                              {
+                                "name": "Disable checkbox",
+                                "trigger": {
+                                  "type": "javascript",
+                                  "javascript": "result = false;\r\nif (!value) {\r\n  for (const contact of data.contacts) {\r\n  if (contact.contactMain) {\r\n    result = true;\r\n    break;\r\n  }\r\n}\r\n}"
+                                },
+                                "actions": [
+                                  {
+                                    "name": "Disable checkbox",
+                                    "type": "property",
+                                    "property": {
+                                      "label": "Disabled",
+                                      "value": "disabled",
+                                      "type": "boolean"
+                                    },
+                                    "state": "true"
+                                  }
+                                ]
+                              }
+                            ],
+                            "type": "checkbox",
+                            "input": true
+                          }
+                        ],
+                        "type": "column",
+                        "input": false,
+                        "key": "column",
+                        "index": 0
+                      },
+                      {
+                        "index": 1,
+                        "type": "column",
+                        "input": false,
+                        "key": "column",
+                        "components": [
+                          {
+                            "label": {
+                              "ru": "Департамент",
+                              "en": "Department"
+                            },
+                            "key": "contactDepartment",
+                            "defaultValue": "",
+                            "refreshOn": [],
+                            "optionalWhenDisabled": false,
+                            "type": "textfield",
+                            "input": true,
+                            "inputMasks": [
+                              {}
+                            ]
+                          },
+                          {
+                            "label": {
+                              "ru": "Телефон",
+                              "en": "Phone"
+                            },
+                            "key": "contactPhone",
+                            "defaultValue": "",
+                            "refreshOn": [],
+                            "optionalWhenDisabled": false,
+                            "type": "textfield",
+                            "input": true,
+                            "inputMasks": [
+                              {}
+                            ]
+                          },
+                          {
+                            "label": {
+                              "ru": "E-mail",
+                              "en": "E-mail"
+                            },
+                            "key": "contactEmail",
+                            "defaultValue": "",
+                            "refreshOn": [],
+                            "optionalWhenDisabled": false,
+                            "type": "textfield",
+                            "input": true,
+                            "inputMasks": [
+                              {}
+                            ]
+                          }
+                        ]
+                      }
+                    ],
+                    "oneColumnInViewMode": false,
+                    "type": "columns",
+                    "input": false
+                  },
+                  {
+                    "label": {
+                      "ru": "Комментарий ",
+                      "en": "Comment"
+                    },
+                    "key": "contactComment",
+                    "defaultValue": "",
+                    "refreshOn": [],
+                    "optionalWhenDisabled": false,
+                    "type": "textarea",
+                    "input": true
+                  }
+                ],
+                "row": "0-0"
+              }
+            ],
+            "rowGroups": [
+              {}
+            ]
+          }
+        ]
+      },
+      {
+        "label": {
+          "ru": "Columns"
+        },
+        "key": "columns2",
+        "columns": [
+          {
+            "components": [
+              {
+                "label": "Cancel",
+                "action": "event",
+                "state": "",
+                "showValidations": false,
+                "event": "cancel",
+                "block": true,
+                "type": "button",
+                "input": true,
+                "key": "submit2",
+                "conditional": {
+                  "show": null,
+                  "when": null
+                }
+              }
+            ],
+            "type": "column",
+            "input": false,
+            "key": "column",
+            "label": "Column",
+            "md": 3,
+            "clearOnHide": true,
+            "conditional": {
+              "show": null,
+              "when": null
+            },
+            "index": 0
+          },
+          {
+            "components": [],
+            "type": "column",
+            "input": false,
+            "key": "column",
+            "label": "Column",
+            "clearOnHide": true,
+            "conditional": {
+              "show": null,
+              "when": null
+            },
+            "index": 1,
+            "md": 3
+          },
+          {
+            "md": 3,
+            "type": "column",
+            "input": false,
+            "key": "column",
+            "label": "Column",
+            "components": [],
+            "clearOnHide": true,
+            "conditional": {
+              "show": null,
+              "when": null
+            },
+            "index": 2
+          },
+          {
+            "md": 3,
+            "type": "column",
+            "input": false,
+            "key": "column",
+            "index": 3,
+            "components": [
+              {
+                "label": {
+                  "ru": "Создать",
+                  "en": "Submit"
+                },
+                "key": "submit",
+                "state": "",
+                "theme": "primary",
+                "block": true,
+                "disableOnInvalid": true,
+                "refreshOn": [],
+                "optionalWhenDisabled": false,
+                "type": "button",
+                "input": true
+              }
+            ]
+          }
+        ],
+        "oneColumnInViewMode": false,
+        "type": "columns",
+        "input": false
+      }
+    ]
+  },
+  "attributes": {},
+  "notExists": false
+}

@@ -8,7 +8,7 @@ confirm:
   title:
     ru: Назначить ответственного
     en: Assign a manager
-  "formRef": uiserv/form@deal-assign-manager
+  formRef: uiserv/form@deal-assign-manager
   attributesMapping:
     record.attributes.manager: manager
 config:

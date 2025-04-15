@@ -1,0 +1,34 @@
+---
+id: lead-change-status
+name:
+  ru: Изменить статус
+  en: Change status
+confirm:
+  title:
+    ru: Изменить статус
+    en: Change status
+  formRef: uiserv/form@lead-change-status-form
+  formAttributes:
+    disqualificationReason: '${disqualificationReason?str}'
+  attributesMapping:
+    record.attributes._status: statuses
+    record.attributes.disqualificationReason: disqualificationReason
+type: mutate
+config:
+  record:
+    id: '${recordRef}'
+    attributes:
+      _status: statuses
+      disqualificationReason: disqualificationReason
+features:
+  execForQuery: false
+  execForRecord: true
+  execForRecords: true
+predicate:
+  t: and
+  val:
+    - t: and
+      val:
+        - t: eq
+          att: _roles.isCurrentUserMemberOf.manager?bool
+          val: true

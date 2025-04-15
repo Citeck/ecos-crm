@@ -1,25 +1,9 @@
 ---
-id: deals-journal
+id: leads-journal
 name:
-  ru: Сделки
-  en: Deals
-defaultFilters:
-  - t: not
-    val:
-      t: eq
-      att: _status
-      val: community
-  - t: not
-    val:
-      t: eq
-      att: source
-      val: old
-  - t: not
-    val:
-      t: eq
-      att: _status
-      val: dropout
-typeRef: emodel/type@deal
+  ru: Лиды
+  en: Leads
+typeRef: emodel/type@lead
 defaultSortBy:
   - attribute: dateReceived
     ascending: false
@@ -28,7 +12,7 @@ actions:
   - uiserv/action@view-dashboard-in-background
   - uiserv/action@record-copy
   - uiserv/action@delete
-  - uiserv/action@deal-change-status
+  - uiserv/action@lead-change-status
   - uiserv/action@assign-manager
 columns:
   - id: number
@@ -49,27 +33,11 @@ columns:
       en: Status
     type: TEXT
     groupable: true
-  - id: company
-    name:
-      ru: Компания
-      en: Company
-    type: TEXT
   - id: dateReceived
     name:
       ru: Дата создания
       en: Received date
     type: DATETIME
-    groupable: true
-  - id: amount
-    name:
-      ru: Бюджет
-      en: Budget
-    type: NUMBER
-  - id: numberOfUsers
-    name:
-      ru: Кол-во пользователей
-      en: Number of users
-    type: TEXT
     groupable: true
   - id: manager
     name:
@@ -77,17 +45,12 @@ columns:
       en: Responsible
     type: PERSON
     groupable: true
-  - id: viewers
+  - id: numberOfUsers
     name:
-      en: Viewers
-      ru: Наблюдатели
-    type: PERSON
-    groupable: true
-  - id: description
-    name:
-      ru: Описание
-      en: Description
+      ru: Кол-во пользователей
+      en: Number of users
     type: TEXT
+    groupable: true
   - id: counterparty
     name:
       ru: Контрагент
@@ -110,11 +73,6 @@ columns:
       en: Phone
     type: TEXT
     attribute: contacts.contactPhone
-  - id: emessage
-    name:
-      ru: Письмо
-      en: Message
-    type: TEXT
   - id: requestSource
     name:
       ru: Источник обращения

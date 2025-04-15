@@ -1,12 +1,12 @@
 {
-  "id": "deal-form",
+  "id": "lead-form",
   "formKey": "",
   "title": {
-    "en": "Deal form"
+    "en": "Lead form"
   },
   "description": {},
   "customModule": "",
-  "typeRef": "emodel/type@deal",
+  "typeRef": "emodel/type@lead",
   "width": "lg",
   "system": false,
   "i18n": {},
@@ -82,6 +82,7 @@
                               "en": "Received date"
                             },
                             "key": "dateReceived",
+                            "disabled": true,
                             "format": "dd-MM-yyyy HH:mm",
                             "datePicker": {
                               "minDate": "",
@@ -90,13 +91,15 @@
                             "timePicker": {
                               "showMeridian": false
                             },
-                            "defaultValue": "",
+                            "defaultValue": "2025-04-14T15:05:46Z",
                             "refreshOn": [],
                             "customDefaultValue": "value = new Date();",
                             "optionalWhenDisabled": false,
+                            "customConditional": "show = instance.options.formMode !== 'CREATE';",
                             "type": "datetime",
                             "input": true,
-                            "suffix": true
+                            "suffix": true,
+                            "reorder": false
                           }
                         ]
                       }
@@ -107,51 +110,42 @@
                   },
                   {
                     "label": {
-                      "ru": "Компания",
-                      "en": "Company"
+                      "ru": "requestType"
                     },
-                    "key": "company",
+                    "key": "requestType",
+                    "validate": {
+                      "select": false
+                    },
+                    "data": {
+                      "url": "/citeck/ecos/records/query",
+                      "headers": [
+                        {
+                          "key": "",
+                          "value": ""
+                        }
+                      ]
+                    },
+                    "defaultValue": "",
+                    "optionalWhenDisabled": false,
+                    "type": "ecosSelect",
+                    "input": true,
+                    "reorder": false,
+                    "reference": false
+                  },
+                  {
+                    "label": {
+                      "ru": "Количество пользователей",
+                      "en": "Number of users"
+                    },
+                    "key": "numberOfUsers",
                     "defaultValue": "",
                     "refreshOn": [],
                     "optionalWhenDisabled": false,
                     "type": "textfield",
-                    "input": true
-                  },
-                  {
-                    "label": {
-                      "ru": "Контрагент",
-                      "en": "Counterparty"
-                    },
-                    "key": "counterparty",
-                    "modalTitle": "",
-                    "journalId": "ecos-counterparty",
-                    "refreshOn": [],
-                    "optionalWhenDisabled": false,
-                    "type": "selectJournal",
                     "input": true,
-                    "queryData": ""
-                  },
-                  {
-                    "label": {
-                      "ru": "createdFromLead"
-                    },
-                    "key": "createdFromLead",
-                    "disabled": true,
-                    "modalTitle": "",
-                    "journalId": "leads-journal",
-                    "source": {
-                      "type": "journal",
-                      "custom": {
-                        "columns": []
-                      },
-                      "customValues": "",
-                      "viewMode": "default"
-                    },
-                    "queryData": "",
-                    "refreshOn": [],
-                    "optionalWhenDisabled": false,
-                    "type": "selectJournal",
-                    "input": true
+                    "inputMasks": [
+                      {}
+                    ]
                   }
                 ],
                 "type": "column",
@@ -171,38 +165,25 @@
                       "en": "Responsible"
                     },
                     "key": "manager",
+                    "validate": {
+                      "required": true
+                    },
                     "allowedAuthorityType": "USER",
                     "currentUserByDefault": true,
                     "defaultValue": "",
                     "refreshOn": [],
                     "optionalWhenDisabled": false,
                     "type": "selectOrgstruct",
-                    "input": true
+                    "input": true,
+                    "reorder": false,
+                    "allowedGroupType": "",
+                    "rootGroupName": ""
                   },
                   {
                     "label": {
-                      "ru": "Бюджет",
-                      "en": "Budget"
+                      "ru": "counterpartyText"
                     },
-                    "key": "amount",
-                    "validate": {
-                      "integer": false
-                    },
-                    "isBigNumber": false,
-                    "delimiter": true,
-                    "delimiterValue": " ",
-                    "refreshOn": [],
-                    "optionalWhenDisabled": false,
-                    "defaultValue": "",
-                    "type": "number",
-                    "input": true
-                  },
-                  {
-                    "label": {
-                      "ru": "Количество пользователей",
-                      "en": "Number of users"
-                    },
-                    "key": "numberOfUsers",
+                    "key": "counterpartyText",
                     "defaultValue": "",
                     "refreshOn": [],
                     "optionalWhenDisabled": false,
@@ -210,22 +191,48 @@
                     "input": true,
                     "inputMasks": [
                       {}
-                    ]
+                    ],
+                    "reorder": false,
+                    "dataSrc": ""
                   },
                   {
                     "label": {
-                      "ru": "Наблюдатели",
-                      "en": "Viewers"
+                      "ru": "Контрагент",
+                      "en": "Counterparty"
                     },
-                    "key": "viewers",
-                    "multiple": true,
-                    "viewModeType": "tags",
-                    "reorder": false,
-                    "defaultValue": [],
+                    "key": "counterparty",
+                    "modalTitle": "",
+                    "journalId": "ecos-counterparty",
                     "refreshOn": [],
                     "optionalWhenDisabled": false,
-                    "type": "selectOrgstruct",
-                    "input": true
+                    "type": "selectJournal",
+                    "input": true,
+                    "queryData": ""
+                  },
+                  {
+                    "label": {
+                      "ru": "disqualificationReason"
+                    },
+                    "key": "disqualificationReason",
+                    "validate": {
+                      "select": false
+                    },
+                    "data": {
+                      "url": "/citeck/ecos/records/query",
+                      "headers": [
+                        {
+                          "key": "",
+                          "value": ""
+                        }
+                      ]
+                    },
+                    "defaultValue": "",
+                    "optionalWhenDisabled": false,
+                    "customConditional": "show = instance.options.formMode !== 'CREATE';",
+                    "type": "ecosSelect",
+                    "input": true,
+                    "reorder": false,
+                    "reference": false
                   }
                 ]
               }
@@ -236,14 +243,15 @@
           },
           {
             "label": {
-              "ru": "Описание",
+              "ru": "comment",
               "en": "Description"
             },
-            "key": "description",
+            "key": "comment",
             "editor": "lexical",
             "defaultValue": "",
             "refreshOn": [],
             "optionalWhenDisabled": false,
+            "rows": 4,
             "type": "textarea",
             "input": true,
             "uploadStorage": "",
@@ -362,7 +370,7 @@
         "input": false
       }
     ],
-    "formId": "deal-form"
+    "formId": "lead-form"
   },
   "attributes": {},
   "notExists": false
