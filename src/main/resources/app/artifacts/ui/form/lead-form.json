@@ -208,7 +208,57 @@
                     "type": "selectJournal",
                     "input": true,
                     "queryData": ""
-                  },
+                  }
+                ]
+              }
+            ],
+            "oneColumnInViewMode": false,
+            "type": "columns",
+            "input": false
+          },
+          {
+            "label": {
+              "ru": "Columns"
+            },
+            "key": "columns4",
+            "columns": [
+              {
+                "components": [
+                  {
+                    "label": {
+                      "ru": "createdDeal"
+                    },
+                    "key": "createdDeal",
+                    "disabled": true,
+                    "clearOnHide": false,
+                    "modalTitle": "",
+                    "journalId": "deals-journal",
+                    "source": {
+                      "type": "journal",
+                      "custom": {
+                        "columns": []
+                      },
+                      "customValues": "",
+                      "viewMode": "default"
+                    },
+                    "queryData": "",
+                    "refreshOn": [],
+                    "optionalWhenDisabled": false,
+                    "type": "selectJournal",
+                    "input": true
+                  }
+                ],
+                "type": "column",
+                "input": false,
+                "key": "column",
+                "index": 0
+              },
+              {
+                "index": 1,
+                "type": "column",
+                "input": false,
+                "key": "column",
+                "components": [
                   {
                     "label": {
                       "ru": "disqualificationReason"

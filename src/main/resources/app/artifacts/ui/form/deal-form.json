@@ -107,29 +107,36 @@
                   },
                   {
                     "label": {
-                      "ru": "Компания",
-                      "en": "Company"
+                      "ru": "Бюджет",
+                      "en": "Budget"
                     },
-                    "key": "company",
-                    "defaultValue": "",
+                    "key": "amount",
+                    "validate": {
+                      "integer": false
+                    },
+                    "isBigNumber": false,
+                    "delimiter": true,
+                    "delimiterValue": " ",
                     "refreshOn": [],
                     "optionalWhenDisabled": false,
-                    "type": "textfield",
+                    "defaultValue": "",
+                    "type": "number",
                     "input": true
                   },
                   {
                     "label": {
-                      "ru": "Контрагент",
-                      "en": "Counterparty"
+                      "ru": "Количество пользователей",
+                      "en": "Number of users"
                     },
-                    "key": "counterparty",
-                    "modalTitle": "",
-                    "journalId": "ecos-counterparty",
+                    "key": "numberOfUsers",
+                    "defaultValue": "",
                     "refreshOn": [],
                     "optionalWhenDisabled": false,
-                    "type": "selectJournal",
+                    "type": "textfield",
                     "input": true,
-                    "queryData": ""
+                    "inputMasks": [
+                      {}
+                    ]
                   },
                   {
                     "label": {
@@ -137,6 +144,7 @@
                     },
                     "key": "createdFromLead",
                     "disabled": true,
+                    "clearOnHide": false,
                     "modalTitle": "",
                     "journalId": "leads-journal",
                     "source": {
@@ -144,8 +152,7 @@
                       "custom": {
                         "columns": []
                       },
-                      "customValues": "",
-                      "viewMode": "default"
+                      "customValues": ""
                     },
                     "queryData": "",
                     "refreshOn": [],
@@ -181,36 +188,24 @@
                   },
                   {
                     "label": {
-                      "ru": "Бюджет",
-                      "en": "Budget"
+                      "ru": "Контрагент",
+                      "en": "Counterparty"
                     },
-                    "key": "amount",
-                    "validate": {
-                      "integer": false
-                    },
-                    "isBigNumber": false,
-                    "delimiter": true,
-                    "delimiterValue": " ",
+                    "key": "counterparty",
+                    "modalTitle": "",
+                    "journalId": "ecos-counterparty",
                     "refreshOn": [],
                     "optionalWhenDisabled": false,
-                    "defaultValue": "",
-                    "type": "number",
-                    "input": true
-                  },
-                  {
-                    "label": {
-                      "ru": "Количество пользователей",
-                      "en": "Number of users"
-                    },
-                    "key": "numberOfUsers",
-                    "defaultValue": "",
-                    "refreshOn": [],
-                    "optionalWhenDisabled": false,
-                    "type": "textfield",
+                    "type": "selectJournal",
                     "input": true,
-                    "inputMasks": [
-                      {}
-                    ]
+                    "queryData": "",
+                    "source": {
+                      "custom": {
+                        "columns": []
+                      },
+                      "type": "journal",
+                      "customValues": []
+                    }
                   },
                   {
                     "label": {
@@ -297,7 +292,6 @@
             "key": "column",
             "label": "Column",
             "md": 3,
-            "clearOnHide": true,
             "conditional": {
               "show": null,
               "when": null
@@ -310,7 +304,6 @@
             "input": false,
             "key": "column",
             "label": "Column",
-            "clearOnHide": true,
             "conditional": {
               "show": null,
               "when": null
@@ -325,7 +318,6 @@
             "key": "column",
             "label": "Column",
             "components": [],
-            "clearOnHide": true,
             "conditional": {
               "show": null,
               "when": null

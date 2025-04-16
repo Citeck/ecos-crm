@@ -13,6 +13,17 @@
   "definition": {
     "components": [
       {
+        "label": {
+          "ru": "lead emessage"
+        },
+        "key": "createdFromLead.emessage",
+        "refreshOn": [],
+        "optionalWhenDisabled": false,
+        "type": "hidden",
+        "input": true,
+        "reorder": false
+      },
+      {
         "scrollableContent": true,
         "key": "panel2",
         "type": "panel",
@@ -76,9 +87,11 @@
             "components": [
               {
                 "label": {
-                  "ru": "siteFrom"
+                  "ru": "Страница заполнения заявки",
+                  "en": "Deal request page"
                 },
-                "key": "siteFrom",
+                "key": "createdFromLead.siteFrom",
+                "disabled": true,
                 "defaultValue": "",
                 "refreshOn": [],
                 "optionalWhenDisabled": false,
@@ -92,9 +105,11 @@
               },
               {
                 "label": {
-                  "ru": "ga_client_id"
+                  "ru": "Идентификатор GA",
+                  "en": "GA ID"
                 },
-                "key": "ga_client_id",
+                "key": "createdFromLead.ga_client_id",
+                "disabled": true,
                 "defaultValue": "",
                 "refreshOn": [],
                 "optionalWhenDisabled": false,
@@ -108,9 +123,11 @@
               },
               {
                 "label": {
-                  "ru": "ym_client_id"
+                  "ru": "Идентификатор YM",
+                  "en": "YM ID"
                 },
-                "key": "ym_client_id",
+                "key": "createdFromLead.ym_client_id",
+                "disabled": true,
                 "defaultValue": "",
                 "refreshOn": [],
                 "optionalWhenDisabled": false,
@@ -141,19 +158,22 @@
             "input": false,
             "components": [
               {
-                "label": "",
-                "key": "emessage",
-                "disabled": true,
-                "defaultValue": "",
-                "refreshOn": [],
+                "label": {
+                  "ru": "Содержимое письма"
+                },
+                "key": "leadEmessage",
+                "tag": "div",
+                "className": "",
+                "refreshOnChange": true,
+                "refreshOn": [
+                  "createdFromLead.emessage"
+                ],
                 "optionalWhenDisabled": false,
-                "type": "textarea",
-                "input": true,
-                "uploadStorage": "",
-                "uploadUrl": "",
-                "uploadOptions": "",
-                "uploadDir": "",
-                "as": "",
+                "content": {
+                  "ru": "<div style=\"border: 1px solid #e0e0e0; border-radius: 4px; padding: 15px; max-height: 500px; overflow-y: auto; background-color: #fff; white-space: pre-wrap; font-family: monospace;\">{{ data.createdFromLead.emessage }}</div>"
+                },
+                "type": "htmlelement",
+                "input": false,
                 "reorder": false
               }
             ],
@@ -191,7 +211,7 @@
             "key": "column",
             "label": "Column",
             "md": 3,
-            "clearOnHide": true,
+            "clearOnHide": false,
             "conditional": {
               "show": null,
               "when": null
@@ -204,7 +224,7 @@
             "input": false,
             "key": "column",
             "label": "Column",
-            "clearOnHide": true,
+            "clearOnHide": false,
             "conditional": {
               "show": null,
               "when": null
@@ -219,7 +239,7 @@
             "key": "column",
             "label": "Column",
             "components": [],
-            "clearOnHide": true,
+            "clearOnHide": false,
             "conditional": {
               "show": null,
               "when": null

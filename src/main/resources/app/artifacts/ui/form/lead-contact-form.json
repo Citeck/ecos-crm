@@ -270,7 +270,7 @@
             "key": "column",
             "label": "Column",
             "md": 3,
-            "clearOnHide": true,
+            "clearOnHide": false,
             "conditional": {
               "show": null,
               "when": null
@@ -283,7 +283,7 @@
             "input": false,
             "key": "column",
             "label": "Column",
-            "clearOnHide": true,
+            "clearOnHide": false,
             "conditional": {
               "show": null,
               "when": null
@@ -298,7 +298,7 @@
             "key": "column",
             "label": "Column",
             "components": [],
-            "clearOnHide": true,
+            "clearOnHide": false,
             "conditional": {
               "show": null,
               "when": null

@@ -19,15 +19,22 @@
         "input": false,
         "components": [
           {
-            "label": {
-              "ru": "Sync contacts",
-              "en": "Sync contacts"
+            "label": "Async Counterparty",
+            "source": {
+              "type": "record",
+              "record": {
+                "id": "{{recordId}}",
+                "attributes": {
+                  "contacts": "counterparty.contacts[]?json"
+                }
+              }
             },
-            "key": "syncContacts",
-            "refreshOn": [],
-            "calculateValue": "let checkMainContact = false;\r\nfor (const contact of data.contacts) {\r\n  if (contact.contactMain) {\r\n    checkMainContact = true;\r\n    break;\r\n  }\r\n}\r\n\r\nif (checkMainContact && !data.contacts[0].contactMain) {\r\n  const sortedContacts = data.contacts;\r\n  sortedContacts.sort((a, b) => b.contactMain - a.contactMain);\r\n  var dataGridInst = util.searchComponents(instance.parent.components, \"contacts\");\r\n  dataGridInst[0].setValue(sortedContacts);\r\n}",
-            "optionalWhenDisabled": false,
-            "type": "hidden",
+            "update": {
+              "type": "any-change",
+              "rate": 300
+            },
+            "key": "asyncCounterparty",
+            "type": "asyncData",
             "input": true
           },
           {
@@ -35,9 +42,10 @@
               "ru": "Контакты",
               "en": "Contacts"
             },
-            "key": "contacts",
+            "key": "counterpartyContacts",
             "hideLabel": true,
             "multiple": true,
+            "disabled": true,
             "validate": {
               "minLength": "",
               "maxLength": ""
@@ -49,6 +57,7 @@
             "layoutFixed": false,
             "enableRowGroups": false,
             "reorder": false,
+            "clearOnHide": false,
             "defaultValue": [
               {
                 "contactFio": "",
@@ -60,7 +69,10 @@
                 "contactComment": ""
               }
             ],
-            "refreshOn": [],
+            "refreshOn": [
+              "asyncCounterparty"
+            ],
+            "calculateValue": "value = _.get(data, \"asyncCounterparty.contacts\");",
             "optionalWhenDisabled": false,
             "type": "datagrid",
             "input": true,
@@ -99,6 +111,7 @@
                               "en": "Full name"
                             },
                             "key": "contactFio",
+                            "disabled": true,
                             "defaultValue": "",
                             "refreshOn": [],
                             "optionalWhenDisabled": false,
@@ -106,7 +119,9 @@
                             "input": true,
                             "inputMasks": [
                               {}
-                            ]
+                            ],
+                            "reorder": false,
+                            "dataSrc": ""
                           },
                           {
                             "label": {
@@ -114,6 +129,7 @@
                               "en": "Position"
                             },
                             "key": "contactPosition",
+                            "disabled": true,
                             "defaultValue": "",
                             "refreshOn": [],
                             "optionalWhenDisabled": false,
@@ -121,7 +137,9 @@
                             "input": true,
                             "inputMasks": [
                               {}
-                            ]
+                            ],
+                            "reorder": false,
+                            "dataSrc": ""
                           },
                           {
                             "label": {
@@ -129,6 +147,7 @@
                               "en": "Main"
                             },
                             "key": "contactMain",
+                            "disabled": true,
                             "refreshOn": [],
                             "optionalWhenDisabled": false,
                             "logic": [
@@ -136,7 +155,7 @@
                                 "name": "Disable checkbox",
                                 "trigger": {
                                   "type": "javascript",
-                                  "javascript": "result = false;\r\nif (!value) {\r\n  for (const contact of data.contacts) {\r\n  if (contact.contactMain) {\r\n    result = true;\r\n    break;\r\n  }\r\n}\r\n}"
+                                  "javascript": "result = false;\r\nif (!value) {\r\n  for (const contact of data.counterparty.contacts) {\r\n  if (contact.contactMain) {\r\n    result = true;\r\n    break;\r\n  }\r\n}\r\n}"
                                 },
                                 "actions": [
                                   {
@@ -153,7 +172,9 @@
                               }
                             ],
                             "type": "checkbox",
-                            "input": true
+                            "input": true,
+                            "reorder": false,
+                            "dataGridLabel": false
                           }
                         ],
                         "type": "column",
@@ -173,6 +194,7 @@
                               "en": "Department"
                             },
                             "key": "contactDepartment",
+                            "disabled": true,
                             "defaultValue": "",
                             "refreshOn": [],
                             "optionalWhenDisabled": false,
@@ -180,7 +202,9 @@
                             "input": true,
                             "inputMasks": [
                               {}
-                            ]
+                            ],
+                            "reorder": false,
+                            "dataSrc": ""
                           },
                           {
                             "label": {
@@ -188,6 +212,7 @@
                               "en": "Phone"
                             },
                             "key": "contactPhone",
+                            "disabled": true,
                             "defaultValue": "",
                             "refreshOn": [],
                             "optionalWhenDisabled": false,
@@ -195,7 +220,9 @@
                             "input": true,
                             "inputMasks": [
                               {}
-                            ]
+                            ],
+                            "reorder": false,
+                            "dataSrc": ""
                           },
                           {
                             "label": {
@@ -203,6 +230,7 @@
                               "en": "E-mail"
                             },
                             "key": "contactEmail",
+                            "disabled": true,
                             "defaultValue": "",
                             "refreshOn": [],
                             "optionalWhenDisabled": false,
@@ -210,7 +238,9 @@
                             "input": true,
                             "inputMasks": [
                               {}
-                            ]
+                            ],
+                            "reorder": false,
+                            "dataSrc": ""
                           }
                         ]
                       }
@@ -225,11 +255,18 @@
                       "en": "Comment"
                     },
                     "key": "contactComment",
+                    "disabled": true,
                     "defaultValue": "",
                     "refreshOn": [],
                     "optionalWhenDisabled": false,
                     "type": "textarea",
-                    "input": true
+                    "input": true,
+                    "uploadStorage": "",
+                    "uploadUrl": "",
+                    "uploadOptions": "",
+                    "uploadDir": "",
+                    "as": "",
+                    "reorder": false
                   }
                 ],
                 "row": "0-0"
@@ -237,7 +274,8 @@
             ],
             "rowGroups": [
               {}
-            ]
+            ],
+            "groupToggle": false
           }
         ]
       },
@@ -270,7 +308,6 @@
             "key": "column",
             "label": "Column",
             "md": 3,
-            "clearOnHide": true,
             "conditional": {
               "show": null,
               "when": null
@@ -283,7 +320,6 @@
             "input": false,
             "key": "column",
             "label": "Column",
-            "clearOnHide": true,
             "conditional": {
               "show": null,
               "when": null
@@ -298,7 +334,6 @@
             "key": "column",
             "label": "Column",
             "components": [],
-            "clearOnHide": true,
             "conditional": {
               "show": null,
               "when": null
