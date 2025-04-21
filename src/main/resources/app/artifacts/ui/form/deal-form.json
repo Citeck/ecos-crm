@@ -13,55 +13,164 @@
   "definition": {
     "components": [
       {
-        "scrollableContent": true,
-        "key": "panel2",
-        "type": "panel",
-        "input": false,
+        "label": {
+          "ru": "Tabs"
+        },
+        "key": "general",
         "components": [
           {
             "label": {
-              "ru": "Columns"
+              "ru": "Основное"
             },
-            "key": "columns",
-            "columns": [
+            "key": "general",
+            "components": [
               {
+                "scrollableContent": true,
+                "key": "panel2",
+                "type": "panel",
+                "input": false,
                 "components": [
-                  {
-                    "label": {
-                      "ru": "Название"
-                    },
-                    "key": "name",
-                    "validate": {
-                      "required": true
-                    },
-                    "defaultValue": "",
-                    "refreshOn": [],
-                    "optionalWhenDisabled": false,
-                    "type": "textfield",
-                    "input": true,
-                    "inputMasks": [
-                      {}
-                    ]
-                  },
                   {
                     "label": {
                       "ru": "Columns"
                     },
-                    "key": "columns3",
+                    "key": "columns",
                     "columns": [
                       {
                         "components": [
                           {
                             "label": {
-                              "en": "Title",
-                              "ru": "Номер"
+                              "ru": "Название"
                             },
-                            "key": "number",
-                            "disabled": true,
+                            "key": "name",
+                            "validate": {
+                              "required": true
+                            },
                             "defaultValue": "",
                             "refreshOn": [],
                             "optionalWhenDisabled": false,
                             "type": "textfield",
+                            "input": true,
+                            "inputMasks": [
+                              {}
+                            ]
+                          },
+                          {
+                            "label": {
+                              "ru": "Columns"
+                            },
+                            "key": "columns3",
+                            "columns": [
+                              {
+                                "components": [
+                                  {
+                                    "label": {
+                                      "en": "Title",
+                                      "ru": "Номер"
+                                    },
+                                    "key": "number",
+                                    "disabled": true,
+                                    "defaultValue": "",
+                                    "refreshOn": [],
+                                    "optionalWhenDisabled": false,
+                                    "type": "textfield",
+                                    "input": true
+                                  }
+                                ],
+                                "type": "column",
+                                "input": false,
+                                "key": "column",
+                                "index": 0
+                              },
+                              {
+                                "index": 1,
+                                "type": "column",
+                                "input": false,
+                                "key": "column",
+                                "components": [
+                                  {
+                                    "label": {
+                                      "ru": "Дата создания",
+                                      "en": "Received date"
+                                    },
+                                    "key": "dateReceived",
+                                    "format": "dd-MM-yyyy HH:mm",
+                                    "datePicker": {
+                                      "minDate": "",
+                                      "maxDate": ""
+                                    },
+                                    "timePicker": {
+                                      "showMeridian": false
+                                    },
+                                    "defaultValue": "",
+                                    "refreshOn": [],
+                                    "customDefaultValue": "value = new Date();",
+                                    "optionalWhenDisabled": false,
+                                    "type": "datetime",
+                                    "input": true,
+                                    "suffix": true
+                                  }
+                                ]
+                              }
+                            ],
+                            "oneColumnInViewMode": false,
+                            "type": "columns",
+                            "input": false
+                          },
+                          {
+                            "label": {
+                              "ru": "Бюджет",
+                              "en": "Budget"
+                            },
+                            "key": "amount",
+                            "validate": {
+                              "integer": false
+                            },
+                            "isBigNumber": false,
+                            "delimiter": true,
+                            "delimiterValue": " ",
+                            "refreshOn": [],
+                            "optionalWhenDisabled": false,
+                            "defaultValue": "",
+                            "type": "number",
+                            "input": true
+                          },
+                          {
+                            "label": {
+                              "ru": "Количество пользователей",
+                              "en": "Number of users"
+                            },
+                            "key": "numberOfUsers",
+                            "defaultValue": "",
+                            "refreshOn": [],
+                            "optionalWhenDisabled": false,
+                            "type": "textfield",
+                            "input": true,
+                            "inputMasks": [
+                              {}
+                            ]
+                          },
+                          {
+                            "label": {
+                              "ru": "createdFromLead"
+                            },
+                            "key": "createdFromLead",
+                            "disabled": true,
+                            "clearOnHide": false,
+                            "modalTitle": "",
+                            "journalId": "leads-journal",
+                            "source": {
+                              "type": "journal",
+                              "custom": {
+                                "columns": []
+                              },
+                              "customValues": "",
+                              "viewMode": "default"
+                            },
+                            "queryData": "",
+                            "refreshOn": [],
+                            "optionalWhenDisabled": false,
+                            "type": "selectJournal",
                             "input": true
                           }
                         ],
@@ -78,25 +187,46 @@
                         "components": [
                           {
                             "label": {
-                              "ru": "Дата создания",
-                              "en": "Received date"
+                              "ru": "Ответственный",
+                              "en": "Responsible"
                             },
-                            "key": "dateReceived",
-                            "format": "dd-MM-yyyy HH:mm",
-                            "datePicker": {
-                              "minDate": "",
-                              "maxDate": ""
-                            },
-                            "timePicker": {
-                              "showMeridian": false
-                            },
+                            "key": "manager",
+                            "allowedAuthorityType": "USER",
+                            "currentUserByDefault": true,
                             "defaultValue": "",
                             "refreshOn": [],
-                            "customDefaultValue": "value = new Date();",
                             "optionalWhenDisabled": false,
-                            "type": "datetime",
+                            "type": "selectOrgstruct",
+                            "input": true
+                          },
+                          {
+                            "label": {
+                              "ru": "Контрагент",
+                              "en": "Counterparty"
+                            },
+                            "key": "counterparty",
+                            "modalTitle": "",
+                            "journalId": "ecos-counterparty",
+                            "refreshOn": [],
+                            "optionalWhenDisabled": false,
+                            "type": "selectJournal",
                             "input": true,
-                            "suffix": true
+                            "queryData": ""
+                          },
+                          {
+                            "label": {
+                              "ru": "Наблюдатели",
+                              "en": "Viewers"
+                            },
+                            "key": "viewers",
+                            "multiple": true,
+                            "viewModeType": "tags",
+                            "reorder": false,
+                            "defaultValue": [],
+                            "refreshOn": [],
+                            "optionalWhenDisabled": false,
+                            "type": "selectOrgstruct",
+                            "input": true
                           }
                         ]
                       }
@@ -107,161 +237,77 @@
                   },
                   {
                     "label": {
-                      "ru": "Бюджет",
-                      "en": "Budget"
+                      "ru": "Описание",
+                      "en": "Description"
                     },
-                    "key": "amount",
-                    "validate": {
-                      "integer": false
-                    },
-                    "isBigNumber": false,
-                    "delimiter": true,
-                    "delimiterValue": " ",
+                    "key": "description",
+                    "editor": "lexical",
+                    "defaultValue": "",
                     "refreshOn": [],
                     "optionalWhenDisabled": false,
-                    "defaultValue": "",
-                    "type": "number",
-                    "input": true
+                    "type": "textarea",
+                    "input": true,
+                    "uploadStorage": "",
+                    "uploadUrl": "",
+                    "uploadOptions": "",
+                    "uploadDir": "",
+                    "as": "",
+                    "reorder": false
                   },
                   {
                     "label": {
-                      "ru": "Количество пользователей",
-                      "en": "Number of users"
+                      "ru": "Status"
                     },
-                    "key": "numberOfUsers",
-                    "defaultValue": "",
+                    "key": "_status",
+                    "disabled": true,
+                    "hidden": true,
+                    "defaultValue": "new",
                     "refreshOn": [],
                     "optionalWhenDisabled": false,
                     "type": "textfield",
-                    "input": true,
-                    "inputMasks": [
-                      {}
-                    ]
-                  },
-                  {
-                    "label": {
-                      "ru": "createdFromLead"
-                    },
-                    "key": "createdFromLead",
-                    "disabled": true,
-                    "clearOnHide": false,
-                    "modalTitle": "",
-                    "journalId": "leads-journal",
-                    "source": {
-                      "type": "journal",
-                      "custom": {
-                        "columns": []
-                      },
-                      "customValues": ""
-                    },
-                    "queryData": "",
-                    "refreshOn": [],
-                    "optionalWhenDisabled": false,
-                    "type": "selectJournal",
-                    "input": true
-                  }
-                ],
-                "type": "column",
-                "input": false,
-                "key": "column",
-                "index": 0
-              },
-              {
-                "index": 1,
-                "type": "column",
-                "input": false,
-                "key": "column",
-                "components": [
-                  {
-                    "label": {
-                      "ru": "Ответственный",
-                      "en": "Responsible"
-                    },
-                    "key": "manager",
-                    "allowedAuthorityType": "USER",
-                    "currentUserByDefault": true,
-                    "defaultValue": "",
-                    "refreshOn": [],
-                    "optionalWhenDisabled": false,
-                    "type": "selectOrgstruct",
-                    "input": true
-                  },
-                  {
-                    "label": {
-                      "ru": "Контрагент",
-                      "en": "Counterparty"
-                    },
-                    "key": "counterparty",
-                    "modalTitle": "",
-                    "journalId": "ecos-counterparty",
-                    "refreshOn": [],
-                    "optionalWhenDisabled": false,
-                    "type": "selectJournal",
-                    "input": true,
-                    "queryData": "",
-                    "source": {
-                      "custom": {
-                        "columns": []
-                      },
-                      "type": "journal",
-                      "customValues": []
-                    }
-                  },
-                  {
-                    "label": {
-                      "ru": "Наблюдатели",
-                      "en": "Viewers"
-                    },
-                    "key": "viewers",
-                    "multiple": true,
-                    "viewModeType": "tags",
-                    "reorder": false,
-                    "defaultValue": [],
-                    "refreshOn": [],
-                    "optionalWhenDisabled": false,
-                    "type": "selectOrgstruct",
                     "input": true
                   }
                 ]
               }
-            ],
-            "oneColumnInViewMode": false,
-            "type": "columns",
-            "input": false
+            ]
           },
           {
             "label": {
-              "ru": "Описание",
-              "en": "Description"
+              "ru": "Продукты и услуги"
             },
-            "key": "description",
-            "editor": "lexical",
-            "defaultValue": "",
-            "refreshOn": [],
-            "optionalWhenDisabled": false,
-            "type": "textarea",
-            "input": true,
-            "uploadStorage": "",
-            "uploadUrl": "",
-            "uploadOptions": "",
-            "uploadDir": "",
-            "as": "",
-            "reorder": false
-          },
-          {
-            "label": {
-              "ru": "Status"
-            },
-            "key": "_status",
-            "disabled": true,
-            "hidden": true,
-            "defaultValue": "new",
-            "refreshOn": [],
-            "optionalWhenDisabled": false,
-            "type": "textfield",
-            "input": true
+            "key": "pas",
+            "components": [
+              {
+                "label": "",
+                "key": "has-pas:product-and-services",
+                "multiple": true,
+                "customButtonName": "",
+                "reorder": false,
+                "clearOnHide": false,
+                "source": {
+                  "type": "journal",
+                  "journal": {
+                    "journalId": "product-and-services-item",
+                    "columns": []
+                  }
+                },
+                "enableSelectButton": true,
+                "selectJournalId": "product-and-services-template",
+                "refreshOn": [],
+                "optionalWhenDisabled": false,
+                "properties": {
+                  "attribute": "has-pas:product-and-services"
+                },
+                "isUsedJournalActions": true,
+                "type": "tableForm",
+                "input": true
+              }
+            ]
           }
-        ]
+        ],
+        "type": "tabs",
+        "input": false,
+        "reorder": false
       },
       {
         "label": {

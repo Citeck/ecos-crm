@@ -43,8 +43,8 @@ model:
         en: Lead Disqualified
     - id: deal_creation
       name:
-        ru: Создание сделки
-        en: Deal Creation
+        ru: Сделка
+        en: Deal
   stages:
     - name:
         ru: Не обработан
