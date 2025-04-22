@@ -129,6 +129,46 @@
               },
               "items": [],
               "allowedFor": []
+            },
+            {
+              "id": "crm-request-categories",
+              "label": {
+                "ru": "Категории обращений",
+                "en": "Request categories"
+              },
+              "icon": "ui/icon@i-leftmenu-groups",
+              "hidden": false,
+              "type": "JOURNAL",
+              "config": {
+                "recordRef": "uiserv/journal@deal-request-category-journal",
+                "displayCount": false
+              },
+              "action": {
+                "type": "",
+                "config": {}
+              },
+              "items": [],
+              "allowedFor": []
+            },
+            {
+              "id": "crm-request-sources",
+              "label": {
+                "ru": "Источники обращений",
+                "en": "Request sources"
+              },
+              "icon": "ui/icon@i-leftmenu-groups",
+              "hidden": false,
+              "type": "JOURNAL",
+              "config": {
+                "recordRef": "uiserv/journal@deal-request-source-journal",
+                "displayCount": false
+              },
+              "action": {
+                "type": "",
+                "config": {}
+              },
+              "items": [],
+              "allowedFor": []
             }
           ],
           "allowedFor": []

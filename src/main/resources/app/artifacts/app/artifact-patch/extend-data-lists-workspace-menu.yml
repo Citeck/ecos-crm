@@ -5,6 +5,7 @@ name:
   en: Add "CRM" data lists
 
 target: 'ui/menu$data-lists-menu'
+enabled: false
 
 type: json
 config:
