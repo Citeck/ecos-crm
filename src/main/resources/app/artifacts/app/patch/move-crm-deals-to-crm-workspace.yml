@@ -1,0 +1,18 @@
+---
+id: move-crm-deals-to-crm-workspace
+date: 2025-04-14T00:00:00Z
+type: mutate
+manual: true
+targetApp: emodel
+config:
+  records:
+    - id: emodel/group-action@
+      attributes:
+        values:
+          type: admin-action-records-of-type
+          config:
+            typeRef: emodel/type@deal
+        execution:
+          type: update-workspace
+          config:
+            targetWorkspace: emodel/workspace@crm-workspace

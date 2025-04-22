@@ -13,6 +13,7 @@ inheritForm: false
 dispNameTemplate:
   ru: "Сделка: ${name}"
 workspaceScope: PRIVATE
+defaultWorkspace: crm-workspace
 actions:
   - uiserv/action@deal-change-status
   - uiserv/action@edit

@@ -11,6 +11,18 @@
       "config": {},
       "items": [
         {
+          "id": "tasks",
+          "label": {
+            "ru": "Задачи",
+            "en": "Tasks"
+          },
+          "hidden": false,
+          "type": "INCLUDE_MENU",
+          "config": {
+            "menuRef": "uiserv/menu@default-tasks"
+          }
+        },
+        {
           "id": "sections",
           "label": {
             "ru": "Разделы",
@@ -74,6 +86,82 @@
               "type": "KANBAN",
               "config": {
                 "recordRef": "uiserv/board@assignments-kanban"
+              },
+              "action": {
+                "type": "",
+                "config": {}
+              },
+              "items": [],
+              "allowedFor": []
+            }
+          ],
+          "allowedFor": []
+        },
+        {
+          "id": "6574c421-21ae-4501-8dfa-1e9e1491a294",
+          "label": {
+            "ru": "Справочники",
+            "en": "Data Lists"
+          },
+          "icon": "",
+          "hidden": false,
+          "type": "SECTION",
+          "config": {},
+          "action": {
+            "type": "",
+            "config": {}
+          },
+          "items": [
+            {
+              "id": "f5742732-3097-4267-8f1c-57f31501d115",
+              "label": {
+                "en": "Контрагенты"
+              },
+              "icon": "ui/icon@i-leftmenu-cases",
+              "hidden": false,
+              "type": "JOURNAL",
+              "config": {
+                "recordRef": "uiserv/journal@ecos-counterparty"
+              },
+              "action": {
+                "type": "",
+                "config": {}
+              },
+              "items": [],
+              "allowedFor": []
+            },
+            {
+              "id": "crm-request-categories",
+              "label": {
+                "ru": "Категории обращений",
+                "en": "Request categories"
+              },
+              "icon": "ui/icon@i-leftmenu-groups",
+              "hidden": false,
+              "type": "JOURNAL",
+              "config": {
+                "recordRef": "uiserv/journal@deal-request-category-journal",
+                "displayCount": false
+              },
+              "action": {
+                "type": "",
+                "config": {}
+              },
+              "items": [],
+              "allowedFor": []
+            },
+            {
+              "id": "crm-request-sources",
+              "label": {
+                "ru": "Источники обращений",
+                "en": "Request sources"
+              },
+              "icon": "ui/icon@i-leftmenu-groups",
+              "hidden": false,
+              "type": "JOURNAL",
+              "config": {
+                "recordRef": "uiserv/journal@deal-request-source-journal",
+                "displayCount": false
               },
               "action": {
                 "type": "",

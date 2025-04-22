@@ -1,9 +1,17 @@
 ---
 id: crm-workspace
 name:
-  ru: Рабочее пространство CRM
-  en: CRM Workspace
+  en: CRM
 description:
-  ru: Рабочее пространство CRM
-  en: CRM Workspace
-workspaceMembers: []
+  ru: Пространство для работы с лидами, сделками и платежами.
+  en: A space for managing leads, deals, and payments.
+workspaceMembers:
+  - id: default-users
+    authorities:
+      - emodel/authority-group@crm-manager
+    memberRole: USER
+  - id: default-managers
+    authorities:
+      - emodel/authority-group@crm-cco
+    memberRole: MANAGER
+
