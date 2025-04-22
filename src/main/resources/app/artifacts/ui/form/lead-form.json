@@ -293,10 +293,10 @@
           },
           {
             "label": {
-              "ru": "comment",
+              "ru": "Описание",
               "en": "Description"
             },
-            "key": "comment",
+            "key": "description",
             "editor": "lexical",
             "defaultValue": "",
             "refreshOn": [],

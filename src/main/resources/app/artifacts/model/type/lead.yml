@@ -100,13 +100,8 @@ model:
               en: Deal
     - id: counterpartyText
       name:
-        ru: Контрагент (текст)
-        en: Counterparty (text)
-      type: TEXT
-    - id: comment
-      name:
-        ru: Комментарий
-        en: Comment
+        ru: Компания
+        en: Company
       type: TEXT
     - id: disqualificationReason
       name:
