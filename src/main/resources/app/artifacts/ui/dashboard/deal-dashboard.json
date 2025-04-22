@@ -5,7 +5,7 @@
   "appliedToRef": "",
   "authority": "",
   "scope": "",
-  "priority": 0.0,
+  "priority": 0,
   "workspace": "",
   "config": {
     "version": "v2",
@@ -57,6 +57,24 @@
               "widgetDisplayCondition": null,
               "elementsDisplayCondition": {},
               "formMode": "EDIT"
+            }
+          },
+          "description": {
+            "ru": "Основное",
+            "en": "General"
+          }
+        },
+        {
+          "name": "activities",
+          "label": "dashboard-settings.widget.activities",
+          "additionalProps": {},
+          "dndId": "380bb7a4-09cc-4c8c-a30a-f042a44e09c3",
+          "id": "865650d9-ded7-467a-b3e4-388105c0b26e",
+          "props": {
+            "id": "865650d9-ded7-467a-b3e4-388105c0b26e",
+            "config": {
+              "widgetDisplayCondition": null,
+              "elementsDisplayCondition": {}
             }
           },
           "description": {
@@ -119,26 +137,6 @@
           "name": "properties",
           "label": "dashboard-settings.widget.properties",
           "additionalProps": {},
-          "dndId": "c1cb3aef-dced-47c9-a254-5c310761353c",
-          "id": "5945c0ff-ddec-4e7b-8a25-092aa01eb0b6",
-          "props": {
-            "id": "5945c0ff-ddec-4e7b-8a25-092aa01eb0b6",
-            "config": {
-              "widgetDisplayCondition": null,
-              "elementsDisplayCondition": {},
-              "formId": "uiserv/form@deal-marketing-form",
-              "titleAsFormName": true
-            }
-          },
-          "description": {
-            "ru": "Основное",
-            "en": "General"
-          }
-        },
-        {
-          "name": "properties",
-          "label": "dashboard-settings.widget.properties",
-          "additionalProps": {},
           "dndId": "e3f7db2c-5088-4bce-9922-be075becb7d7",
           "id": "a8fa00b9-3b51-4027-a4a7-17a799c2adf1",
           "props": {
@@ -156,16 +154,18 @@
           }
         },
         {
-          "name": "activities",
-          "label": "dashboard-settings.widget.activities",
+          "name": "properties",
+          "label": "dashboard-settings.widget.properties",
           "additionalProps": {},
-          "dndId": "380bb7a4-09cc-4c8c-a30a-f042a44e09c3",
-          "id": "865650d9-ded7-467a-b3e4-388105c0b26e",
+          "dndId": "c1cb3aef-dced-47c9-a254-5c310761353c",
+          "id": "5945c0ff-ddec-4e7b-8a25-092aa01eb0b6",
           "props": {
-            "id": "865650d9-ded7-467a-b3e4-388105c0b26e",
+            "id": "5945c0ff-ddec-4e7b-8a25-092aa01eb0b6",
             "config": {
               "widgetDisplayCondition": null,
-              "elementsDisplayCondition": {}
+              "elementsDisplayCondition": {},
+              "formId": "uiserv/form@deal-marketing-form",
+              "titleAsFormName": true
             }
           },
           "description": {
@@ -296,7 +296,8 @@
               "widgets": [
                 "7194460e-6e57-4e9b-9696-d6ad4ad0242d",
                 "d5b4372a-cb41-4370-b66e-5580a52aaa6f",
-                "d8a5405d-225c-4dd5-926b-66fe35af2ba4"
+                "d8a5405d-225c-4dd5-926b-66fe35af2ba4",
+                "865650d9-ded7-467a-b3e4-388105c0b26e"
               ]
             },
             {
@@ -304,9 +305,8 @@
                 "b4bcb077-ed4f-498a-b152-97798fddd8fb",
                 "6d9d1e54-0c77-4990-9aed-228bec1614f4",
                 "6cb0726f-07c2-4388-84bc-6651823e2ba9",
-                "5945c0ff-ddec-4e7b-8a25-092aa01eb0b6",
                 "a8fa00b9-3b51-4027-a4a7-17a799c2adf1",
-                "865650d9-ded7-467a-b3e4-388105c0b26e",
+                "5945c0ff-ddec-4e7b-8a25-092aa01eb0b6",
                 "c0a9aeee-a536-400d-ae80-326e77ce5202"
               ],
               "width": "25%"

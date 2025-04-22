@@ -38,6 +38,25 @@
           },
           "items": [
             {
+              "id": "leads",
+              "label": {
+                "ru": "Лиды",
+                "en": "Leads"
+              },
+              "icon": "ui/icon@i-leftmenu-meetings",
+              "hidden": false,
+              "type": "JOURNAL",
+              "config": {
+                "recordRef": "uiserv/journal@leads-journal"
+              },
+              "action": {
+                "type": "",
+                "config": {}
+              },
+              "items": [],
+              "allowedFor": []
+            },
+            {
               "id": "15fb35cc-5c64-42e4-aef1-3536adbffed6",
               "label": {
                 "ru": "Сделки",
@@ -48,6 +67,25 @@
               "type": "JOURNAL",
               "config": {
                 "recordRef": "uiserv/journal@deals-journal"
+              },
+              "action": {
+                "type": "",
+                "config": {}
+              },
+              "items": [],
+              "allowedFor": []
+            },
+            {
+              "id": "orders",
+              "label": {
+                "ru": "Заказы",
+                "en": "Orders"
+              },
+              "icon": "ui/icon@i-leftmenu-tax-report",
+              "hidden": false,
+              "type": "JOURNAL",
+              "config": {
+                "recordRef": "uiserv/journal@orders-journal"
               },
               "action": {
                 "type": "",
