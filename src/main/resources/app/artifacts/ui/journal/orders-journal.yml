@@ -6,6 +6,7 @@ name:
 typeRef: emodel/type@order
 actions:
   - uiserv/action@view-dashboard
+  - uiserv/action@edit
   - uiserv/action@delete
   - uiserv/action@order-change-status
 columns:
@@ -36,6 +37,15 @@ columns:
       ru: Сумма итого
       en: Total amount
     type: NUMBER
+    sortable: false
+    searchable: false
+  - id: has-pas:totalAmountWithVat
+    name:
+      ru: Сумма с НДС
+      en: Total amount with VAT
+    type: NUMBER
+    sortable: false
+    searchable: false
   - id: manager
     name:
       ru: Ответственный

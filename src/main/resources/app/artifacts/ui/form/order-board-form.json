@@ -20,42 +20,8 @@
         "components": [
           {
             "label": {
-              "ru": "Компания",
-              "en": "Company"
-            },
-            "key": "company",
-            "hideLabel": true,
-            "hidden": true,
-            "refreshOn": [],
-            "optionalWhenDisabled": false,
-            "customConditional": "show = value !== ''",
-            "type": "textfield",
-            "input": true,
-            "inputMasks": [
-              {}
-            ]
-          },
-          {
-            "label": {
-              "ru": "Контрагент",
-              "en": "Counterparty"
-            },
-            "key": "counterparty",
-            "hideLabel": true,
-            "hidden": true,
-            "modalTitle": "",
-            "journalId": "ecos-counterparty",
-            "queryData": "",
-            "refreshOn": [],
-            "optionalWhenDisabled": false,
-            "customConditional": "show = !_.isEmpty(value)",
-            "type": "selectJournal",
-            "input": true
-          },
-          {
-            "label": {
-              "ru": "Отв",
-              "en": "Responsible"
+              "ru": "manager",
+              "en": "manager"
             },
             "key": "manager",
             "allowedAuthorityType": "USER",
@@ -64,71 +30,93 @@
             "optionalWhenDisabled": false,
             "customConditional": "show = !_.isEmpty(value)",
             "type": "selectOrgstruct",
-            "input": true
+            "input": true,
+            "reorder": false,
+            "allowedGroupType": "",
+            "rootGroupName": "",
+            "defaultValue": ""
           },
           {
             "label": {
-              "ru": "Бюджет"
+              "ru": "orderDate",
+              "en": "orderDate"
             },
-            "key": "amount",
-            "validate": {
-              "integer": false
-            },
-            "customClass": "font-weight: bold;",
-            "isBigNumber": false,
-            "delimiter": true,
-            "delimiterValue": "  ",
-            "refreshOn": [],
-            "optionalWhenDisabled": false,
-            "defaultValue": "",
-            "type": "number",
-            "input": true
-          },
-          {
-            "label": {
-              "ru": "Дата создания",
-              "en": "Received date"
-            },
-            "key": "dateReceived",
-            "format": "dd-MM-yyyy",
+            "key": "orderDate",
+            "format": "dd-MM-yyyy HH:mm",
             "customClass": "font-weight-light",
             "datePicker": {
               "minDate": "",
               "maxDate": ""
             },
             "enableTime": false,
+            "defaultValue": "",
+            "refreshOn": [],
+            "optionalWhenDisabled": false,
+            "type": "datetime",
+            "input": true,
+            "suffix": true,
+            "reorder": false
+          },
+          {
+            "label": {
+              "ru": "deal"
+            },
+            "key": "deal",
+            "modalTitle": "",
+            "journalId": "deals-journal",
+            "source": {
+              "type": "journal",
+              "custom": {
+                "columns": []
+              },
+              "customValues": ""
+            },
             "refreshOn": [],
             "optionalWhenDisabled": false,
             "customConditional": "show = !_.isEmpty(value)",
-            "type": "datetime",
-            "input": true,
-            "suffix": true
-          },
-          {
-            "label": {
-              "ru": "Категория обращения"
-            },
-            "key": "requestCategory",
-            "modalTitle": "",
-            "journalId": "order-request-category-journal",
-            "queryData": "",
-            "refreshOn": [],
-            "optionalWhenDisabled": false,
             "type": "selectJournal",
-            "input": true
+            "input": true,
+            "queryData": ""
           },
           {
             "label": {
-              "ru": "Status"
+              "ru": "has-pas:totalAmount"
             },
-            "key": "_status",
+            "key": "has-pas:totalAmount",
             "disabled": true,
-            "hidden": true,
-            "defaultValue": "new",
+            "validate": {
+              "integer": false
+            },
+            "isBigNumber": false,
+            "delimiter": true,
+            "delimiterValue": " ",
             "refreshOn": [],
             "optionalWhenDisabled": false,
-            "type": "textfield",
-            "input": true
+            "decimalLimit": 2,
+            "defaultValue": "",
+            "type": "number",
+            "input": true,
+            "reorder": false
+          },
+          {
+            "label": {
+              "ru": "has-pas:totalAmountWithVat"
+            },
+            "key": "has-pas:totalAmountWithVat",
+            "disabled": true,
+            "validate": {
+              "integer": false
+            },
+            "isBigNumber": false,
+            "delimiter": true,
+            "delimiterValue": " ",
+            "refreshOn": [],
+            "optionalWhenDisabled": false,
+            "decimalLimit": 2,
+            "defaultValue": "",
+            "type": "number",
+            "input": true,
+            "reorder": false
           }
         ]
       },

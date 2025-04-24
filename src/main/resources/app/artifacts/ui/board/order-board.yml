@@ -6,8 +6,8 @@ name:
 typeRef: emodel/type@order
 journalRef: uiserv/journal@orders-journal
 cardFormRef: uiserv/form@order-board-form
+cardFieldsLabelLayout: TOP
 readOnly: false
-disableTitle: false
 columns:
   - id: placement
     name:
@@ -28,4 +28,4 @@ columns:
   - id: canceled
     name:
       ru: Отменен
-      en: Canceled 
+      en: Canceled
