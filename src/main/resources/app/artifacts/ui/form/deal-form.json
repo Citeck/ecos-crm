@@ -201,17 +201,65 @@
                           },
                           {
                             "label": {
-                              "ru": "Контрагент",
-                              "en": "Counterparty"
+                              "ru": "Columns"
                             },
-                            "key": "counterparty",
-                            "modalTitle": "",
-                            "journalId": "ecos-counterparty",
-                            "refreshOn": [],
-                            "optionalWhenDisabled": false,
-                            "type": "selectJournal",
-                            "input": true,
-                            "queryData": ""
+                            "key": "columns4",
+                            "columns": [
+                              {
+                                "components": [
+                                  {
+                                    "label": {
+                                      "ru": "Контрагент",
+                                      "en": "Counterparty"
+                                    },
+                                    "key": "counterparty",
+                                    "modalTitle": "",
+                                    "journalId": "ecos-counterparty",
+                                    "refreshOn": [],
+                                    "optionalWhenDisabled": false,
+                                    "type": "selectJournal",
+                                    "input": true,
+                                    "queryData": ""
+                                  }
+                                ],
+                                "type": "column",
+                                "input": false,
+                                "key": "column",
+                                "index": 0
+                              },
+                              {
+                                "index": 1,
+                                "type": "column",
+                                "input": false,
+                                "key": "column",
+                                "components": [
+                                  {
+                                    "label": {
+                                      "ru": "contract"
+                                    },
+                                    "key": "contract",
+                                    "modalTitle": "",
+                                    "journalId": "ecos-contract-journal",
+                                    "source": {
+                                      "type": "journal",
+                                      "custom": {
+                                        "columns": []
+                                      },
+                                      "customValues": "",
+                                      "viewMode": "default"
+                                    },
+                                    "refreshOn": [],
+                                    "optionalWhenDisabled": false,
+                                    "type": "selectJournal",
+                                    "input": true,
+                                    "queryData": ""
+                                  }
+                                ]
+                              }
+                            ],
+                            "oneColumnInViewMode": false,
+                            "type": "columns",
+                            "input": false
                           },
                           {
                             "label": {
@@ -298,6 +346,42 @@
                 "properties": {
                   "attribute": "has-pas:product-and-services"
                 },
+                "isUsedJournalActions": true,
+                "type": "tableForm",
+                "input": true,
+                "tab": 1
+              }
+            ]
+          },
+          {
+            "label": {
+              "ru": "Заказы"
+            },
+            "key": "order",
+            "components": [
+              {
+                "label": "",
+                "key": "has-orders:orders",
+                "multiple": true,
+                "customButtonName": "",
+                "reorder": false,
+                "source": {
+                  "type": "journal",
+                  "journal": {
+                    "journalId": "orders-journal",
+                    "columns": [
+                      "number",
+                      "counterparty",
+                      "contract",
+                      "has-pas:totalAmount",
+                      "manager",
+                      "_created",
+                      "_status"
+                    ]
+                  }
+                },
+                "refreshOn": [],
+                "optionalWhenDisabled": false,
                 "isUsedJournalActions": true,
                 "type": "tableForm",
                 "input": true

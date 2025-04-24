@@ -1,0 +1,37 @@
+{
+  "id": "order-permissions",
+  "typeRef": "emodel/type@order",
+  "permissions": {
+    "matrix": {
+      "manager": {
+        "placement": "WRITE",
+        "approving": "WRITE",
+        "execution": "WRITE",
+        "completed": "WRITE",
+        "canceled": "WRITE"
+      },
+      "cco": {
+        "placement": "WRITE",
+        "approving": "WRITE",
+        "execution": "WRITE",
+        "completed": "WRITE",
+        "canceled": "WRITE"
+      },
+      "viewers": {
+        "placement": "READ",
+        "approving": "READ",
+        "execution": "READ",
+        "completed": "READ",
+        "canceled": "READ"
+      },
+      "allCRMManagers": {
+        "placement": "READ",
+        "approving": "READ",
+        "execution": "READ",
+        "completed": "READ",
+        "canceled": "READ"
+      }
+    }
+  },
+  "attributes": {}
+} 

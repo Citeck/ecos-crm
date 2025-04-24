@@ -1,0 +1,31 @@
+---
+id: order-board
+name:
+  ru: Заказы
+  en: Orders
+typeRef: emodel/type@order
+journalRef: uiserv/journal@orders-journal
+cardFormRef: uiserv/form@order-board-form
+readOnly: false
+disableTitle: false
+columns:
+  - id: placement
+    name:
+      ru: Оформление
+      en: placement
+  - id: approving
+    name:
+      ru: Согласование
+      en: Approving
+  - id: execution
+    name:
+      ru: Исполнение
+      en: Execution
+  - id: completed
+    name:
+      ru: Завершен
+      en: Completed
+  - id: canceled
+    name:
+      ru: Отменен
+      en: Canceled 

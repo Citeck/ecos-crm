@@ -1,0 +1,156 @@
+---
+id: order
+name:
+  ru: Заказ
+  en: Order
+storageType: ECOS_MODEL
+parentRef: emodel/type@case
+formRef: uiserv/form@order-form
+journalRef: uiserv/journal@orders-journal
+defaultStatus: placement
+boardRef: uiserv/board@order-board
+inheritForm: false
+dispNameTemplate:
+  ru: "Заказ №${number}"
+  en: "Order #${number}"
+workspaceScope: PRIVATE
+actions:
+  - uiserv/action@order-change-status
+  - uiserv/action@edit
+  - uiserv/action@delete
+defaultCreateVariant: true
+model:
+  statuses:
+    - id: placement
+      name:
+        ru: Оформление
+        en: Placement
+    - id: approving
+      name:
+        ru: Согласование
+        en: Approving
+    - id: execution
+      name:
+        ru: Исполнение
+        en: Execution
+    - id: completed
+      name:
+        ru: Завершен
+        en: Completed
+    - id: canceled
+      name:
+        ru: Отменен
+        en: Canceled
+  stages:
+    - name:
+        ru: Оформление
+        en: Placement
+      statuses:
+        - placement
+    - name:
+        ru: Согласование
+        en: Approving
+      statuses:
+        - approving
+    - name:
+        ru: Исполнение
+        en: Execution
+      statuses:
+        - execution
+    - name:
+        ru: Завершен
+        en: Completed
+      statuses:
+        - completed
+    - name:
+        ru: Отменен
+        en: Canceled
+      statuses:
+        - canceled
+  roles:
+    - id: manager
+      name:
+        ru: Менеджер по продажам
+        en: Manager
+      computed:
+        type: SCRIPT
+        config:
+          fn: |
+            const manager = value.load('manager?id');
+            if (manager === null) {
+                return "GROUP_crm-manager";
+            }
+            return manager;
+    - id: viewers
+      name:
+        en: Viewers
+        ru: Наблюдатели
+      computed:
+        type: ATTRIBUTE
+        config:
+          attribute: viewers
+    - id: allCRMManagers
+      name:
+        en: All CRM Managers
+        ru: Все менеджеры CRM
+      assignees:
+        - GROUP_crm-manager
+    - id: cco
+      name:
+        ru: Коммерческий директор
+        en: CCO
+      assignees:
+        - GROUP_crm-cco
+  attributes:
+    - id: number
+      name:
+        ru: Номер
+        en: Number
+      computed:
+        type: COUNTER
+        config:
+          numTemplateRef: emodel/num-template@order-num-template
+        storingType: ON_CREATE
+    - id: orderDate
+      name:
+        ru: Дата заказа
+        en: Order date
+      type: DATETIME
+      computed:
+        storingType: ON_EMPTY
+        config:
+          fn: |
+            return new Date();
+        type: SCRIPT
+    - id: manager
+      name:
+        ru: Ответственный
+        en: Manager
+      type: PERSON
+    - id: counterparty
+      name:
+        ru: Контрагент
+        en: Counterparty
+      type: ASSOC
+      config:
+        typeRef: emodel/type@ecos-counterparty
+        child: false
+    - id: contract
+      name:
+        ru: Договор
+        en: Contract
+      type: ASSOC
+      config:
+        typeRef: emodel/type@ecos-contract
+        child: false
+    - id: deal
+      name:
+        ru: Сделка
+        en: Deal
+      type: ASSOC
+      config:
+        typeRef: emodel/type@deal
+        child: false
+
+aspects:
+  - ref: emodel/aspect@has-product-and-services

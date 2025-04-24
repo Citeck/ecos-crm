@@ -152,3 +152,11 @@ model:
       multiple: false
       config:
         typeRef: emodel/type@lead
+    - id: contract
+      name:
+        ru: Договор
+        en: Contract
+      type: ASSOC
+      config:
+        typeRef: emodel/type@ecos-contract
+        child: false
