@@ -151,6 +151,14 @@ model:
       config:
         typeRef: emodel/type@deal
         child: false
+    - id: currency
+      name:
+        ru: Валюта
+        en: Currency
+      type: ASSOC
+      config:
+        typeRef: emodel/type@currency
+        child: false
 
 aspects:
   - ref: emodel/aspect@has-product-and-services

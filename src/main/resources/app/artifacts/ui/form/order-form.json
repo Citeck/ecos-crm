@@ -98,132 +98,141 @@
             "label": {
               "ru": "Columns"
             },
-            "key": "columns",
+            "key": "columns5",
             "columns": [
               {
                 "components": [
                   {
                     "label": {
-                      "ru": "Columns"
+                      "ru": "number"
                     },
-                    "key": "columns3",
-                    "columns": [
-                      {
-                        "components": [
-                          {
-                            "label": {
-                              "ru": "number"
-                            },
-                            "key": "number",
-                            "disabled": true,
-                            "validate": {
-                              "integer": false
-                            },
-                            "isBigNumber": false,
-                            "delimiterValue": " ",
-                            "refreshOn": [],
-                            "optionalWhenDisabled": false,
-                            "defaultValue": "",
-                            "type": "number",
-                            "input": true
-                          },
-                          {
-                            "label": {
-                              "ru": "deal"
-                            },
-                            "key": "deal",
-                            "modalTitle": "",
-                            "journalId": "deals-journal",
-                            "source": {
-                              "type": "journal",
-                              "custom": {
-                                "columns": []
-                              },
-                              "customValues": "",
-                              "viewMode": "default"
-                            },
-                            "queryData": "",
-                            "refreshOn": [],
-                            "customDefaultValue": "const parentForm = instance.options.parentForm;\nif (parentForm) {\n    let parentRef = _.get(parentForm, 'options.recordId');\n    if (parentRef && parentRef.indexOf('deal') !== -1) {\n        parentRef = parentRef.replace(/-alias-\\d+$/, '');\n        value = parentRef;\n    }\n}",
-                            "optionalWhenDisabled": false,
-                            "type": "selectJournal",
-                            "input": true
-                          }
-                        ],
-                        "type": "column",
-                        "input": false,
-                        "key": "column",
-                        "index": 0
+                    "key": "number",
+                    "disabled": true,
+                    "validate": {
+                      "integer": false
+                    },
+                    "isBigNumber": false,
+                    "delimiterValue": " ",
+                    "refreshOn": [],
+                    "optionalWhenDisabled": false,
+                    "defaultValue": "",
+                    "type": "number",
+                    "input": true
+                  },
+                  {
+                    "label": {
+                      "ru": "deal"
+                    },
+                    "key": "deal",
+                    "modalTitle": "",
+                    "journalId": "deals-journal",
+                    "source": {
+                      "type": "journal",
+                      "custom": {
+                        "columns": []
                       },
-                      {
-                        "index": 1,
-                        "type": "column",
-                        "input": false,
-                        "key": "column",
-                        "components": [
-                          {
-                            "label": {
-                              "ru": "orderDate",
-                              "en": "Created date"
-                            },
-                            "key": "orderDate",
-                            "format": "yyyy-MM-dd HH:mm",
-                            "datePicker": {
-                              "minDate": "",
-                              "maxDate": ""
-                            },
-                            "timePicker": {
-                              "showMeridian": false
-                            },
-                            "defaultValue": "2025-04-22T10:52:18Z",
-                            "refreshOn": [],
-                            "customDefaultValue": "value = new Date();",
-                            "optionalWhenDisabled": false,
-                            "type": "datetime",
-                            "input": true,
-                            "suffix": true,
-                            "reorder": false
-                          },
-                          {
-                            "label": {
-                              "ru": "contract"
-                            },
-                            "key": "contract",
-                            "modalTitle": "",
-                            "journalId": "ecos-contract-journal",
-                            "source": {
-                              "type": "journal",
-                              "custom": {
-                                "columns": []
-                              },
-                              "customValues": "",
-                              "viewMode": "default"
-                            },
-                            "queryData": "",
-                            "refreshOn": [],
-                            "customDefaultValue": "const parentForm = instance.options.parentForm\nif (parentForm) {\n    const contract = _.get(parentForm, 'data.contract');\n    if (contract) {\n        value = contract\n    }\n}",
-                            "optionalWhenDisabled": false,
-                            "type": "selectJournal",
-                            "input": true
-                          }
-                        ]
-                      }
-                    ],
-                    "oneColumnInViewMode": false,
-                    "type": "columns",
-                    "input": false
+                      "customValues": "",
+                      "viewMode": "default"
+                    },
+                    "queryData": "",
+                    "refreshOn": [],
+                    "customDefaultValue": "const parentForm = instance.options.parentForm;\nif (parentForm) {\n    let parentRef = _.get(parentForm, 'options.recordId');\n    if (parentRef && parentRef.indexOf('deal') !== -1) {\n        parentRef = parentRef.replace(/-alias-\\d+$/, '');\n        value = parentRef;\n    }\n}",
+                    "optionalWhenDisabled": false,
+                    "type": "selectJournal",
+                    "input": true
+                  },
+                  {
+                    "label": {
+                      "ru": "currency"
+                    },
+                    "key": "currency",
+                    "validate": {
+                      "required": true
+                    },
+                    "modalTitle": "",
+                    "journalId": "currency",
+                    "source": {
+                      "type": "journal",
+                      "custom": {
+                        "columns": []
+                      },
+                      "customValues": "",
+                      "viewMode": "default"
+                    },
+                    "defaultValue": "emodel/currency@rub",
+                    "refreshOn": [],
+                    "optionalWhenDisabled": false,
+                    "type": "selectJournal",
+                    "input": true,
+                    "queryData": ""
                   }
                 ],
+                "md": 4,
                 "type": "column",
                 "input": false,
                 "key": "column",
                 "index": 0
               },
               {
-                "index": 1,
+                "md": 4,
                 "type": "column",
                 "input": false,
                 "key": "column",
+                "index": 1,
+                "components": [
+                  {
+                    "label": {
+                      "ru": "orderDate",
+                      "en": "Created date"
+                    },
+                    "key": "orderDate",
+                    "format": "yyyy-MM-dd HH:mm",
+                    "datePicker": {
+                      "minDate": "",
+                      "maxDate": ""
+                    },
+                    "timePicker": {
+                      "showMeridian": false
+                    },
+                    "defaultValue": "2025-04-22T10:52:18Z",
+                    "refreshOn": [],
+                    "customDefaultValue": "value = new Date();",
+                    "optionalWhenDisabled": false,
+                    "type": "datetime",
+                    "input": true,
+                    "suffix": true,
+                    "reorder": false
+                  },
+                  {
+                    "label": {
+                      "ru": "contract"
+                    },
+                    "key": "contract",
+                    "modalTitle": "",
+                    "journalId": "ecos-contract-journal",
+                    "source": {
+                      "type": "journal",
+                      "custom": {
+                        "columns": []
+                      },
+                      "customValues": "",
+                      "viewMode": "default"
+                    },
+                    "queryData": "",
+                    "refreshOn": [],
+                    "customDefaultValue": "const parentForm = instance.options.parentForm\nif (parentForm) {\n    const contract = _.get(parentForm, 'data.contract');\n    if (contract) {\n        value = contract\n    }\n}",
+                    "optionalWhenDisabled": false,
+                    "type": "selectJournal",
+                    "input": true
+                  }
+                ]
+              },
+              {
+                "md": 4,
+                "type": "column",
+                "input": false,
+                "key": "column",
+                "index": 2,
                 "components": [
                   {
                     "label": {
@@ -271,7 +280,8 @@
             ],
             "oneColumnInViewMode": false,
             "type": "columns",
-            "input": false
+            "input": false,
+            "reorder": false
           },
           {
             "label": {
