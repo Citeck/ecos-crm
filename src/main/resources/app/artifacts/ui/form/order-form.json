@@ -121,9 +121,10 @@
                   },
                   {
                     "label": {
-                      "ru": "deal"
+                      "ru": "Сделка",
+                      "en": "Deal"
                     },
-                    "key": "deal",
+                    "key": "crm-links:deal",
                     "modalTitle": "",
                     "journalId": "deals-journal",
                     "source": {

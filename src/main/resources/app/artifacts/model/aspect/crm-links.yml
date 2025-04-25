@@ -1,0 +1,22 @@
+---
+id: crm-links
+name:
+  ru: Связь с CRM объектами
+  en: Link with CRM objects
+attributes:
+  - id: order
+    name:
+      en: Order
+      ru: Заказ
+    type: ASSOC
+    config:
+      child: false
+      typeRef: emodel/type@order
+  - id: deal
+    name:
+      en: Deal
+      ru: Сделка
+    type: ASSOC
+    config:
+      child: false
+      typeRef: emodel/type@deal

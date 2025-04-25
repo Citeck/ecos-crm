@@ -14,5 +14,5 @@ attributes:
     type: ASSOC
     config:
       child: false
-      typeRef: emodel/type@product-and-services-item
+      typeRef: emodel/type@order
     multiple: true

@@ -143,14 +143,6 @@ model:
       config:
         typeRef: emodel/type@ecos-contract
         child: false
-    - id: deal
-      name:
-        ru: Сделка
-        en: Deal
-      type: ASSOC
-      config:
-        typeRef: emodel/type@deal
-        child: false
     - id: currency
       name:
         ru: Валюта
@@ -162,3 +154,4 @@ model:
 
 aspects:
   - ref: emodel/aspect@has-product-and-services
+  - ref: emodel/aspect@crm-links
