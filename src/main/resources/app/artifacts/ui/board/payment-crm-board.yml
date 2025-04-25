@@ -1,0 +1,31 @@
+---
+id: payment-crm-board
+name:
+  ru: Платежи
+  en: Payments
+typeRef: emodel/type@payment-crm
+journalRef: uiserv/journal@payments-crm-journal
+cardFormRef: uiserv/form@payment-crm-board-form
+cardFieldsLabelLayout: TOP
+readOnly: false
+columns:
+  - id: draft
+    name:
+      ru: Черновик
+      en: Draft
+  - id: planned
+    name:
+      ru: Запланирован
+      en: Planned
+  - id: partialPayed
+    name:
+      ru: Частично оплачен
+      en: Partially paid
+  - id: paid
+    name:
+      ru: Оплачен
+      en: Paid
+  - id: canceled
+    name:
+      ru: Отменен
+      en: Canceled

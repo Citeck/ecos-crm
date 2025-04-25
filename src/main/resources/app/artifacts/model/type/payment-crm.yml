@@ -1,0 +1,36 @@
+---
+id: payment-crm
+name:
+  ru: Платеж
+  en: Payment
+storageType: ECOS_MODEL
+parentRef: emodel/type@payment
+formRef: uiserv/form@payment-crm-form
+journalRef: uiserv/journal@payments-crm-journal
+boardRef: uiserv/board@payment-crm-board
+numTemplateRef: emodel/num-template@payment-crm-num-template
+inheritForm: false
+defaultCreateVariant: true
+actions:
+  - uiserv/action@payment-crm-change-status
+  - uiserv/action@edit
+  - uiserv/action@delete
+model:
+  attributes: []
+  roles:
+    - id: creator
+      name:
+        ru: Создатель
+        en: Creator
+      attributes:
+        - _creator
+    - id: responsible
+      name:
+        ru: Ответственный
+        en: Responsible
+      attributes:
+        - responsible
+  statuses: []
+
+aspects:
+  - ref: emodel/aspect@crm-links

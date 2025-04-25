@@ -96,350 +96,406 @@
         "components": [
           {
             "label": {
-              "ru": "Columns"
+              "ru": "Tabs"
             },
-            "key": "columns5",
-            "columns": [
+            "key": "tabs2",
+            "components": [
               {
+                "label": {
+                  "ru": "Основное",
+                  "en": "General"
+                },
+                "key": "general",
                 "components": [
                   {
                     "label": {
-                      "ru": "number"
+                      "ru": "Columns"
                     },
-                    "key": "number",
-                    "disabled": true,
-                    "validate": {
-                      "integer": false
-                    },
-                    "isBigNumber": false,
-                    "delimiterValue": " ",
-                    "refreshOn": [],
-                    "optionalWhenDisabled": false,
-                    "defaultValue": "",
-                    "type": "number",
-                    "input": true
-                  },
-                  {
-                    "label": {
-                      "ru": "Сделка",
-                      "en": "Deal"
-                    },
-                    "key": "crm-links:deal",
-                    "modalTitle": "",
-                    "journalId": "deals-journal",
-                    "source": {
-                      "type": "journal",
-                      "custom": {
-                        "columns": []
+                    "key": "columns5",
+                    "columns": [
+                      {
+                        "components": [
+                          {
+                            "label": {
+                              "ru": "number"
+                            },
+                            "key": "number",
+                            "disabled": true,
+                            "validate": {
+                              "integer": false
+                            },
+                            "isBigNumber": false,
+                            "delimiterValue": " ",
+                            "refreshOn": [],
+                            "optionalWhenDisabled": false,
+                            "defaultValue": "",
+                            "type": "number",
+                            "input": true
+                          },
+                          {
+                            "label": {
+                              "ru": "Сделка",
+                              "en": "Deal"
+                            },
+                            "key": "crm-links:deal",
+                            "modalTitle": "",
+                            "journalId": "deals-journal",
+                            "source": {
+                              "type": "journal",
+                              "custom": {
+                                "columns": []
+                              },
+                              "customValues": "",
+                              "viewMode": "default"
+                            },
+                            "queryData": "",
+                            "refreshOn": [],
+                            "customDefaultValue": "const parentForm = instance.options.parentForm;\nif (parentForm) {\n    let parentRef = _.get(parentForm, 'options.recordId');\n    if (parentRef && parentRef.indexOf('deal') !== -1) {\n        parentRef = parentRef.replace(/-alias-\\d+$/, '');\n        value = parentRef;\n    }\n}",
+                            "optionalWhenDisabled": false,
+                            "type": "selectJournal",
+                            "input": true
+                          },
+                          {
+                            "label": {
+                              "ru": "currency"
+                            },
+                            "key": "currency",
+                            "validate": {
+                              "required": true
+                            },
+                            "modalTitle": "",
+                            "journalId": "currency",
+                            "source": {
+                              "type": "journal",
+                              "custom": {
+                                "columns": []
+                              },
+                              "customValues": "",
+                              "viewMode": "default"
+                            },
+                            "defaultValue": "emodel/currency@rub",
+                            "refreshOn": [],
+                            "optionalWhenDisabled": false,
+                            "type": "selectJournal",
+                            "input": true,
+                            "queryData": ""
+                          }
+                        ],
+                        "md": 4,
+                        "type": "column",
+                        "input": false,
+                        "key": "column",
+                        "index": 0
                       },
-                      "customValues": "",
-                      "viewMode": "default"
-                    },
-                    "queryData": "",
-                    "refreshOn": [],
-                    "customDefaultValue": "const parentForm = instance.options.parentForm;\nif (parentForm) {\n    let parentRef = _.get(parentForm, 'options.recordId');\n    if (parentRef && parentRef.indexOf('deal') !== -1) {\n        parentRef = parentRef.replace(/-alias-\\d+$/, '');\n        value = parentRef;\n    }\n}",
-                    "optionalWhenDisabled": false,
-                    "type": "selectJournal",
-                    "input": true
-                  },
-                  {
-                    "label": {
-                      "ru": "currency"
-                    },
-                    "key": "currency",
-                    "validate": {
-                      "required": true
-                    },
-                    "modalTitle": "",
-                    "journalId": "currency",
-                    "source": {
-                      "type": "journal",
-                      "custom": {
-                        "columns": []
+                      {
+                        "md": 4,
+                        "type": "column",
+                        "input": false,
+                        "key": "column",
+                        "index": 1,
+                        "components": [
+                          {
+                            "label": {
+                              "ru": "orderDate",
+                              "en": "Created date"
+                            },
+                            "key": "orderDate",
+                            "format": "yyyy-MM-dd HH:mm",
+                            "datePicker": {
+                              "minDate": "",
+                              "maxDate": ""
+                            },
+                            "timePicker": {
+                              "showMeridian": false
+                            },
+                            "defaultValue": "2025-04-22T10:52:18Z",
+                            "refreshOn": [],
+                            "customDefaultValue": "value = new Date();",
+                            "optionalWhenDisabled": false,
+                            "type": "datetime",
+                            "input": true,
+                            "suffix": true,
+                            "reorder": false
+                          },
+                          {
+                            "label": {
+                              "ru": "contract"
+                            },
+                            "key": "contract",
+                            "modalTitle": "",
+                            "journalId": "ecos-contract-journal",
+                            "source": {
+                              "type": "journal",
+                              "custom": {
+                                "columns": []
+                              },
+                              "customValues": "",
+                              "viewMode": "default"
+                            },
+                            "queryData": "",
+                            "refreshOn": [],
+                            "customDefaultValue": "const parentForm = instance.options.parentForm\nif (parentForm) {\n    const contract = _.get(parentForm, 'data.contract');\n    if (contract) {\n        value = contract\n    }\n}",
+                            "optionalWhenDisabled": false,
+                            "type": "selectJournal",
+                            "input": true
+                          }
+                        ]
                       },
-                      "customValues": "",
-                      "viewMode": "default"
-                    },
-                    "defaultValue": "emodel/currency@rub",
-                    "refreshOn": [],
-                    "optionalWhenDisabled": false,
-                    "type": "selectJournal",
-                    "input": true,
-                    "queryData": ""
-                  }
-                ],
-                "md": 4,
-                "type": "column",
-                "input": false,
-                "key": "column",
-                "index": 0
-              },
-              {
-                "md": 4,
-                "type": "column",
-                "input": false,
-                "key": "column",
-                "index": 1,
-                "components": [
-                  {
-                    "label": {
-                      "ru": "orderDate",
-                      "en": "Created date"
-                    },
-                    "key": "orderDate",
-                    "format": "yyyy-MM-dd HH:mm",
-                    "datePicker": {
-                      "minDate": "",
-                      "maxDate": ""
-                    },
-                    "timePicker": {
-                      "showMeridian": false
-                    },
-                    "defaultValue": "2025-04-22T10:52:18Z",
-                    "refreshOn": [],
-                    "customDefaultValue": "value = new Date();",
-                    "optionalWhenDisabled": false,
-                    "type": "datetime",
-                    "input": true,
-                    "suffix": true,
+                      {
+                        "md": 4,
+                        "type": "column",
+                        "input": false,
+                        "key": "column",
+                        "index": 2,
+                        "components": [
+                          {
+                            "label": {
+                              "ru": "manager"
+                            },
+                            "key": "manager",
+                            "allowedAuthorityType": "USER",
+                            "defaultValue": "",
+                            "refreshOn": [],
+                            "customDefaultValue": "const parentForm = instance.options.parentForm\nif (parentForm) {\n    const manager = _.get(parentForm, 'data.manager');\n    if (manager) {\n        value = manager;\n    }\n}",
+                            "optionalWhenDisabled": false,
+                            "type": "selectOrgstruct",
+                            "input": true,
+                            "reorder": false,
+                            "allowedGroupType": "",
+                            "rootGroupName": ""
+                          },
+                          {
+                            "label": {
+                              "ru": "counterparty"
+                            },
+                            "key": "counterparty",
+                            "validate": {
+                              "required": true
+                            },
+                            "modalTitle": "",
+                            "journalId": "ecos-counterparty",
+                            "source": {
+                              "type": "journal",
+                              "custom": {
+                                "columns": []
+                              },
+                              "customValues": "",
+                              "viewMode": "default"
+                            },
+                            "queryData": "",
+                            "refreshOn": [],
+                            "customDefaultValue": "const parentForm = instance.options.parentForm\nif (parentForm) {\n    const counterparty = _.get(parentForm, 'data.counterparty');\n    if (counterparty) {\n        value = counterparty\n    }\n}",
+                            "optionalWhenDisabled": false,
+                            "type": "selectJournal",
+                            "input": true
+                          }
+                        ]
+                      }
+                    ],
+                    "oneColumnInViewMode": false,
+                    "type": "columns",
+                    "input": false,
                     "reorder": false
                   },
                   {
                     "label": {
-                      "ru": "contract"
+                      "ru": "Panel"
                     },
-                    "key": "contract",
-                    "modalTitle": "",
-                    "journalId": "ecos-contract-journal",
-                    "source": {
-                      "type": "journal",
-                      "custom": {
-                        "columns": []
-                      },
-                      "customValues": "",
-                      "viewMode": "default"
+                    "key": "panel",
+                    "title": {
+                      "ru": "Продукты и услуги"
                     },
-                    "queryData": "",
                     "refreshOn": [],
-                    "customDefaultValue": "const parentForm = instance.options.parentForm\nif (parentForm) {\n    const contract = _.get(parentForm, 'data.contract');\n    if (contract) {\n        value = contract\n    }\n}",
                     "optionalWhenDisabled": false,
-                    "type": "selectJournal",
-                    "input": true
-                  }
-                ]
-              },
-              {
-                "md": 4,
-                "type": "column",
-                "input": false,
-                "key": "column",
-                "index": 2,
-                "components": [
-                  {
-                    "label": {
-                      "ru": "manager"
-                    },
-                    "key": "manager",
-                    "allowedAuthorityType": "USER",
-                    "defaultValue": "",
-                    "refreshOn": [],
-                    "customDefaultValue": "const parentForm = instance.options.parentForm\nif (parentForm) {\n    const manager = _.get(parentForm, 'data.manager');\n    if (manager) {\n        value = manager;\n    }\n}",
-                    "optionalWhenDisabled": false,
-                    "type": "selectOrgstruct",
-                    "input": true,
-                    "reorder": false,
-                    "allowedGroupType": "",
-                    "rootGroupName": ""
-                  },
-                  {
-                    "label": {
-                      "ru": "counterparty"
-                    },
-                    "key": "counterparty",
-                    "validate": {
-                      "required": true
-                    },
-                    "modalTitle": "",
-                    "journalId": "ecos-counterparty",
-                    "source": {
-                      "type": "journal",
-                      "custom": {
-                        "columns": []
-                      },
-                      "customValues": "",
-                      "viewMode": "default"
-                    },
-                    "queryData": "",
-                    "refreshOn": [],
-                    "customDefaultValue": "const parentForm = instance.options.parentForm\nif (parentForm) {\n    const counterparty = _.get(parentForm, 'data.counterparty');\n    if (counterparty) {\n        value = counterparty\n    }\n}",
-                    "optionalWhenDisabled": false,
-                    "type": "selectJournal",
-                    "input": true
-                  }
-                ]
-              }
-            ],
-            "oneColumnInViewMode": false,
-            "type": "columns",
-            "input": false,
-            "reorder": false
-          },
-          {
-            "label": {
-              "ru": "Panel"
-            },
-            "key": "panel",
-            "title": {
-              "ru": "Продукты и услуги"
-            },
-            "refreshOn": [],
-            "optionalWhenDisabled": false,
-            "type": "panel",
-            "input": false,
-            "components": [
-              {
-                "label": {
-                  "ru": "Продукты и услуги",
-                  "en": "Product and services"
-                },
-                "key": "has-pas:product-and-services",
-                "hideLabel": true,
-                "multiple": true,
-                "customButtonName": "",
-                "reorder": false,
-                "source": {
-                  "type": "journal",
-                  "journal": {
-                    "journalId": "product-and-services-item",
-                    "columns": []
-                  }
-                },
-                "enableSelectButton": true,
-                "selectJournalId": "product-and-services-template",
-                "refreshOn": [],
-                "optionalWhenDisabled": false,
-                "properties": {
-                  "attribute": "has-pas:product-and-services"
-                },
-                "isUsedJournalActions": true,
-                "type": "tableForm",
-                "input": true
-              },
-              {
-                "label": {
-                  "ru": "Columns"
-                },
-                "key": "columns4",
-                "columns": [
-                  {
-                    "components": [],
-                    "md": 4,
-                    "type": "column",
+                    "type": "panel",
                     "input": false,
-                    "key": "column",
-                    "index": 0
-                  },
-                  {
-                    "md": 4,
-                    "type": "column",
-                    "input": false,
-                    "key": "column",
-                    "index": 1,
-                    "components": []
-                  },
-                  {
-                    "md": 4,
-                    "type": "column",
-                    "input": false,
-                    "key": "column",
-                    "index": 2,
                     "components": [
                       {
                         "label": {
-                          "ru": "Сумма итого",
-                          "en": "Total amount"
+                          "ru": "Продукты и услуги",
+                          "en": "Product and services"
                         },
-                        "key": "has-pas:totalAmount",
-                        "disabled": true,
-                        "validate": {
-                          "integer": false
+                        "key": "has-pas:product-and-services",
+                        "hideLabel": true,
+                        "multiple": true,
+                        "customButtonName": "",
+                        "reorder": false,
+                        "source": {
+                          "type": "journal",
+                          "journal": {
+                            "journalId": "product-and-services-item",
+                            "columns": []
+                          }
                         },
-                        "labelPosition": "left-left",
-                        "clearOnHide": false,
-                        "isBigNumber": false,
-                        "delimiter": true,
-                        "delimiterValue": " ",
-                        "refreshOn": [
-                          "pasAmount"
-                        ],
-                        "calculateValue": "value = _.get(data, 'pasAmount', 0);",
-                        "optionalWhenDisabled": false,
-                        "decimalLimit": 2,
-                        "defaultValue": "",
-                        "type": "number",
-                        "input": true,
-                        "reorder": false
-                      },
-                      {
-                        "label": {
-                          "ru": "Сумма НДС",
-                          "en": "Total VAT"
-                        },
-                        "key": "has-pas:totalVat",
-                        "disabled": true,
-                        "validate": {
-                          "integer": false
-                        },
-                        "labelPosition": "left-left",
-                        "clearOnHide": false,
-                        "isBigNumber": false,
-                        "delimiter": true,
-                        "delimiterValue": " ",
+                        "enableSelectButton": true,
+                        "selectJournalId": "product-and-services-template",
                         "refreshOn": [],
-                        "calculateValue": "value = _.get(data, 'pasTotalVat', 0);",
                         "optionalWhenDisabled": false,
-                        "decimalLimit": 2,
-                        "defaultValue": "",
-                        "type": "number",
-                        "input": true,
-                        "reorder": false
+                        "properties": {
+                          "attribute": "has-pas:product-and-services"
+                        },
+                        "isUsedJournalActions": true,
+                        "type": "tableForm",
+                        "input": true
                       },
                       {
                         "label": {
-                          "ru": "Сумма итого c НДС",
-                          "en": "Total amount with VAT"
+                          "ru": "Columns"
                         },
-                        "key": "has-pas:totalAmountWithVat",
-                        "disabled": true,
-                        "validate": {
-                          "integer": false
-                        },
-                        "labelPosition": "left-left",
-                        "clearOnHide": false,
-                        "isBigNumber": false,
-                        "delimiter": true,
-                        "delimiterValue": " ",
-                        "refreshOn": [
-                          "pasAmountWithVat"
+                        "key": "columns4",
+                        "columns": [
+                          {
+                            "components": [],
+                            "md": 4,
+                            "type": "column",
+                            "input": false,
+                            "key": "column",
+                            "index": 0
+                          },
+                          {
+                            "md": 4,
+                            "type": "column",
+                            "input": false,
+                            "key": "column",
+                            "index": 1,
+                            "components": []
+                          },
+                          {
+                            "md": 4,
+                            "type": "column",
+                            "input": false,
+                            "key": "column",
+                            "index": 2,
+                            "components": [
+                              {
+                                "label": {
+                                  "ru": "Сумма итого",
+                                  "en": "Total amount"
+                                },
+                                "key": "has-pas:totalAmount",
+                                "disabled": true,
+                                "validate": {
+                                  "integer": false
+                                },
+                                "labelPosition": "left-left",
+                                "clearOnHide": false,
+                                "isBigNumber": false,
+                                "delimiter": true,
+                                "delimiterValue": " ",
+                                "refreshOn": [
+                                  "pasAmount"
+                                ],
+                                "calculateValue": "value = _.get(data, 'pasAmount', 0);",
+                                "optionalWhenDisabled": false,
+                                "decimalLimit": 2,
+                                "defaultValue": "",
+                                "type": "number",
+                                "input": true,
+                                "reorder": false
+                              },
+                              {
+                                "label": {
+                                  "ru": "Сумма НДС",
+                                  "en": "Total VAT"
+                                },
+                                "key": "has-pas:totalVat",
+                                "disabled": true,
+                                "validate": {
+                                  "integer": false
+                                },
+                                "labelPosition": "left-left",
+                                "clearOnHide": false,
+                                "isBigNumber": false,
+                                "delimiter": true,
+                                "delimiterValue": " ",
+                                "refreshOn": [],
+                                "calculateValue": "value = _.get(data, 'pasTotalVat', 0);",
+                                "optionalWhenDisabled": false,
+                                "decimalLimit": 2,
+                                "defaultValue": "",
+                                "type": "number",
+                                "input": true,
+                                "reorder": false
+                              },
+                              {
+                                "label": {
+                                  "ru": "Сумма итого c НДС",
+                                  "en": "Total amount with VAT"
+                                },
+                                "key": "has-pas:totalAmountWithVat",
+                                "disabled": true,
+                                "validate": {
+                                  "integer": false
+                                },
+                                "labelPosition": "left-left",
+                                "clearOnHide": false,
+                                "isBigNumber": false,
+                                "delimiter": true,
+                                "delimiterValue": " ",
+                                "refreshOn": [
+                                  "pasAmountWithVat"
+                                ],
+                                "calculateValue": "value = _.get(data, 'pasAmountWithVat', 0);",
+                                "optionalWhenDisabled": false,
+                                "decimalLimit": 2,
+                                "defaultValue": "",
+                                "type": "number",
+                                "input": true,
+                                "reorder": false
+                              }
+                            ]
+                          }
                         ],
-                        "calculateValue": "value = _.get(data, 'pasAmountWithVat', 0);",
-                        "optionalWhenDisabled": false,
-                        "decimalLimit": 2,
-                        "defaultValue": "",
-                        "type": "number",
-                        "input": true,
+                        "oneColumnInViewMode": false,
+                        "type": "columns",
+                        "input": false,
                         "reorder": false
                       }
-                    ]
+                    ],
+                    "collapsed": false,
+                    "reorder": false
                   }
-                ],
-                "oneColumnInViewMode": false,
-                "type": "columns",
-                "input": false,
-                "reorder": false
+                ]
+              },
+              {
+                "label": {
+                  "ru": "Платежи",
+                  "en": "Payments"
+                },
+                "key": "payments",
+                "components": [
+                  {
+                    "label": "",
+                    "key": "has-payments:payments",
+                    "hideLabel": true,
+                    "multiple": true,
+                    "customButtonName": "",
+                    "source": {
+                      "type": "journal",
+                      "journal": {
+                        "journalId": "payments-crm-journal",
+                        "columns": [
+                          "_disp",
+                          "amount",
+                          "plannedPaymentDate",
+                          "factPaymentDate",
+                          "responsible",
+                          "_status"
+                        ]
+                      }
+                    },
+                    "refreshOn": [],
+                    "optionalWhenDisabled": false,
+                    "isUsedJournalActions": true,
+                    "type": "tableForm",
+                    "input": true,
+                    "reorder": false
+                  }
+                ]
               }
             ],
-            "collapsed": false,
+            "type": "tabs",
+            "input": false,
             "reorder": false
           }
         ]

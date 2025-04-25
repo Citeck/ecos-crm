@@ -154,4 +154,5 @@ model:
 
 aspects:
   - ref: emodel/aspect@has-product-and-services
+  - ref: emodel/aspect@has-paymeents
   - ref: emodel/aspect@crm-links

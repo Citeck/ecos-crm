@@ -1,0 +1,24 @@
+{
+  "id": "payment-crm",
+  "typeRef": "emodel/type@payment-crm",
+  "permissions": {
+    "matrix": {
+      "creator": {
+        "draft": "WRITE",
+        "planned": "WRITE",
+        "partialPayed": "WRITE",
+        "paid": "WRITE",
+        "canceled": "WRITE"
+      },
+      "responsible": {
+        "draft": "WRITE",
+        "planned": "WRITE",
+        "partialPayed": "WRITE",
+        "paid": "READ",
+        "canceled": "READ"
+      }
+    },
+    "rules": []
+  },
+  "attributes": {}
+}

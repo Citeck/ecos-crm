@@ -384,7 +384,43 @@
                 "optionalWhenDisabled": false,
                 "isUsedJournalActions": true,
                 "type": "tableForm",
-                "input": true
+                "input": true,
+                "tab": 2
+              }
+            ]
+          },
+          {
+            "label": {
+              "ru": "Платежи"
+            },
+            "key": "payments",
+            "components": [
+              {
+                "label": "",
+                "key": "has-payments:payments",
+                "hideLabel": true,
+                "multiple": true,
+                "customButtonName": "",
+                "source": {
+                  "type": "journal",
+                  "journal": {
+                    "journalId": "payments-crm-journal",
+                    "columns": [
+                      "_disp",
+                      "amount",
+                      "plannedPaymentDate",
+                      "factPaymentDate",
+                      "responsible",
+                      "_status"
+                    ]
+                  }
+                },
+                "refreshOn": [],
+                "optionalWhenDisabled": false,
+                "isUsedJournalActions": true,
+                "type": "tableForm",
+                "input": true,
+                "reorder": false
               }
             ]
           }

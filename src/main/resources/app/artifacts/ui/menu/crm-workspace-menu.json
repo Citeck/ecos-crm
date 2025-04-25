@@ -95,6 +95,25 @@
               "allowedFor": []
             },
             {
+              "id": "payments",
+              "label": {
+                "ru": "Платежи",
+                "en": "Payments"
+              },
+              "icon": "ui/icon@i-leftmenu-finances",
+              "hidden": false,
+              "type": "JOURNAL",
+              "config": {
+                "recordRef": "uiserv/journal@payments-crm-journal"
+              },
+              "action": {
+                "type": "",
+                "config": {}
+              },
+              "items": [],
+              "allowedFor": []
+            },
+            {
               "id": "workspace-files",
               "label": {
                 "ru": "Библиотека документов",
