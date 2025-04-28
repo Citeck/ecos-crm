@@ -62,6 +62,9 @@
         "dropout": "READ",
         "old": "READ",
         "community": "READ"
+      },
+      "crmAdministrators": {
+        "ANY": "WRITE"
       }
     }
   },

@@ -22,8 +22,12 @@ model:
       computed:
         type: SCRIPT
         config:
-          fn: "var manager = value.load('manager?id');\r\nif (manager === null) {\r\
-            \n  return \"GROUP_crm-manager\";\r\n}\r\nreturn manager;"
+          fn: |
+            const manager = value.load('manager?id');
+            if (manager === null) {
+                return "GROUP_crm-manager";
+            }
+            return manager;
     - id: viewers
       name:
         en: Viewers
@@ -44,6 +48,12 @@ model:
         en: CCO
       assignees:
         - GROUP_crm-cco
+    - id: crmAdministrators
+      name:
+        ru: Администраторы CRM
+        en: CRM Administrators
+      assignees:
+        - GROUP_crm-administrators
   attributes:
     - id: name
       name:

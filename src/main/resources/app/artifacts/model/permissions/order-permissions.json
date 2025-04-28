@@ -23,6 +23,9 @@
         "execution": "READ",
         "completed": "READ",
         "canceled": "READ"
+      },
+      "crmAdministrators": {
+        "ANY": "WRITE"
       }
     }
   },

@@ -17,6 +17,9 @@
         "paid": "READ",
         "canceled": "READ"
       },
+      "crmAdministrators": {
+        "ANY": "WRITE"
+      },
       "link_manager": {
         "draft": "WRITE",
         "planned": "WRITE",
