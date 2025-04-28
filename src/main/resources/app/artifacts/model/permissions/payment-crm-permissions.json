@@ -16,6 +16,22 @@
         "partialPayed": "WRITE",
         "paid": "READ",
         "canceled": "READ"
+      },
+      "link_manager": {
+        "draft": "WRITE",
+        "planned": "WRITE",
+        "partialPayed": "WRITE",
+        "paid": "READ",
+        "canceled": "READ"
+      },
+      "link_viewers": {
+        "ANY": "READ"
+      },
+      "link_allCRMManagers": {
+        "ANY": "READ"
+      },
+      "link_cco": {
+        "ANY": "WRITE"
       }
     },
     "rules": []

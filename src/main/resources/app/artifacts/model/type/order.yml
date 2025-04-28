@@ -81,14 +81,6 @@ model:
                 return "GROUP_crm-manager";
             }
             return manager;
-    - id: viewers
-      name:
-        en: Viewers
-        ru: Наблюдатели
-      computed:
-        type: ATTRIBUTE
-        config:
-          attribute: viewers
     - id: allCRMManagers
       name:
         en: All CRM Managers

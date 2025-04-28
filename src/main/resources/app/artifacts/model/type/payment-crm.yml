@@ -30,6 +30,53 @@ model:
         en: Responsible
       attributes:
         - responsible
+    - id: link_manager
+      name:
+        ru: Менеджер по продажам
+        en: Sales manager
+      computed:
+        type: SCRIPT
+        config:
+          fn: |
+            const orderManager = value.load('crm-links:order._roles.assigneesOf.manager[]?str') || [];
+            const dealManager = value.load('crm-links:deal._roles.assigneesOf.manager[]?str') || [];
+            
+            return [...orderManager, ...dealManager];
+    - id: link_viewers
+      name:
+        ru: Наблюдатели
+        en: Viewers
+      computed:
+        type: SCRIPT
+        config:
+          fn: |
+            const dealViewers = value.load('crm-links:deal._roles.assigneesOf.viewers[]?str') || [];
+            
+            return dealViewers;
+    - id: link_allCRMManagers
+      name:
+        ru: Все менеджеры CRM
+        en: All CRM Managers
+      computed:
+        type: SCRIPT
+        config:
+          fn: |
+            const orderManagers = value.load('crm-links:order._roles.assigneesOf.allCRMManagers[]?str') || [];
+            const dealManagers = value.load('crm-links:deal._roles.assigneesOf.allCRMManagers[]?str') || [];
+            
+            return [...orderManagers, ...dealManagers];
+    - id: link_cco
+      name:
+        ru: Коммерческий директор
+        en: CCO
+      computed:
+        type: SCRIPT
+        config:
+          fn: |
+            const orderCco = value.load('crm-links:order._roles.assigneesOf.cco[]?str') || [];
+            const dealCco = value.load('crm-links:deal._roles.assigneesOf.cco[]?str') || [];
+            
+            return [...orderCco, ...dealCco];
   statuses: []
 
 aspects:

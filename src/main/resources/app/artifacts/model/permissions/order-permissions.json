@@ -17,13 +17,6 @@
         "completed": "WRITE",
         "canceled": "WRITE"
       },
-      "viewers": {
-        "placement": "READ",
-        "approving": "READ",
-        "execution": "READ",
-        "completed": "READ",
-        "canceled": "READ"
-      },
       "allCRMManagers": {
         "placement": "READ",
         "approving": "READ",
