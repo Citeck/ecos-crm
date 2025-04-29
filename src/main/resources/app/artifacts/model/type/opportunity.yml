@@ -17,7 +17,7 @@ model:
   roles:
     - id: manager
       name:
-        ru: Менеджер по продажам
+        ru: Ответственный
         en: Manager
       computed:
         type: SCRIPT
