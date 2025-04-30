@@ -25,7 +25,7 @@
             },
             "key": "syncContacts",
             "refreshOn": [],
-            "calculateValue": "let checkMainContact = false;\r\nfor (const contact of data.contacts) {\r\n  if (contact.contactMain) {\r\n    checkMainContact = true;\r\n    break;\r\n  }\r\n}\r\n\r\nif (checkMainContact && !data.contacts[0].contactMain) {\r\n  const sortedContacts = data.contacts;\r\n  sortedContacts.sort((a, b) => b.contactMain - a.contactMain);\r\n  var dataGridInst = util.searchComponents(instance.parent.components, \"contacts\");\r\n  dataGridInst[0].setValue(sortedContacts);\r\n}",
+            "calculateValue": "let checkMainContact = false;\nlet contacts = _.get(data, 'contacts', []);\n\r\nfor (const contact of contacts) {\r\n  if (contact.contactMain) {\r\n    checkMainContact = true;\r\n    break;\r\n  }\r\n}\r\n\r\nif (checkMainContact && !contacts[0].contactMain) {\r\n  const sortedContacts = contacts;\r\n  sortedContacts.sort((a, b) => b.contactMain - a.contactMain);\r\n  var dataGridInst = util.searchComponents(instance.parent.components, \"contacts\");\r\n  dataGridInst[0].setValue(sortedContacts);\r\n}",
             "optionalWhenDisabled": false,
             "type": "hidden",
             "input": true
@@ -136,7 +136,7 @@
                                 "name": "Disable checkbox",
                                 "trigger": {
                                   "type": "javascript",
-                                  "javascript": "result = false;\r\nif (!value) {\r\n  for (const contact of data.contacts) {\r\n  if (contact.contactMain) {\r\n    result = true;\r\n    break;\r\n  }\r\n}\r\n}"
+                                  "javascript": "result = false;\nif (!value) {\n    let contacts = _.get(data, 'contacts', []);\n    for (const contact of contacts) {\n        if (contact.contactMain) {\n            result = true;\n            break;\n        }\n    }\n}"
                                 },
                                 "actions": [
                                   {

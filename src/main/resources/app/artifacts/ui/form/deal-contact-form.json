@@ -155,7 +155,7 @@
                                 "name": "Disable checkbox",
                                 "trigger": {
                                   "type": "javascript",
-                                  "javascript": "result = false;\r\nif (!value) {\r\n  for (const contact of data.counterparty.contacts) {\r\n  if (contact.contactMain) {\r\n    result = true;\r\n    break;\r\n  }\r\n}\r\n}"
+                                  "javascript": "let trigger = false\n\nif (!value) {\n    let contracts = _.get(data, 'counterparty.contacts', []);\n    for (const contact of contracts) {\n        if (contact.contactMain) {\n            result = true;\n            break;\n        }\n    }\n}\n\nresult = trigger"
                                 },
                                 "actions": [
                                   {
