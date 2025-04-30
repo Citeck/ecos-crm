@@ -8,7 +8,6 @@ disableTitle: true
 name:
   ru: Доска Сделок
   en: Deals board
-actions: null
 columns:
   - id: new
     name:
