@@ -369,19 +369,12 @@
                   "type": "journal",
                   "journal": {
                     "journalId": "orders-journal",
-                    "columns": [
-                      "number",
-                      "counterparty",
-                      "contract",
-                      "has-pas:totalAmount",
-                      "manager",
-                      "_created",
-                      "_status"
-                    ]
+                    "columns": []
                   }
                 },
                 "refreshOn": [],
                 "optionalWhenDisabled": false,
+                "customConditional": "show = instance.options.formMode !== 'CREATE';",
                 "isUsedJournalActions": true,
                 "type": "tableForm",
                 "input": true,
@@ -401,26 +394,20 @@
                 "hideLabel": true,
                 "multiple": true,
                 "customButtonName": "",
+                "reorder": false,
                 "source": {
                   "type": "journal",
                   "journal": {
                     "journalId": "payments-crm-journal",
-                    "columns": [
-                      "_disp",
-                      "amount",
-                      "plannedPaymentDate",
-                      "factPaymentDate",
-                      "responsible",
-                      "_status"
-                    ]
+                    "columns": []
                   }
                 },
                 "refreshOn": [],
                 "optionalWhenDisabled": false,
+                "customConditional": "show = instance.options.formMode !== 'CREATE';",
                 "isUsedJournalActions": true,
                 "type": "tableForm",
-                "input": true,
-                "reorder": false
+                "input": true
               }
             ]
           }

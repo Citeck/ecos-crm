@@ -26,7 +26,7 @@ defaultSortBy:
 actions:
   - uiserv/action@view-dashboard
   - uiserv/action@view-dashboard-in-background
-  - uiserv/action@record-copy
+  - uiserv/action@edit
   - uiserv/action@delete
   - uiserv/action@deal-change-status
   - uiserv/action@assign-manager

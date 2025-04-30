@@ -27,7 +27,7 @@ columns:
       ru: Договор
       en: Contract
     type: ASSOC
-  - id: deal
+  - id: crm-links:deal
     name:
       ru: Сделка
       en: Deal

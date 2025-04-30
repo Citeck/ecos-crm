@@ -10,6 +10,7 @@ journalRef: uiserv/journal@leads-journal
 defaultStatus: new
 boardRef: uiserv/board@lead-board
 inheritForm: false
+inheritActions: false
 dispNameTemplate:
   ru: "Лид: ${name}"
 workspaceScope: PRIVATE
@@ -18,6 +19,7 @@ actions:
   - uiserv/action@edit
   - uiserv/action@delete
   - uiserv/action@create-counterparty
+  - uiserv/action@merge-lead
 defaultCreateVariant: true
 model:
   statuses:

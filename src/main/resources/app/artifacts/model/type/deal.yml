@@ -11,7 +11,7 @@ defaultStatus: new
 boardRef: uiserv/board@deal-board
 inheritForm: false
 dispNameTemplate:
-  ru: "Сделка: ${name}"
+  ru: "Сделка №${number}: ${name}"
 workspaceScope: PRIVATE
 defaultWorkspace: crm-workspace
 actions:

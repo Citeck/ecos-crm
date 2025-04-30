@@ -1,0 +1,23 @@
+---
+id: merge-lead
+name:
+  ru: Объединить с основным лидом
+  en: Merge with main lead
+type: mutate
+confirm:
+  title:
+    ru: Объединить с основным лидом
+    en: Merge with main lead
+  "formRef": uiserv/form@lead-merge-form
+  attributesMapping:
+    record.attributes.mergeIn: mergeIn
+config:
+  record:
+    id: ecom/merge-lead@
+    attributes:
+      mergeFrom: ${recordRef}
+      mergeIn: mergeIn
+features:
+  execForQuery: false
+  execForRecord: true
+  execForRecords: false 
