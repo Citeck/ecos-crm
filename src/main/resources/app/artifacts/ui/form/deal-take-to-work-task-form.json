@@ -1,0 +1,84 @@
+{
+  "id": "deal-take-to-work-task-form",
+  "formKey": "",
+  "title": {
+    "en": "CRM Deal take to work task form"
+  },
+  "description": {},
+  "customModule": "",
+  "typeRef": "",
+  "width": "",
+  "system": false,
+  "i18n": {},
+  "definition": {
+    "components": [
+      {
+        "scrollableContent": true,
+        "key": "panel2",
+        "type": "panel",
+        "input": false,
+        "components": [
+          {
+            "label": {
+              "ru": "Причина дисквалификации",
+              "en": "Disqualification reason"
+            },
+            "key": "_ECM_disqualificationReason",
+            "validate": {
+              "select": false
+            },
+            "dataSrc": "custom",
+            "data": {
+              "custom": "var reasons = _.get(data, \"typeInfo.reasons\");\n\nvalues = reasons;",
+              "headers": [
+                {}
+              ]
+            },
+            "refreshOn": [
+              "data"
+            ],
+            "optionalWhenDisabled": false,
+            "type": "ecosSelect",
+            "input": true,
+            "defaultValue": "",
+            "reorder": false,
+            "reference": false
+          }
+        ]
+      },
+      {
+        "label": {
+          "ru": "Task Outcome"
+        },
+        "key": "taskOutcome2",
+        "refreshOn": [],
+        "optionalWhenDisabled": false,
+        "type": "taskOutcome",
+        "input": true,
+        "reorder": false
+      },
+      {
+        "label": "Type info request",
+        "source": {
+          "type": "record",
+          "record": {
+            "id": "emodel/type@lead",
+            "attributes": {
+              "reasons": "attributeById.disqualificationReason.config.values[]{value,label._as.mltext}"
+            }
+          },
+          "forceLoad": false
+        },
+        "update": {
+          "type": "once"
+        },
+        "key": "typeInfo",
+        "type": "asyncData",
+        "input": true,
+        "triggerEventOnChange": false
+      }
+    ]
+  },
+  "attributes": {},
+  "notExists": false
+}
