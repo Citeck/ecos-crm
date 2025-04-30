@@ -26,6 +26,9 @@
             },
             "key": "mergeIn",
             "modalTitle": "",
+            "validate": {
+              "required": true
+            },
             "journalId": "leads-journal",
             "refreshOn": [],
             "optionalWhenDisabled": false,

@@ -12,7 +12,7 @@ boardRef: uiserv/board@lead-board
 inheritForm: false
 inheritActions: false
 dispNameTemplate:
-  ru: "Лид: ${name}"
+  ru: "Лид №${number}: ${name}"
 workspaceScope: PRIVATE
 actions:
   - uiserv/action@lead-change-status

@@ -24,6 +24,9 @@
               "en": "Deal"
             },
             "key": "mergeIn",
+            "validate": {
+              "required": true
+            },
             "modalTitle": "",
             "journalId": "deals-journal",
             "refreshOn": [],

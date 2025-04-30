@@ -49,11 +49,6 @@ columns:
       en: Status
     type: TEXT
     groupable: true
-  - id: company
-    name:
-      ru: Компания
-      en: Company
-    type: TEXT
   - id: dateReceived
     name:
       ru: Дата создания
@@ -65,12 +60,6 @@ columns:
       ru: Бюджет
       en: Budget
     type: NUMBER
-  - id: numberOfUsers
-    name:
-      ru: Кол-во пользователей
-      en: Number of users
-    type: TEXT
-    groupable: true
   - id: manager
     name:
       ru: Ответственный

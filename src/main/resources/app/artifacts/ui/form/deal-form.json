@@ -137,21 +137,6 @@
                           },
                           {
                             "label": {
-                              "ru": "Количество пользователей",
-                              "en": "Number of users"
-                            },
-                            "key": "numberOfUsers",
-                            "defaultValue": "",
-                            "refreshOn": [],
-                            "optionalWhenDisabled": false,
-                            "type": "textfield",
-                            "input": true,
-                            "inputMasks": [
-                              {}
-                            ]
-                          },
-                          {
-                            "label": {
                               "ru": "createdFromLead"
                             },
                             "key": "createdFromLead",
