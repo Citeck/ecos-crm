@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<bpmn:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:ecos="http://www.citeck.ru/ecos/bpmn/1.0" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" id="Definitions_Mi5OJ3Q" name="" targetNamespace="http://bpmn.io/schema/bpmn" exporter="bpmn-js (https://demo.bpmn.io)" exporterVersion="8.2.0" ecos:workingCopySourceRef="" ecos:name_ml="{}" ecos:formRef="" ecos:autoDeleteEnabled="false" ecos:sectionRef="eproc/bpmn-section@DEFAULT" ecos:enabled="true" ecos:autoStartEnabled="false" ecos:defState="CONVERTED" ecos:processDefId="crm-lead-issue-observer-process" ecos:ecosType="emodel/type@lead">
+<bpmn:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:ecos="http://www.citeck.ru/ecos/bpmn/1.0" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" id="Definitions_Mi5OJ3Q" name="" targetNamespace="http://bpmn.io/schema/bpmn" exporter="bpmn-js (https://demo.bpmn.io)" exporterVersion="8.2.0" ecos:workingCopySourceRef="" ecos:name_ml="{&quot;ru&quot;:&quot;CRM Лид, системные обработчики&quot;}" ecos:formRef="" ecos:autoDeleteEnabled="false" ecos:sectionRef="eproc/bpmn-section@DEFAULT" ecos:enabled="true" ecos:autoStartEnabled="false" ecos:defState="CONVERTED" ecos:processDefId="crm-lead-issue-observer-process" ecos:ecosType="">
     <bpmn:process isExecutable="true" id="crm-lead-issue-observer-process">
         <bpmn:startEvent isInterrupting="true" name="Статус: Создание сделки" id="StartEvent_1ew9rff" ecos:documentation="{}" ecos:eventFilterByRecordType="ANY" ecos:eventModel="{}" ecos:asyncConfig="{&quot;asyncBefore&quot;:false,&quot;asyncAfter&quot;:false,&quot;exclusive&quot;:false}" ecos:name_ml="{&quot;ru&quot;:&quot;Статус: Создание сделки&quot;}" ecos:jobConfig="{&quot;jobPriority&quot;:null,&quot;jobRetryTimeCycle&quot;:null}" ecos:manualStatus="deal_creation" ecos:eventManualMode="false" ecos:eventFilterByEcosType="emodel/type@lead" ecos:statusChangeType="AFTER" ecos:eventType="RECORD_STATUS_CHANGED">
             <bpmn:outgoing >Flow_0tjb20o</bpmn:outgoing>
-            <bpmn:signalEventDefinition  signalRef="Signal_e2rE8V1" id="SignalEventDefinition_07pq3pt"/>
+            <bpmn:signalEventDefinition  signalRef="Signal_D9VHsCh" id="SignalEventDefinition_07pq3pt"/>
         </bpmn:startEvent>
         <bpmn:sequenceFlow sourceRef="StartEvent_1ew9rff" targetRef="Activity_11i6vyp" name="" id="Flow_0tjb20o" ecos:name_ml="{}" ecos:conditionConfig="{&quot;fn&quot;:&quot;&quot;,&quot;expression&quot;:&quot;&quot;,&quot;outcome&quot;:&quot;&quot;}" ecos:conditionType="NONE"/>
         <bpmn:sequenceFlow sourceRef="Activity_11i6vyp" targetRef="Gateway_1upady2" name="" id="Flow_0bd4e1v" ecos:name_ml="{}" ecos:conditionConfig="{&quot;fn&quot;:&quot;&quot;,&quot;expression&quot;:&quot;&quot;,&quot;outcome&quot;:&quot;&quot;}" ecos:conditionType="NONE"/>
@@ -63,7 +63,7 @@ document.save();</bpmn:script>
     <bpmn:process isExecutable="true" id="Process_0pvt667">
         <bpmn:startEvent isInterrupting="true" name="Статус: Дисквалифицирован" id="Event_03uahzo" ecos:documentation="{}" ecos:eventFilterByRecordType="ANY" ecos:eventModel="{}" ecos:asyncConfig="{&quot;asyncBefore&quot;:false,&quot;asyncAfter&quot;:false,&quot;exclusive&quot;:false}" ecos:name_ml="{&quot;ru&quot;:&quot;Статус: Дисквалифицирован&quot;}" ecos:jobConfig="{&quot;jobPriority&quot;:null,&quot;jobRetryTimeCycle&quot;:null}" ecos:manualStatus="disqualified" ecos:eventManualMode="false" ecos:eventFilterByEcosType="emodel/type@lead" ecos:statusChangeType="AFTER" ecos:eventType="RECORD_STATUS_CHANGED">
             <bpmn:outgoing >Flow_0t6417e</bpmn:outgoing>
-            <bpmn:signalEventDefinition  signalRef="Signal_5J0scUY" id="SignalEventDefinition_07kax8d"/>
+            <bpmn:signalEventDefinition  signalRef="Signal_IPcWnsd" id="SignalEventDefinition_07kax8d"/>
         </bpmn:startEvent>
         <bpmn:endEvent name="" id="Event_0eemnyr" ecos:documentation="{}" ecos:asyncConfig="{&quot;asyncBefore&quot;:false,&quot;asyncAfter&quot;:false,&quot;exclusive&quot;:true}" ecos:name_ml="{}" ecos:jobConfig="{&quot;jobPriority&quot;:null,&quot;jobRetryTimeCycle&quot;:null}">
             <bpmn:incoming >Flow_0kfu1f4</bpmn:incoming>
@@ -84,8 +84,8 @@ if (!disqualificationReason) {
         <bpmn:participant  name="Проверка перехода на Создание сделки" processRef="crm-lead-issue-observer-process" id="Participant_1vf8j93" ecos:documentation="{}" ecos:name_ml="{&quot;ru&quot;:&quot;Проверка перехода на Создание сделки&quot;}" ecos:ecosType="emodel/type@lead"/>
         <bpmn:participant  name="Проверка перехода на Дисквалификацию" processRef="Process_0pvt667" id="Participant_1ch8wzw" ecos:documentation="{}" ecos:name_ml="{&quot;ru&quot;:&quot;Проверка перехода на Дисквалификацию&quot;}" ecos:ecosType="emodel/type@lead"/>
     </bpmn:collaboration>
-    <bpmn:signal name="RECORD_STATUS_CHANGED;ANY;emodel/type@lead;pr_af473a3fef4d683d31833a0bc82bb364" id="Signal_e2rE8V1"/>
-    <bpmn:signal name="RECORD_STATUS_CHANGED;ANY;emodel/type@lead;pr_8319b6940d7e9c2804480532d640ba8f" id="Signal_5J0scUY"/>
+    <bpmn:signal name="RECORD_STATUS_CHANGED;ANY;emodel/type@lead;pr_af473a3fef4d683d31833a0bc82bb364" id="Signal_D9VHsCh"/>
+    <bpmn:signal name="RECORD_STATUS_CHANGED;ANY;emodel/type@lead;pr_8319b6940d7e9c2804480532d640ba8f" id="Signal_IPcWnsd"/>
     <bpmndi:BPMNDiagram id="BPMNDiagram_1">
         <bpmndi:BPMNPlane  bpmnElement="Collaboration_027w2fx" id="BPMNPlane_1">
             <bpmndi:BPMNShape bpmnElement="Participant_1vf8j93" isExpanded="false" id="Participant_1vf8j93_di">

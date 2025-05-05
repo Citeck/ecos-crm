@@ -8,9 +8,15 @@ confirm:
     ru: Изменить
     en: Change
   formRef: uiserv/form@payment-crm-change-status-form
-  formAttributes: {}
+  formAttributes:
+    plannedPaymentDate: '${plannedPaymentDate}'
+    factPaymentDate: '${factPaymentDate}'
+    comment: '${comment}'
   attributesMapping:
     record.attributes._status: statuses
+    record.attributes.plannedPaymentDate: plannedPaymentDate
+    record.attributes.factPaymentDate: factPaymentDate
+    record.attributes.comment: comment
 type: mutate
 config:
   record:

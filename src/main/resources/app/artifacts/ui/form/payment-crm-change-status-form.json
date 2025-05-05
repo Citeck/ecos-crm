@@ -39,6 +39,95 @@
       },
       {
         "label": {
+          "ru": "Планируемая дата платежа",
+          "en": "Planned payment date"
+        },
+        "key": "plannedPaymentDate",
+        "validate": {
+          "required": true
+        },
+        "format": "yyyy-MM-dd",
+        "datePicker": {
+          "minDate": "",
+          "maxDate": ""
+        },
+        "enableTime": false,
+        "timePicker": {
+          "showMeridian": false
+        },
+        "defaultValue": "",
+        "refreshOn": [],
+        "optionalWhenDisabled": false,
+        "conditional": {
+          "show": "true",
+          "when": "statuses",
+          "eq": "planned"
+        },
+        "type": "datetime",
+        "input": true,
+        "suffix": true,
+        "reorder": false
+      },
+      {
+        "label": {
+          "ru": "Фактическая дата платежа",
+          "en": "Fact payment date"
+        },
+        "key": "factPaymentDate",
+        "validate": {
+          "required": true
+        },
+        "format": "yyyy-MM-dd",
+        "datePicker": {
+          "minDate": "",
+          "maxDate": ""
+        },
+        "enableTime": false,
+        "timePicker": {
+          "showMeridian": false
+        },
+        "refreshOn": [],
+        "optionalWhenDisabled": false,
+        "conditional": {
+          "show": "true",
+          "when": "statuses",
+          "eq": "paid"
+        },
+        "type": "datetime",
+        "input": true,
+        "suffix": true,
+        "reorder": false,
+        "defaultValue": ""
+      },
+      {
+        "label": {
+          "ru": "Комментарий",
+          "en": "Comment"
+        },
+        "key": "comment",
+        "validate": {
+          "required": true
+        },
+        "editor": "lexical",
+        "defaultValue": "",
+        "refreshOn": [],
+        "optionalWhenDisabled": false,
+        "conditional": {
+          "show": "true",
+          "when": "statuses",
+          "eq": "canceled"
+        },
+        "type": "textarea",
+        "input": true,
+        "uploadStorage": "",
+        "uploadUrl": "",
+        "uploadOptions": "",
+        "uploadDir": "",
+        "as": "",
+        "reorder": false
+      },
+      {
+        "label": {
           "ru": "Columns"
         },
         "key": "columns2",
@@ -150,7 +239,7 @@
         "input": false
       }
     ],
-    "formId": "change-status-form"
+    "formId": "payment-crm-change-status-form"
   },
   "attributes": {},
   "notExists": false

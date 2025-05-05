@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<bpmn:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:ecos="http://www.citeck.ru/ecos/bpmn/1.0" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" id="Definitions_lGeInrw" name="CRM Платеж, системные обработчики" targetNamespace="http://bpmn.io/schema/bpmn" exporter="bpmn-js (https://demo.bpmn.io)" exporterVersion="8.2.0" ecos:workingCopySourceRef="" ecos:name_ml="{&quot;ru&quot;:&quot;CRM Платеж, системные обработчики&quot;}" ecos:formRef="" ecos:autoDeleteEnabled="false" ecos:sectionRef="eproc/bpmn-section@DEFAULT" ecos:enabled="true" ecos:autoStartEnabled="false" ecos:defState="CONVERTED" ecos:processDefId="crm-payment-issue-observer-process" ecos:ecosType="">
+    <bpmn:process isExecutable="true" id="crm-payment-issue-observer-process">
+        <bpmn:sequenceFlow sourceRef="StartEvent_1ew9rff" targetRef="Activity_0a7sdm6" name="" id="Flow_05ttlye" ecos:name_ml="{}" ecos:conditionConfig="{&quot;fn&quot;:&quot;&quot;,&quot;expression&quot;:&quot;&quot;,&quot;outcome&quot;:&quot;&quot;}" ecos:conditionType="NONE"/>
+        <bpmn:endEvent name="" id="Event_0x7xc7q" ecos:documentation="{}" ecos:asyncConfig="{&quot;asyncBefore&quot;:false,&quot;asyncAfter&quot;:false,&quot;exclusive&quot;:true}" ecos:name_ml="{}" ecos:jobConfig="{&quot;jobPriority&quot;:null,&quot;jobRetryTimeCycle&quot;:null}">
+            <bpmn:incoming >Flow_0wjpj1k</bpmn:incoming>
+        </bpmn:endEvent>
+        <bpmn:sequenceFlow sourceRef="Activity_0a7sdm6" targetRef="Event_0x7xc7q" name="" id="Flow_0wjpj1k" ecos:name_ml="{}" ecos:conditionConfig="{&quot;fn&quot;:&quot;&quot;,&quot;expression&quot;:&quot;&quot;,&quot;outcome&quot;:&quot;&quot;}" ecos:conditionType="NONE"/>
+        <bpmn:scriptTask scriptFormat="javascript" name="Проверка условий перехода" id="Activity_0a7sdm6" ecos:documentation="{}" ecos:asyncConfig="{&quot;asyncBefore&quot;:false,&quot;asyncAfter&quot;:false,&quot;exclusive&quot;:false}" ecos:name_ml="{&quot;ru&quot;:&quot;Проверка условий перехода&quot;}" ecos:jobConfig="{&quot;jobPriority&quot;:null,&quot;jobRetryTimeCycle&quot;:null}" ecos:script="const comment = document.load(&quot;comment&quot;);&#10;&#10;if (!comment) {&#10;  throw new Error(&quot;Необходимо указать комментарий при отмене платежа&quot;);&#10;}">
+            <bpmn:incoming >Flow_05ttlye</bpmn:incoming>
+            <bpmn:outgoing >Flow_0wjpj1k</bpmn:outgoing>
+            <bpmn:script>const comment = document.load("comment");
+
+if (!comment) {
+  throw new Error("Необходимо указать комментарий при отмене платежа");
+}</bpmn:script>
+        </bpmn:scriptTask>
+        <bpmn:startEvent isInterrupting="true" name="Статус: Отменен" id="StartEvent_1ew9rff" ecos:documentation="{}" ecos:eventFilterByRecordType="ANY" ecos:eventModel="{}" ecos:asyncConfig="{&quot;asyncBefore&quot;:false,&quot;asyncAfter&quot;:false,&quot;exclusive&quot;:false}" ecos:name_ml="{&quot;ru&quot;:&quot;Статус: Отменен&quot;}" ecos:jobConfig="{&quot;jobPriority&quot;:null,&quot;jobRetryTimeCycle&quot;:null}" ecos:manualStatus="canceled" ecos:eventManualMode="false" ecos:eventFilterByEcosType="emodel/type@payment-crm" ecos:statusChangeType="AFTER" ecos:eventType="RECORD_STATUS_CHANGED">
+            <bpmn:outgoing >Flow_05ttlye</bpmn:outgoing>
+            <bpmn:signalEventDefinition  signalRef="Signal_tnclsz8" id="SignalEventDefinition_0gk5t5y"/>
+        </bpmn:startEvent>
+    </bpmn:process>
+    <bpmn:process isExecutable="true" id="Process_1trn1ko">
+        <bpmn:sequenceFlow sourceRef="Event_1772dp0" targetRef="Activity_08op0pz" name="" id="Flow_1ynprht" ecos:name_ml="{}" ecos:conditionConfig="{&quot;fn&quot;:&quot;&quot;,&quot;expression&quot;:&quot;&quot;,&quot;outcome&quot;:&quot;&quot;}" ecos:conditionType="NONE"/>
+        <bpmn:endEvent name="" id="Event_0hc55j0" ecos:documentation="{}" ecos:asyncConfig="{&quot;asyncBefore&quot;:false,&quot;asyncAfter&quot;:false,&quot;exclusive&quot;:true}" ecos:name_ml="{}" ecos:jobConfig="{&quot;jobPriority&quot;:null,&quot;jobRetryTimeCycle&quot;:null}">
+            <bpmn:incoming >Flow_1oaacop</bpmn:incoming>
+        </bpmn:endEvent>
+        <bpmn:sequenceFlow sourceRef="Activity_08op0pz" targetRef="Event_0hc55j0" name="" id="Flow_1oaacop" ecos:name_ml="{}" ecos:conditionConfig="{&quot;fn&quot;:&quot;&quot;,&quot;expression&quot;:&quot;&quot;,&quot;outcome&quot;:&quot;&quot;}" ecos:conditionType="NONE"/>
+        <bpmn:startEvent isInterrupting="true" name="Статус: Запланирован" id="Event_1772dp0" ecos:documentation="{}" ecos:eventFilterByRecordType="ANY" ecos:eventModel="{}" ecos:asyncConfig="{&quot;asyncBefore&quot;:false,&quot;asyncAfter&quot;:false,&quot;exclusive&quot;:false}" ecos:name_ml="{&quot;ru&quot;:&quot;Статус: Запланирован&quot;}" ecos:jobConfig="{&quot;jobPriority&quot;:null,&quot;jobRetryTimeCycle&quot;:null}" ecos:manualStatus="planned" ecos:eventManualMode="false" ecos:eventFilterByEcosType="emodel/type@payment-crm" ecos:statusChangeType="AFTER" ecos:eventType="RECORD_STATUS_CHANGED">
+            <bpmn:outgoing >Flow_1ynprht</bpmn:outgoing>
+            <bpmn:signalEventDefinition  signalRef="Signal_1yVG4OZ" id="SignalEventDefinition_07ttujs"/>
+        </bpmn:startEvent>
+        <bpmn:scriptTask scriptFormat="javascript" name="Проверка условий перехода" id="Activity_08op0pz" ecos:documentation="{}" ecos:asyncConfig="{&quot;asyncBefore&quot;:false,&quot;asyncAfter&quot;:false,&quot;exclusive&quot;:false}" ecos:name_ml="{&quot;ru&quot;:&quot;Проверка условий перехода&quot;}" ecos:jobConfig="{&quot;jobPriority&quot;:null,&quot;jobRetryTimeCycle&quot;:null}" ecos:script="const plannedPaymentDate = document.load(&quot;plannedPaymentDate&quot;);&#10;&#10;if (!plannedPaymentDate) {&#10;  throw new Error(&quot;Необходимо указать планируемую дату платежа&quot;);&#10;}">
+            <bpmn:incoming >Flow_1ynprht</bpmn:incoming>
+            <bpmn:outgoing >Flow_1oaacop</bpmn:outgoing>
+            <bpmn:script>const plannedPaymentDate = document.load("plannedPaymentDate");
+
+if (!plannedPaymentDate) {
+  throw new Error("Необходимо указать планируемую дату платежа");
+}</bpmn:script>
+        </bpmn:scriptTask>
+    </bpmn:process>
+    <bpmn:process isExecutable="true" id="Process_1ilk77r">
+        <bpmn:sequenceFlow sourceRef="Event_10a3kxw" targetRef="Activity_0qgj231" name="" id="Flow_1tr46ro" ecos:name_ml="{}" ecos:conditionConfig="{&quot;fn&quot;:&quot;&quot;,&quot;expression&quot;:&quot;&quot;,&quot;outcome&quot;:&quot;&quot;}" ecos:conditionType="NONE"/>
+        <bpmn:endEvent name="" id="Event_1x00990" ecos:documentation="{}" ecos:asyncConfig="{&quot;asyncBefore&quot;:false,&quot;asyncAfter&quot;:false,&quot;exclusive&quot;:true}" ecos:name_ml="{}" ecos:jobConfig="{&quot;jobPriority&quot;:null,&quot;jobRetryTimeCycle&quot;:null}">
+            <bpmn:incoming >Flow_01wdadp</bpmn:incoming>
+        </bpmn:endEvent>
+        <bpmn:sequenceFlow sourceRef="Activity_0qgj231" targetRef="Event_1x00990" name="" id="Flow_01wdadp" ecos:name_ml="{}" ecos:conditionConfig="{&quot;fn&quot;:&quot;&quot;,&quot;expression&quot;:&quot;&quot;,&quot;outcome&quot;:&quot;&quot;}" ecos:conditionType="NONE"/>
+        <bpmn:startEvent isInterrupting="true" name="Статус: Оплачен" id="Event_10a3kxw" ecos:documentation="{}" ecos:eventFilterByRecordType="ANY" ecos:eventModel="{}" ecos:asyncConfig="{&quot;asyncBefore&quot;:false,&quot;asyncAfter&quot;:false,&quot;exclusive&quot;:false}" ecos:name_ml="{&quot;ru&quot;:&quot;Статус: Оплачен&quot;}" ecos:jobConfig="{&quot;jobPriority&quot;:null,&quot;jobRetryTimeCycle&quot;:null}" ecos:manualStatus="paid" ecos:eventManualMode="false" ecos:eventFilterByEcosType="emodel/type@payment-crm" ecos:statusChangeType="AFTER" ecos:eventType="RECORD_STATUS_CHANGED">
+            <bpmn:outgoing >Flow_1tr46ro</bpmn:outgoing>
+            <bpmn:signalEventDefinition  signalRef="Signal_rTg9qa1" id="SignalEventDefinition_1nsv2t9"/>
+        </bpmn:startEvent>
+        <bpmn:scriptTask scriptFormat="javascript" name="Проверка условий перехода" id="Activity_0qgj231" ecos:documentation="{}" ecos:asyncConfig="{&quot;asyncBefore&quot;:false,&quot;asyncAfter&quot;:false,&quot;exclusive&quot;:false}" ecos:name_ml="{&quot;ru&quot;:&quot;Проверка условий перехода&quot;}" ecos:jobConfig="{&quot;jobPriority&quot;:null,&quot;jobRetryTimeCycle&quot;:null}" ecos:script="const factPaymentDate = document.load(&quot;factPaymentDate&quot;);&#10;&#10;if (!factPaymentDate) {&#10;  throw new Error(&quot;Необходимо указать фактическую дату платежа&quot;);&#10;}">
+            <bpmn:incoming >Flow_1tr46ro</bpmn:incoming>
+            <bpmn:outgoing >Flow_01wdadp</bpmn:outgoing>
+            <bpmn:script>const factPaymentDate = document.load("factPaymentDate");
+
+if (!factPaymentDate) {
+  throw new Error("Необходимо указать фактическую дату платежа");
+}</bpmn:script>
+        </bpmn:scriptTask>
+    </bpmn:process>
+    <bpmn:collaboration id="Collaboration_1yii51s">
+        <bpmn:participant  name="Проверка перехода на Отменен" processRef="crm-payment-issue-observer-process" id="Participant_13tzek4" ecos:documentation="{}" ecos:name_ml="{&quot;ru&quot;:&quot;Проверка перехода на Отменен&quot;}" ecos:ecosType="emodel/type@payment-crm"/>
+        <bpmn:participant  name="Проверка перехода на Запланирован" processRef="Process_1trn1ko" id="Participant_1mjjy67" ecos:documentation="{}" ecos:name_ml="{&quot;ru&quot;:&quot;Проверка перехода на Запланирован&quot;}" ecos:ecosType="emodel/type@payment-crm"/>
+        <bpmn:participant  name="Проверка перехода на Оплачен" processRef="Process_1ilk77r" id="Participant_1jmt2nv" ecos:documentation="{}" ecos:name_ml="{&quot;ru&quot;:&quot;Проверка перехода на Оплачен&quot;}" ecos:ecosType="emodel/type@payment-crm"/>
+    </bpmn:collaboration>
+    <bpmn:signal name="RECORD_STATUS_CHANGED;ANY;emodel/type@payment-crm;pr_52a3016ea8c0747cb9016add1104315f" id="Signal_tnclsz8"/>
+    <bpmn:signal name="RECORD_STATUS_CHANGED;ANY;emodel/type@payment-crm;pr_37453a84649487b2ac3851343b5af9a8" id="Signal_1yVG4OZ"/>
+    <bpmn:signal name="RECORD_STATUS_CHANGED;ANY;emodel/type@payment-crm;pr_87815f918158d0672017791d9fbf909a" id="Signal_rTg9qa1"/>
+    <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+        <bpmndi:BPMNPlane  bpmnElement="Collaboration_1yii51s" id="BPMNPlane_1">
+            <bpmndi:BPMNShape bpmnElement="Participant_13tzek4" isExpanded="false" id="Participant_13tzek4_di">
+                <dc:Bounds x="50.0" y="-40.0" width="410.0" height="250.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="Event_0x7xc7q" isExpanded="false" id="Event_0x7xc7q_di">
+                <dc:Bounds x="372.0" y="52.0" width="36.0" height="36.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="Activity_0a7sdm6" isExpanded="false" id="Activity_0vncldr_di">
+                <dc:Bounds x="220.0" y="30.0" width="100.0" height="80.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="StartEvent_1ew9rff" isExpanded="false" id="Event_0urdy0c_di">
+                <dc:Bounds x="132.0" y="52.0" width="36.0" height="36.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNEdge bpmnElement="Flow_05ttlye" id="Flow_05ttlye_di">
+                <di:waypoint x="168.0" y="70.0"/>
+                <di:waypoint x="220.0" y="70.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="Flow_0wjpj1k" id="Flow_0wjpj1k_di">
+                <di:waypoint x="320.0" y="70.0"/>
+                <di:waypoint x="372.0" y="70.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNShape bpmnElement="Participant_1mjjy67" isExpanded="false" id="Participant_1mjjy67_di">
+                <dc:Bounds x="50.0" y="270.0" width="410.0" height="250.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="Event_0hc55j0" isExpanded="false" id="Event_0hc55j0_di">
+                <dc:Bounds x="372.0" y="372.0" width="36.0" height="36.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="Event_1772dp0" isExpanded="false" id="Event_1o1f6to_di">
+                <dc:Bounds x="132.0" y="372.0" width="36.0" height="36.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="Activity_08op0pz" isExpanded="false" id="Activity_1976zfl_di">
+                <dc:Bounds x="220.0" y="350.0" width="100.0" height="80.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNEdge bpmnElement="Flow_1ynprht" id="Flow_1ynprht_di">
+                <di:waypoint x="168.0" y="390.0"/>
+                <di:waypoint x="220.0" y="390.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="Flow_1oaacop" id="Flow_1oaacop_di">
+                <di:waypoint x="320.0" y="390.0"/>
+                <di:waypoint x="372.0" y="390.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNShape bpmnElement="Participant_1jmt2nv" isExpanded="false" id="Participant_1jmt2nv_di">
+                <dc:Bounds x="50.0" y="580.0" width="410.0" height="250.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="Event_1x00990" isExpanded="false" id="Event_1x00990_di">
+                <dc:Bounds x="372.0" y="682.0" width="36.0" height="36.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="Event_10a3kxw" isExpanded="false" id="Event_1wn9ebv_di">
+                <dc:Bounds x="132.0" y="682.0" width="36.0" height="36.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="Activity_0qgj231" isExpanded="false" id="Activity_0y6ixb4_di">
+                <dc:Bounds x="220.0" y="660.0" width="100.0" height="80.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNEdge bpmnElement="Flow_1tr46ro" id="Flow_1tr46ro_di">
+                <di:waypoint x="168.0" y="700.0"/>
+                <di:waypoint x="220.0" y="700.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="Flow_01wdadp" id="Flow_01wdadp_di">
+                <di:waypoint x="320.0" y="700.0"/>
+                <di:waypoint x="372.0" y="700.0"/>
+            </bpmndi:BPMNEdge>
+        </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+</bpmn:definitions>
