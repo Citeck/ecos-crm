@@ -5,6 +5,7 @@ name:
 description:
   ru: Пространство для работы с лидами, сделками и платежами.
   en: A space for managing leads, deals, and payments.
+homePageLink: '/v2/journals?journalId=deals-journal'
 workspaceMembers:
   - id: default-users
     authorities:
