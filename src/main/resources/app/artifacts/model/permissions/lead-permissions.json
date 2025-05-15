@@ -1,0 +1,34 @@
+{
+  "id": "lead-permission-matrix",
+  "typeRef": "emodel/type@lead",
+  "permissions": {
+    "matrix": {
+      "manager": {
+        "new": "WRITE",
+        "nurturing": "WRITE",
+        "interest": "WRITE",
+        "pause": "WRITE",
+        "disqualified": "WRITE",
+        "deal_creation": "WRITE"
+      },
+      "viewers": {
+        "ANY": "READ"
+      },
+      "allCRMManagers": {
+        "ANY": "READ"
+      },
+      "cco": {
+        "new": "WRITE",
+        "nurturing": "WRITE",
+        "interest": "WRITE",
+        "pause": "WRITE",
+        "disqualified": "WRITE",
+        "deal_creation": "WRITE"
+      },
+      "crmAdministrators": {
+        "ANY": "WRITE"
+      }
+    }
+  },
+  "attributes": {}
+}

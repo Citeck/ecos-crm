@@ -1,0 +1,43 @@
+{
+  "id": "payment-crm",
+  "typeRef": "emodel/type@payment-crm",
+  "permissions": {
+    "matrix": {
+      "creator": {
+        "draft": "WRITE",
+        "planned": "WRITE",
+        "partialPayed": "WRITE",
+        "paid": "WRITE",
+        "canceled": "WRITE"
+      },
+      "responsible": {
+        "draft": "WRITE",
+        "planned": "WRITE",
+        "partialPayed": "WRITE",
+        "paid": "READ",
+        "canceled": "READ"
+      },
+      "crmAdministrators": {
+        "ANY": "WRITE"
+      },
+      "link_manager": {
+        "draft": "WRITE",
+        "planned": "WRITE",
+        "partialPayed": "WRITE",
+        "paid": "READ",
+        "canceled": "READ"
+      },
+      "link_viewers": {
+        "ANY": "READ"
+      },
+      "link_allCRMManagers": {
+        "ANY": "READ"
+      },
+      "link_cco": {
+        "ANY": "WRITE"
+      }
+    },
+    "rules": []
+  },
+  "attributes": {}
+}

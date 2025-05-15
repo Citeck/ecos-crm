@@ -1,0 +1,18 @@
+---
+id: has-orders
+name:
+  ru: Имеет заказы
+  en: Has orders
+
+prefix: has-orders
+
+attributes:
+  - id: orders
+    name:
+      en: Orders
+      ru: Заказы
+    type: ASSOC
+    config:
+      child: false
+      typeRef: emodel/type@order
+    multiple: true

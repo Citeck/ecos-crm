@@ -1,0 +1,31 @@
+---
+id: order-change-status
+name:
+  ru: Изменить статус
+  en: Change status
+confirm:
+  title:
+    ru: Изменить
+    en: Change
+  formRef: uiserv/form@order-change-status-form
+  formAttributes: {}
+  attributesMapping:
+    record.attributes._status: statuses
+type: mutate
+config:
+  record:
+    id: '${recordRef}'
+    attributes:
+      _status: statuses
+features:
+  execForQuery: false
+  execForRecord: true
+  execForRecords: true
+predicate:
+  t: and
+  val:
+    - t: and
+      val:
+        - t: eq
+          att: _roles.isCurrentUserMemberOf.manager?bool
+          val: true

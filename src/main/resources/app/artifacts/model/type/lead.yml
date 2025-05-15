@@ -1,0 +1,183 @@
+---
+id: lead
+name:
+  ru: Лид
+  en: Lead
+storageType: ECOS_MODEL
+parentRef: emodel/type@opportunity
+formRef: uiserv/form@lead-form
+journalRef: uiserv/journal@leads-journal
+defaultStatus: new
+boardRef: uiserv/board@lead-board
+inheritForm: false
+inheritActions: false
+dispNameTemplate:
+  ru: "Лид №${number}: ${name}"
+workspaceScope: PRIVATE
+actions:
+  - uiserv/action@lead-change-status
+  - uiserv/action@edit
+  - uiserv/action@delete
+  - uiserv/action@create-counterparty
+  - uiserv/action@merge-lead
+defaultCreateVariant: true
+model:
+  statuses:
+    - id: new
+      name:
+        ru: Новый
+        en: New
+    - id: nurturing
+      name:
+        ru: Взращивание
+        en: Nurturing
+    - id: interest
+      name:
+        ru: Есть интерес
+        en: Interest
+    - id: pause
+      name:
+        ru: Пауза
+        en: Pause
+    - id: disqualified
+      name:
+        ru: Дисквалифицирован
+        en: Lead Disqualified
+    - id: deal_creation
+      name:
+        ru: Сделка
+        en: Deal
+  stages:
+    - name:
+        ru: Не обработан
+        en: Unprocessed
+      statuses:
+        - new
+    - name:
+        ru: Квалификация
+        en: Qualification
+      statuses:
+        - nurturing
+        - interest
+    - name:
+        ru: Пауза
+        en: Pause
+      statuses:
+        - pause
+    - name:
+        ru: Завершен
+        en: Completed
+      statuses:
+        - disqualified
+        - deal_creation
+  attributes:
+    - id: number
+      name:
+        ru: Номер
+        en: Number
+      computed:
+        type: COUNTER
+        config:
+          numTemplateRef: emodel/num-template@lead-num-template
+        storingType: ON_CREATE
+    - id: requestType
+      name:
+        ru: Тип запроса
+        en: Request type
+      type: OPTIONS
+      config:
+        source: values
+        values:
+          - value: partnership
+            label:
+              ru: Партнёрство
+              en: Partnership
+          - value: education
+            label:
+              ru: Обучение
+              en: Education
+          - value: deal
+            label:
+              ru: Сделка
+              en: Deal
+    - id: counterpartyText
+      name:
+        ru: Компания
+        en: Company
+      type: TEXT
+    - id: disqualificationReason
+      name:
+        ru: Причина дисквалификации
+        en: Disqualification reason
+      type: OPTIONS
+      config:
+        source: values
+        values:
+          - value: no_contact
+            label:
+              ru: Не смогли связаться (вообще ни разу)
+              en: No contact at all
+          - value: not_interested
+            label:
+              ru: Не интересно (отказ от общения)
+              en: Not interested (refused communication)
+          - value: blacklist_suspicion
+            label:
+              ru: Подозрение на черный список
+              en: Blacklist suspicion
+          - value: not_target
+            label:
+              ru: Нецелевой клиент
+              en: Not a target client
+          - value: education_interest
+            label:
+              ru: Интересует обучение
+              en: Interested in education
+          - value: duplicate
+            label:
+              ru: Дубликат
+              en: Duplicate
+          - value: incorrect_data
+            label:
+              ru: Некорректные данные
+              en: Incorrect data
+          - value: partnership_interest
+            label:
+              ru: Интересует партнерство
+              en: Interested in partnership
+          - value: service_unavailable
+            label:
+              ru: Невозможно предоставить услугу
+              en: Unable to provide service
+          - value: competitor_choice
+            label:
+              ru: Выбрал конкурента
+              en: Chose competitor
+          - value: substitute_choice
+            label:
+              ru: Выбрал заменитель продукта
+              en: Chose product substitute
+          - value: expensive
+            label:
+              ru: Дорого
+              en: Too expensive
+          - value: spam
+            label:
+              ru: Спам
+              en: Spam
+          - value: webinar_participant
+            label:
+              ru: Участник вебинара из департамента компании
+              en: Webinar participant from company department
+          - value: existing_client
+            label:
+              ru: Существующий клиент
+              en: Existing client
+    - id: createdDeal
+      name:
+        ru: Созданная сделка
+        en: Created deal
+      type: ASSOC
+      multiple: false
+      config:
+        typeRef: emodel/type@deal

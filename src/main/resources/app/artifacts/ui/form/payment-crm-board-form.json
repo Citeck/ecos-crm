@@ -1,13 +1,13 @@
 {
-  "id": "deal-merge-form",
+  "id": "payment-crm-board-form",
   "formKey": "",
   "title": {
-    "en": "Deal Merge Form"
+    "en": "Payment board form"
   },
   "description": {},
   "customModule": "",
-  "typeRef": "",
-  "width": "",
+  "typeRef": "emodel/type@payment-crm",
+  "width": "lg",
   "system": false,
   "i18n": {},
   "definition": {
@@ -20,20 +20,76 @@
         "components": [
           {
             "label": {
-              "ru": "Сделка",
-              "en": "Deal"
+              "ru": "amount"
             },
-            "key": "mergeIn",
+            "key": "amount",
             "validate": {
-              "required": true
+              "integer": false
             },
-            "modalTitle": "",
-            "journalId": "deals-journal",
+            "isBigNumber": false,
+            "delimiter": true,
+            "delimiterValue": " ",
             "refreshOn": [],
             "optionalWhenDisabled": false,
-            "type": "selectJournal",
+            "decimalLimit": 2,
+            "defaultValue": 0,
+            "type": "number",
             "input": true,
-            "queryData": ""
+            "reorder": false
+          },
+          {
+            "label": {
+              "ru": "plannedPaymentDate"
+            },
+            "key": "plannedPaymentDate",
+            "datePicker": {
+              "minDate": "",
+              "maxDate": ""
+            },
+            "enableTime": false,
+            "timePicker": {
+              "showMeridian": false
+            },
+            "defaultValue": "",
+            "refreshOn": [],
+            "optionalWhenDisabled": false,
+            "type": "datetime",
+            "input": true,
+            "suffix": true,
+            "format": "yyyy-MM-dd"
+          },
+          {
+            "label": {
+              "ru": "factPaymentDate"
+            },
+            "key": "factPaymentDate",
+            "datePicker": {
+              "minDate": "",
+              "maxDate": ""
+            },
+            "enableTime": false,
+            "timePicker": {
+              "showMeridian": false
+            },
+            "defaultValue": "",
+            "refreshOn": [],
+            "optionalWhenDisabled": false,
+            "type": "datetime",
+            "input": true,
+            "suffix": true,
+            "format": "yyyy-MM-dd"
+          },
+          {
+            "label": {
+              "ru": "responsible"
+            },
+            "key": "responsible",
+            "refreshOn": [],
+            "optionalWhenDisabled": false,
+            "type": "selectOrgstruct",
+            "input": true,
+            "defaultValue": "",
+            "reorder": false
           }
         ]
       },
@@ -110,8 +166,8 @@
             "components": [
               {
                 "label": {
-                  "en": "Merge",
-                  "ru": "Объединить"
+                  "ru": "Создать",
+                  "en": "Submit"
                 },
                 "key": "submit",
                 "state": "",
@@ -121,10 +177,7 @@
                 "refreshOn": [],
                 "optionalWhenDisabled": false,
                 "type": "button",
-                "input": true,
-                "headers": [
-                  {}
-                ]
+                "input": true
               }
             ]
           }
@@ -133,7 +186,8 @@
         "type": "columns",
         "input": false
       }
-    ]
+    ],
+    "formId": "payment-crm-board-form"
   },
   "attributes": {},
   "notExists": false

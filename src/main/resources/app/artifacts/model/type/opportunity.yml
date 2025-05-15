@@ -1,0 +1,159 @@
+---
+id: opportunity
+name:
+  ru: Возможность
+  en: Opportunity
+storageType: ECOS_MODEL
+parentRef: emodel/type@case
+inheritForm: false
+dispNameTemplate:
+  ru: ${name}
+workspaceScope: PRIVATE
+actions:
+  - uiserv/action@edit
+  - uiserv/action@delete
+defaultCreateVariant: true
+model:
+  roles:
+    - id: manager
+      name:
+        ru: Ответственный
+        en: Manager
+      computed:
+        type: SCRIPT
+        config:
+          fn: |
+            const manager = value.load('manager?id');
+            if (manager === null) {
+                return "GROUP_crm-manager";
+            }
+            return manager;
+    - id: viewers
+      name:
+        en: Viewers
+        ru: Наблюдатели
+      computed:
+        type: ATTRIBUTE
+        config:
+          attribute: viewers
+    - id: allCRMManagers
+      name:
+        en: All CRM Managers
+        ru: Все менеджеры CRM
+      assignees:
+        - GROUP_crm-manager
+    - id: cco
+      name:
+        ru: Коммерческий директор
+        en: CCO
+      assignees:
+        - GROUP_crm-cco
+    - id: crmAdministrators
+      name:
+        ru: Администраторы CRM
+        en: CRM Administrators
+      assignees:
+        - GROUP_crm-administrators
+  attributes:
+    - id: name
+      name:
+        ru: Название
+        en: Name
+    - id: amount
+      name:
+        ru: Бюджет
+        en: Budget
+      type: NUMBER
+    - id: description
+      name:
+        ru: Описание
+        en: Description
+    - id: counterparty
+      name:
+        ru: Контрагент
+        en: Counterparty
+      type: ASSOC
+      config:
+        typeRef: emodel/type@ecos-counterparty
+        child: false
+    - id: manager
+      name:
+        ru: Ответственный
+        en: Manager
+      type: PERSON
+    - id: viewers
+      name:
+        ru: Наблюдатели
+        en: Viewers
+      type: PERSON
+      multiple: true
+    - id: dateReceived
+      name:
+        ru: Дата создания
+        en: Received date
+      type: DATETIME
+      computed:
+        storingType: ON_EMPTY
+        config:
+          fn: |
+            return new Date();
+        type: SCRIPT
+    - id: requestSource
+      name:
+        ru: Источник обращения
+        en: Request source
+      type: ASSOC
+      config:
+        typeRef: emodel/type@deal-request-source
+        child: false
+    - id: requestCategory
+      name:
+        ru: Категория обращения
+        en: Request category
+      type: ASSOC
+      config:
+        typeRef: emodel/type@deal-request-category
+        child: false
+    - id: siteEmail
+      name:
+        ru: E-mail заявки с сайта
+        en: Site e-mail
+    - id: siteFrom
+      name:
+        ru: Страница заполнения заявки
+        en: Deal request page
+    - id: emessage
+      name:
+        ru: Почтовое сообщение
+        en: Post message
+    - id: syncRequestSourceCount
+      name:
+        ru: Количество попыток синхронизации с YM
+      type: NUMBER
+      computed:
+        type: VALUE
+        config:
+          value: '0'
+        storingType: ON_CREATE
+    - id: ga_client_id
+      name:
+        ru: Идентификатор GA
+        en: GA ID
+    - id: ym_client_id
+      name:
+        ru: Идентификатор YM
+        en: YM ID
+    - id: contacts
+      name:
+        ru: Контакты
+        en: Contacts
+      type: JSON
+      multiple: true
+    - id: numberOfUsers
+      name:
+        ru: Количество пользователей
+        en: Number of users
+    - id: bitrixId
+      name:
+        ru: Id сделки из Bitrix
+        en: Deal id from Bitrix

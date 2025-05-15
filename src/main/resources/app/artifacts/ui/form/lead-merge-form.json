@@ -1,8 +1,9 @@
 {
-  "id": "deal-merge-form",
+  "id": "lead-merge-form",
   "formKey": "",
   "title": {
-    "en": "Deal Merge Form"
+    "en": "Lead Merge Form",
+    "ru": "Форма объединения лидов"
   },
   "description": {},
   "customModule": "",
@@ -20,15 +21,15 @@
         "components": [
           {
             "label": {
-              "ru": "Сделка",
-              "en": "Deal"
+              "ru": "Лид",
+              "en": "Lead"
             },
             "key": "mergeIn",
+            "modalTitle": "",
             "validate": {
               "required": true
             },
-            "modalTitle": "",
-            "journalId": "deals-journal",
+            "journalId": "leads-journal",
             "refreshOn": [],
             "optionalWhenDisabled": false,
             "type": "selectJournal",
@@ -137,4 +138,4 @@
   },
   "attributes": {},
   "notExists": false
-}
+} 

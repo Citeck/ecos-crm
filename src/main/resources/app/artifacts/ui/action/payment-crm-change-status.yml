@@ -1,0 +1,37 @@
+---
+id: payment-crm-change-status
+name:
+  ru: Изменить статус
+  en: Change status
+confirm:
+  title:
+    ru: Изменить
+    en: Change
+  formRef: uiserv/form@payment-crm-change-status-form
+  formAttributes:
+    plannedPaymentDate: '${plannedPaymentDate}'
+    factPaymentDate: '${factPaymentDate}'
+    comment: '${comment}'
+  attributesMapping:
+    record.attributes._status: statuses
+    record.attributes.plannedPaymentDate: plannedPaymentDate
+    record.attributes.factPaymentDate: factPaymentDate
+    record.attributes.comment: comment
+type: mutate
+config:
+  record:
+    id: '${recordRef}'
+    attributes:
+      _status: statuses
+features:
+  execForQuery: false
+  execForRecord: true
+  execForRecords: true
+predicate:
+  t: and
+  val:
+    - t: and
+      val:
+        - t: eq
+          att: permissions._has.Write?bool!
+          val: true

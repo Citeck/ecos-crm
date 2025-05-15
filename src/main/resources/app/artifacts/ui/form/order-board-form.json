@@ -1,13 +1,13 @@
 {
-  "id": "deal-merge-form",
+  "id": "order-board-form",
   "formKey": "",
   "title": {
-    "en": "Deal Merge Form"
+    "en": "Order board form"
   },
   "description": {},
   "customModule": "",
-  "typeRef": "",
-  "width": "",
+  "typeRef": "emodel/type@order",
+  "width": "lg",
   "system": false,
   "i18n": {},
   "definition": {
@@ -20,20 +20,104 @@
         "components": [
           {
             "label": {
+              "ru": "manager",
+              "en": "manager"
+            },
+            "key": "manager",
+            "allowedAuthorityType": "USER",
+            "currentUserByDefault": true,
+            "refreshOn": [],
+            "optionalWhenDisabled": false,
+            "customConditional": "show = !_.isEmpty(value)",
+            "type": "selectOrgstruct",
+            "input": true,
+            "reorder": false,
+            "allowedGroupType": "",
+            "rootGroupName": "",
+            "defaultValue": ""
+          },
+          {
+            "label": {
+              "ru": "orderDate",
+              "en": "orderDate"
+            },
+            "key": "orderDate",
+            "format": "dd-MM-yyyy HH:mm",
+            "customClass": "font-weight-light",
+            "datePicker": {
+              "minDate": "",
+              "maxDate": ""
+            },
+            "enableTime": false,
+            "defaultValue": "",
+            "refreshOn": [],
+            "optionalWhenDisabled": false,
+            "type": "datetime",
+            "input": true,
+            "suffix": true,
+            "reorder": false
+          },
+          {
+            "label": {
               "ru": "Сделка",
               "en": "Deal"
             },
-            "key": "mergeIn",
-            "validate": {
-              "required": true
-            },
+            "key": "crm-links:deal",
             "modalTitle": "",
             "journalId": "deals-journal",
+            "source": {
+              "type": "journal",
+              "custom": {
+                "columns": []
+              },
+              "customValues": ""
+            },
             "refreshOn": [],
             "optionalWhenDisabled": false,
+            "customConditional": "show = !_.isEmpty(value)",
             "type": "selectJournal",
             "input": true,
             "queryData": ""
+          },
+          {
+            "label": {
+              "ru": "has-pas:totalAmount"
+            },
+            "key": "has-pas:totalAmount",
+            "disabled": true,
+            "validate": {
+              "integer": false
+            },
+            "isBigNumber": false,
+            "delimiter": true,
+            "delimiterValue": " ",
+            "refreshOn": [],
+            "optionalWhenDisabled": false,
+            "decimalLimit": 2,
+            "defaultValue": "",
+            "type": "number",
+            "input": true,
+            "reorder": false
+          },
+          {
+            "label": {
+              "ru": "has-pas:totalAmountWithVat"
+            },
+            "key": "has-pas:totalAmountWithVat",
+            "disabled": true,
+            "validate": {
+              "integer": false
+            },
+            "isBigNumber": false,
+            "delimiter": true,
+            "delimiterValue": " ",
+            "refreshOn": [],
+            "optionalWhenDisabled": false,
+            "decimalLimit": 2,
+            "defaultValue": "",
+            "type": "number",
+            "input": true,
+            "reorder": false
           }
         ]
       },
@@ -110,8 +194,8 @@
             "components": [
               {
                 "label": {
-                  "en": "Merge",
-                  "ru": "Объединить"
+                  "ru": "Создать",
+                  "en": "Submit"
                 },
                 "key": "submit",
                 "state": "",
@@ -121,10 +205,7 @@
                 "refreshOn": [],
                 "optionalWhenDisabled": false,
                 "type": "button",
-                "input": true,
-                "headers": [
-                  {}
-                ]
+                "input": true
               }
             ]
           }
@@ -133,7 +214,8 @@
         "type": "columns",
         "input": false
       }
-    ]
+    ],
+    "formId": "order-board-form"
   },
   "attributes": {},
   "notExists": false

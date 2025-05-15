@@ -1,0 +1,427 @@
+{
+  "id": "lead-form",
+  "formKey": "",
+  "title": {
+    "en": "Lead form"
+  },
+  "description": {},
+  "customModule": "",
+  "typeRef": "emodel/type@lead",
+  "width": "lg",
+  "system": false,
+  "i18n": {},
+  "definition": {
+    "components": [
+      {
+        "scrollableContent": true,
+        "key": "panel2",
+        "type": "panel",
+        "input": false,
+        "components": [
+          {
+            "label": {
+              "ru": "Columns"
+            },
+            "key": "columns",
+            "columns": [
+              {
+                "components": [
+                  {
+                    "label": {
+                      "ru": "Название"
+                    },
+                    "key": "name",
+                    "validate": {
+                      "required": true
+                    },
+                    "defaultValue": "",
+                    "refreshOn": [],
+                    "optionalWhenDisabled": false,
+                    "type": "textfield",
+                    "input": true,
+                    "inputMasks": [
+                      {}
+                    ]
+                  },
+                  {
+                    "label": {
+                      "ru": "Columns"
+                    },
+                    "key": "columns3",
+                    "columns": [
+                      {
+                        "components": [
+                          {
+                            "label": {
+                              "en": "Title",
+                              "ru": "Номер"
+                            },
+                            "key": "number",
+                            "disabled": true,
+                            "defaultValue": "",
+                            "refreshOn": [],
+                            "optionalWhenDisabled": false,
+                            "type": "textfield",
+                            "input": true
+                          }
+                        ],
+                        "type": "column",
+                        "input": false,
+                        "key": "column",
+                        "index": 0
+                      },
+                      {
+                        "index": 1,
+                        "type": "column",
+                        "input": false,
+                        "key": "column",
+                        "components": [
+                          {
+                            "label": {
+                              "ru": "Дата создания",
+                              "en": "Received date"
+                            },
+                            "key": "dateReceived",
+                            "disabled": true,
+                            "format": "dd-MM-yyyy HH:mm",
+                            "datePicker": {
+                              "minDate": "",
+                              "maxDate": ""
+                            },
+                            "timePicker": {
+                              "showMeridian": false
+                            },
+                            "defaultValue": "2025-04-14T15:05:46Z",
+                            "refreshOn": [],
+                            "customDefaultValue": "value = new Date();",
+                            "optionalWhenDisabled": false,
+                            "customConditional": "show = instance.options.formMode !== 'CREATE';",
+                            "type": "datetime",
+                            "input": true,
+                            "suffix": true,
+                            "reorder": false
+                          }
+                        ]
+                      }
+                    ],
+                    "oneColumnInViewMode": false,
+                    "type": "columns",
+                    "input": false
+                  },
+                  {
+                    "label": {
+                      "ru": "requestType"
+                    },
+                    "key": "requestType",
+                    "validate": {
+                      "select": false
+                    },
+                    "data": {
+                      "url": "/citeck/ecos/records/query",
+                      "headers": [
+                        {
+                          "key": "",
+                          "value": ""
+                        }
+                      ]
+                    },
+                    "defaultValue": "",
+                    "optionalWhenDisabled": false,
+                    "type": "ecosSelect",
+                    "input": true,
+                    "reorder": false,
+                    "reference": false
+                  },
+                  {
+                    "label": {
+                      "ru": "Количество пользователей",
+                      "en": "Number of users"
+                    },
+                    "key": "numberOfUsers",
+                    "defaultValue": "",
+                    "refreshOn": [],
+                    "optionalWhenDisabled": false,
+                    "type": "textfield",
+                    "input": true,
+                    "inputMasks": [
+                      {}
+                    ]
+                  }
+                ],
+                "type": "column",
+                "input": false,
+                "key": "column",
+                "index": 0
+              },
+              {
+                "index": 1,
+                "type": "column",
+                "input": false,
+                "key": "column",
+                "components": [
+                  {
+                    "label": {
+                      "ru": "Ответственный",
+                      "en": "Responsible"
+                    },
+                    "key": "manager",
+                    "validate": {
+                      "required": true
+                    },
+                    "allowedAuthorityType": "USER",
+                    "currentUserByDefault": true,
+                    "defaultValue": "",
+                    "refreshOn": [],
+                    "optionalWhenDisabled": false,
+                    "type": "selectOrgstruct",
+                    "input": true,
+                    "reorder": false,
+                    "allowedGroupType": "",
+                    "rootGroupName": ""
+                  },
+                  {
+                    "label": {
+                      "ru": "counterpartyText"
+                    },
+                    "key": "counterpartyText",
+                    "defaultValue": "",
+                    "refreshOn": [],
+                    "optionalWhenDisabled": false,
+                    "type": "textfield",
+                    "input": true,
+                    "inputMasks": [
+                      {}
+                    ],
+                    "reorder": false,
+                    "dataSrc": ""
+                  },
+                  {
+                    "label": {
+                      "ru": "Контрагент",
+                      "en": "Counterparty"
+                    },
+                    "key": "counterparty",
+                    "modalTitle": "",
+                    "journalId": "ecos-counterparty",
+                    "refreshOn": [],
+                    "optionalWhenDisabled": false,
+                    "type": "selectJournal",
+                    "input": true,
+                    "queryData": ""
+                  }
+                ]
+              }
+            ],
+            "oneColumnInViewMode": false,
+            "type": "columns",
+            "input": false
+          },
+          {
+            "label": {
+              "ru": "Columns"
+            },
+            "key": "columns4",
+            "columns": [
+              {
+                "components": [
+                  {
+                    "label": {
+                      "ru": "createdDeal"
+                    },
+                    "key": "createdDeal",
+                    "disabled": true,
+                    "clearOnHide": false,
+                    "modalTitle": "",
+                    "journalId": "deals-journal",
+                    "source": {
+                      "type": "journal",
+                      "custom": {
+                        "columns": []
+                      },
+                      "customValues": "",
+                      "viewMode": "default"
+                    },
+                    "queryData": "",
+                    "refreshOn": [],
+                    "optionalWhenDisabled": false,
+                    "type": "selectJournal",
+                    "input": true
+                  }
+                ],
+                "type": "column",
+                "input": false,
+                "key": "column",
+                "index": 0
+              },
+              {
+                "index": 1,
+                "type": "column",
+                "input": false,
+                "key": "column",
+                "components": [
+                  {
+                    "label": {
+                      "ru": "disqualificationReason"
+                    },
+                    "key": "disqualificationReason",
+                    "validate": {
+                      "select": false
+                    },
+                    "data": {
+                      "url": "/citeck/ecos/records/query",
+                      "headers": [
+                        {
+                          "key": "",
+                          "value": ""
+                        }
+                      ]
+                    },
+                    "defaultValue": "",
+                    "optionalWhenDisabled": false,
+                    "customConditional": "show = instance.options.formMode !== 'CREATE';",
+                    "type": "ecosSelect",
+                    "input": true,
+                    "reorder": false,
+                    "reference": false
+                  }
+                ]
+              }
+            ],
+            "oneColumnInViewMode": false,
+            "type": "columns",
+            "input": false
+          },
+          {
+            "label": {
+              "ru": "Описание",
+              "en": "Description"
+            },
+            "key": "description",
+            "editor": "lexical",
+            "defaultValue": "",
+            "refreshOn": [],
+            "optionalWhenDisabled": false,
+            "rows": 4,
+            "type": "textarea",
+            "input": true,
+            "uploadStorage": "",
+            "uploadUrl": "",
+            "uploadOptions": "",
+            "uploadDir": "",
+            "as": "",
+            "reorder": false
+          },
+          {
+            "label": {
+              "ru": "Status"
+            },
+            "key": "_status",
+            "disabled": true,
+            "hidden": true,
+            "defaultValue": "new",
+            "refreshOn": [],
+            "optionalWhenDisabled": false,
+            "type": "textfield",
+            "input": true
+          }
+        ]
+      },
+      {
+        "label": {
+          "ru": "Columns"
+        },
+        "key": "columns2",
+        "columns": [
+          {
+            "components": [
+              {
+                "label": "Cancel",
+                "action": "event",
+                "state": "",
+                "showValidations": false,
+                "event": "cancel",
+                "block": true,
+                "type": "button",
+                "input": true,
+                "key": "submit2",
+                "conditional": {
+                  "show": null,
+                  "when": null
+                }
+              }
+            ],
+            "type": "column",
+            "input": false,
+            "key": "column",
+            "label": "Column",
+            "md": 3,
+            "clearOnHide": true,
+            "conditional": {
+              "show": null,
+              "when": null
+            },
+            "index": 0
+          },
+          {
+            "components": [],
+            "type": "column",
+            "input": false,
+            "key": "column",
+            "label": "Column",
+            "clearOnHide": true,
+            "conditional": {
+              "show": null,
+              "when": null
+            },
+            "index": 1,
+            "md": 3
+          },
+          {
+            "md": 3,
+            "type": "column",
+            "input": false,
+            "key": "column",
+            "label": "Column",
+            "components": [],
+            "clearOnHide": true,
+            "conditional": {
+              "show": null,
+              "when": null
+            },
+            "index": 2
+          },
+          {
+            "md": 3,
+            "type": "column",
+            "input": false,
+            "key": "column",
+            "index": 3,
+            "components": [
+              {
+                "label": {
+                  "ru": "Создать",
+                  "en": "Submit"
+                },
+                "key": "submit",
+                "state": "",
+                "theme": "primary",
+                "block": true,
+                "disableOnInvalid": true,
+                "refreshOn": [],
+                "optionalWhenDisabled": false,
+                "type": "button",
+                "input": true
+              }
+            ]
+          }
+        ],
+        "oneColumnInViewMode": false,
+        "type": "columns",
+        "input": false
+      }
+    ],
+    "formId": "lead-form"
+  },
+  "attributes": {},
+  "notExists": false
+}

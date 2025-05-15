@@ -1,7 +1,7 @@
 {
-  "id": "crm-dashboard",
+  "id": "order-dashboard",
   "name": {},
-  "typeRef": "emodel/type@deal",
+  "typeRef": "emodel/type@order",
   "appliedToRef": "",
   "authority": "",
   "scope": "",
@@ -11,23 +11,6 @@
     "version": "v2",
     "v2": {
       "widgets": [
-        {
-          "name": "stages",
-          "label": "dashboard-settings.widget.stages",
-          "dndId": "e1d87f9d-c2f0-455e-863b-73c1aa4d22cb",
-          "id": "7194460e-6e57-4e9b-9696-d6ad4ad0242d",
-          "props": {
-            "id": "7194460e-6e57-4e9b-9696-d6ad4ad0242d",
-            "config": {
-              "widgetDisplayCondition": null,
-              "elementsDisplayCondition": {}
-            }
-          },
-          "description": {
-            "ru": "Основное",
-            "en": "General"
-          }
-        },
         {
           "dndId": "077bcf0e-5f7e-4f6d-abca-f996d243ea1d",
           "name": "tasks",
@@ -54,8 +37,24 @@
             "id": "ecbede90-a55d-423a-9b6b-3ac523600335",
             "config": {
               "widgetDisplayCondition": "",
-              "elementsDisplayCondition": {},
-              "formMode": "EDIT"
+              "elementsDisplayCondition": {}
+            }
+          },
+          "description": {
+            "ru": "Основное",
+            "en": "General"
+          }
+        },
+        {
+          "dndId": "aa0deb44-527e-4244-85cc-89757c0e07eb",
+          "name": "comments",
+          "label": "dashboard-settings.widget.comments",
+          "id": "291afa3a-50c1-4a3a-9700-8b85767926af",
+          "props": {
+            "id": "291afa3a-50c1-4a3a-9700-8b85767926af",
+            "config": {
+              "widgetDisplayCondition": "",
+              "elementsDisplayCondition": {}
             }
           },
           "description": {
@@ -115,24 +114,6 @@
           }
         },
         {
-          "name": "activities",
-          "label": "dashboard-settings.widget.activities",
-          "additionalProps": {},
-          "dndId": "380bb7a4-09cc-4c8c-a30a-f042a44e09c3",
-          "id": "865650d9-ded7-467a-b3e4-388105c0b26e",
-          "props": {
-            "id": "865650d9-ded7-467a-b3e4-388105c0b26e",
-            "config": {
-              "widgetDisplayCondition": null,
-              "elementsDisplayCondition": {}
-            }
-          },
-          "description": {
-            "ru": "Основное",
-            "en": "General"
-          }
-        },
-        {
           "dndId": "951e31ba-70c0-4cab-988b-9d271cfa3632",
           "name": "doc-associations",
           "label": "dashboard-settings.widget.doc-associations",
@@ -147,6 +128,24 @@
           "description": {
             "ru": "Основное",
             "en": "General"
+          }
+        },
+        {
+          "name": "doc-preview",
+          "label": "dashboard-settings.widget.preview",
+          "dndId": "f13d2acd-fc25-4fce-9901-e4b8e7c60f6f",
+          "id": "579e37df-8dae-4f08-abb0-da6bb5f57bf1",
+          "props": {
+            "id": "579e37df-8dae-4f08-abb0-da6bb5f57bf1",
+            "config": {
+              "widgetDisplayCondition": "",
+              "elementsDisplayCondition": {},
+              "link": ""
+            }
+          },
+          "description": {
+            "ru": "Предпросмотр",
+            "en": "Preview"
           }
         },
         {
@@ -195,42 +194,24 @@
               "elementsDisplayCondition": {},
               "types": [
                 {
-                  "type": "emodel/type@doclib-file",
+                  "formId": null,
                   "multiple": false,
-                  "mandatory": false,
-                  "canUpload": true,
-                  "journalId": ""
-                },
-                {
-                  "type": "emodel/type@attachment",
-                  "multiple": false,
-                  "mandatory": false,
-                  "canUpload": true,
-                  "journalId": ""
-                },
-                {
-                  "type": "emodel/type@commercial-offer-document",
-                  "multiple": false,
-                  "mandatory": false,
-                  "canUpload": true,
-                  "journalId": ""
-                },
-                {
                   "type": "emodel/type@scan-document",
-                  "multiple": false,
-                  "mandatory": false,
-                  "canUpload": true,
-                  "journalId": ""
+                  "mandatory": false
                 },
                 {
-                  "type": "emodel/type@counterparty-document",
+                  "formId": null,
                   "multiple": false,
-                  "mandatory": false,
-                  "canUpload": true,
-                  "journalId": ""
+                  "type": "emodel/type@counterparty-document",
+                  "mandatory": false
+                },
+                {
+                  "formId": null,
+                  "multiple": false,
+                  "type": "emodel/type@attachment",
+                  "mandatory": false
                 }
-              ],
-              "isLoadChecklist": true
+              ]
             }
           },
           "description": {
@@ -253,9 +234,9 @@
           "columns": [
             {
               "widgets": [
-                "7194460e-6e57-4e9b-9696-d6ad4ad0242d",
                 "d5b4372a-cb41-4370-b66e-5580a52aaa6f",
-                "ecbede90-a55d-423a-9b6b-3ac523600335"
+                "ecbede90-a55d-423a-9b6b-3ac523600335",
+                "291afa3a-50c1-4a3a-9700-8b85767926af"
               ]
             },
             {
@@ -263,10 +244,27 @@
                 "b4bcb077-ed4f-498a-b152-97798fddd8fb",
                 "6d9d1e54-0c77-4990-9aed-228bec1614f4",
                 "6cb0726f-07c2-4388-84bc-6651823e2ba9",
-                "865650d9-ded7-467a-b3e4-388105c0b26e",
                 "c0a9aeee-a536-400d-ae80-326e77ce5202"
               ],
               "width": "25%"
+            }
+          ]
+        },
+        {
+          "id": "layout_bf4ddf5b-d22d-40aa-afc3-1ddebe28cfba",
+          "tab": {
+            "label": {
+              "ru": "Предпросмотр",
+              "en": "Preview"
+            },
+            "idLayout": "layout_bf4ddf5b-d22d-40aa-afc3-1ddebe28cfba"
+          },
+          "type": "1-column",
+          "columns": [
+            {
+              "widgets": [
+                "579e37df-8dae-4f08-abb0-da6bb5f57bf1"
+              ]
             }
           ]
         },
@@ -317,37 +315,48 @@
         {
           "id": "layout_b4b01e70-e01c-457d-abfa-aaaf0a4ca691",
           "tab": {
-            "label": "Свойства",
+            "label": {
+              "ru": "Свойства",
+              "en": "Properties"
+            },
             "idLayout": "layout_b4b01e70-e01c-457d-abfa-aaaf0a4ca691"
           },
           "type": "mobile",
           "columns": [
             {
               "widgets": [
-                "b4bcb077-ed4f-498a-b152-97798fddd8fb",
                 "d5b4372a-cb41-4370-b66e-5580a52aaa6f",
-                "ecbede90-a55d-423a-9b6b-3ac523600335"
+                "ecbede90-a55d-423a-9b6b-3ac523600335",
+                "b4bcb077-ed4f-498a-b152-97798fddd8fb"
               ]
             }
           ]
         },
         {
-          "id": "layout_b3a3755f-12c4-4b2c-9c87-10821681b76c",
+          "id": "layout_4e345aef-8b21-47cb-a653-26e3e897bb5c",
           "tab": {
-            "label": "Комментарии",
-            "idLayout": "layout_b3a3755f-12c4-4b2c-9c87-10821681b76c"
+            "label": {
+              "ru": "Просмотр",
+              "en": "View"
+            },
+            "idLayout": "layout_4e345aef-8b21-47cb-a653-26e3e897bb5c"
           },
           "type": "mobile",
           "columns": [
             {
-              "widgets": []
+              "widgets": [
+                "579e37df-8dae-4f08-abb0-da6bb5f57bf1"
+              ]
             }
           ]
         },
         {
           "id": "layout_c5b3186f-5a78-4d92-a730-1c8086562141",
           "tab": {
-            "label": "Действия",
+            "label": {
+              "ru": "Действия",
+              "en": "Actions"
+            },
             "idLayout": "layout_c5b3186f-5a78-4d92-a730-1c8086562141"
           },
           "type": "mobile",
@@ -360,9 +369,30 @@
           ]
         },
         {
+          "id": "layout_69e552d9-1323-42b4-b8ac-af176a6084fc",
+          "tab": {
+            "label": {
+              "ru": "Документы",
+              "en": "Documents"
+            },
+            "idLayout": "layout_69e552d9-1323-42b4-b8ac-af176a6084fc"
+          },
+          "type": "mobile",
+          "columns": [
+            {
+              "widgets": [
+                "4b5571a3-256d-4bcd-b970-5c52a68e4944"
+              ]
+            }
+          ]
+        },
+        {
           "id": "layout_07d39068-7d9b-4d4e-822a-c2db4913cb6d",
           "tab": {
-            "label": "Связи документа",
+            "label": {
+              "ru": "Связи документа",
+              "en": "Document's links"
+            },
             "idLayout": "layout_07d39068-7d9b-4d4e-822a-c2db4913cb6d"
           },
           "type": "mobile",
@@ -375,16 +405,73 @@
           ]
         },
         {
-          "id": "layout_69e552d9-1323-42b4-b8ac-af176a6084fc",
+          "id": "layout_b3a3755f-12c4-4b2c-9c87-10821681b76c",
           "tab": {
-            "label": "Документы",
-            "idLayout": "layout_69e552d9-1323-42b4-b8ac-af176a6084fc"
+            "label": {
+              "ru": "Комментарии",
+              "en": "Comments"
+            },
+            "idLayout": "layout_b3a3755f-12c4-4b2c-9c87-10821681b76c"
           },
           "type": "mobile",
           "columns": [
             {
               "widgets": [
-                "4b5571a3-256d-4bcd-b970-5c52a68e4944"
+                "291afa3a-50c1-4a3a-9700-8b85767926af"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "layout_0ae86778-b9a2-4f1b-8bb8-43891c1539cd",
+          "tab": {
+            "label": {
+              "ru": "История событий",
+              "en": "Events' history"
+            },
+            "idLayout": "layout_0ae86778-b9a2-4f1b-8bb8-43891c1539cd"
+          },
+          "type": "mobile",
+          "columns": [
+            {
+              "widgets": [
+                "7c456711-ee3f-43b2-959e-2a28afc1557b"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "layout_8b060391-384f-4040-a16b-18ed74a8959f",
+          "tab": {
+            "label": {
+              "ru": "Журнал версий",
+              "en": "Versions' journal"
+            },
+            "idLayout": "layout_8b060391-384f-4040-a16b-18ed74a8959f"
+          },
+          "type": "mobile",
+          "columns": [
+            {
+              "widgets": [
+                "52f3656c-1c8e-48f6-873c-04f14881fc70"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "layout_0fe2383d-bce5-4003-b795-9eb284884932",
+          "tab": {
+            "label": {
+              "ru": "Предпросмотр",
+              "en": "Preview"
+            },
+            "idLayout": "layout_0fe2383d-bce5-4003-b795-9eb284884932"
+          },
+          "type": "mobile",
+          "columns": [
+            {
+              "widgets": [
+                "579e37df-8dae-4f08-abb0-da6bb5f57bf1"
               ]
             }
           ]

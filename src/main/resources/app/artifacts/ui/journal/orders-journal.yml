@@ -1,0 +1,66 @@
+---
+id: orders-journal
+name:
+  ru: Заказы
+  en: Orders
+typeRef: emodel/type@order
+actions:
+  - uiserv/action@view-dashboard
+  - uiserv/action@edit
+  - uiserv/action@delete
+  - uiserv/action@order-change-status
+columns:
+  - id: number
+    name:
+      ru: Номер
+      en: Number
+    type: NUMBER
+    formatter:
+      type: link
+  - id: counterparty
+    name:
+      ru: Контрагент
+      en: Counterparty
+    type: ASSOC
+  - id: contract
+    name:
+      ru: Договор
+      en: Contract
+    type: ASSOC
+  - id: crm-links:deal
+    name:
+      ru: Сделка
+      en: Deal
+    type: ASSOC
+  - id: has-pas:totalAmount
+    name:
+      ru: Сумма итого
+      en: Total amount
+    type: NUMBER
+    sortable: false
+    searchable: false
+  - id: has-pas:totalAmountWithVat
+    name:
+      ru: Сумма с НДС
+      en: Total amount with VAT
+    type: NUMBER
+    sortable: false
+    searchable: false
+  - id: manager
+    name:
+      ru: Ответственный
+      en: Responsible
+    type: PERSON
+    groupable: true
+  - id: _created
+    name:
+      ru: Дата
+      en: Date
+    type: DATETIME
+    groupable: true
+  - id: _status
+    name:
+      ru: Статус
+      en: Status
+    type: TEXT
+    groupable: true 

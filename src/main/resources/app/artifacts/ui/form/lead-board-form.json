@@ -1,12 +1,12 @@
 {
-  "id": "deal-board-form",
+  "id": "lead-board-form",
   "formKey": "",
   "title": {
-    "en": "Deal board form"
+    "en": "Lead board form"
   },
   "description": {},
   "customModule": "",
-  "typeRef": "emodel/type@deal",
+  "typeRef": "emodel/type@lead",
   "width": "lg",
   "system": false,
   "i18n": {},
@@ -20,14 +20,35 @@
         "components": [
           {
             "label": {
-              "ru": "Контрагент",
-              "en": "Counterparty"
+              "ru": "Компания"
+            },
+            "key": "counterpartyText",
+            "defaultValue": "",
+            "refreshOn": [],
+            "optionalWhenDisabled": false,
+            "customConditional": "show = !_.isEmpty(value)",
+            "type": "textfield",
+            "input": true,
+            "inputMasks": [
+              {}
+            ],
+            "reorder": false,
+            "dataSrc": ""
+          },
+          {
+            "label": {
+              "ru": "counterparty"
             },
             "key": "counterparty",
-            "hideLabel": true,
-            "hidden": true,
             "modalTitle": "",
             "journalId": "ecos-counterparty",
+            "source": {
+              "type": "journal",
+              "custom": {
+                "columns": []
+              },
+              "customValues": ""
+            },
             "queryData": "",
             "refreshOn": [],
             "optionalWhenDisabled": false,
@@ -47,24 +68,6 @@
             "optionalWhenDisabled": false,
             "customConditional": "show = !_.isEmpty(value)",
             "type": "selectOrgstruct",
-            "input": true
-          },
-          {
-            "label": {
-              "ru": "Бюджет"
-            },
-            "key": "amount",
-            "validate": {
-              "integer": false
-            },
-            "customClass": "font-weight: bold;",
-            "isBigNumber": false,
-            "delimiter": true,
-            "delimiterValue": "  ",
-            "refreshOn": [],
-            "optionalWhenDisabled": false,
-            "defaultValue": "",
-            "type": "number",
             "input": true
           },
           {
@@ -93,30 +96,24 @@
             },
             "key": "requestCategory",
             "modalTitle": "",
-            "journalId": "deal-request-category-journal",
+            "journalId": "lead-request-category-journal",
             "queryData": "",
             "refreshOn": [],
             "optionalWhenDisabled": false,
             "type": "selectJournal",
-            "input": true
-          },
-          {
-            "label": {
-              "ru": "Status"
-            },
-            "key": "_status",
-            "disabled": true,
-            "hidden": true,
-            "defaultValue": "new",
-            "refreshOn": [],
-            "optionalWhenDisabled": false,
-            "type": "textfield",
-            "input": true
+            "input": true,
+            "source": {
+              "custom": {
+                "columns": []
+              },
+              "type": "journal",
+              "customValues": []
+            }
           }
         ]
       }
     ],
-    "formId": "deal-board-form"
+    "formId": "lead-board-form"
   },
   "attributes": {},
   "notExists": false

@@ -1,5 +1,5 @@
 ---
-id: change-status
+id: deal-change-status
 name:
   ru: Изменить статус
   en: Change status
@@ -7,8 +7,7 @@ confirm:
   title:
     ru: Изменить
     en: Change
-  message: {}
-  formRef: uiserv/form@change-status-form
+  formRef: uiserv/form@deal-change-status-form
   formAttributes: {}
   attributesMapping:
     record.attributes._status: statuses

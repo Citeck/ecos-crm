@@ -1,0 +1,601 @@
+{
+  "id": "order-form",
+  "formKey": "",
+  "title": {
+    "ru": "Заказ",
+    "en": "Order"
+  },
+  "description": {},
+  "customModule": "",
+  "typeRef": "emodel/type@order",
+  "width": "extra-lg",
+  "system": false,
+  "i18n": {},
+  "definition": {
+    "components": [
+      {
+        "label": "pas amount async",
+        "source": {
+          "type": "custom",
+          "custom": {
+            "syncData": "value = _.get(data, 'has-pas:product-and-services', []);",
+            "asyncData": "const products = data;\n\nconst promises = products.map(function(item) {\n    return Records.get(item).load('amount?num').then(sum => {\n        if (sum) {\n            return parseFloat(sum) || 0;\n        }\n        return 0;\n    });\n});\n\nvalue = Promise.all(promises).then(amounts => {\n    const totalAmount = amounts.reduce((total, amount) => total + amount, 0);\n    return totalAmount;\n});"
+          },
+          "forceLoad": false
+        },
+        "update": {
+          "type": "once",
+          "rate": 500
+        },
+        "refreshOn": [
+          {
+            "label": "has-pas:product-and-services",
+            "value": "has-pas:product-and-services"
+          }
+        ],
+        "key": "pasAmount",
+        "type": "asyncData",
+        "input": true,
+        "triggerEventOnChange": false
+      },
+      {
+        "label": "pas total vat async",
+        "source": {
+          "type": "custom",
+          "custom": {
+            "syncData": "value = _.get(data, 'has-pas:product-and-services', []);",
+            "asyncData": "const products = data;\n\nconst promises = products.map(function(item) {\n    return Records.get(item).load('vatAmount?num').then(sum => {\n        if (sum) {\n            return parseFloat(sum) || 0;\n        }\n        return 0;\n    });\n});\n\nvalue = Promise.all(promises).then(amounts => {\n    const total = amounts.reduce((total, amount) => total + amount, 0);\n    return total;\n});"
+          },
+          "forceLoad": false
+        },
+        "update": {
+          "type": "once",
+          "rate": 500
+        },
+        "refreshOn": [
+          {
+            "label": "has-pas:product-and-services",
+            "value": "has-pas:product-and-services"
+          }
+        ],
+        "key": "pasTotalVat",
+        "type": "asyncData",
+        "input": true,
+        "triggerEventOnChange": false
+      },
+      {
+        "label": "pas amount with vat async",
+        "source": {
+          "type": "custom",
+          "custom": {
+            "syncData": "value = _.get(data, 'has-pas:product-and-services', []);",
+            "asyncData": "const products = data;\n\nconst promises = products.map(function(item) {\n    return Records.get(item).load('amountWithVat?num').then(sum => {\n        if (sum) {\n            return parseFloat(sum) || 0;\n        }\n        return 0;\n    });\n});\n\nvalue = Promise.all(promises).then(amounts => {\n    const totalAmount = amounts.reduce((total, amount) => total + amount, 0);\n    return totalAmount;\n});"
+          },
+          "forceLoad": false
+        },
+        "update": {
+          "type": "once",
+          "rate": 500
+        },
+        "refreshOn": [
+          {
+            "label": "has-pas:product-and-services",
+            "value": "has-pas:product-and-services"
+          }
+        ],
+        "key": "pasAmountWithVat",
+        "type": "asyncData",
+        "input": true,
+        "triggerEventOnChange": false
+      },
+      {
+        "scrollableContent": true,
+        "key": "panel2",
+        "type": "panel",
+        "input": false,
+        "components": [
+          {
+            "label": {
+              "ru": "Tabs"
+            },
+            "key": "tabs2",
+            "components": [
+              {
+                "label": {
+                  "ru": "Основное",
+                  "en": "General"
+                },
+                "key": "general",
+                "components": [
+                  {
+                    "label": {
+                      "ru": "Columns"
+                    },
+                    "key": "columns5",
+                    "columns": [
+                      {
+                        "components": [
+                          {
+                            "label": {
+                              "ru": "number"
+                            },
+                            "key": "number",
+                            "disabled": true,
+                            "validate": {
+                              "integer": false
+                            },
+                            "isBigNumber": false,
+                            "delimiterValue": " ",
+                            "refreshOn": [],
+                            "optionalWhenDisabled": false,
+                            "defaultValue": "",
+                            "type": "number",
+                            "input": true
+                          },
+                          {
+                            "label": {
+                              "ru": "Сделка",
+                              "en": "Deal"
+                            },
+                            "key": "crm-links:deal",
+                            "modalTitle": "",
+                            "journalId": "deals-journal",
+                            "source": {
+                              "type": "journal",
+                              "custom": {
+                                "columns": []
+                              },
+                              "customValues": "",
+                              "viewMode": "default"
+                            },
+                            "queryData": "",
+                            "refreshOn": [],
+                            "customDefaultValue": "const parentForm = instance.options.parentForm;\nif (parentForm) {\n    let parentRef = _.get(parentForm, 'options.recordId');\n    if (parentRef && parentRef.indexOf('deal') !== -1) {\n        parentRef = parentRef.replace(/-alias-\\d+$/, '');\n        value = parentRef;\n    }\n}",
+                            "optionalWhenDisabled": false,
+                            "type": "selectJournal",
+                            "input": true
+                          },
+                          {
+                            "label": {
+                              "ru": "currency"
+                            },
+                            "key": "currency",
+                            "validate": {
+                              "required": true
+                            },
+                            "modalTitle": "",
+                            "journalId": "currency",
+                            "source": {
+                              "type": "journal",
+                              "custom": {
+                                "columns": []
+                              },
+                              "customValues": "",
+                              "viewMode": "default"
+                            },
+                            "defaultValue": "emodel/currency@rub",
+                            "refreshOn": [],
+                            "optionalWhenDisabled": false,
+                            "type": "selectJournal",
+                            "input": true,
+                            "queryData": ""
+                          }
+                        ],
+                        "md": 4,
+                        "type": "column",
+                        "input": false,
+                        "key": "column",
+                        "index": 0
+                      },
+                      {
+                        "md": 4,
+                        "type": "column",
+                        "input": false,
+                        "key": "column",
+                        "index": 1,
+                        "components": [
+                          {
+                            "label": {
+                              "ru": "orderDate",
+                              "en": "Created date"
+                            },
+                            "key": "orderDate",
+                            "format": "yyyy-MM-dd HH:mm",
+                            "datePicker": {
+                              "minDate": "",
+                              "maxDate": ""
+                            },
+                            "timePicker": {
+                              "showMeridian": false
+                            },
+                            "defaultValue": "2025-04-22T10:52:18Z",
+                            "refreshOn": [],
+                            "customDefaultValue": "value = new Date();",
+                            "optionalWhenDisabled": false,
+                            "type": "datetime",
+                            "input": true,
+                            "suffix": true,
+                            "reorder": false
+                          },
+                          {
+                            "label": {
+                              "ru": "contract"
+                            },
+                            "key": "contract",
+                            "modalTitle": "",
+                            "journalId": "ecos-contract-journal",
+                            "source": {
+                              "type": "journal",
+                              "custom": {
+                                "columns": []
+                              },
+                              "customValues": "",
+                              "viewMode": "default"
+                            },
+                            "queryData": "",
+                            "refreshOn": [],
+                            "customDefaultValue": "const parentForm = instance.options.parentForm\nif (parentForm) {\n    const contract = _.get(parentForm, 'data.contract');\n    if (contract) {\n        value = contract\n    }\n}",
+                            "optionalWhenDisabled": false,
+                            "type": "selectJournal",
+                            "input": true
+                          }
+                        ]
+                      },
+                      {
+                        "md": 4,
+                        "type": "column",
+                        "input": false,
+                        "key": "column",
+                        "index": 2,
+                        "components": [
+                          {
+                            "label": {
+                              "ru": "manager"
+                            },
+                            "key": "manager",
+                            "allowedAuthorityType": "USER",
+                            "defaultValue": "",
+                            "refreshOn": [],
+                            "customDefaultValue": "const parentForm = instance.options.parentForm\nif (parentForm) {\n    const manager = _.get(parentForm, 'data.manager');\n    if (manager) {\n        value = manager;\n    }\n}",
+                            "optionalWhenDisabled": false,
+                            "type": "selectOrgstruct",
+                            "input": true,
+                            "reorder": false,
+                            "allowedGroupType": "",
+                            "rootGroupName": ""
+                          },
+                          {
+                            "label": {
+                              "ru": "counterparty"
+                            },
+                            "key": "counterparty",
+                            "validate": {
+                              "required": true
+                            },
+                            "modalTitle": "",
+                            "journalId": "ecos-counterparty",
+                            "source": {
+                              "type": "journal",
+                              "custom": {
+                                "columns": []
+                              },
+                              "customValues": "",
+                              "viewMode": "default"
+                            },
+                            "queryData": "",
+                            "refreshOn": [],
+                            "customDefaultValue": "const parentForm = instance.options.parentForm\nif (parentForm) {\n    const counterparty = _.get(parentForm, 'data.counterparty');\n    if (counterparty) {\n        value = counterparty\n    }\n}",
+                            "optionalWhenDisabled": false,
+                            "type": "selectJournal",
+                            "input": true
+                          }
+                        ]
+                      }
+                    ],
+                    "oneColumnInViewMode": false,
+                    "type": "columns",
+                    "input": false,
+                    "reorder": false
+                  },
+                  {
+                    "label": {
+                      "ru": "Panel"
+                    },
+                    "key": "panel",
+                    "title": {
+                      "ru": "Продукты и услуги"
+                    },
+                    "refreshOn": [],
+                    "optionalWhenDisabled": false,
+                    "type": "panel",
+                    "input": false,
+                    "components": [
+                      {
+                        "label": {
+                          "ru": "Продукты и услуги",
+                          "en": "Product and services"
+                        },
+                        "key": "has-pas:product-and-services",
+                        "hideLabel": true,
+                        "multiple": true,
+                        "customButtonName": "",
+                        "reorder": false,
+                        "source": {
+                          "type": "journal",
+                          "journal": {
+                            "journalId": "product-and-services-item",
+                            "columns": []
+                          }
+                        },
+                        "enableSelectButton": true,
+                        "selectJournalId": "product-and-services-template",
+                        "refreshOn": [],
+                        "optionalWhenDisabled": false,
+                        "properties": {
+                          "attribute": "has-pas:product-and-services"
+                        },
+                        "isUsedJournalActions": true,
+                        "type": "tableForm",
+                        "input": true
+                      },
+                      {
+                        "label": {
+                          "ru": "Columns"
+                        },
+                        "key": "columns4",
+                        "columns": [
+                          {
+                            "components": [],
+                            "md": 4,
+                            "type": "column",
+                            "input": false,
+                            "key": "column",
+                            "index": 0
+                          },
+                          {
+                            "md": 4,
+                            "type": "column",
+                            "input": false,
+                            "key": "column",
+                            "index": 1,
+                            "components": []
+                          },
+                          {
+                            "md": 4,
+                            "type": "column",
+                            "input": false,
+                            "key": "column",
+                            "index": 2,
+                            "components": [
+                              {
+                                "label": {
+                                  "ru": "Сумма итого",
+                                  "en": "Total amount"
+                                },
+                                "key": "has-pas:totalAmount",
+                                "disabled": true,
+                                "validate": {
+                                  "integer": false
+                                },
+                                "labelPosition": "left-left",
+                                "clearOnHide": false,
+                                "isBigNumber": false,
+                                "delimiter": true,
+                                "delimiterValue": " ",
+                                "refreshOn": [
+                                  "pasAmount"
+                                ],
+                                "calculateValue": "value = _.get(data, 'pasAmount', 0);",
+                                "optionalWhenDisabled": false,
+                                "decimalLimit": 2,
+                                "defaultValue": "",
+                                "type": "number",
+                                "input": true,
+                                "reorder": false
+                              },
+                              {
+                                "label": {
+                                  "ru": "Сумма НДС",
+                                  "en": "Total VAT"
+                                },
+                                "key": "has-pas:totalVat",
+                                "disabled": true,
+                                "validate": {
+                                  "integer": false
+                                },
+                                "labelPosition": "left-left",
+                                "clearOnHide": false,
+                                "isBigNumber": false,
+                                "delimiter": true,
+                                "delimiterValue": " ",
+                                "refreshOn": [],
+                                "calculateValue": "value = _.get(data, 'pasTotalVat', 0);",
+                                "optionalWhenDisabled": false,
+                                "decimalLimit": 2,
+                                "defaultValue": "",
+                                "type": "number",
+                                "input": true,
+                                "reorder": false
+                              },
+                              {
+                                "label": {
+                                  "ru": "Сумма итого c НДС",
+                                  "en": "Total amount with VAT"
+                                },
+                                "key": "has-pas:totalAmountWithVat",
+                                "disabled": true,
+                                "validate": {
+                                  "integer": false
+                                },
+                                "labelPosition": "left-left",
+                                "clearOnHide": false,
+                                "isBigNumber": false,
+                                "delimiter": true,
+                                "delimiterValue": " ",
+                                "refreshOn": [
+                                  "pasAmountWithVat"
+                                ],
+                                "calculateValue": "value = _.get(data, 'pasAmountWithVat', 0);",
+                                "optionalWhenDisabled": false,
+                                "decimalLimit": 2,
+                                "defaultValue": "",
+                                "type": "number",
+                                "input": true,
+                                "reorder": false
+                              }
+                            ]
+                          }
+                        ],
+                        "oneColumnInViewMode": false,
+                        "type": "columns",
+                        "input": false,
+                        "reorder": false
+                      }
+                    ],
+                    "collapsed": false,
+                    "reorder": false
+                  }
+                ]
+              },
+              {
+                "label": {
+                  "ru": "Платежи",
+                  "en": "Payments"
+                },
+                "key": "payments",
+                "components": [
+                  {
+                    "label": "",
+                    "key": "has-payments:payments",
+                    "hideLabel": true,
+                    "multiple": true,
+                    "customButtonName": "",
+                    "source": {
+                      "type": "journal",
+                      "journal": {
+                        "journalId": "payments-crm-journal",
+                        "columns": [
+                          "_disp",
+                          "amount",
+                          "plannedPaymentDate",
+                          "factPaymentDate",
+                          "responsible",
+                          "_status"
+                        ]
+                      }
+                    },
+                    "refreshOn": [],
+                    "optionalWhenDisabled": false,
+                    "isUsedJournalActions": true,
+                    "type": "tableForm",
+                    "input": true,
+                    "reorder": false
+                  }
+                ]
+              }
+            ],
+            "type": "tabs",
+            "input": false,
+            "reorder": false
+          }
+        ]
+      },
+      {
+        "label": {
+          "ru": "Columns"
+        },
+        "key": "columns2",
+        "columns": [
+          {
+            "components": [
+              {
+                "label": "Cancel",
+                "action": "event",
+                "state": "",
+                "showValidations": false,
+                "event": "cancel",
+                "block": true,
+                "type": "button",
+                "input": true,
+                "key": "submit2",
+                "conditional": {
+                  "show": null,
+                  "when": null
+                }
+              }
+            ],
+            "type": "column",
+            "input": false,
+            "key": "column",
+            "label": "Column",
+            "md": 3,
+            "clearOnHide": true,
+            "conditional": {
+              "show": null,
+              "when": null
+            },
+            "index": 0
+          },
+          {
+            "components": [],
+            "type": "column",
+            "input": false,
+            "key": "column",
+            "label": "Column",
+            "clearOnHide": true,
+            "conditional": {
+              "show": null,
+              "when": null
+            },
+            "index": 1,
+            "md": 3
+          },
+          {
+            "md": 3,
+            "type": "column",
+            "input": false,
+            "key": "column",
+            "label": "Column",
+            "components": [],
+            "clearOnHide": true,
+            "conditional": {
+              "show": null,
+              "when": null
+            },
+            "index": 2
+          },
+          {
+            "md": 3,
+            "type": "column",
+            "input": false,
+            "key": "column",
+            "index": 3,
+            "components": [
+              {
+                "label": {
+                  "ru": "Создать",
+                  "en": "Submit"
+                },
+                "key": "submit",
+                "state": "",
+                "theme": "primary",
+                "block": true,
+                "disableOnInvalid": true,
+                "refreshOn": [],
+                "optionalWhenDisabled": false,
+                "type": "button",
+                "input": true
+              }
+            ]
+          }
+        ],
+        "oneColumnInViewMode": false,
+        "type": "columns",
+        "input": false
+      }
+    ],
+    "formId": "order-form"
+  },
+  "attributes": {},
+  "notExists": false
+}

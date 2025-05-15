@@ -1,43 +1,39 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<bpmn:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:ecos="http://www.citeck.ru/ecos/bpmn/1.0" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" id="Definitions_oXeiv1R" name="Взятие в работу Сделки" targetNamespace="http://bpmn.io/schema/bpmn" exporter="bpmn-js (https://demo.bpmn.io)" exporterVersion="8.2.0" ecos:workingCopySourceRef="" ecos:name_ml="{&quot;ru&quot;:&quot;Взятие в работу Сделки&quot;}" ecos:formRef="" ecos:autoDeleteEnabled="true" ecos:sectionRef="eproc/bpmn-section@DEFAULT" ecos:enabled="true" ecos:autoStartEnabled="true" ecos:defState="CONVERTED" ecos:processDefId="deal-take-to-work-process" ecos:ecosType="emodel/type@deal">
+<bpmn:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:ecos="http://www.citeck.ru/ecos/bpmn/1.0" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" id="Definitions_oXeiv1R" name="CRM Сделка" targetNamespace="http://bpmn.io/schema/bpmn" exporter="bpmn-js (https://demo.bpmn.io)" exporterVersion="8.2.0" ecos:workingCopySourceRef="" ecos:name_ml="{&quot;ru&quot;:&quot;CRM Сделка&quot;}" ecos:formRef="" ecos:autoDeleteEnabled="true" ecos:sectionRef="eproc/bpmn-section@DEFAULT" ecos:enabled="true" ecos:autoStartEnabled="true" ecos:defState="CONVERTED" ecos:processDefId="deal-take-to-work-process" ecos:ecosType="emodel/type@deal">
     <bpmn:process isExecutable="true" id="deal-take-to-work-process">
-        <bpmn:userTask name="Задача взятия в работу" id="Activity_0mby3dh" ecos:documentation="{}" ecos:manualRecipients="[]" ecos:laManualNotificationTemplateEnabled="false" ecos:outcomes="[{&quot;id&quot;:&quot;dropout&quot;,&quot;name&quot;:{&quot;ru&quot;:&quot;Перевести в статус Отсев&quot;},&quot;config&quot;:{&quot;theme&quot;:&quot;DANGER&quot;}},{&quot;id&quot;:&quot;takeToWork&quot;,&quot;name&quot;:{&quot;ru&quot;:&quot;Взять в работу&quot;,&quot;en&quot;:&quot;Take to work&quot;},&quot;config&quot;:{&quot;theme&quot;:&quot;PRIMARY&quot;}}]" ecos:laNotificationAdditionalMeta="{}" ecos:laEnabled="false" ecos:name_ml="{&quot;ru&quot;:&quot;Задача взятия в работу&quot;,&quot;en&quot;:&quot;Task of taking to work&quot;}" ecos:laNotificationType="EMAIL_NOTIFICATION" ecos:laReportEnabled="false" ecos:manualRecipientsMode="false" ecos:priority="MEDIUM" ecos:assignees="[&quot;manager&quot;]">
+        <bpmn:userTask name="Взятие в работу" id="Activity_0mby3dh" ecos:documentation="{}" ecos:manualRecipients="[]" ecos:laManualNotificationTemplateEnabled="false" ecos:outcomes="[{&quot;id&quot;:&quot;dropout&quot;,&quot;name&quot;:{&quot;ru&quot;:&quot;Перевести в статус Отсев&quot;},&quot;config&quot;:{&quot;theme&quot;:&quot;DANGER&quot;}},{&quot;id&quot;:&quot;takeToWork&quot;,&quot;name&quot;:{&quot;ru&quot;:&quot;Взять в работу&quot;,&quot;en&quot;:&quot;Take to work&quot;},&quot;config&quot;:{&quot;theme&quot;:&quot;PRIMARY&quot;}}]" ecos:laNotificationAdditionalMeta="{}" ecos:laEnabled="false" ecos:name_ml="{&quot;ru&quot;:&quot;Взятие в работу&quot;,&quot;en&quot;:&quot;Task of taking to work&quot;}" ecos:laNotificationType="EMAIL_NOTIFICATION" ecos:laReportEnabled="false" ecos:manualRecipientsMode="false" ecos:priority="MEDIUM" ecos:assignees="[&quot;manager&quot;]">
             <bpmn:incoming >Flow_003zmr7</bpmn:incoming>
             <bpmn:outgoing >Flow_1xb8yj4</bpmn:outgoing>
         </bpmn:userTask>
-        <bpmn:scriptTask scriptFormat="javascript" name="Назначение ответственного" id="Activity_01f1m7s" ecos:documentation="{}" ecos:asyncConfig="{&quot;asyncBefore&quot;:false,&quot;asyncAfter&quot;:false,&quot;exclusive&quot;:true}" ecos:name_ml="{&quot;ru&quot;:&quot;Назначение ответственного&quot;}" ecos:jobConfig="{&quot;jobPriority&quot;:null,&quot;jobRetryTimeCycle&quot;:null}" ecos:script="document.att(&quot;manager&quot;, &quot;emodel/person@&quot; + lastTaskCompletor);&#10;document.save();">
+        <bpmn:scriptTask scriptFormat="javascript" name="Назначение ответственного" id="Activity_01f1m7s" ecos:documentation="{}" ecos:asyncConfig="{&quot;asyncBefore&quot;:false,&quot;asyncAfter&quot;:false,&quot;exclusive&quot;:false}" ecos:name_ml="{&quot;ru&quot;:&quot;Назначение ответственного&quot;}" ecos:jobConfig="{&quot;jobPriority&quot;:null,&quot;jobRetryTimeCycle&quot;:null}" ecos:script="document.att(&quot;manager&quot;, &quot;emodel/person@&quot; + lastTaskCompletor);&#10;document.save();">
             <bpmn:incoming >Flow_0v2hbgu</bpmn:incoming>
             <bpmn:outgoing >Flow_16fqv4z</bpmn:outgoing>
             <bpmn:script>document.att("manager", "emodel/person@" + lastTaskCompletor);
 document.save();</bpmn:script>
         </bpmn:scriptTask>
         <bpmn:sequenceFlow sourceRef="Gateway_0fdq65l" targetRef="Activity_01f1m7s" name="Назначить ответственного" id="Flow_0v2hbgu" ecos:name_ml="{&quot;ru&quot;:&quot;Назначить ответственного&quot;}" ecos:conditionConfig="{&quot;fn&quot;:&quot;&quot;,&quot;expression&quot;:&quot;&quot;,&quot;outcome&quot;:&quot;Activity_0mby3dh:takeToWork&quot;}" ecos:conditionType="OUTCOME"/>
-        <bpmn:endEvent name="" id="Event_0h0804u" ecos:documentation="{}" ecos:asyncConfig="{&quot;asyncBefore&quot;:false,&quot;asyncAfter&quot;:false,&quot;exclusive&quot;:true}" ecos:name_ml="{}" ecos:jobConfig="{&quot;jobPriority&quot;:null,&quot;jobRetryTimeCycle&quot;:null}">
+        <bpmn:endEvent name="Первичный контакт" id="Event_0h0804u" ecos:documentation="{}" ecos:asyncConfig="{&quot;asyncBefore&quot;:false,&quot;asyncAfter&quot;:false,&quot;exclusive&quot;:true}" ecos:name_ml="{&quot;ru&quot;:&quot;Первичный контакт&quot;}" ecos:jobConfig="{&quot;jobPriority&quot;:null,&quot;jobRetryTimeCycle&quot;:null}">
             <bpmn:incoming >Flow_10rnbcw</bpmn:incoming>
         </bpmn:endEvent>
-        <bpmn:startEvent isInterrupting="true" name="" id="StartEvent_1ew9rff" ecos:documentation="{}" ecos:asyncConfig="{&quot;asyncBefore&quot;:false,&quot;asyncAfter&quot;:false,&quot;exclusive&quot;:true}" ecos:name_ml="{}" ecos:jobConfig="{&quot;jobPriority&quot;:null,&quot;jobRetryTimeCycle&quot;:null}">
+        <bpmn:startEvent isInterrupting="true" name="Сделка создана" id="StartEvent_1ew9rff" ecos:documentation="{}" ecos:asyncConfig="{&quot;asyncBefore&quot;:false,&quot;asyncAfter&quot;:false,&quot;exclusive&quot;:true}" ecos:name_ml="{&quot;ru&quot;:&quot;Сделка создана&quot;}" ecos:jobConfig="{&quot;jobPriority&quot;:null,&quot;jobRetryTimeCycle&quot;:null}">
             <bpmn:outgoing >Flow_0rjs758</bpmn:outgoing>
         </bpmn:startEvent>
-        <bpmn:exclusiveGateway default="Flow_003zmr7" name="" id="Gateway_1le3kw3" ecos:documentation="{}" ecos:name_ml="{}">
-            <bpmn:incoming >Flow_19q43ub</bpmn:incoming>
+        <bpmn:exclusiveGateway default="Flow_003zmr7" name="Менеджер выбран?" id="Gateway_1le3kw3" ecos:documentation="{}" ecos:name_ml="{&quot;ru&quot;:&quot;Менеджер выбран?&quot;}">
+            <bpmn:incoming >Flow_0rjs758</bpmn:incoming>
             <bpmn:outgoing >Flow_003zmr7</bpmn:outgoing>
             <bpmn:outgoing >Flow_1dis24m</bpmn:outgoing>
         </bpmn:exclusiveGateway>
-        <bpmn:sequenceFlow sourceRef="Gateway_1le3kw3" targetRef="Activity_0mby3dh" name="Менеджер не выбран" id="Flow_003zmr7" ecos:name_ml="{&quot;ru&quot;:&quot;Менеджер не выбран&quot;}" ecos:conditionConfig="{&quot;fn&quot;:&quot;&quot;,&quot;expression&quot;:&quot;&quot;,&quot;outcome&quot;:&quot;&quot;}" ecos:conditionType="NONE"/>
-        <bpmn:endEvent name="" id="Event_1a87ud5" ecos:documentation="{}" ecos:asyncConfig="{&quot;asyncBefore&quot;:false,&quot;asyncAfter&quot;:false,&quot;exclusive&quot;:true}" ecos:name_ml="{}" ecos:jobConfig="{&quot;jobPriority&quot;:null,&quot;jobRetryTimeCycle&quot;:null}">
-            <bpmn:incoming >Flow_1dis24m</bpmn:incoming>
+        <bpmn:sequenceFlow sourceRef="Gateway_1le3kw3" targetRef="Activity_0mby3dh" name="Нет" id="Flow_003zmr7" ecos:name_ml="{&quot;ru&quot;:&quot;Нет&quot;}" ecos:conditionConfig="{&quot;fn&quot;:&quot;&quot;,&quot;expression&quot;:&quot;&quot;,&quot;outcome&quot;:&quot;&quot;}" ecos:conditionType="NONE"/>
+        <bpmn:endEvent name="Обработка не требуется" id="Event_1a87ud5" ecos:documentation="{}" ecos:asyncConfig="{&quot;asyncBefore&quot;:false,&quot;asyncAfter&quot;:false,&quot;exclusive&quot;:true}" ecos:name_ml="{&quot;ru&quot;:&quot;Обработка не требуется&quot;}" ecos:jobConfig="{&quot;jobPriority&quot;:null,&quot;jobRetryTimeCycle&quot;:null}">
+            <bpmn:incoming >Flow_09jpkws</bpmn:incoming>
         </bpmn:endEvent>
-        <bpmn:sequenceFlow sourceRef="Gateway_1le3kw3" targetRef="Event_1a87ud5" name="" id="Flow_1dis24m" ecos:name_ml="{}" ecos:conditionConfig="{&quot;fn&quot;:&quot;document.load(\&quot;manager\&quot;) !== null;&quot;,&quot;expression&quot;:&quot;&quot;,&quot;outcome&quot;:&quot;&quot;}" ecos:conditionType="SCRIPT"/>
-        <bpmn:boundaryEvent  cancelActivity="true" attachedToRef="Activity_0mby3dh" name="" id="Event_0pmo0tz" ecos:documentation="{}" ecos:variableEvents="[]" ecos:asyncConfig="{&quot;asyncBefore&quot;:false,&quot;asyncAfter&quot;:false,&quot;exclusive&quot;:true}" ecos:reactOnDocumentChange="true" ecos:name_ml="{}" ecos:jobConfig="{&quot;jobPriority&quot;:null,&quot;jobRetryTimeCycle&quot;:null}" ecos:conditionConfig="{&quot;fn&quot;:&quot;document.load(\&quot;manager\&quot;) !== null;&quot;,&quot;expression&quot;:&quot;&quot;,&quot;outcome&quot;:&quot;&quot;}" ecos:conditionType="SCRIPT" ecos:documentVariables="[&quot;manager&quot;]">
-            <bpmn:outgoing>Flow_0fgzn68</bpmn:outgoing>
+        <bpmn:sequenceFlow sourceRef="Gateway_1le3kw3" targetRef="Gateway_10ta111" name="Да" id="Flow_1dis24m" ecos:name_ml="{&quot;ru&quot;:&quot;Да&quot;}" ecos:conditionConfig="{&quot;fn&quot;:&quot;document.load(\&quot;manager?id\&quot;) !== null;&quot;,&quot;expression&quot;:&quot;&quot;,&quot;outcome&quot;:&quot;&quot;}" ecos:conditionType="SCRIPT"/>
+        <bpmn:boundaryEvent  cancelActivity="true" attachedToRef="Activity_0mby3dh" name="Менеджер назначен" id="Event_0pmo0tz" ecos:documentation="{}" ecos:variableEvents="[]" ecos:asyncConfig="{&quot;asyncBefore&quot;:false,&quot;asyncAfter&quot;:false,&quot;exclusive&quot;:false}" ecos:reactOnDocumentChange="true" ecos:name_ml="{&quot;ru&quot;:&quot;Менеджер назначен&quot;}" ecos:jobConfig="{&quot;jobPriority&quot;:null,&quot;jobRetryTimeCycle&quot;:null}" ecos:conditionConfig="{&quot;fn&quot;:&quot;document.load(\&quot;manager\&quot;) !== null;&quot;,&quot;expression&quot;:&quot;&quot;,&quot;outcome&quot;:&quot;&quot;}" ecos:conditionType="SCRIPT" ecos:documentVariables="[&quot;manager&quot;]">
+            <bpmn:outgoing>Flow_1g371s4</bpmn:outgoing>
             <bpmn:conditionalEventDefinition id="ConditionalEventDefinition_0leiaox">
                 <bpmn:condition xsi:type="bpmn:tFormalExpression" language="javascript">document.load("manager") !== null;</bpmn:condition>
             </bpmn:conditionalEventDefinition>
         </bpmn:boundaryEvent>
-        <bpmn:endEvent name="" id="Event_0r9l5li" ecos:documentation="{}" ecos:asyncConfig="{&quot;asyncBefore&quot;:false,&quot;asyncAfter&quot;:false,&quot;exclusive&quot;:true}" ecos:name_ml="{}" ecos:jobConfig="{&quot;jobPriority&quot;:null,&quot;jobRetryTimeCycle&quot;:null}">
-            <bpmn:incoming >Flow_0fgzn68</bpmn:incoming>
-        </bpmn:endEvent>
-        <bpmn:sequenceFlow sourceRef="Event_0pmo0tz" targetRef="Event_0r9l5li" name="Менеджер назначен" id="Flow_0fgzn68" ecos:name_ml="{&quot;ru&quot;:&quot;Менеджер назначен&quot;}" ecos:conditionConfig="{&quot;fn&quot;:&quot;&quot;,&quot;expression&quot;:&quot;&quot;,&quot;outcome&quot;:&quot;&quot;}" ecos:conditionType="NONE"/>
         <bpmn:exclusiveGateway name="" id="Gateway_0fdq65l" ecos:documentation="{}" ecos:name_ml="{}">
             <bpmn:incoming >Flow_1xb8yj4</bpmn:incoming>
             <bpmn:outgoing >Flow_0v2hbgu</bpmn:outgoing>
@@ -48,152 +44,124 @@ document.save();</bpmn:script>
             <bpmn:incoming >Flow_0xeoaiq</bpmn:incoming>
             <bpmn:outgoing >Flow_1qpiqfw</bpmn:outgoing>
         </bpmn:task>
-        <bpmn:endEvent name="" id="Event_088oezf" ecos:documentation="{}" ecos:asyncConfig="{&quot;asyncBefore&quot;:false,&quot;asyncAfter&quot;:false,&quot;exclusive&quot;:true}" ecos:name_ml="{}" ecos:jobConfig="{&quot;jobPriority&quot;:null,&quot;jobRetryTimeCycle&quot;:null}">
+        <bpmn:endEvent name="Отсев" id="Event_088oezf" ecos:documentation="{}" ecos:asyncConfig="{&quot;asyncBefore&quot;:false,&quot;asyncAfter&quot;:false,&quot;exclusive&quot;:true}" ecos:name_ml="{&quot;ru&quot;:&quot;Отсев&quot;}" ecos:jobConfig="{&quot;jobPriority&quot;:null,&quot;jobRetryTimeCycle&quot;:null}">
             <bpmn:incoming >Flow_1qpiqfw</bpmn:incoming>
         </bpmn:endEvent>
         <bpmn:sequenceFlow sourceRef="Activity_19si9tj" targetRef="Event_088oezf" name="" id="Flow_1qpiqfw" ecos:name_ml="{}" ecos:conditionConfig="{&quot;fn&quot;:&quot;&quot;,&quot;expression&quot;:&quot;&quot;,&quot;outcome&quot;:&quot;&quot;}" ecos:conditionType="NONE"/>
         <bpmn:sequenceFlow sourceRef="Gateway_0fdq65l" targetRef="Activity_19si9tj" name="Перевести в статус Отсев" id="Flow_0xeoaiq" ecos:name_ml="{&quot;ru&quot;:&quot;Перевести в статус Отсев&quot;}" ecos:conditionConfig="{&quot;fn&quot;:&quot;&quot;,&quot;expression&quot;:&quot;&quot;,&quot;outcome&quot;:&quot;Activity_0mby3dh:dropout&quot;}" ecos:conditionType="OUTCOME"/>
-        <bpmn:exclusiveGateway default="Flow_19q43ub" name="" id="Gateway_0zk16rs" ecos:documentation="{}" ecos:name_ml="{}">
-            <bpmn:incoming >Flow_0rjs758</bpmn:incoming>
-            <bpmn:outgoing >Flow_19q43ub</bpmn:outgoing>
-            <bpmn:outgoing >Flow_0j3x8mo</bpmn:outgoing>
-        </bpmn:exclusiveGateway>
-        <bpmn:sequenceFlow sourceRef="StartEvent_1ew9rff" targetRef="Gateway_0zk16rs" name="" id="Flow_0rjs758" ecos:name_ml="{}" ecos:conditionConfig="{&quot;fn&quot;:&quot;&quot;,&quot;expression&quot;:&quot;&quot;,&quot;outcome&quot;:&quot;&quot;}" ecos:conditionType="NONE"/>
-        <bpmn:sequenceFlow sourceRef="Gateway_0zk16rs" targetRef="Gateway_1le3kw3" name="Кроме Community" id="Flow_19q43ub" ecos:name_ml="{&quot;ru&quot;:&quot;Кроме Community&quot;}" ecos:conditionConfig="{&quot;fn&quot;:&quot;&quot;,&quot;expression&quot;:&quot;&quot;,&quot;outcome&quot;:&quot;&quot;}" ecos:conditionType="NONE"/>
-        <bpmn:task name="Community версия" id="Activity_0opfq6u" ecos:documentation="{}" ecos:asyncConfig="{&quot;asyncBefore&quot;:false,&quot;asyncAfter&quot;:false,&quot;exclusive&quot;:true}" ecos:taskType="setStatus" ecos:name_ml="{&quot;ru&quot;:&quot;Community версия&quot;}" ecos:jobConfig="{&quot;jobPriority&quot;:null,&quot;jobRetryTimeCycle&quot;:null}" ecos:status="community">
-            <bpmn:incoming >Flow_0j3x8mo</bpmn:incoming>
-            <bpmn:outgoing >Flow_0vth7zh</bpmn:outgoing>
-        </bpmn:task>
-        <bpmn:sequenceFlow sourceRef="Gateway_0zk16rs" targetRef="Activity_0opfq6u" name="" id="Flow_0j3x8mo" ecos:name_ml="{}" ecos:conditionConfig="{&quot;fn&quot;:&quot;document.load(\&quot;requestCategory?localId\&quot;) == \&quot;community\&quot;;&quot;,&quot;expression&quot;:&quot;&quot;,&quot;outcome&quot;:&quot;&quot;}" ecos:conditionType="SCRIPT"/>
-        <bpmn:endEvent name="" id="Event_1jc0zdi" ecos:documentation="{}" ecos:asyncConfig="{&quot;asyncBefore&quot;:false,&quot;asyncAfter&quot;:false,&quot;exclusive&quot;:true}" ecos:name_ml="{}" ecos:jobConfig="{&quot;jobPriority&quot;:null,&quot;jobRetryTimeCycle&quot;:null}">
-            <bpmn:incoming >Flow_0vth7zh</bpmn:incoming>
-        </bpmn:endEvent>
-        <bpmn:sequenceFlow sourceRef="Activity_0opfq6u" targetRef="Event_1jc0zdi" name="" id="Flow_0vth7zh" ecos:name_ml="{}" ecos:conditionConfig="{&quot;fn&quot;:&quot;&quot;,&quot;expression&quot;:&quot;&quot;,&quot;outcome&quot;:&quot;&quot;}" ecos:conditionType="NONE"/>
-        <bpmn:task name="Статус Первичный контакт" id="Activity_087y5bd" ecos:documentation="{}" ecos:asyncConfig="{&quot;asyncBefore&quot;:false,&quot;asyncAfter&quot;:false,&quot;exclusive&quot;:true}" ecos:taskType="setStatus" ecos:name_ml="{&quot;ru&quot;:&quot;Статус Первичный контакт&quot;}" ecos:jobConfig="{&quot;jobPriority&quot;:null,&quot;jobRetryTimeCycle&quot;:null}" ecos:status="firstContact">
+        <bpmn:sequenceFlow sourceRef="StartEvent_1ew9rff" targetRef="Gateway_1le3kw3" name="" id="Flow_0rjs758" ecos:name_ml="{}" ecos:conditionConfig="{&quot;fn&quot;:&quot;&quot;,&quot;expression&quot;:&quot;&quot;,&quot;outcome&quot;:&quot;&quot;}" ecos:conditionType="NONE"/>
+        <bpmn:task name="Статус Первичный контакт" id="Activity_087y5bd" ecos:documentation="{}" ecos:asyncConfig="{&quot;asyncBefore&quot;:false,&quot;asyncAfter&quot;:false,&quot;exclusive&quot;:false}" ecos:taskType="setStatus" ecos:name_ml="{&quot;ru&quot;:&quot;Статус Первичный контакт&quot;}" ecos:jobConfig="{&quot;jobPriority&quot;:null,&quot;jobRetryTimeCycle&quot;:null}" ecos:status="firstContact">
             <bpmn:incoming >Flow_16fqv4z</bpmn:incoming>
             <bpmn:outgoing >Flow_10rnbcw</bpmn:outgoing>
         </bpmn:task>
         <bpmn:sequenceFlow sourceRef="Activity_01f1m7s" targetRef="Activity_087y5bd" name="" id="Flow_16fqv4z" ecos:name_ml="{}" ecos:conditionConfig="{&quot;fn&quot;:&quot; &quot;,&quot;expression&quot;:&quot;&quot;,&quot;outcome&quot;:&quot;&quot;}" ecos:conditionType="NONE"/>
         <bpmn:sequenceFlow sourceRef="Activity_087y5bd" targetRef="Event_0h0804u" name="" id="Flow_10rnbcw" ecos:name_ml="{}" ecos:conditionConfig="{&quot;fn&quot;:&quot; &quot;,&quot;expression&quot;:&quot;&quot;,&quot;outcome&quot;:&quot;&quot;}" ecos:conditionType="NONE"/>
-        <bpmn:endEvent name="" id="Event_0r2lndr" ecos:documentation="{}" ecos:asyncConfig="{&quot;asyncBefore&quot;:false,&quot;asyncAfter&quot;:false,&quot;exclusive&quot;:true}" ecos:name_ml="{}" ecos:jobConfig="{&quot;jobPriority&quot;:null,&quot;jobRetryTimeCycle&quot;:null}">
-            <bpmn:incoming >Flow_0l54m6r</bpmn:incoming>
-        </bpmn:endEvent>
-        <bpmn:sequenceFlow sourceRef="Event_00ivonz" targetRef="Event_0r2lndr" name="Перешла в статус Отсев" id="Flow_0l54m6r" ecos:name_ml="{&quot;ru&quot;:&quot;Перешла в статус Отсев&quot;}" ecos:conditionConfig="{&quot;fn&quot;:&quot;&quot;,&quot;expression&quot;:&quot;&quot;,&quot;outcome&quot;:&quot;&quot;}" ecos:conditionType="NONE"/>
-        <bpmn:boundaryEvent  cancelActivity="true" attachedToRef="Activity_0mby3dh" name="" id="Event_00ivonz" ecos:documentation="{}" ecos:eventFilterByRecordType="DOCUMENT" ecos:eventModel="{}" ecos:asyncConfig="{&quot;asyncBefore&quot;:false,&quot;asyncAfter&quot;:false,&quot;exclusive&quot;:true}" ecos:name_ml="{}" ecos:jobConfig="{&quot;jobPriority&quot;:null,&quot;jobRetryTimeCycle&quot;:null}" ecos:manualStatus="dropout" ecos:eventManualMode="false" ecos:statusChangeType="AFTER" ecos:eventType="RECORD_STATUS_CHANGED">
-            <bpmn:outgoing>Flow_0l54m6r</bpmn:outgoing>
-            <bpmn:signalEventDefinition signalRef="Signal_GUrI3Sj" id="SignalEventDefinition_178k188"/>
+        <bpmn:boundaryEvent  cancelActivity="true" attachedToRef="Activity_0mby3dh" name="Перешла в статус Отсев" id="Event_00ivonz" ecos:documentation="{}" ecos:eventFilterByRecordType="DOCUMENT" ecos:eventModel="{}" ecos:asyncConfig="{&quot;asyncBefore&quot;:false,&quot;asyncAfter&quot;:false,&quot;exclusive&quot;:false}" ecos:name_ml="{&quot;ru&quot;:&quot;Перешла в статус Отсев&quot;}" ecos:jobConfig="{&quot;jobPriority&quot;:null,&quot;jobRetryTimeCycle&quot;:null}" ecos:manualStatus="dropout" ecos:eventManualMode="false" ecos:statusChangeType="AFTER" ecos:eventType="RECORD_STATUS_CHANGED">
+            <bpmn:outgoing>Flow_1sa55c1</bpmn:outgoing>
+            <bpmn:signalEventDefinition signalRef="Signal_56F1XuH" id="SignalEventDefinition_178k188"/>
         </bpmn:boundaryEvent>
+        <bpmn:exclusiveGateway name="" id="Gateway_10ta111" ecos:documentation="{}" ecos:name_ml="{}">
+            <bpmn:incoming >Flow_1dis24m</bpmn:incoming>
+            <bpmn:incoming >Flow_1g371s4</bpmn:incoming>
+            <bpmn:incoming >Flow_1sa55c1</bpmn:incoming>
+            <bpmn:outgoing >Flow_09jpkws</bpmn:outgoing>
+        </bpmn:exclusiveGateway>
+        <bpmn:sequenceFlow sourceRef="Gateway_10ta111" targetRef="Event_1a87ud5" name="" id="Flow_09jpkws" ecos:name_ml="{}" ecos:conditionConfig="{&quot;fn&quot;:&quot;&quot;,&quot;expression&quot;:&quot;&quot;,&quot;outcome&quot;:&quot;&quot;}" ecos:conditionType="NONE"/>
+        <bpmn:sequenceFlow sourceRef="Event_0pmo0tz" targetRef="Gateway_10ta111" name="" id="Flow_1g371s4" ecos:name_ml="{}" ecos:conditionConfig="{&quot;fn&quot;:&quot; &quot;,&quot;expression&quot;:&quot;&quot;,&quot;outcome&quot;:&quot;&quot;}" ecos:conditionType="NONE"/>
+        <bpmn:sequenceFlow sourceRef="Event_00ivonz" targetRef="Gateway_10ta111" name="" id="Flow_1sa55c1" ecos:name_ml="{}" ecos:conditionConfig="{&quot;fn&quot;:&quot; &quot;,&quot;expression&quot;:&quot;&quot;,&quot;outcome&quot;:&quot;&quot;}" ecos:conditionType="NONE"/>
     </bpmn:process>
-    <bpmn:signal name="RECORD_STATUS_CHANGED;${execution.businessKey};ANY;pr_5a11b3c88eda03a6a8e9f269d5aad733" id="Signal_GUrI3Sj"/>
+    <bpmn:signal name="RECORD_STATUS_CHANGED;${execution.businessKey};ANY;pr_5a11b3c88eda03a6a8e9f269d5aad733" id="Signal_56F1XuH"/>
     <bpmndi:BPMNDiagram id="BPMNDiagram_1">
         <bpmndi:BPMNPlane  bpmnElement="deal-take-to-work-process" id="BPMNPlane_1">
             <bpmndi:BPMNShape bpmnElement="Activity_0mby3dh" isExpanded="true" id="Activity_113a5vh_di">
                 <dc:Bounds x="350.0" y="59.0" width="100.0" height="80.0"/>
             </bpmndi:BPMNShape>
             <bpmndi:BPMNShape bpmnElement="Activity_01f1m7s" isExpanded="true" id="Activity_1k2q07q_di">
-                <dc:Bounds x="680.0" y="59.0" width="100.0" height="80.0"/>
+                <dc:Bounds x="730.0" y="59.0" width="100.0" height="80.0"/>
             </bpmndi:BPMNShape>
             <bpmndi:BPMNShape bpmnElement="Event_0h0804u" isExpanded="true" id="Event_0h0804u_di">
-                <dc:Bounds x="1092.0" y="81.0" width="36.0" height="36.0"/>
+                <dc:Bounds x="1142.0" y="81.0" width="36.0" height="36.0"/>
             </bpmndi:BPMNShape>
             <bpmndi:BPMNShape bpmnElement="StartEvent_1ew9rff" isExpanded="true" id="Event_0l42ra6_di">
-                <dc:Bounds x="-28.0" y="81.0" width="36.0" height="36.0"/>
+                <dc:Bounds x="82.0" y="81.0" width="36.0" height="36.0"/>
             </bpmndi:BPMNShape>
             <bpmndi:BPMNShape bpmnElement="Gateway_1le3kw3" isExpanded="true" id="Gateway_1le3kw3_di">
-                <dc:Bounds x="205.0" y="74.0" width="50.0" height="50.0"/>
+                <dc:Bounds x="175.0" y="74.0" width="50.0" height="50.0"/>
             </bpmndi:BPMNShape>
             <bpmndi:BPMNShape bpmnElement="Event_1a87ud5" isExpanded="true" id="Event_1a87ud5_di">
-                <dc:Bounds x="212.0" y="302.0" width="36.0" height="36.0"/>
-            </bpmndi:BPMNShape>
-            <bpmndi:BPMNShape bpmnElement="Event_0r9l5li" isExpanded="true" id="Event_0r9l5li_di">
-                <dc:Bounds x="382.0" y="-48.0" width="36.0" height="36.0"/>
+                <dc:Bounds x="332.0" y="332.0" width="36.0" height="36.0"/>
             </bpmndi:BPMNShape>
             <bpmndi:BPMNShape bpmnElement="Gateway_0fdq65l" isExpanded="true" id="Gateway_0fdq65l_di">
-                <dc:Bounds x="515.0" y="74.0" width="50.0" height="50.0"/>
+                <dc:Bounds x="565.0" y="74.0" width="50.0" height="50.0"/>
             </bpmndi:BPMNShape>
             <bpmndi:BPMNShape bpmnElement="Activity_19si9tj" isExpanded="true" id="Activity_104zh9h_di">
-                <dc:Bounds x="680.0" y="200.0" width="100.0" height="80.0"/>
+                <dc:Bounds x="730.0" y="200.0" width="100.0" height="80.0"/>
             </bpmndi:BPMNShape>
             <bpmndi:BPMNShape bpmnElement="Event_088oezf" isExpanded="true" id="Event_088oezf_di">
-                <dc:Bounds x="1092.0" y="222.0" width="36.0" height="36.0"/>
-            </bpmndi:BPMNShape>
-            <bpmndi:BPMNShape bpmnElement="Gateway_0zk16rs" isExpanded="true" id="Gateway_0zk16rs_di">
-                <dc:Bounds x="75.0" y="74.0" width="50.0" height="50.0"/>
-            </bpmndi:BPMNShape>
-            <bpmndi:BPMNShape bpmnElement="Activity_0opfq6u" isExpanded="true" id="Activity_0opfq6u_di">
-                <dc:Bounds x="50.0" y="180.0" width="100.0" height="80.0"/>
-            </bpmndi:BPMNShape>
-            <bpmndi:BPMNShape bpmnElement="Event_1jc0zdi" isExpanded="true" id="Event_1jc0zdi_di">
-                <dc:Bounds x="82.0" y="302.0" width="36.0" height="36.0"/>
+                <dc:Bounds x="1142.0" y="222.0" width="36.0" height="36.0"/>
             </bpmndi:BPMNShape>
             <bpmndi:BPMNShape bpmnElement="Activity_087y5bd" isExpanded="false" id="Activity_087y5bd_di">
-                <dc:Bounds x="880.0" y="59.0" width="100.0" height="80.0"/>
+                <dc:Bounds x="930.0" y="59.0" width="100.0" height="80.0"/>
             </bpmndi:BPMNShape>
-            <bpmndi:BPMNShape bpmnElement="Event_0r2lndr" isExpanded="false" id="Event_0r2lndr_di">
-                <dc:Bounds x="382.0" y="202.0" width="36.0" height="36.0"/>
-            </bpmndi:BPMNShape>
-            <bpmndi:BPMNShape bpmnElement="Event_0pmo0tz" isExpanded="true" id="Event_17tht5j_di">
-                <dc:Bounds x="382.0" y="41.0" width="36.0" height="36.0"/>
+            <bpmndi:BPMNShape bpmnElement="Gateway_10ta111" isExpanded="false" id="Gateway_10ta111_di">
+                <dc:Bounds x="325.0" y="215.0" width="50.0" height="50.0"/>
             </bpmndi:BPMNShape>
             <bpmndi:BPMNShape bpmnElement="Event_00ivonz" isExpanded="false" id="Event_0jikxsl_di">
-                <dc:Bounds x="382.0" y="121.0" width="36.0" height="36.0"/>
+                <dc:Bounds x="432.0" y="121.0" width="36.0" height="36.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="Event_0pmo0tz" isExpanded="true" id="Event_17tht5j_di">
+                <dc:Bounds x="332.0" y="121.0" width="36.0" height="36.0"/>
             </bpmndi:BPMNShape>
             <bpmndi:BPMNEdge bpmnElement="Flow_0v2hbgu" id="Flow_0v2hbgu_di">
-                <di:waypoint x="565.0" y="99.0"/>
-                <di:waypoint x="680.0" y="99.0"/>
+                <di:waypoint x="615.0" y="99.0"/>
+                <di:waypoint x="730.0" y="99.0"/>
             </bpmndi:BPMNEdge>
             <bpmndi:BPMNEdge bpmnElement="Flow_003zmr7" id="Flow_003zmr7_di">
-                <di:waypoint x="255.0" y="99.0"/>
+                <di:waypoint x="225.0" y="99.0"/>
                 <di:waypoint x="350.0" y="99.0"/>
             </bpmndi:BPMNEdge>
             <bpmndi:BPMNEdge bpmnElement="Flow_1dis24m" id="Flow_1dis24m_di">
-                <di:waypoint x="230.0" y="124.0"/>
-                <di:waypoint x="230.0" y="302.0"/>
-            </bpmndi:BPMNEdge>
-            <bpmndi:BPMNEdge bpmnElement="Flow_0fgzn68" id="Flow_0fgzn68_di">
-                <di:waypoint x="400.0" y="41.0"/>
-                <di:waypoint x="400.0" y="-12.0"/>
+                <di:waypoint x="200.0" y="124.0"/>
+                <di:waypoint x="200.0" y="240.0"/>
+                <di:waypoint x="325.0" y="240.0"/>
             </bpmndi:BPMNEdge>
             <bpmndi:BPMNEdge bpmnElement="Flow_1xb8yj4" id="Flow_1xb8yj4_di">
                 <di:waypoint x="450.0" y="99.0"/>
-                <di:waypoint x="515.0" y="99.0"/>
+                <di:waypoint x="565.0" y="99.0"/>
             </bpmndi:BPMNEdge>
             <bpmndi:BPMNEdge bpmnElement="Flow_1qpiqfw" id="Flow_1qpiqfw_di">
-                <di:waypoint x="780.0" y="240.0"/>
-                <di:waypoint x="1092.0" y="240.0"/>
+                <di:waypoint x="830.0" y="240.0"/>
+                <di:waypoint x="1142.0" y="240.0"/>
             </bpmndi:BPMNEdge>
             <bpmndi:BPMNEdge bpmnElement="Flow_0xeoaiq" id="Flow_0xeoaiq_di">
-                <di:waypoint x="540.0" y="124.0"/>
-                <di:waypoint x="540.0" y="240.0"/>
-                <di:waypoint x="680.0" y="240.0"/>
+                <di:waypoint x="590.0" y="124.0"/>
+                <di:waypoint x="590.0" y="240.0"/>
+                <di:waypoint x="730.0" y="240.0"/>
             </bpmndi:BPMNEdge>
             <bpmndi:BPMNEdge bpmnElement="Flow_0rjs758" id="Flow_0rjs758_di">
-                <di:waypoint x="8.0" y="99.0"/>
-                <di:waypoint x="75.0" y="99.0"/>
-            </bpmndi:BPMNEdge>
-            <bpmndi:BPMNEdge bpmnElement="Flow_19q43ub" id="Flow_19q43ub_di">
-                <di:waypoint x="125.0" y="99.0"/>
-                <di:waypoint x="205.0" y="99.0"/>
-            </bpmndi:BPMNEdge>
-            <bpmndi:BPMNEdge bpmnElement="Flow_0j3x8mo" id="Flow_0j3x8mo_di">
-                <di:waypoint x="100.0" y="124.0"/>
-                <di:waypoint x="100.0" y="180.0"/>
-            </bpmndi:BPMNEdge>
-            <bpmndi:BPMNEdge bpmnElement="Flow_0vth7zh" id="Flow_0vth7zh_di">
-                <di:waypoint x="100.0" y="260.0"/>
-                <di:waypoint x="100.0" y="302.0"/>
+                <di:waypoint x="118.0" y="99.0"/>
+                <di:waypoint x="175.0" y="99.0"/>
             </bpmndi:BPMNEdge>
             <bpmndi:BPMNEdge bpmnElement="Flow_16fqv4z" id="Flow_16fqv4z_di">
-                <di:waypoint x="780.0" y="99.0"/>
-                <di:waypoint x="880.0" y="99.0"/>
+                <di:waypoint x="830.0" y="99.0"/>
+                <di:waypoint x="930.0" y="99.0"/>
             </bpmndi:BPMNEdge>
             <bpmndi:BPMNEdge bpmnElement="Flow_10rnbcw" id="Flow_10rnbcw_di">
-                <di:waypoint x="980.0" y="99.0"/>
-                <di:waypoint x="1092.0" y="99.0"/>
+                <di:waypoint x="1030.0" y="99.0"/>
+                <di:waypoint x="1142.0" y="99.0"/>
             </bpmndi:BPMNEdge>
-            <bpmndi:BPMNEdge bpmnElement="Flow_0l54m6r" id="Flow_0l54m6r_di">
-                <di:waypoint x="400.0" y="157.0"/>
-                <di:waypoint x="400.0" y="202.0"/>
+            <bpmndi:BPMNEdge bpmnElement="Flow_09jpkws" id="Flow_09jpkws_di">
+                <di:waypoint x="350.0" y="265.0"/>
+                <di:waypoint x="350.0" y="332.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="Flow_1g371s4" id="Flow_1g371s4_di">
+                <di:waypoint x="350.0" y="157.0"/>
+                <di:waypoint x="350.0" y="215.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="Flow_1sa55c1" id="Flow_1sa55c1_di">
+                <di:waypoint x="450.0" y="157.0"/>
+                <di:waypoint x="450.0" y="240.0"/>
+                <di:waypoint x="375.0" y="240.0"/>
             </bpmndi:BPMNEdge>
         </bpmndi:BPMNPlane>
     </bpmndi:BPMNDiagram>

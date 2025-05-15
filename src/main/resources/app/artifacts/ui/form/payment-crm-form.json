@@ -1,0 +1,497 @@
+{
+  "id": "payment-crm-form",
+  "formKey": "",
+  "title": {
+    "ru": "Платеж CRM",
+    "en": "Payment CRM"
+  },
+  "description": {},
+  "customModule": "",
+  "typeRef": "emodel/type@payment-crm",
+  "width": "extra-lg",
+  "system": false,
+  "i18n": {},
+  "definition": {
+    "components": [
+      {
+        "scrollableContent": true,
+        "key": "panel2",
+        "type": "panel",
+        "input": false,
+        "components": [
+          {
+            "label": {
+              "ru": "Columns"
+            },
+            "key": "columns5",
+            "columns": [
+              {
+                "components": [
+                  {
+                    "label": {
+                      "ru": "amount"
+                    },
+                    "key": "amount",
+                    "validate": {
+                      "required": true,
+                      "integer": false,
+                      "min": 0
+                    },
+                    "isBigNumber": false,
+                    "delimiterValue": " ",
+                    "defaultValue": "",
+                    "refreshOn": [],
+                    "customDefaultValue": "const parentForm = instance.options.parentForm;\n\nconsole.log(parentForm);\n\nif (parentForm) {\n    const totalAmountWithVat = _.get(parentForm, 'data.has-pas:totalAmountWithVat');\n    if (totalAmountWithVat) {\n        value = totalAmountWithVat\n    }\n}",
+                    "optionalWhenDisabled": false,
+                    "decimalLimit": 2,
+                    "type": "number",
+                    "input": true,
+                    "reorder": false
+                  }
+                ],
+                "md": 4,
+                "type": "column",
+                "input": false,
+                "key": "column",
+                "index": 0
+              },
+              {
+                "md": 4,
+                "type": "column",
+                "input": false,
+                "key": "column",
+                "index": 1,
+                "components": [
+                  {
+                    "label": {
+                      "ru": "currency"
+                    },
+                    "key": "currency",
+                    "validate": {
+                      "required": true
+                    },
+                    "modalTitle": "",
+                    "journalId": "currency",
+                    "source": {
+                      "type": "journal",
+                      "custom": {
+                        "columns": []
+                      },
+                      "customValues": "",
+                      "viewMode": "default"
+                    },
+                    "queryData": "",
+                    "refreshOn": [],
+                    "customDefaultValue": "const parentForm = instance.options.parentForm\nlet defaultCurrency = \"emodel/currency@rub\";\n\nif (parentForm) {\n    const currency = _.get(parentForm, 'data.currency');\n    if (currency) {\n        defaultCurrency = currency\n    }\n}\n\nvalue = defaultCurrency;",
+                    "optionalWhenDisabled": false,
+                    "type": "selectJournal",
+                    "input": true
+                  }
+                ]
+              },
+              {
+                "md": 4,
+                "type": "column",
+                "input": false,
+                "key": "column",
+                "index": 2,
+                "components": [
+                  {
+                    "label": {
+                      "ru": "responsible"
+                    },
+                    "key": "responsible",
+                    "validate": {
+                      "required": true
+                    },
+                    "allowedAuthorityType": "USER",
+                    "currentUserByDefault": true,
+                    "defaultValue": "",
+                    "refreshOn": [],
+                    "customDefaultValue": "const parentForm = instance.options.parentForm\nif (parentForm) {\n    const manager = _.get(parentForm, 'data.manager');\n    if (manager) {\n        value = manager;\n    }\n}",
+                    "optionalWhenDisabled": false,
+                    "type": "selectOrgstruct",
+                    "input": true,
+                    "repayment-crm": false,
+                    "reorder": false,
+                    "allowedGroupType": "",
+                    "rootGroupName": ""
+                  }
+                ]
+              }
+            ],
+            "oneColumnInViewMode": false,
+            "type": "columns",
+            "input": false,
+            "repayment-crm": false
+          },
+          {
+            "label": {
+              "ru": "Columns"
+            },
+            "key": "columns3",
+            "columns": [
+              {
+                "components": [
+                  {
+                    "label": {
+                      "ru": "counterparty"
+                    },
+                    "key": "counterparty",
+                    "validate": {
+                      "required": true
+                    },
+                    "modalTitle": "",
+                    "journalId": "ecos-counterparty",
+                    "source": {
+                      "type": "journal",
+                      "custom": {
+                        "columns": []
+                      },
+                      "customValues": "",
+                      "viewMode": "default"
+                    },
+                    "queryData": "",
+                    "refreshOn": [],
+                    "customDefaultValue": "const parentForm = instance.options.parentForm\nif (parentForm) {\n    const counterparty = _.get(parentForm, 'data.counterparty');\n    if (counterparty) {\n        value = counterparty\n    }\n}",
+                    "optionalWhenDisabled": false,
+                    "type": "selectJournal",
+                    "input": true
+                  }
+                ],
+                "md": 4,
+                "type": "column",
+                "input": false,
+                "key": "column",
+                "index": 0
+              },
+              {
+                "md": 4,
+                "type": "column",
+                "input": false,
+                "key": "column",
+                "index": 1,
+                "components": [
+                  {
+                    "label": {
+                      "ru": "Заказ",
+                      "en": "Order"
+                    },
+                    "key": "crm-links:order",
+                    "modalTitle": "",
+                    "journalId": "orders-journal",
+                    "source": {
+                      "type": "journal",
+                      "custom": {
+                        "columns": []
+                      },
+                      "customValues": "",
+                      "viewMode": "default"
+                    },
+                    "queryData": "",
+                    "refreshOn": [],
+                    "customDefaultValue": "const parentForm = instance.options.parentForm;\nif (parentForm) {\n    let parentRef = _.get(parentForm, 'options.recordId');\n    if (parentRef && parentRef.indexOf('order') !== -1) {\n        parentRef = parentRef.replace(/-alias-\\d+$/, '');\n        value = parentRef;\n    }\n}",
+                    "optionalWhenDisabled": false,
+                    "type": "selectJournal",
+                    "input": true
+                  }
+                ]
+              },
+              {
+                "md": 4,
+                "type": "column",
+                "input": false,
+                "key": "column",
+                "index": 2,
+                "components": [
+                  {
+                    "label": {
+                      "ru": "Сделка",
+                      "en": "Deal"
+                    },
+                    "key": "crm-links:deal",
+                    "modalTitle": "",
+                    "journalId": "deals-journal",
+                    "source": {
+                      "type": "journal",
+                      "custom": {
+                        "columns": []
+                      },
+                      "customValues": "",
+                      "viewMode": "default"
+                    },
+                    "queryData": "",
+                    "refreshOn": [],
+                    "customDefaultValue": "const parentForm = instance.options.parentForm;\nif (parentForm) {\n    let parentRef = _.get(parentForm, 'options.recordId');\n    if (parentRef && parentRef.indexOf('deal') !== -1) {\n        parentRef = parentRef.replace(/-alias-\\d+$/, '');\n        value = parentRef;\n    }\n}",
+                    "optionalWhenDisabled": false,
+                    "type": "selectJournal",
+                    "input": true
+                  }
+                ]
+              }
+            ],
+            "oneColumnInViewMode": false,
+            "type": "columns",
+            "input": false,
+            "reorder": false
+          },
+          {
+            "label": {
+              "ru": "Panel"
+            },
+            "key": "panel",
+            "title": {
+              "ru": "Дата",
+              "en": "Date"
+            },
+            "refreshOn": [],
+            "optionalWhenDisabled": false,
+            "type": "panel",
+            "input": false,
+            "components": [
+              {
+                "label": {
+                  "ru": "Columns"
+                },
+                "key": "columns",
+                "columns": [
+                  {
+                    "components": [
+                      {
+                        "label": {
+                          "ru": "plannedPaymentDate"
+                        },
+                        "key": "plannedPaymentDate",
+                        "format": "yyyy-MM-dd",
+                        "datePicker": {
+                          "minDate": "",
+                          "maxDate": ""
+                        },
+                        "enableTime": false,
+                        "timePicker": {
+                          "showMeridian": false
+                        },
+                        "defaultValue": "",
+                        "refreshOn": [],
+                        "optionalWhenDisabled": false,
+                        "type": "datetime",
+                        "input": true,
+                        "suffix": true,
+                        "reorder": false
+                      }
+                    ],
+                    "md": 4,
+                    "type": "column",
+                    "input": false,
+                    "key": "column",
+                    "index": 0
+                  },
+                  {
+                    "md": 4,
+                    "type": "column",
+                    "input": false,
+                    "key": "column",
+                    "index": 1,
+                    "components": [
+                      {
+                        "label": {
+                          "ru": "factPaymentDate"
+                        },
+                        "key": "factPaymentDate",
+                        "datePicker": {
+                          "minDate": "",
+                          "maxDate": ""
+                        },
+                        "enableTime": false,
+                        "timePicker": {
+                          "showMeridian": false
+                        },
+                        "defaultValue": "",
+                        "refreshOn": [],
+                        "optionalWhenDisabled": false,
+                        "type": "datetime",
+                        "input": true,
+                        "suffix": true,
+                        "format": "yyyy-MM-dd"
+                      }
+                    ]
+                  },
+                  {
+                    "md": 4,
+                    "type": "column",
+                    "input": false,
+                    "key": "column",
+                    "index": 2,
+                    "components": [
+                      {
+                        "label": {
+                          "ru": "Дата создания",
+                          "en": "Created date"
+                        },
+                        "key": "_created",
+                        "disabled": true,
+                        "format": "yyyy-MM-dd HH:mm",
+                        "datePicker": {
+                          "minDate": "",
+                          "maxDate": ""
+                        },
+                        "timePicker": {
+                          "showMeridian": false
+                        },
+                        "defaultValue": "2025-04-25T09:22:33Z",
+                        "refreshOn": [],
+                        "optionalWhenDisabled": false,
+                        "customConditional": "show = instance.options.formMode !== 'CREATE';",
+                        "type": "datetime",
+                        "input": true,
+                        "suffix": true,
+                        "reorder": false
+                      }
+                    ]
+                  }
+                ],
+                "oneColumnInViewMode": false,
+                "type": "columns",
+                "input": false,
+                "reorder": false
+              }
+            ],
+            "collapsed": false,
+            "reorder": false
+          },
+          {
+            "label": {
+              "ru": "Panel"
+            },
+            "key": "panel3",
+            "title": {
+              "ru": " Комментарий"
+            },
+            "refreshOn": [],
+            "optionalWhenDisabled": false,
+            "type": "panel",
+            "input": false,
+            "components": [
+              {
+                "label": "",
+                "key": "comment",
+                "hideLabel": true,
+                "editor": "lexical",
+                "defaultValue": "",
+                "refreshOn": [],
+                "optionalWhenDisabled": false,
+                "rows": 5,
+                "type": "textarea",
+                "input": true,
+                "uploadStorage": "",
+                "uploadUrl": "",
+                "uploadOptions": "",
+                "uploadDir": "",
+                "as": "",
+                "reorder": false
+              }
+            ],
+            "collapsed": false,
+            "reorder": false
+          }
+        ]
+      },
+      {
+        "label": {
+          "ru": "Columns"
+        },
+        "key": "columns2",
+        "columns": [
+          {
+            "components": [
+              {
+                "label": "Cancel",
+                "action": "event",
+                "state": "",
+                "showValidations": false,
+                "event": "cancel",
+                "block": true,
+                "type": "button",
+                "input": true,
+                "key": "submit2",
+                "conditional": {
+                  "show": null,
+                  "when": null
+                }
+              }
+            ],
+            "type": "column",
+            "input": false,
+            "key": "column",
+            "label": "Column",
+            "md": 3,
+            "clearOnHide": true,
+            "conditional": {
+              "show": null,
+              "when": null
+            },
+            "index": 0
+          },
+          {
+            "components": [],
+            "type": "column",
+            "input": false,
+            "key": "column",
+            "label": "Column",
+            "clearOnHide": true,
+            "conditional": {
+              "show": null,
+              "when": null
+            },
+            "index": 1,
+            "md": 3
+          },
+          {
+            "md": 3,
+            "type": "column",
+            "input": false,
+            "key": "column",
+            "label": "Column",
+            "components": [],
+            "clearOnHide": true,
+            "conditional": {
+              "show": null,
+              "when": null
+            },
+            "index": 2
+          },
+          {
+            "md": 3,
+            "type": "column",
+            "input": false,
+            "key": "column",
+            "index": 3,
+            "components": [
+              {
+                "label": {
+                  "ru": "Создать",
+                  "en": "Submit"
+                },
+                "key": "submit",
+                "state": "",
+                "theme": "primary",
+                "block": true,
+                "disableOnInvalid": true,
+                "refreshOn": [],
+                "optionalWhenDisabled": false,
+                "type": "button",
+                "input": true
+              }
+            ]
+          }
+        ],
+        "oneColumnInViewMode": false,
+        "type": "columns",
+        "input": false
+      }
+    ],
+    "formId": "payment-crm-form"
+  },
+  "attributes": {},
+  "notExists": false
+}

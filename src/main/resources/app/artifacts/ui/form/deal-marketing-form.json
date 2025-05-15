@@ -1,0 +1,283 @@
+{
+  "id": "deal-marketing-form",
+  "formKey": "",
+  "title": {
+    "en": "Маркетинг"
+  },
+  "description": {},
+  "customModule": "",
+  "typeRef": "emodel/type@deal",
+  "width": "",
+  "system": false,
+  "i18n": {},
+  "definition": {
+    "components": [
+      {
+        "label": {
+          "ru": "lead emessage"
+        },
+        "key": "createdFromLead.emessage",
+        "refreshOn": [],
+        "optionalWhenDisabled": false,
+        "type": "hidden",
+        "input": true,
+        "reorder": false
+      },
+      {
+        "scrollableContent": true,
+        "key": "panel2",
+        "type": "panel",
+        "input": false,
+        "components": [
+          {
+            "label": {
+              "ru": "requestCategory"
+            },
+            "key": "requestCategory",
+            "modalTitle": "",
+            "journalId": "deal-request-category-journal",
+            "source": {
+              "type": "journal",
+              "custom": {
+                "columns": []
+              },
+              "customValues": "",
+              "viewMode": "default"
+            },
+            "queryData": "",
+            "refreshOn": [],
+            "optionalWhenDisabled": false,
+            "type": "selectJournal",
+            "input": true
+          },
+          {
+            "label": {
+              "ru": "requestSource"
+            },
+            "key": "requestSource",
+            "modalTitle": "",
+            "journalId": "deal-request-source-journal",
+            "source": {
+              "type": "journal",
+              "custom": {
+                "columns": []
+              },
+              "customValues": "",
+              "viewMode": "default"
+            },
+            "refreshOn": [],
+            "optionalWhenDisabled": false,
+            "type": "selectJournal",
+            "input": true,
+            "queryData": ""
+          },
+          {
+            "label": {
+              "ru": "Panel"
+            },
+            "key": "panel",
+            "title": {
+              "ru": "Заявка с сайта"
+            },
+            "collapsible": true,
+            "refreshOn": [],
+            "optionalWhenDisabled": false,
+            "type": "panel",
+            "input": false,
+            "components": [
+              {
+                "label": {
+                  "ru": "Страница заполнения заявки",
+                  "en": "Deal request page"
+                },
+                "key": "createdFromLead.siteFrom",
+                "disabled": true,
+                "defaultValue": "",
+                "refreshOn": [],
+                "optionalWhenDisabled": false,
+                "type": "textfield",
+                "input": true,
+                "inputMasks": [
+                  {}
+                ],
+                "reorder": false,
+                "dataSrc": ""
+              },
+              {
+                "label": {
+                  "ru": "Идентификатор GA",
+                  "en": "GA ID"
+                },
+                "key": "createdFromLead.ga_client_id",
+                "disabled": true,
+                "defaultValue": "",
+                "refreshOn": [],
+                "optionalWhenDisabled": false,
+                "type": "textfield",
+                "input": true,
+                "inputMasks": [
+                  {}
+                ],
+                "reorder": false,
+                "dataSrc": ""
+              },
+              {
+                "label": {
+                  "ru": "Идентификатор YM",
+                  "en": "YM ID"
+                },
+                "key": "createdFromLead.ym_client_id",
+                "disabled": true,
+                "defaultValue": "",
+                "refreshOn": [],
+                "optionalWhenDisabled": false,
+                "type": "textfield",
+                "input": true,
+                "inputMasks": [
+                  {}
+                ],
+                "reorder": false,
+                "dataSrc": ""
+              }
+            ],
+            "collapsed": true,
+            "reorder": false
+          },
+          {
+            "label": {
+              "ru": "Panel"
+            },
+            "key": "panel3",
+            "title": {
+              "ru": "Почтовое сообщение"
+            },
+            "collapsible": true,
+            "refreshOn": [],
+            "optionalWhenDisabled": false,
+            "type": "panel",
+            "input": false,
+            "components": [
+              {
+                "label": {
+                  "ru": "Содержимое письма"
+                },
+                "key": "leadEmessage",
+                "tag": "div",
+                "className": "",
+                "refreshOnChange": true,
+                "refreshOn": [
+                  "createdFromLead.emessage"
+                ],
+                "optionalWhenDisabled": false,
+                "content": {
+                  "ru": "<div style=\"border: 1px solid #e0e0e0; border-radius: 4px; padding: 15px; max-height: 500px; overflow-y: auto; background-color: #fff; white-space: pre-wrap; font-family: monospace;\">{{ data.createdFromLead.emessage }}</div>"
+                },
+                "type": "htmlelement",
+                "input": false,
+                "reorder": false
+              }
+            ],
+            "collapsed": true,
+            "reorder": false
+          }
+        ]
+      },
+      {
+        "label": {
+          "ru": "Columns"
+        },
+        "key": "columns2",
+        "columns": [
+          {
+            "components": [
+              {
+                "label": "Cancel",
+                "action": "event",
+                "state": "",
+                "showValidations": false,
+                "event": "cancel",
+                "block": true,
+                "type": "button",
+                "input": true,
+                "key": "submit2",
+                "conditional": {
+                  "show": null,
+                  "when": null
+                }
+              }
+            ],
+            "type": "column",
+            "input": false,
+            "key": "column",
+            "label": "Column",
+            "md": 3,
+            "clearOnHide": false,
+            "conditional": {
+              "show": null,
+              "when": null
+            },
+            "index": 0
+          },
+          {
+            "components": [],
+            "type": "column",
+            "input": false,
+            "key": "column",
+            "label": "Column",
+            "clearOnHide": false,
+            "conditional": {
+              "show": null,
+              "when": null
+            },
+            "index": 1,
+            "md": 3
+          },
+          {
+            "md": 3,
+            "type": "column",
+            "input": false,
+            "key": "column",
+            "label": "Column",
+            "components": [],
+            "clearOnHide": false,
+            "conditional": {
+              "show": null,
+              "when": null
+            },
+            "index": 2
+          },
+          {
+            "md": 3,
+            "type": "column",
+            "input": false,
+            "key": "column",
+            "index": 3,
+            "components": [
+              {
+                "label": {
+                  "ru": "Создать",
+                  "en": "Submit"
+                },
+                "key": "submit",
+                "state": "",
+                "theme": "primary",
+                "block": true,
+                "disableOnInvalid": true,
+                "refreshOn": [],
+                "optionalWhenDisabled": false,
+                "type": "button",
+                "input": true
+              }
+            ]
+          }
+        ],
+        "oneColumnInViewMode": false,
+        "type": "columns",
+        "input": false
+      }
+    ],
+    "formId": "deal-marketing-form"
+  },
+  "attributes": {},
+  "notExists": false
+}

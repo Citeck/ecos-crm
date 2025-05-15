@@ -1,0 +1,192 @@
+{
+  "id": "lead-change-status-form",
+  "formKey": "",
+  "title": {
+    "en": "Lead change status form"
+  },
+  "description": {},
+  "customModule": "",
+  "typeRef": "",
+  "width": "",
+  "system": false,
+  "i18n": {},
+  "definition": {
+    "components": [
+      {
+        "label": {
+          "ru": "Статус, в который хотите перевести лид:",
+          "en": "Choose status:"
+        },
+        "key": "statuses",
+        "validate": {
+          "select": false
+        },
+        "clearOnHide": false,
+        "dataSrc": "custom",
+        "data": {
+          "custom": "var statuses  = _.get(data, \"typeInfo.statuses\");\nvar arr = [];\n\nfor(var i = 0; i < statuses.length; i++) {\n  var val = { value: statuses[i].id, label: Citeck.helpers.getMLValue(statuses[i].name) };\n  arr.push(val);\n}\n\nvalues = arr;",
+          "headers": [
+            {}
+          ]
+        },
+        "defaultValue": "",
+        "optionalWhenDisabled": false,
+        "type": "ecosSelect",
+        "input": true,
+        "reorder": false,
+        "reference": false
+      },
+      {
+        "label": {
+          "ru": "Причина дисквалификации",
+          "en": "Disqualification reason"
+        },
+        "key": "disqualificationReason",
+        "validate": {
+          "required": true,
+          "select": false
+        },
+        "clearOnHide": false,
+        "dataSrc": "custom",
+        "data": {
+          "custom": "var reasons = _.get(data, \"typeInfo.reasons\");\n\nvalues = reasons;",
+          "headers": [
+            {}
+          ]
+        },
+        "defaultValue": "",
+        "refreshOn": [
+          "data"
+        ],
+        "optionalWhenDisabled": false,
+        "conditional": {
+          "show": "true",
+          "when": "statuses",
+          "eq": "disqualified"
+        },
+        "type": "ecosSelect",
+        "input": true,
+        "reorder": false,
+        "reference": false
+      },
+      {
+        "label": {
+          "ru": "Columns"
+        },
+        "key": "columns2",
+        "columns": [
+          {
+            "components": [
+              {
+                "label": "Cancel",
+                "action": "event",
+                "state": "",
+                "showValidations": false,
+                "event": "cancel",
+                "block": true,
+                "type": "button",
+                "input": true,
+                "key": "submit2",
+                "conditional": {
+                  "show": null,
+                  "when": null
+                }
+              }
+            ],
+            "type": "column",
+            "input": false,
+            "key": "column",
+            "label": "Column",
+            "md": 3,
+            "clearOnHide": true,
+            "conditional": {
+              "show": null,
+              "when": null
+            },
+            "index": 0
+          },
+          {
+            "components": [
+              {
+                "label": "Type info request",
+                "source": {
+                  "type": "record",
+                  "record": {
+                    "id": "emodel/type@lead",
+                    "attributes": {
+                      "statuses": "model.statuses[]?json",
+                      "reasons": "attributeById.disqualificationReason.config.values[]{value,label._as.mltext}"
+                    }
+                  },
+                  "forceLoad": false
+                },
+                "update": {
+                  "type": "once"
+                },
+                "key": "typeInfo",
+                "type": "asyncData",
+                "input": true,
+                "triggerEventOnChange": false
+              }
+            ],
+            "type": "column",
+            "input": false,
+            "key": "column",
+            "label": "Column",
+            "clearOnHide": true,
+            "conditional": {
+              "show": null,
+              "when": null
+            },
+            "index": 1,
+            "md": 3
+          },
+          {
+            "md": 3,
+            "type": "column",
+            "input": false,
+            "key": "column",
+            "label": "Column",
+            "components": [],
+            "clearOnHide": true,
+            "conditional": {
+              "show": null,
+              "when": null
+            },
+            "index": 2
+          },
+          {
+            "md": 3,
+            "type": "column",
+            "input": false,
+            "key": "column",
+            "index": 3,
+            "components": [
+              {
+                "label": {
+                  "ru": "Отправить",
+                  "en": "Submit"
+                },
+                "key": "submit",
+                "state": "",
+                "theme": "primary",
+                "block": true,
+                "disableOnInvalid": true,
+                "refreshOn": [],
+                "optionalWhenDisabled": false,
+                "type": "button",
+                "input": true
+              }
+            ]
+          }
+        ],
+        "oneColumnInViewMode": false,
+        "type": "columns",
+        "input": false
+      }
+    ],
+    "formId": "lead-change-status-form"
+  },
+  "attributes": {},
+  "notExists": false
+}

@@ -1,0 +1,438 @@
+{
+  "id": "deal-dashboard",
+  "name": {},
+  "typeRef": "emodel/type@deal",
+  "appliedToRef": "",
+  "authority": "",
+  "scope": "",
+  "priority": 0,
+  "workspace": "",
+  "config": {
+    "version": "v2",
+    "v2": {
+      "widgets": [
+        {
+          "name": "stages",
+          "label": "dashboard-settings.widget.stages",
+          "dndId": "e1d87f9d-c2f0-455e-863b-73c1aa4d22cb",
+          "id": "7194460e-6e57-4e9b-9696-d6ad4ad0242d",
+          "props": {
+            "id": "7194460e-6e57-4e9b-9696-d6ad4ad0242d",
+            "config": {
+              "widgetDisplayCondition": null,
+              "elementsDisplayCondition": {}
+            }
+          },
+          "description": {
+            "ru": "Основное",
+            "en": "General"
+          }
+        },
+        {
+          "dndId": "077bcf0e-5f7e-4f6d-abca-f996d243ea1d",
+          "name": "tasks",
+          "label": "dashboard-settings.widget.tasks",
+          "id": "d5b4372a-cb41-4370-b66e-5580a52aaa6f",
+          "props": {
+            "id": "d5b4372a-cb41-4370-b66e-5580a52aaa6f",
+            "config": {
+              "widgetDisplayCondition": "",
+              "elementsDisplayCondition": {}
+            }
+          },
+          "description": {
+            "ru": "Основное",
+            "en": "General"
+          }
+        },
+        {
+          "name": "properties",
+          "label": "dashboard-settings.widget.properties",
+          "additionalProps": {},
+          "dndId": "4dd2b3a1-72ef-48bd-8e13-b8a47aa91fd0",
+          "id": "d8a5405d-225c-4dd5-926b-66fe35af2ba4",
+          "props": {
+            "id": "d8a5405d-225c-4dd5-926b-66fe35af2ba4",
+            "config": {
+              "widgetDisplayCondition": null,
+              "elementsDisplayCondition": {},
+              "formMode": "EDIT"
+            }
+          },
+          "description": {
+            "ru": "Основное",
+            "en": "General"
+          }
+        },
+        {
+          "name": "activities",
+          "label": "dashboard-settings.widget.activities",
+          "additionalProps": {},
+          "dndId": "380bb7a4-09cc-4c8c-a30a-f042a44e09c3",
+          "id": "865650d9-ded7-467a-b3e4-388105c0b26e",
+          "props": {
+            "id": "865650d9-ded7-467a-b3e4-388105c0b26e",
+            "config": {
+              "widgetDisplayCondition": null,
+              "elementsDisplayCondition": {}
+            }
+          },
+          "description": {
+            "ru": "Основное",
+            "en": "General"
+          }
+        },
+        {
+          "dndId": "38403ec8-6589-4747-beef-53e182ea14a5",
+          "name": "doc-status",
+          "label": "dashboard-settings.widget.doc-status",
+          "id": "b4bcb077-ed4f-498a-b152-97798fddd8fb",
+          "props": {
+            "id": "b4bcb077-ed4f-498a-b152-97798fddd8fb",
+            "config": {
+              "widgetDisplayCondition": "",
+              "elementsDisplayCondition": {}
+            }
+          },
+          "description": {
+            "ru": "Основное",
+            "en": "General"
+          }
+        },
+        {
+          "dndId": "68d2228b-5972-4b90-b465-d317e5f3d0a6",
+          "name": "current-tasks",
+          "label": "dashboard-settings.widget.current-tasks",
+          "id": "6d9d1e54-0c77-4990-9aed-228bec1614f4",
+          "props": {
+            "id": "6d9d1e54-0c77-4990-9aed-228bec1614f4",
+            "config": {
+              "widgetDisplayCondition": "",
+              "elementsDisplayCondition": {}
+            }
+          },
+          "description": {
+            "ru": "Основное",
+            "en": "General"
+          }
+        },
+        {
+          "dndId": "8ecb125c-7a47-4d3b-b871-5868fbe76498",
+          "name": "record-actions",
+          "label": "dashboard-settings.widget.actions",
+          "id": "6cb0726f-07c2-4388-84bc-6651823e2ba9",
+          "props": {
+            "id": "6cb0726f-07c2-4388-84bc-6651823e2ba9",
+            "config": {
+              "widgetDisplayCondition": "",
+              "elementsDisplayCondition": {}
+            }
+          },
+          "description": {
+            "ru": "Основное",
+            "en": "General"
+          }
+        },
+        {
+          "name": "properties",
+          "label": "dashboard-settings.widget.properties",
+          "additionalProps": {},
+          "dndId": "e3f7db2c-5088-4bce-9922-be075becb7d7",
+          "id": "a8fa00b9-3b51-4027-a4a7-17a799c2adf1",
+          "props": {
+            "id": "a8fa00b9-3b51-4027-a4a7-17a799c2adf1",
+            "config": {
+              "widgetDisplayCondition": null,
+              "elementsDisplayCondition": {},
+              "formId": "uiserv/form@deal-contact-form",
+              "titleAsFormName": true
+            }
+          },
+          "description": {
+            "ru": "Основное",
+            "en": "General"
+          }
+        },
+        {
+          "name": "properties",
+          "label": "dashboard-settings.widget.properties",
+          "additionalProps": {},
+          "dndId": "c1cb3aef-dced-47c9-a254-5c310761353c",
+          "id": "5945c0ff-ddec-4e7b-8a25-092aa01eb0b6",
+          "props": {
+            "id": "5945c0ff-ddec-4e7b-8a25-092aa01eb0b6",
+            "config": {
+              "widgetDisplayCondition": null,
+              "elementsDisplayCondition": {},
+              "formId": "uiserv/form@deal-marketing-form",
+              "titleAsFormName": true
+            }
+          },
+          "description": {
+            "ru": "Основное",
+            "en": "General"
+          }
+        },
+        {
+          "dndId": "951e31ba-70c0-4cab-988b-9d271cfa3632",
+          "name": "doc-associations",
+          "label": "dashboard-settings.widget.doc-associations",
+          "id": "c0a9aeee-a536-400d-ae80-326e77ce5202",
+          "props": {
+            "id": "c0a9aeee-a536-400d-ae80-326e77ce5202",
+            "config": {
+              "widgetDisplayCondition": "",
+              "elementsDisplayCondition": {}
+            }
+          },
+          "description": {
+            "ru": "Основное",
+            "en": "General"
+          }
+        },
+        {
+          "name": "events-history",
+          "label": "dashboard-settings.widget.events-history",
+          "dndId": "57bd94df-7533-47ce-890a-5a83edce9614",
+          "id": "7c456711-ee3f-43b2-959e-2a28afc1557b",
+          "props": {
+            "id": "7c456711-ee3f-43b2-959e-2a28afc1557b",
+            "config": {
+              "widgetDisplayCondition": "",
+              "elementsDisplayCondition": {}
+            }
+          },
+          "description": {
+            "ru": "История",
+            "en": "History"
+          }
+        },
+        {
+          "name": "versions-journal",
+          "label": "dashboard-settings.widget.versions-journal",
+          "dndId": "de494611-5b1e-4199-8e9a-931b29ab5b48",
+          "id": "52f3656c-1c8e-48f6-873c-04f14881fc70",
+          "props": {
+            "id": "52f3656c-1c8e-48f6-873c-04f14881fc70",
+            "config": {
+              "widgetDisplayCondition": "",
+              "elementsDisplayCondition": {}
+            }
+          },
+          "description": {
+            "ru": "История",
+            "en": "History"
+          }
+        },
+        {
+          "dndId": "9818c1d8-bc41-464f-9824-8d3cd2cf03f2",
+          "name": "documents",
+          "label": "dashboard-settings.widget.documents",
+          "id": "4b5571a3-256d-4bcd-b970-5c52a68e4944",
+          "props": {
+            "id": "4b5571a3-256d-4bcd-b970-5c52a68e4944",
+            "config": {
+              "widgetDisplayCondition": "",
+              "elementsDisplayCondition": {},
+              "types": [
+                {
+                  "type": "emodel/type@doclib-file",
+                  "multiple": false,
+                  "mandatory": false,
+                  "canUpload": true,
+                  "journalId": ""
+                },
+                {
+                  "type": "emodel/type@attachment",
+                  "multiple": false,
+                  "mandatory": false,
+                  "canUpload": true,
+                  "journalId": ""
+                },
+                {
+                  "type": "emodel/type@commercial-offer-document",
+                  "multiple": false,
+                  "mandatory": false,
+                  "canUpload": true,
+                  "journalId": ""
+                },
+                {
+                  "type": "emodel/type@scan-document",
+                  "multiple": false,
+                  "mandatory": false,
+                  "canUpload": true,
+                  "journalId": ""
+                },
+                {
+                  "type": "emodel/type@counterparty-document",
+                  "multiple": false,
+                  "mandatory": false,
+                  "canUpload": true,
+                  "journalId": ""
+                }
+              ],
+              "isLoadChecklist": true
+            }
+          },
+          "description": {
+            "ru": "Документы",
+            "en": "Documents"
+          }
+        }
+      ],
+      "desktop": [
+        {
+          "id": "layout_799ac5e5-9eab-4c08-af80-5ed48d768229",
+          "tab": {
+            "label": {
+              "ru": "Основное",
+              "en": "General"
+            },
+            "idLayout": "layout_799ac5e5-9eab-4c08-af80-5ed48d768229"
+          },
+          "type": "2-columns-big-small",
+          "columns": [
+            {
+              "widgets": [
+                "7194460e-6e57-4e9b-9696-d6ad4ad0242d",
+                "d5b4372a-cb41-4370-b66e-5580a52aaa6f",
+                "d8a5405d-225c-4dd5-926b-66fe35af2ba4",
+                "865650d9-ded7-467a-b3e4-388105c0b26e"
+              ]
+            },
+            {
+              "widgets": [
+                "b4bcb077-ed4f-498a-b152-97798fddd8fb",
+                "6d9d1e54-0c77-4990-9aed-228bec1614f4",
+                "6cb0726f-07c2-4388-84bc-6651823e2ba9",
+                "a8fa00b9-3b51-4027-a4a7-17a799c2adf1",
+                "5945c0ff-ddec-4e7b-8a25-092aa01eb0b6",
+                "c0a9aeee-a536-400d-ae80-326e77ce5202"
+              ],
+              "width": "25%"
+            }
+          ]
+        },
+        {
+          "id": "layout_18a3a08f-e70d-476b-911e-0730c58f97ed",
+          "tab": {
+            "label": {
+              "ru": "История",
+              "en": "History"
+            },
+            "idLayout": "layout_18a3a08f-e70d-476b-911e-0730c58f97ed"
+          },
+          "type": "2-columns-big-small",
+          "columns": [
+            {
+              "widgets": [
+                "7c456711-ee3f-43b2-959e-2a28afc1557b"
+              ]
+            },
+            {
+              "widgets": [
+                "52f3656c-1c8e-48f6-873c-04f14881fc70"
+              ],
+              "width": "25%"
+            }
+          ]
+        },
+        {
+          "id": "layout_35cd006c-9ae1-4148-9e25-3a78989fd690",
+          "tab": {
+            "label": {
+              "ru": "Документы",
+              "en": "Documents"
+            },
+            "idLayout": "layout_35cd006c-9ae1-4148-9e25-3a78989fd690"
+          },
+          "type": "1-column",
+          "columns": [
+            {
+              "widgets": [
+                "4b5571a3-256d-4bcd-b970-5c52a68e4944"
+              ]
+            }
+          ]
+        }
+      ],
+      "mobile": [
+        {
+          "id": "layout_b4b01e70-e01c-457d-abfa-aaaf0a4ca691",
+          "tab": {
+            "label": "Основное",
+            "idLayout": "layout_b4b01e70-e01c-457d-abfa-aaaf0a4ca691"
+          },
+          "type": "mobile",
+          "columns": [
+            {
+              "widgets": [
+                "b4bcb077-ed4f-498a-b152-97798fddd8fb",
+                "d5b4372a-cb41-4370-b66e-5580a52aaa6f"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "layout_b3a3755f-12c4-4b2c-9c87-10821681b76c",
+          "tab": {
+            "label": "Комментарии",
+            "idLayout": "layout_b3a3755f-12c4-4b2c-9c87-10821681b76c"
+          },
+          "type": "mobile",
+          "columns": [
+            {
+              "widgets": []
+            }
+          ]
+        },
+        {
+          "id": "layout_c5b3186f-5a78-4d92-a730-1c8086562141",
+          "tab": {
+            "label": "Действия",
+            "idLayout": "layout_c5b3186f-5a78-4d92-a730-1c8086562141"
+          },
+          "type": "mobile",
+          "columns": [
+            {
+              "widgets": [
+                "6cb0726f-07c2-4388-84bc-6651823e2ba9"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "layout_07d39068-7d9b-4d4e-822a-c2db4913cb6d",
+          "tab": {
+            "label": "Связи документа",
+            "idLayout": "layout_07d39068-7d9b-4d4e-822a-c2db4913cb6d"
+          },
+          "type": "mobile",
+          "columns": [
+            {
+              "widgets": [
+                "c0a9aeee-a536-400d-ae80-326e77ce5202"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "layout_69e552d9-1323-42b4-b8ac-af176a6084fc",
+          "tab": {
+            "label": "Документы",
+            "idLayout": "layout_69e552d9-1323-42b4-b8ac-af176a6084fc"
+          },
+          "type": "mobile",
+          "columns": [
+            {
+              "widgets": [
+                "4b5571a3-256d-4bcd-b970-5c52a68e4944"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "attributes": {}
+}

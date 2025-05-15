@@ -1,6 +1,6 @@
 ---
 id: create-crm-groups
-date: 2023-02-18T00:00:00Z
+date: 2025-04-28T00:00:00Z
 type: mutate
 targetApp: emodel
 config:
@@ -20,5 +20,14 @@ config:
         name:
           ru: Коммерческий директор
           en: CRM CCO
+        att_add_authorityGroups:
+          - emodel/authority-group@_orgstruct_home_
+
+    - id: emodel/authority-group@
+      attributes:
+        id: crm-administrators
+        name:
+          ru: Администраторы CRM
+          en: CRM Administrators
         att_add_authorityGroups:
           - emodel/authority-group@_orgstruct_home_

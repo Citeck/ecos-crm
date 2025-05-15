@@ -1,0 +1,37 @@
+---
+id: lead-board
+typeRef: emodel/type@lead
+journalRef: uiserv/journal@leads-journal
+cardFormRef: uiserv/form@lead-board-form
+readOnly: false
+disableTitle: false
+cardFieldsLabelLayout: TOP
+name:
+  ru: Доска Лидов
+  en: Leads board
+columns:
+  - id: new
+    name:
+      ru: Не обработана
+      en: New
+    hideOldItems: false
+  - id: interest
+    name:
+      ru: Есть интерес
+      en: Interest
+    hideOldItems: false
+  - id: pause
+    name:
+      ru: Пауза
+      en: Pause
+    hideOldItems: false
+  - id: disqualified
+    name:
+      ru: Дисквалифицирован
+      en: Lead Disqualified
+    hideOldItems: false
+  - id: deal_creation
+    name:
+      ru: Сделка
+      en: Deal
+    hideOldItems: false
