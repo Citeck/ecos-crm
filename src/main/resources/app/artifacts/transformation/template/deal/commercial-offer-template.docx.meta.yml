@@ -1,0 +1,20 @@
+---
+id: commercial-offer-template
+name:
+  ru: Шаблон коммерческого предложения
+mimeType: application/vnd.openxmlformats-officedocument.wordprocessingml.document
+engine: freemarker
+model:
+  date: $now | fmt("dd.MM.yyyy")
+  counterparty: counterparty.fullOrganizationName!""
+  userFirstName: $user.firstName
+  userLastName: $user.lastName
+  userJobTitle: $user.jobTitle
+  userPhone: $user.phoneNumber
+  userEmail: $user.email
+computedAttributes:
+  - id: ''
+    type: ''
+    config: {}
+tags:
+  - ''

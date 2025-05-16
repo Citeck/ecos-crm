@@ -1,0 +1,24 @@
+---
+id: commercial-offer-template-action
+name:
+  ru: Сгенерировать КП
+  en: Generate CO
+type: transform
+config:
+  input:
+    type: 'template'
+    config:
+      entityRef: '${?id}'
+      templateRef: transformations/template@commercial-offer-template
+  transformations:
+    - type: 'convert'
+      config:
+        toMimeType: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+  output:
+    type: "mutate"
+    config:
+      entityRef: 'emodel/document@'
+      additionalAttributes:
+        "_parent": '${?id}'
+        "_parentAtt": "docs:documents"
+        "_type": 'emodel/type@document'

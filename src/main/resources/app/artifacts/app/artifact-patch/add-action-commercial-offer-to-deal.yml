@@ -1,0 +1,12 @@
+---
+id: add-action-commercial-offer-to-deal
+name:
+  ru: Добавить действие "Коммерческое предложение" к сделке
+  en: Add "Commercial offer" action to deal
+target: 'model/type$deal'
+type: json
+config:
+  operations:
+    - op: add
+      path: 'actions'
+      value: uiserv/action@commercial-offer-template-action
