@@ -7,6 +7,11 @@ engine: freemarker
 model:
   date: $now | fmt("dd.MM.yyyy")
   counterparty: counterparty.fullOrganizationName!""
+  legalentity: contract.legalEntity.fullOrganizationName!""
+  orders: has-orders:orders.has-pas:product-and-services[]{name, quantity, unit.unitShortName.ru, priceWithDiscount | fmt("0.00"), amount}
+  totalAmount: has-orders:orders.has-pas:totalAmount | fmt("0.00")
+  totalVat: has-orders:orders.has-pas:totalVat | fmt("0.00")
+  totalAmountWithVat: has-orders:orders.has-pas:totalAmountWithVat | fmt("0.00")
   userFirstName: $user.firstName
   userLastName: $user.lastName
   userJobTitle: $user.jobTitle

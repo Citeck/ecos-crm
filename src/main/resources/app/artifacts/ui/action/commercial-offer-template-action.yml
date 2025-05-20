@@ -17,8 +17,8 @@ config:
   output:
     type: "mutate"
     config:
-      entityRef: 'emodel/document@'
+      entityRef: 'emodel/commercial-offer-document@'
       additionalAttributes:
         "_parent": '${?id}'
         "_parentAtt": "docs:documents"
-        "_type": 'emodel/type@document'
+        "_type": 'emodel/type@commercial-offer-document'
