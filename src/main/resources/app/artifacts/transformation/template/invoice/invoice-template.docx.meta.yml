@@ -1,0 +1,32 @@
+---
+id: invoice-template
+name:
+  ru: Шаблон счёта
+mimeType: application/vnd.openxmlformats-officedocument.wordprocessingml.document
+engine: freemarker
+model:
+  date: $now | fmt("dd.MM.yyyy")
+  counterparty: counterparty.fullOrganizationName!""
+  legalEntity: contract.legalEntity.fullOrganizationName
+  inn: contract.legalEntity.inn
+  kpp: contract.legalEntity.kpp
+  accountNumber: contract.legalEntity.accountNumber
+  bankTitle: contract.legalEntity.bankTitle
+  bankId: contract.legalEntity.bankId
+  correspondentAccountNumber: contract.legalEntity.correspondentAccountNumber
+  contractCounterparty: contract.counterparty.fullOrganizationName!""
+  userFirstName: $user.firstName
+  userLastName: $user.lastName
+  userJobTitle: $user.jobTitle
+  userPhone: $user.phoneNumber
+  userEmail: $user.email
+  orders: has-pas:product-and-services[]{name, quantity, unit.unitShortName.ru, priceWithDiscount | fmt("0.00"), amount}
+  totalAmount: has-pas:totalAmount | fmt("0.00")
+  totalVat: has-pas:totalVat | fmt("0.00")
+  totalAmountWithVat: has-pas:totalAmountWithVat | fmt("0.00")
+computedAttributes:
+  - id: ''
+    type: ''
+    config: {}
+tags:
+  - ''

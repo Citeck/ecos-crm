@@ -1,0 +1,24 @@
+---
+id: invoice-template-action
+name:
+  ru: Сформировать счет
+  en: Form an invoice
+type: transform
+config:
+  input:
+    type: 'template'
+    config:
+      entityRef: '${?id}'
+      templateRef: transformations/template@invoice-template
+  transformations:
+    - type: 'convert'
+      config:
+        toMimeType: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+  output:
+    type: "mutate"
+    config:
+      entityRef: 'emodel/invoice-document@'
+      additionalAttributes:
+        "_parent": '${?id}'
+        "_parentAtt": "docs:documents"
+        "_type": 'emodel/type@invoice-document'

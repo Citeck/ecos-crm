@@ -1,0 +1,19 @@
+---
+id: act-template
+name:
+  ru: Шаблон акта
+mimeType: application/vnd.openxmlformats-officedocument.wordprocessingml.document
+engine: freemarker
+model:
+  date: $now | fmt("dd.MM.yyyy")
+  counterparty: counterparty.fullOrganizationName!""
+  orders: has-pas:product-and-services[]{name, quantity, unit.unitShortName.ru, priceWithDiscount | fmt("0.00"), amount}
+  totalAmount: has-pas:totalAmount | fmt("0.00")
+  totalVat: has-pas:totalVat | fmt("0.00")
+  totalAmountWithVat: has-pas:totalAmountWithVat | fmt("0.00")
+computedAttributes:
+  - id: ''
+    type: ''
+    config: {}
+tags:
+  - ''
