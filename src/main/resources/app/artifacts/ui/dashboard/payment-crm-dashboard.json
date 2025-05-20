@@ -23,6 +23,10 @@
               "widgetDisplayCondition": null,
               "elementsDisplayCondition": {}
             }
+          },
+          "description": {
+            "ru": "Основное",
+            "en": "General"
           }
         },
         {
@@ -146,24 +150,6 @@
           }
         },
         {
-          "name": "doc-preview",
-          "label": "dashboard-settings.widget.preview",
-          "dndId": "f13d2acd-fc25-4fce-9901-e4b8e7c60f6f",
-          "id": "579e37df-8dae-4f08-abb0-da6bb5f57bf1",
-          "props": {
-            "id": "579e37df-8dae-4f08-abb0-da6bb5f57bf1",
-            "config": {
-              "widgetDisplayCondition": "",
-              "elementsDisplayCondition": {},
-              "link": ""
-            }
-          },
-          "description": {
-            "ru": "Предпросмотр",
-            "en": "Preview"
-          }
-        },
-        {
           "name": "events-history",
           "label": "dashboard-settings.widget.events-history",
           "dndId": "57bd94df-7533-47ce-890a-5a83edce9614",
@@ -267,24 +253,6 @@
           ]
         },
         {
-          "id": "layout_bf4ddf5b-d22d-40aa-afc3-1ddebe28cfba",
-          "tab": {
-            "label": {
-              "ru": "Предпросмотр",
-              "en": "Preview"
-            },
-            "idLayout": "layout_bf4ddf5b-d22d-40aa-afc3-1ddebe28cfba"
-          },
-          "type": "1-column",
-          "columns": [
-            {
-              "widgets": [
-                "579e37df-8dae-4f08-abb0-da6bb5f57bf1"
-              ]
-            }
-          ]
-        },
-        {
           "id": "layout_18a3a08f-e70d-476b-911e-0730c58f97ed",
           "tab": {
             "label": {
@@ -360,9 +328,7 @@
           "type": "mobile",
           "columns": [
             {
-              "widgets": [
-                "579e37df-8dae-4f08-abb0-da6bb5f57bf1"
-              ]
+              "widgets": []
             }
           ]
         },
@@ -486,9 +452,7 @@
           "type": "mobile",
           "columns": [
             {
-              "widgets": [
-                "579e37df-8dae-4f08-abb0-da6bb5f57bf1"
-              ]
+              "widgets": []
             }
           ]
         }
