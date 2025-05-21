@@ -121,6 +121,44 @@
               "allowedFor": []
             },
             {
+              "id": "contracts",
+              "label": {
+                "ru": "Договоры",
+                "en": "Contracts"
+              },
+              "icon": "ui/icon@i-leftmenu-contracts",
+              "hidden": false,
+              "type": "JOURNAL",
+              "config": {
+                "recordRef": "uiserv/journal@ecos-contract-journal"
+              },
+              "action": {
+                "type": "",
+                "config": {}
+              },
+              "items": [],
+              "allowedFor": []
+            },
+            {
+              "id": "suppagreements",
+              "label": {
+                "ru": "Доп. соглашения",
+                "en": "Supp. agreements"
+              },
+              "icon": "ui/icon@i-leftmenu-files",
+              "hidden": false,
+              "type": "JOURNAL",
+              "config": {
+                "recordRef": "uiserv/journal@ecos-supplementary-agreement-journal"
+              },
+              "action": {
+                "type": "",
+                "config": {}
+              },
+              "items": [],
+              "allowedFor": []
+            },
+            {
               "id": "workspace-files",
               "label": {
                 "ru": "Библиотека документов",
