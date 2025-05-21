@@ -1,0 +1,16 @@
+---
+id: invoice-document
+name:
+  ru: Счет
+  en: Invoice
+storageType: ECOS_MODEL
+parentRef: emodel/type@document
+inheritForm: false
+inheritActions: false
+actions:
+  - uiserv/action@content-preview-modal
+  - uiserv/action@edit-in-onlyoffice-tfm
+  - uiserv/action@content-download
+  - uiserv/action@download-pdf
+  - uiserv/action@delete
+workspaceScope: PRIVATE

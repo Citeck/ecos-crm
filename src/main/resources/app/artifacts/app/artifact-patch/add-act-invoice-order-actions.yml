@@ -1,0 +1,14 @@
+---
+id: add-act-invoice-order-actions
+name:
+  ru: Обновление действий заказа
+  en: Update order actions
+target: 'model/type$order'
+type: json
+config:
+  operations:
+    - op: add
+      path: 'actions'
+      value:
+        - uiserv/action@act-template-action
+        - uiserv/action@invoice-template-action

@@ -1,0 +1,24 @@
+---
+id: act-template-action
+name:
+  ru: Сформировать акт
+  en: Form an act
+type: transform
+config:
+  input:
+    type: 'template'
+    config:
+      entityRef: '${?id}'
+      templateRef: transformations/template@act-template
+  transformations:
+    - type: 'convert'
+      config:
+        toMimeType: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+  output:
+    type: "mutate"
+    config:
+      entityRef: 'emodel/act-document@'
+      additionalAttributes:
+        "_parent": '${?id}'
+        "_parentAtt": "docs:documents"
+        "_type": 'emodel/type@act-document'
