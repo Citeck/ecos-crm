@@ -1,8 +1,8 @@
 ---
-id: commercial-offer-document
+id: invoice-document
 name:
-  ru: Коммерческое предложение
-  en: Commercial offer
+  ru: Счет
+  en: Invoice
 storageType: ECOS_MODEL
 parentRef: emodel/type@document
 inheritForm: false

@@ -1,15 +1,15 @@
 ---
-id: commercial-offer-template-action
+id: invoice-template-action
 name:
-  ru: Сгенерировать КП
-  en: Generate CO
+  ru: Сформировать счет
+  en: Form an invoice
 type: transform
 config:
   input:
     type: 'template'
     config:
       entityRef: '${?id}'
-      templateRef: transformations/template@commercial-offer-template
+      templateRef: transformations/template@invoice-template
   transformations:
     - type: 'convert'
       config:
@@ -17,8 +17,8 @@ config:
   output:
     type: "mutate"
     config:
-      entityRef: 'emodel/commercial-offer-document@'
+      entityRef: 'emodel/invoice-document@'
       additionalAttributes:
         "_parent": '${?id}'
         "_parentAtt": "docs:documents"
-        "_type": 'emodel/type@commercial-offer-document'
+        "_type": 'emodel/type@invoice-document'

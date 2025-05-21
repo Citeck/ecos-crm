@@ -1,15 +1,15 @@
 ---
-id: commercial-offer-template-action
+id: act-template-action
 name:
-  ru: Сгенерировать КП
-  en: Generate CO
+  ru: Сформировать акт
+  en: Form an act
 type: transform
 config:
   input:
     type: 'template'
     config:
       entityRef: '${?id}'
-      templateRef: transformations/template@commercial-offer-template
+      templateRef: transformations/template@act-template
   transformations:
     - type: 'convert'
       config:
@@ -17,8 +17,8 @@ config:
   output:
     type: "mutate"
     config:
-      entityRef: 'emodel/commercial-offer-document@'
+      entityRef: 'emodel/act-document@'
       additionalAttributes:
         "_parent": '${?id}'
         "_parentAtt": "docs:documents"
-        "_type": 'emodel/type@commercial-offer-document'
+        "_type": 'emodel/type@act-document'

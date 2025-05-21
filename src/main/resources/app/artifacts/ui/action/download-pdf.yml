@@ -1,0 +1,15 @@
+---
+id: download-pdf
+name:
+  ru: Скачать PDF
+  en: Download PDF
+type: transform
+config:
+  input:
+    type: 'entity-content'
+    config:
+      entityRef: '${?id}'
+  transformations:
+    - type: 'convert'
+      config:
+        toMimeType: 'application/pdf'

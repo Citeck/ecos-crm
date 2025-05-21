@@ -201,6 +201,18 @@
                 },
                 {
                   "formId": null,
+                  "multiple": true,
+                  "type": "emodel/type@invoice-document",
+                  "mandatory": false
+                },
+                {
+                  "formId": null,
+                  "multiple": true,
+                  "type": "emodel/type@act-document",
+                  "mandatory": false
+                },
+                {
+                  "formId": null,
                   "multiple": false,
                   "type": "emodel/type@counterparty-document",
                   "mandatory": false
