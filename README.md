@@ -2,7 +2,7 @@
 
 **Read this in other languages: [Русский](README.RU.MD)**
 
-# `CRM`
+# CRM
 
 The module `CRM` offers various features to streamline CRM processes, such as lead management, opportunity tracking, contact management, and sales pipeline management. It facilitates collaboration among sales teams and enhances customer communication through integrated email management and activity tracking.
 
