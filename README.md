@@ -2,9 +2,9 @@
 
 **Read this in other languages: [Русский](README.RU.MD)**
 
-# `ecos-crm`
+# `CRM`
 
-The module `ecos-crm` offers various features to streamline CRM processes, such as lead management, opportunity tracking, contact management, and sales pipeline management. It facilitates collaboration among sales teams and enhances customer communication through integrated email management and activity tracking.
+The module `CRM` offers various features to streamline CRM processes, such as lead management, opportunity tracking, contact management, and sales pipeline management. It facilitates collaboration among sales teams and enhances customer communication through integrated email management and activity tracking.
 
 ## Get started
 
@@ -20,8 +20,8 @@ We welcome contributions from the community to make Citeck even better. Everyone
 
 ## Support
 
-If you need any assistance or have any questions regarding Citeck `ecos-crm`, please create an issue in this repository or reach out to our [support team](mailto:support@citeck.ru).
+If you need any assistance or have any questions regarding Citeck `CRM`, please create an issue in this repository or reach out to our [support team](mailto:support@citeck.ru).
 
 ## License
 
-Citeck `ecos-crm` is released under the [GNU Lesser General Public License](LICENSE).
+Citeck `CRM` is released under the [GNU Lesser General Public License](LICENSE).
