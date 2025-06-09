@@ -6,7 +6,7 @@ The module `ecos-crm` offers various features to streamline CRM processes, such 
 
 ## Get started
 
-If you are new to Citeck platform and would like to run the software locally, we recommend you download the Dockerized version from [Demo repository](https://github.com/Citeck/ecos-community-demo).
+If you are new to Citeck platform and would like to load the software locally, we recommend you download the Dockerized version from [Demo repository](https://github.com/Citeck/citeck-community).
 
 ## Useful Links
 
