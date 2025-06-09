@@ -1,5 +1,7 @@
 ![Citeck ECOS Logo](https://raw.githubusercontent.com/Citeck/ecos-ui/develop/public/img/logo/ecos-logo.svg)
 
+**Read this in other languages: [Русский](README.RU.MD)**
+
 # `ecos-crm`
 
 The module `ecos-crm` offers various features to streamline CRM processes, such as lead management, opportunity tracking, contact management, and sales pipeline management. It facilitates collaboration among sales teams and enhances customer communication through integrated email management and activity tracking.
