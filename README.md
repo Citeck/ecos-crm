@@ -1,12 +1,14 @@
 ![Citeck ECOS Logo](https://raw.githubusercontent.com/Citeck/ecos-ui/develop/public/img/logo/ecos-logo.svg)
 
-# `ecos-crm`
+**Read this in other languages: [Русский](README.RU.MD)**
 
-The module `ecos-crm` offers various features to streamline CRM processes, such as lead management, opportunity tracking, contact management, and sales pipeline management. It facilitates collaboration among sales teams and enhances customer communication through integrated email management and activity tracking.
+# CRM
+
+The `CRM` module  offers various features to streamline CRM processes, such as lead management, opportunity tracking, contact management, and sales pipeline management. It facilitates collaboration among sales teams and enhances customer communication through integrated email management and activity tracking.
 
 ## Get started
 
-If you are new to Citeck platform and would like to run the software locally, we recommend you download the Dockerized version from [Demo repository](https://github.com/Citeck/ecos-community-demo).
+If you are new to Citeck platform and would like to load the software locally, we recommend you download the Dockerized version from [Demo repository](https://github.com/Citeck/citeck-community).
 
 ## Useful Links
 
@@ -18,8 +20,8 @@ We welcome contributions from the community to make Citeck even better. Everyone
 
 ## Support
 
-If you need any assistance or have any questions regarding Citeck `ecos-crm`, please create an issue in this repository or reach out to our [support team](mailto:support@citeck.ru).
+If you need any assistance or have any questions regarding Citeck `CRM`, please create an issue in this repository or reach out to our [support team](mailto:support@citeck.ru).
 
 ## License
 
-Citeck `ecos-crm` is released under the [GNU Lesser General Public License](LICENSE).
+Citeck `CRM` is released under the [GNU Lesser General Public License](LICENSE).
