@@ -8,6 +8,7 @@ model:
   date: $now | fmt("dd.MM.yyyy")
   counterparty: counterparty.fullOrganizationName!""
   legalEntity: contract.legalEntity.fullOrganizationName
+  juridicalAddress: contract.legalEntity.juridicalAddress
   inn: contract.legalEntity.inn
   kpp: contract.legalEntity.kpp
   accountNumber: contract.legalEntity.accountNumber
