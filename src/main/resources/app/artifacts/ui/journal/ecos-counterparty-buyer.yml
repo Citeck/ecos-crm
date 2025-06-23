@@ -1,0 +1,78 @@
+---
+id: ecos-counterparty-buyer
+name:
+  en: Counterparties
+  ru: Контрагенты
+predicate:
+  t: eq
+  att: counterpartyType
+  val: buyer
+typeRef: emodel/type@ecos-counterparty
+editable: false
+columns:
+  - id: fullOrganizationName
+    name:
+      ru: Полное наименование
+      en: Full organization name
+    type: TEXT
+  - id: counterpartyType
+    name:
+      ru: Тип контрагента
+      en: Counterparty type
+    type: TEXT
+  - id: inn
+    name:
+      ru: ИНН
+      en: ITN
+    type: TEXT
+  - id: kpp
+    name:
+      ru: КПП
+      en: Tax Registration Reason Code
+    type: TEXT
+  - id: ceoName
+    name:
+      ru: Генеральный директор
+      en: CEO name
+    type: TEXT
+  - id: shortOrganizationName
+    name:
+      ru: Альтернативное наименование организации
+    type: TEXT
+    visible: false
+  - id: ogrn
+    name:
+      ru: ОГРН
+      en: Primary State Registration Number
+    type: TEXT
+    visible: false
+  - id: juridicalAddress
+    name:
+      ru: Юридический адрес
+      en: Juridical address
+    type: TEXT
+    visible: false
+  - id: postAddress
+    name:
+      ru: Фактический адрес
+      en: Post address
+    type: TEXT
+    visible: false
+  - id: phone
+    name:
+      ru: Телефон
+      en: Phone
+    type: TEXT
+    visible: false
+  - id: cellPhone
+    name:
+      ru: Мобильный телефон
+      en: Cell phone
+    type: TEXT
+    visible: false
+  - id: email
+    name:
+      ru: Адрес электронной почты
+      en: E-mail
+    type: TEXT
+    visible: false
