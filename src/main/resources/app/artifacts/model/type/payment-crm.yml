@@ -87,3 +87,10 @@ model:
 
 aspects:
   - ref: emodel/aspect@crm-links
+  - ref: emodel/aspect@history-config
+    config:
+      disableHistory: false
+      excludedAtts:
+        - crm-bitrix24:bitrixSyncDate
+      onCreationHistoricalAtts: [ ]
+    inheritConfig: false
