@@ -6,6 +6,8 @@
       "creator": {
         "draft": "WRITE",
         "planned": "WRITE",
+        "confirmed": "WRITE",
+        "expired": "WRITE",
         "partialPayed": "WRITE",
         "paid": "WRITE",
         "canceled": "WRITE"
@@ -13,6 +15,8 @@
       "responsible": {
         "draft": "WRITE",
         "planned": "WRITE",
+        "confirmed": "WRITE",
+        "expired": "WRITE",
         "partialPayed": "WRITE",
         "paid": "READ",
         "canceled": "READ"
@@ -23,6 +27,8 @@
       "link_manager": {
         "draft": "WRITE",
         "planned": "WRITE",
+        "confirmed": "WRITE",
+        "expired": "WRITE",
         "partialPayed": "WRITE",
         "paid": "READ",
         "canceled": "READ"

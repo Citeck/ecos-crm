@@ -16,3 +16,8 @@ attributes:
     name:
       ru: ID Реквизита Банка из Bitrix24
       en: ID Requisite Bank from Bitrix24
+  - id: bitrixSyncDate
+    type: DATETIME
+    name:
+      ru: Bitrix sync date
+      en: Bitrix sync date
