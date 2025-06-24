@@ -28,6 +28,7 @@
           "ru": "Panel"
         },
         "key": "panel_counterparty_contacts",
+        "customClass": "citeck-widget-contacts",
         "scrollableContent": true,
         "refreshOn": [
           "is_legacy_contacts"
@@ -56,6 +57,24 @@
             "type": "asyncData",
             "input": true,
             "triggerEventOnChange": false
+          },
+          {
+            "label": {
+              "ru": "HTML",
+              "en": "HTML"
+            },
+            "key": "html",
+            "hidden": true,
+            "className": "",
+            "content": {
+              "ru": "text\n\n<style>\n    .citeck-widget-contacts .table-bordered {\n        border: none;\n    }\n    .citeck-widget-contacts .table-bordered th, .table-bordered td {\n        border: none;\n    }\n    \n    .citeck-widget-contacts .table th, .table td {\n        padding: 0;\n    }\n    \n    .citeck-widget-contacts .form-group {\n        margin: 0;\n    }\n    \n    .citeck-widget-contacts .formio-form_view-mode.formio-form .card .card-title {\n        font-size: 14px;\n    }\n    \n    .citeck-widget-contacts .card-body .panel-body {\n        padding: 0 28px !important;\n        margin-bottom: 12px;\n    }\n    \n    .formio-form_view-mode dl {\n        border-bottom: none !important;\n        padding: 5px 0;\n    }\n    \n    .formio-form_view-mode dd {\n        color: #444444;\n        font-weight: 600;\n    }\n    \n    .formio-form_view-mode dt {\n        color: #B7B7B7;\n    }\n    .formio-form_view-mode dt:after {\n        content: \":\";\n    }\n    \n    .citeck-widget-contacts .formio-dialog-content .preview-panel .card .card-title {\n        padding: 0;\n        margin-top: 2px;\n        margin-bottom: 12px !important;\n        \n        display: flex;\n        gap: 3px;\n        align-items: center;\n    }\n</style>"
+            },
+            "refreshOnChange": false,
+            "refreshOn": [],
+            "optionalWhenDisabled": false,
+            "type": "htmlelement",
+            "input": false,
+            "reorder": false
           },
           {
             "label": {
@@ -96,7 +115,7 @@
               "asyncCounterparty",
               "is_legacy_contacts"
             ],
-            "calculateValue": "const counterpartyContacts = _.get(data, \"asyncCounterparty.contacts\", []);\n\nvalue = counterpartyContacts;",
+            "calculateValue": "const counterpartyContacts = _.get(data, \"asyncCounterparty.contacts\", []);\nvalue = counterpartyContacts;",
             "optionalWhenDisabled": false,
             "conditional": {
               "show": "true",
@@ -116,12 +135,15 @@
                 },
                 "key": "panel5",
                 "title": {
-                  "ru": "Контакт: ${contactFio}",
+                  "ru": "${contactFio}",
                   "en": "Contact: ${contactFio}"
                 },
+                "theme": "transparent",
+                "customClass": "citeck-widget-contacts__not-collapsed",
                 "collapsible": true,
                 "collapsed": true,
                 "refreshOn": [],
+                "customDefaultValue": "const firstPanel = document.querySelectorAll('.citeck-widget-contacts__not-collapsed .panel-body')[0];\nif (firstPanel) {\n  firstPanel.removeAttribute('hidden');\n  firstPanel.removeAttribute('style');\n}",
                 "optionalWhenDisabled": false,
                 "type": "panel",
                 "input": false,
@@ -134,24 +156,6 @@
                     "columns": [
                       {
                         "components": [
-                          {
-                            "label": {
-                              "ru": "ФИО",
-                              "en": "Full name"
-                            },
-                            "key": "contactFio",
-                            "disabled": true,
-                            "defaultValue": "",
-                            "refreshOn": [],
-                            "optionalWhenDisabled": false,
-                            "type": "textfield",
-                            "input": true,
-                            "inputMasks": [
-                              {}
-                            ],
-                            "reorder": false,
-                            "dataSrc": ""
-                          },
                           {
                             "label": {
                               "ru": "Должность",
@@ -285,6 +289,7 @@
                     },
                     "key": "contactComment",
                     "disabled": true,
+                    "customClass": "citeck-widget-contacts__comment",
                     "defaultValue": "",
                     "refreshOn": [],
                     "optionalWhenDisabled": false,
@@ -381,12 +386,14 @@
                     },
                     "key": "panel5",
                     "title": {
-                      "ru": "Контакт: ${contactFio}",
-                      "en": "Contact: ${contactFio}"
+                      "ru": "${contactFio}",
+                      "en": "${contactFio}"
                     },
+                    "theme": "transparent",
                     "collapsible": true,
                     "collapsed": true,
                     "refreshOn": [],
+                    "customDefaultValue": "const firstPanel = document.querySelectorAll('.citeck-widget-contacts__not-collapsed .panel-body')[0];\nif (firstPanel) {\n  firstPanel.removeAttribute('hidden');\n  firstPanel.removeAttribute('style');\n}",
                     "optionalWhenDisabled": false,
                     "type": "panel",
                     "input": false,
@@ -399,21 +406,6 @@
                         "columns": [
                           {
                             "components": [
-                              {
-                                "label": {
-                                  "ru": "ФИО",
-                                  "en": "Full name"
-                                },
-                                "key": "contactFio",
-                                "defaultValue": "",
-                                "refreshOn": [],
-                                "optionalWhenDisabled": false,
-                                "type": "textfield",
-                                "input": true,
-                                "inputMasks": [
-                                  {}
-                                ]
-                              },
                               {
                                 "label": {
                                   "ru": "Должность",
@@ -531,6 +523,7 @@
                           "en": "Comment"
                         },
                         "key": "contactComment",
+                        "customClass": "citeck-widget-contacts__comment",
                         "defaultValue": "",
                         "refreshOn": [],
                         "optionalWhenDisabled": false,
