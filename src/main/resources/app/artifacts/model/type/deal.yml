@@ -161,3 +161,11 @@ model:
       config:
         typeRef: emodel/type@ecos-contract
         child: false
+aspects:
+  - ref: emodel/aspect@history-config
+    config:
+      disableHistory: false
+      excludedAtts:
+        - crm-bitrix24:bitrixSyncDate
+      onCreationHistoricalAtts: []
+    inheritConfig: false
