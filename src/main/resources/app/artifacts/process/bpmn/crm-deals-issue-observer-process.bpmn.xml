@@ -1,0 +1,599 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<bpmn:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:ecos="http://www.citeck.ru/ecos/bpmn/1.0" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" id="Definitions_KtpDB4k" name="" targetNamespace="http://bpmn.io/schema/bpmn" exporter="bpmn-js (https://demo.bpmn.io)" exporterVersion="8.2.0" ecos:workingCopySourceRef="" ecos:name_ml="{}" ecos:formRef="" ecos:autoDeleteEnabled="false" ecos:sectionRef="eproc/bpmn-section@DEFAULT" ecos:enabled="false" ecos:autoStartEnabled="false" ecos:defState="CONVERTED" ecos:processDefId="crm-deals-issue-observer-process" ecos:ecosType="">
+    <bpmn:process isExecutable="true" id="crm-deals-issue-observer-process">
+        <bpmn:startEvent isInterrupting="true" name="" id="StartEvent_1ew9rff" ecos:documentation="{}" ecos:eventFilterByRecordType="ANY" ecos:eventModel="{}" ecos:asyncConfig="{&quot;asyncBefore&quot;:false,&quot;asyncAfter&quot;:false,&quot;exclusive&quot;:true}" ecos:name_ml="{}" ecos:jobConfig="{&quot;jobPriority&quot;:null,&quot;jobRetryTimeCycle&quot;:null}" ecos:manualStatus="firstContact" ecos:eventManualMode="false" ecos:eventFilterByEcosType="emodel/type@deal" ecos:statusChangeType="AFTER" ecos:eventType="RECORD_STATUS_CHANGED">
+            <bpmn:outgoing >Flow_1rmizj4</bpmn:outgoing>
+            <bpmn:signalEventDefinition  signalRef="Signal_aaqoSv8" id="SignalEventDefinition_0bzy6l8"/>
+        </bpmn:startEvent>
+        <bpmn:scriptTask scriptFormat="javascript" name="" id="Activity_0fl4m1m" ecos:documentation="{}" ecos:asyncConfig="{&quot;asyncBefore&quot;:false,&quot;asyncAfter&quot;:false,&quot;exclusive&quot;:true}" ecos:name_ml="{}" ecos:jobConfig="{&quot;jobPriority&quot;:null,&quot;jobRetryTimeCycle&quot;:null}" ecos:script="var recordId = event.get(&quot;record&quot;);&#10;var payments = Records.query({&#10;      &quot;sourceId&quot;: 'emodel/payment-crm',&#10;      &quot;query&quot;: {&#10;          &quot;t&quot;: &quot;and&quot;,&#10;          &quot;val&quot;: [&#10;              {&#10;                  &quot;t&quot;: &quot;eq&quot;,&#10;                  &quot;att&quot;: &quot;crm-links:deal&quot;,&#10;                  &quot;val&quot;: recordId&#10;              }&#10;          ]&#10;      },&#10;      &quot;language&quot;: 'predicate'&#10;  },{created: &quot;_created&quot;});&#10;var payments = payments.records || []&#10;&#10;if (payments===undefined || payments ===null || payments.length===0) {&#10;  throw new Error(&quot;Изменение статуса невозможно при отсутствии платежей. Добавьте платежи на соответствующей вкладке.&quot;);&#10;}">
+            <bpmn:incoming >Flow_1rmizj4</bpmn:incoming>
+            <bpmn:outgoing >Flow_0p27rir</bpmn:outgoing>
+            <bpmn:script>var recordId = event.get("record");
+                var payments = Records.query({
+                "sourceId": 'emodel/payment-crm',
+                "query": {
+                "t": "and",
+                "val": [
+                {
+                "t": "eq",
+                "att": "crm-links:deal",
+                "val": recordId
+                }
+                ]
+                },
+                "language": 'predicate'
+                },{created: "_created"});
+                var payments = payments.records || []
+
+                if (payments===undefined || payments ===null || payments.length===0) {
+                throw new Error("Изменение статуса невозможно при отсутствии платежей. Добавьте платежи на соответствующей вкладке.");
+                }</bpmn:script>
+        </bpmn:scriptTask>
+        <bpmn:endEvent name="" id="Event_0itd0o1" ecos:documentation="{}" ecos:asyncConfig="{&quot;asyncBefore&quot;:false,&quot;asyncAfter&quot;:false,&quot;exclusive&quot;:true}" ecos:name_ml="{}" ecos:jobConfig="{&quot;jobPriority&quot;:null,&quot;jobRetryTimeCycle&quot;:null}">
+            <bpmn:incoming >Flow_0p27rir</bpmn:incoming>
+        </bpmn:endEvent>
+        <bpmn:sequenceFlow sourceRef="StartEvent_1ew9rff" targetRef="Activity_0fl4m1m" name="" id="Flow_1rmizj4" ecos:name_ml="{}" ecos:conditionConfig="{&quot;fn&quot;:&quot;&quot;,&quot;expression&quot;:&quot;&quot;,&quot;outcome&quot;:&quot;&quot;}" ecos:conditionType="NONE"/>
+        <bpmn:sequenceFlow sourceRef="Activity_0fl4m1m" targetRef="Event_0itd0o1" name="" id="Flow_0p27rir" ecos:name_ml="{}" ecos:conditionConfig="{&quot;fn&quot;:&quot;&quot;,&quot;expression&quot;:&quot;&quot;,&quot;outcome&quot;:&quot;&quot;}" ecos:conditionType="NONE"/>
+    </bpmn:process>
+    <bpmn:process isExecutable="true" id="Process_16x2qig">
+        <bpmn:startEvent isInterrupting="true" name="" id="Event_0obrzve" ecos:documentation="{}" ecos:eventFilterByRecordType="ANY" ecos:eventModel="{}" ecos:asyncConfig="{&quot;asyncBefore&quot;:false,&quot;asyncAfter&quot;:false,&quot;exclusive&quot;:true}" ecos:name_ml="{}" ecos:jobConfig="{&quot;jobPriority&quot;:null,&quot;jobRetryTimeCycle&quot;:null}" ecos:manualStatus="presentation" ecos:eventManualMode="false" ecos:eventFilterByEcosType="emodel/type@deal" ecos:statusChangeType="AFTER" ecos:eventType="RECORD_STATUS_CHANGED">
+            <bpmn:outgoing >Flow_0eaef93</bpmn:outgoing>
+            <bpmn:signalEventDefinition  signalRef="Signal_psFxnwB" id="SignalEventDefinition_11i5p3t"/>
+        </bpmn:startEvent>
+        <bpmn:scriptTask scriptFormat="javascript" name="" id="Activity_13gvqj3" ecos:documentation="{}" ecos:asyncConfig="{&quot;asyncBefore&quot;:false,&quot;asyncAfter&quot;:false,&quot;exclusive&quot;:true}" ecos:name_ml="{}" ecos:jobConfig="{&quot;jobPriority&quot;:null,&quot;jobRetryTimeCycle&quot;:null}" ecos:script="var recordId = event.get(&quot;record&quot;);&#10;var payments = Records.query({&#10;      &quot;sourceId&quot;: 'emodel/payment-crm',&#10;      &quot;query&quot;: {&#10;          &quot;t&quot;: &quot;and&quot;,&#10;          &quot;val&quot;: [&#10;              {&#10;                  &quot;t&quot;: &quot;eq&quot;,&#10;                  &quot;att&quot;: &quot;crm-links:deal&quot;,&#10;                  &quot;val&quot;: recordId&#10;              }&#10;          ]&#10;      },&#10;      &quot;language&quot;: 'predicate'&#10;  },{created: &quot;_created&quot;});&#10;var payments = payments.records || []&#10;&#10;if (payments===undefined || payments ===null || payments.length===0) {&#10;  throw new Error(&quot;Изменение статуса невозможно при отсутствии платежей. Добавьте платежи на соответствующей вкладке.&quot;);&#10;}">
+            <bpmn:incoming >Flow_0eaef93</bpmn:incoming>
+            <bpmn:outgoing >Flow_03332gv</bpmn:outgoing>
+            <bpmn:script>var recordId = event.get("record");
+                var payments = Records.query({
+                "sourceId": 'emodel/payment-crm',
+                "query": {
+                "t": "and",
+                "val": [
+                {
+                "t": "eq",
+                "att": "crm-links:deal",
+                "val": recordId
+                }
+                ]
+                },
+                "language": 'predicate'
+                },{created: "_created"});
+                var payments = payments.records || []
+
+                if (payments===undefined || payments ===null || payments.length===0) {
+                throw new Error("Изменение статуса невозможно при отсутствии платежей. Добавьте платежи на соответствующей вкладке.");
+                }</bpmn:script>
+        </bpmn:scriptTask>
+        <bpmn:endEvent name="" id="Event_015kg7d" ecos:documentation="{}" ecos:asyncConfig="{&quot;asyncBefore&quot;:false,&quot;asyncAfter&quot;:false,&quot;exclusive&quot;:true}" ecos:name_ml="{}" ecos:jobConfig="{&quot;jobPriority&quot;:null,&quot;jobRetryTimeCycle&quot;:null}">
+            <bpmn:incoming >Flow_03332gv</bpmn:incoming>
+        </bpmn:endEvent>
+        <bpmn:sequenceFlow sourceRef="Event_0obrzve" targetRef="Activity_13gvqj3" name="" id="Flow_0eaef93" ecos:name_ml="{}" ecos:conditionConfig="{&quot;fn&quot;:&quot;&quot;,&quot;expression&quot;:&quot;&quot;,&quot;outcome&quot;:&quot;&quot;}" ecos:conditionType="NONE"/>
+        <bpmn:sequenceFlow sourceRef="Activity_13gvqj3" targetRef="Event_015kg7d" name="" id="Flow_03332gv" ecos:name_ml="{}" ecos:conditionConfig="{&quot;fn&quot;:&quot;&quot;,&quot;expression&quot;:&quot;&quot;,&quot;outcome&quot;:&quot;&quot;}" ecos:conditionType="NONE"/>
+    </bpmn:process>
+    <bpmn:process isExecutable="true" id="Process_151bmnh">
+        <bpmn:startEvent isInterrupting="true" name="" id="Event_1o8snbj" ecos:documentation="{}" ecos:eventFilterByRecordType="ANY" ecos:eventModel="{}" ecos:asyncConfig="{&quot;asyncBefore&quot;:false,&quot;asyncAfter&quot;:false,&quot;exclusive&quot;:true}" ecos:name_ml="{}" ecos:jobConfig="{&quot;jobPriority&quot;:null,&quot;jobRetryTimeCycle&quot;:null}" ecos:manualStatus="offerPreparation" ecos:eventManualMode="false" ecos:eventFilterByEcosType="emodel/type@deal" ecos:statusChangeType="AFTER" ecos:eventType="RECORD_STATUS_CHANGED">
+            <bpmn:outgoing >Flow_1000yl9</bpmn:outgoing>
+            <bpmn:signalEventDefinition  signalRef="Signal_BGE1SfU" id="SignalEventDefinition_0sh7nro"/>
+        </bpmn:startEvent>
+        <bpmn:scriptTask scriptFormat="javascript" name="" id="Activity_0q0skki" ecos:documentation="{}" ecos:asyncConfig="{&quot;asyncBefore&quot;:false,&quot;asyncAfter&quot;:false,&quot;exclusive&quot;:true}" ecos:name_ml="{}" ecos:jobConfig="{&quot;jobPriority&quot;:null,&quot;jobRetryTimeCycle&quot;:null}" ecos:script="var recordId = event.get(&quot;record&quot;);&#10;var payments = Records.query({&#10;      &quot;sourceId&quot;: 'emodel/payment-crm',&#10;      &quot;query&quot;: {&#10;          &quot;t&quot;: &quot;and&quot;,&#10;          &quot;val&quot;: [&#10;              {&#10;                  &quot;t&quot;: &quot;eq&quot;,&#10;                  &quot;att&quot;: &quot;crm-links:deal&quot;,&#10;                  &quot;val&quot;: recordId&#10;              }&#10;          ]&#10;      },&#10;      &quot;language&quot;: 'predicate'&#10;  },{created: &quot;_created&quot;});&#10;var payments = payments.records || []&#10;&#10;if (payments===undefined || payments ===null || payments.length===0) {&#10;  throw new Error(&quot;Изменение статуса невозможно при отсутствии платежей. Добавьте платежи на соответствующей вкладке.&quot;);&#10;}">
+            <bpmn:incoming >Flow_1000yl9</bpmn:incoming>
+            <bpmn:outgoing >Flow_0ejaek3</bpmn:outgoing>
+            <bpmn:script>var recordId = event.get("record");
+                var payments = Records.query({
+                "sourceId": 'emodel/payment-crm',
+                "query": {
+                "t": "and",
+                "val": [
+                {
+                "t": "eq",
+                "att": "crm-links:deal",
+                "val": recordId
+                }
+                ]
+                },
+                "language": 'predicate'
+                },{created: "_created"});
+                var payments = payments.records || []
+
+                if (payments===undefined || payments ===null || payments.length===0) {
+                throw new Error("Изменение статуса невозможно при отсутствии платежей. Добавьте платежи на соответствующей вкладке.");
+                }</bpmn:script>
+        </bpmn:scriptTask>
+        <bpmn:endEvent name="" id="Event_1izkssu" ecos:documentation="{}" ecos:asyncConfig="{&quot;asyncBefore&quot;:false,&quot;asyncAfter&quot;:false,&quot;exclusive&quot;:true}" ecos:name_ml="{}" ecos:jobConfig="{&quot;jobPriority&quot;:null,&quot;jobRetryTimeCycle&quot;:null}">
+            <bpmn:incoming >Flow_0ejaek3</bpmn:incoming>
+        </bpmn:endEvent>
+        <bpmn:sequenceFlow sourceRef="Event_1o8snbj" targetRef="Activity_0q0skki" name="" id="Flow_1000yl9" ecos:name_ml="{}" ecos:conditionConfig="{&quot;fn&quot;:&quot; &quot;,&quot;expression&quot;:&quot;&quot;,&quot;outcome&quot;:&quot;&quot;}" ecos:conditionType="NONE"/>
+        <bpmn:sequenceFlow sourceRef="Activity_0q0skki" targetRef="Event_1izkssu" name="" id="Flow_0ejaek3" ecos:name_ml="{}" ecos:conditionConfig="{&quot;fn&quot;:&quot;&quot;,&quot;expression&quot;:&quot;&quot;,&quot;outcome&quot;:&quot;&quot;}" ecos:conditionType="NONE"/>
+    </bpmn:process>
+    <bpmn:process isExecutable="true" id="Process_0obfffj">
+        <bpmn:startEvent isInterrupting="true" name="" id="Event_0ko5hcv" ecos:documentation="{}" ecos:eventFilterByRecordType="ANY" ecos:eventModel="{}" ecos:asyncConfig="{&quot;asyncBefore&quot;:false,&quot;asyncAfter&quot;:false,&quot;exclusive&quot;:true}" ecos:name_ml="{}" ecos:jobConfig="{&quot;jobPriority&quot;:null,&quot;jobRetryTimeCycle&quot;:null}" ecos:manualStatus="identifyNeeds" ecos:eventManualMode="false" ecos:eventFilterByEcosType="emodel/type@deal" ecos:statusChangeType="AFTER" ecos:eventType="RECORD_STATUS_CHANGED">
+            <bpmn:outgoing >Flow_1i8q5bs</bpmn:outgoing>
+            <bpmn:signalEventDefinition  signalRef="Signal_ZxGr1zx" id="SignalEventDefinition_182zu34"/>
+        </bpmn:startEvent>
+        <bpmn:scriptTask scriptFormat="javascript" name="" id="Activity_1lop1jk" ecos:documentation="{}" ecos:asyncConfig="{&quot;asyncBefore&quot;:false,&quot;asyncAfter&quot;:false,&quot;exclusive&quot;:true}" ecos:name_ml="{}" ecos:jobConfig="{&quot;jobPriority&quot;:null,&quot;jobRetryTimeCycle&quot;:null}" ecos:script="var recordId = event.get(&quot;record&quot;);&#10;var payments = Records.query({&#10;      &quot;sourceId&quot;: 'emodel/payment-crm',&#10;      &quot;query&quot;: {&#10;          &quot;t&quot;: &quot;and&quot;,&#10;          &quot;val&quot;: [&#10;              {&#10;                  &quot;t&quot;: &quot;eq&quot;,&#10;                  &quot;att&quot;: &quot;crm-links:deal&quot;,&#10;                  &quot;val&quot;: recordId&#10;              }&#10;          ]&#10;      },&#10;      &quot;language&quot;: 'predicate'&#10;  },{created: &quot;_created&quot;});&#10;var payments = payments.records || []&#10;&#10;if (payments===undefined || payments ===null || payments.length===0) {&#10;  throw new Error(&quot;Изменение статуса невозможно при отсутствии платежей. Добавьте платежи на соответствующей вкладке.&quot;);&#10;}">
+            <bpmn:incoming >Flow_1i8q5bs</bpmn:incoming>
+            <bpmn:outgoing >Flow_1rnzo4t</bpmn:outgoing>
+            <bpmn:script>var recordId = event.get("record");
+                var payments = Records.query({
+                "sourceId": 'emodel/payment-crm',
+                "query": {
+                "t": "and",
+                "val": [
+                {
+                "t": "eq",
+                "att": "crm-links:deal",
+                "val": recordId
+                }
+                ]
+                },
+                "language": 'predicate'
+                },{created: "_created"});
+                var payments = payments.records || []
+
+                if (payments===undefined || payments ===null || payments.length===0) {
+                throw new Error("Изменение статуса невозможно при отсутствии платежей. Добавьте платежи на соответствующей вкладке.");
+                }</bpmn:script>
+        </bpmn:scriptTask>
+        <bpmn:endEvent name="" id="Event_0ux22kk" ecos:documentation="{}" ecos:asyncConfig="{&quot;asyncBefore&quot;:false,&quot;asyncAfter&quot;:false,&quot;exclusive&quot;:true}" ecos:name_ml="{}" ecos:jobConfig="{&quot;jobPriority&quot;:null,&quot;jobRetryTimeCycle&quot;:null}">
+            <bpmn:incoming >Flow_1rnzo4t</bpmn:incoming>
+        </bpmn:endEvent>
+        <bpmn:sequenceFlow sourceRef="Event_0ko5hcv" targetRef="Activity_1lop1jk" name="" id="Flow_1i8q5bs" ecos:name_ml="{}" ecos:conditionConfig="{&quot;fn&quot;:&quot;&quot;,&quot;expression&quot;:&quot;&quot;,&quot;outcome&quot;:&quot;&quot;}" ecos:conditionType="NONE"/>
+        <bpmn:sequenceFlow sourceRef="Activity_1lop1jk" targetRef="Event_0ux22kk" name="" id="Flow_1rnzo4t" ecos:name_ml="{}" ecos:conditionConfig="{&quot;fn&quot;:&quot;&quot;,&quot;expression&quot;:&quot;&quot;,&quot;outcome&quot;:&quot;&quot;}" ecos:conditionType="NONE"/>
+    </bpmn:process>
+    <bpmn:process isExecutable="true" id="Process_0sfaa9r">
+        <bpmn:startEvent isInterrupting="true" name="" id="Event_1u7jhfs" ecos:documentation="{}" ecos:eventFilterByRecordType="ANY" ecos:eventModel="{}" ecos:asyncConfig="{&quot;asyncBefore&quot;:false,&quot;asyncAfter&quot;:false,&quot;exclusive&quot;:true}" ecos:name_ml="{}" ecos:jobConfig="{&quot;jobPriority&quot;:null,&quot;jobRetryTimeCycle&quot;:null}" ecos:manualStatus="prototype" ecos:eventManualMode="false" ecos:eventFilterByEcosType="emodel/type@deal" ecos:statusChangeType="AFTER" ecos:eventType="RECORD_STATUS_CHANGED">
+            <bpmn:outgoing >Flow_0xiuj8y</bpmn:outgoing>
+            <bpmn:signalEventDefinition  signalRef="Signal_V9v0wuj" id="SignalEventDefinition_0j5urem"/>
+        </bpmn:startEvent>
+        <bpmn:scriptTask scriptFormat="javascript" name="" id="Activity_0muvogc" ecos:documentation="{}" ecos:asyncConfig="{&quot;asyncBefore&quot;:false,&quot;asyncAfter&quot;:false,&quot;exclusive&quot;:true}" ecos:name_ml="{}" ecos:jobConfig="{&quot;jobPriority&quot;:null,&quot;jobRetryTimeCycle&quot;:null}" ecos:script="var recordId = event.get(&quot;record&quot;);&#10;var payments = Records.query({&#10;      &quot;sourceId&quot;: 'emodel/payment-crm',&#10;      &quot;query&quot;: {&#10;          &quot;t&quot;: &quot;and&quot;,&#10;          &quot;val&quot;: [&#10;              {&#10;                  &quot;t&quot;: &quot;eq&quot;,&#10;                  &quot;att&quot;: &quot;crm-links:deal&quot;,&#10;                  &quot;val&quot;: recordId&#10;              }&#10;          ]&#10;      },&#10;      &quot;language&quot;: 'predicate'&#10;  },{created: &quot;_created&quot;});&#10;var payments = payments.records || []&#10;&#10;if (payments===undefined || payments ===null || payments.length===0) {&#10;  throw new Error(&quot;Изменение статуса невозможно при отсутствии платежей. Добавьте платежи на соответствующей вкладке.&quot;);&#10;}">
+            <bpmn:incoming >Flow_0xiuj8y</bpmn:incoming>
+            <bpmn:outgoing >Flow_1dusxqz</bpmn:outgoing>
+            <bpmn:script>var recordId = event.get("record");
+                var payments = Records.query({
+                "sourceId": 'emodel/payment-crm',
+                "query": {
+                "t": "and",
+                "val": [
+                {
+                "t": "eq",
+                "att": "crm-links:deal",
+                "val": recordId
+                }
+                ]
+                },
+                "language": 'predicate'
+                },{created: "_created"});
+                var payments = payments.records || []
+
+                if (payments===undefined || payments ===null || payments.length===0) {
+                throw new Error("Изменение статуса невозможно при отсутствии платежей. Добавьте платежи на соответствующей вкладке.");
+                }</bpmn:script>
+        </bpmn:scriptTask>
+        <bpmn:endEvent name="" id="Event_1sujmf8" ecos:documentation="{}" ecos:asyncConfig="{&quot;asyncBefore&quot;:false,&quot;asyncAfter&quot;:false,&quot;exclusive&quot;:true}" ecos:name_ml="{}" ecos:jobConfig="{&quot;jobPriority&quot;:null,&quot;jobRetryTimeCycle&quot;:null}">
+            <bpmn:incoming >Flow_1dusxqz</bpmn:incoming>
+        </bpmn:endEvent>
+        <bpmn:sequenceFlow sourceRef="Event_1u7jhfs" targetRef="Activity_0muvogc" name="" id="Flow_0xiuj8y" ecos:name_ml="{}" ecos:conditionConfig="{&quot;fn&quot;:&quot;&quot;,&quot;expression&quot;:&quot;&quot;,&quot;outcome&quot;:&quot;&quot;}" ecos:conditionType="NONE"/>
+        <bpmn:sequenceFlow sourceRef="Activity_0muvogc" targetRef="Event_1sujmf8" name="" id="Flow_1dusxqz" ecos:name_ml="{}" ecos:conditionConfig="{&quot;fn&quot;:&quot;&quot;,&quot;expression&quot;:&quot;&quot;,&quot;outcome&quot;:&quot;&quot;}" ecos:conditionType="NONE"/>
+    </bpmn:process>
+    <bpmn:process isExecutable="true" id="Process_0lzc2fy">
+        <bpmn:startEvent isInterrupting="true" name="" id="Event_1ri56v7" ecos:documentation="{}" ecos:eventFilterByRecordType="ANY" ecos:eventModel="{}" ecos:asyncConfig="{&quot;asyncBefore&quot;:false,&quot;asyncAfter&quot;:false,&quot;exclusive&quot;:true}" ecos:name_ml="{}" ecos:jobConfig="{&quot;jobPriority&quot;:null,&quot;jobRetryTimeCycle&quot;:null}" ecos:manualStatus="decision" ecos:eventManualMode="false" ecos:eventFilterByEcosType="emodel/type@deal" ecos:statusChangeType="AFTER" ecos:eventType="RECORD_STATUS_CHANGED">
+            <bpmn:outgoing >Flow_0br4czh</bpmn:outgoing>
+            <bpmn:signalEventDefinition  signalRef="Signal_nlxk3pB" id="SignalEventDefinition_0rjtl55"/>
+        </bpmn:startEvent>
+        <bpmn:scriptTask scriptFormat="javascript" name="" id="Activity_05zvzv9" ecos:documentation="{}" ecos:asyncConfig="{&quot;asyncBefore&quot;:false,&quot;asyncAfter&quot;:false,&quot;exclusive&quot;:true}" ecos:name_ml="{}" ecos:jobConfig="{&quot;jobPriority&quot;:null,&quot;jobRetryTimeCycle&quot;:null}" ecos:script="var recordId = event.get(&quot;record&quot;);&#10;var payments = Records.query({&#10;      &quot;sourceId&quot;: 'emodel/payment-crm',&#10;      &quot;query&quot;: {&#10;          &quot;t&quot;: &quot;and&quot;,&#10;          &quot;val&quot;: [&#10;              {&#10;                  &quot;t&quot;: &quot;eq&quot;,&#10;                  &quot;att&quot;: &quot;crm-links:deal&quot;,&#10;                  &quot;val&quot;: recordId&#10;              }&#10;          ]&#10;      },&#10;      &quot;language&quot;: 'predicate'&#10;  },{created: &quot;_created&quot;});&#10;var payments = payments.records || []&#10;&#10;if (payments===undefined || payments ===null || payments.length===0) {&#10;  throw new Error(&quot;Изменение статуса невозможно при отсутствии платежей. Добавьте платежи на соответствующей вкладке.&quot;);&#10;}">
+            <bpmn:incoming >Flow_0br4czh</bpmn:incoming>
+            <bpmn:outgoing >Flow_16qt6an</bpmn:outgoing>
+            <bpmn:script>var recordId = event.get("record");
+                var payments = Records.query({
+                "sourceId": 'emodel/payment-crm',
+                "query": {
+                "t": "and",
+                "val": [
+                {
+                "t": "eq",
+                "att": "crm-links:deal",
+                "val": recordId
+                }
+                ]
+                },
+                "language": 'predicate'
+                },{created: "_created"});
+                var payments = payments.records || []
+
+                if (payments===undefined || payments ===null || payments.length===0) {
+                throw new Error("Изменение статуса невозможно при отсутствии платежей. Добавьте платежи на соответствующей вкладке.");
+                }</bpmn:script>
+        </bpmn:scriptTask>
+        <bpmn:endEvent name="" id="Event_158dvvo" ecos:documentation="{}" ecos:asyncConfig="{&quot;asyncBefore&quot;:false,&quot;asyncAfter&quot;:false,&quot;exclusive&quot;:true}" ecos:name_ml="{}" ecos:jobConfig="{&quot;jobPriority&quot;:null,&quot;jobRetryTimeCycle&quot;:null}">
+            <bpmn:incoming >Flow_16qt6an</bpmn:incoming>
+        </bpmn:endEvent>
+        <bpmn:sequenceFlow sourceRef="Event_1ri56v7" targetRef="Activity_05zvzv9" name="" id="Flow_0br4czh" ecos:name_ml="{}" ecos:conditionConfig="{&quot;fn&quot;:&quot;&quot;,&quot;expression&quot;:&quot;&quot;,&quot;outcome&quot;:&quot;&quot;}" ecos:conditionType="NONE"/>
+        <bpmn:sequenceFlow sourceRef="Activity_05zvzv9" targetRef="Event_158dvvo" name="" id="Flow_16qt6an" ecos:name_ml="{}" ecos:conditionConfig="{&quot;fn&quot;:&quot;&quot;,&quot;expression&quot;:&quot;&quot;,&quot;outcome&quot;:&quot;&quot;}" ecos:conditionType="NONE"/>
+    </bpmn:process>
+    <bpmn:process isExecutable="true" id="Process_10xff9r">
+        <bpmn:startEvent isInterrupting="true" name="" id="Event_00kd2i9" ecos:documentation="{}" ecos:eventFilterByRecordType="ANY" ecos:eventModel="{}" ecos:asyncConfig="{&quot;asyncBefore&quot;:false,&quot;asyncAfter&quot;:false,&quot;exclusive&quot;:true}" ecos:name_ml="{}" ecos:jobConfig="{&quot;jobPriority&quot;:null,&quot;jobRetryTimeCycle&quot;:null}" ecos:manualStatus="completed" ecos:eventManualMode="false" ecos:eventFilterByEcosType="emodel/type@deal" ecos:statusChangeType="AFTER" ecos:eventType="RECORD_STATUS_CHANGED">
+            <bpmn:outgoing >Flow_0nj77bj</bpmn:outgoing>
+            <bpmn:signalEventDefinition  signalRef="Signal_tmL4tTF" id="SignalEventDefinition_0c8dev9"/>
+        </bpmn:startEvent>
+        <bpmn:scriptTask scriptFormat="javascript" name="" id="Activity_1bajju7" ecos:documentation="{}" ecos:asyncConfig="{&quot;asyncBefore&quot;:false,&quot;asyncAfter&quot;:false,&quot;exclusive&quot;:true}" ecos:name_ml="{}" ecos:jobConfig="{&quot;jobPriority&quot;:null,&quot;jobRetryTimeCycle&quot;:null}" ecos:script="var recordId = event.get(&quot;record&quot;);&#10;var payments = Records&#10;  .query({query: {&#10;      sourceId: 'emodel/payment-crm',&#10;      query: {&#10;          &quot;t&quot;: &quot;and&quot;,&#10;          &quot;val&quot;: [&#10;              {&#10;                  &quot;t&quot;: &quot;eq&quot;,&#10;                  &quot;att&quot;: &quot;crm-links:deal&quot;,&#10;                  &quot;val&quot;: recordId&#10;              }&#10;          ]&#10;      },&#10;      language: 'predicate'&#10;  },&#10;  attributes: [&quot;_status.id&quot;, &quot;plannedPaymentDate&quot;, &quot;factPaymentDate&quot;]&#10;  });&#10;&#10;payments=payments&#10;  .records&#10;  .filter(rec =&gt;&#10;    rec[&quot;_status.id&quot;]===&quot;paid&quot;&#10;  &amp;&amp;rec[&quot;_status.id&quot;]===&quot;canceled&quot;)&#10;  .filter(rec =&gt;&#10;  {&#10;    var plan = new Date(rec[&quot;plannedPaymentDate&quot;]) || &quot;&quot;&#10;    var fact = new Date(rec[&quot;factPaymentDate&quot;]) || &quot;&quot;&#10;    if(fact===&quot;&quot; || plan===&quot;&quot;){&#10;      return true;&#10;    } else {&#10;      var now = Date.now()&#10;      return fact&gt;now &amp;&amp; plan&gt;now&#10;    }&#10;  }&#10;  )|| []&#10;&#10;if (payments.length !== 0) {&#10;  throw new Error(&quot;Закрытие сделки невозможно. Проверьте, что платежи находятся в статусах \&quot;Оплачен\&quot; или \&quot;Отменен\&quot;, а плановая и фактическая даты оплаты не позже текущей даты&quot;);&#10;}">
+            <bpmn:incoming >Flow_0nj77bj</bpmn:incoming>
+            <bpmn:outgoing >Flow_0ek06iz</bpmn:outgoing>
+            <bpmn:script>var recordId = event.get("record");
+                var payments = Records
+                .query({query: {
+                sourceId: 'emodel/payment-crm',
+                query: {
+                "t": "and",
+                "val": [
+                {
+                "t": "eq",
+                "att": "crm-links:deal",
+                "val": recordId
+                }
+                ]
+                },
+                language: 'predicate'
+                },
+                attributes: ["_status.id", "plannedPaymentDate", "factPaymentDate"]
+                });
+
+                payments=payments
+                .records
+                .filter(rec =&gt;
+                rec["_status.id"]==="paid"
+                &amp;&amp;rec["_status.id"]==="canceled")
+                .filter(rec =&gt;
+                {
+                var plan = new Date(rec["plannedPaymentDate"]) || ""
+                var fact = new Date(rec["factPaymentDate"]) || ""
+                if(fact==="" || plan===""){
+                return true;
+                } else {
+                var now = Date.now()
+                return fact&gt;now &amp;&amp; plan&gt;now
+                }
+                }
+                )|| []
+
+                if (payments.length !== 0) {
+                throw new Error("Закрытие сделки невозможно. Проверьте, что платежи находятся в статусах \"Оплачен\" или \"Отменен\", а плановая и фактическая даты оплаты не позже текущей даты");
+                }</bpmn:script>
+        </bpmn:scriptTask>
+        <bpmn:endEvent name="" id="Event_0yn94si" ecos:documentation="{}" ecos:asyncConfig="{&quot;asyncBefore&quot;:false,&quot;asyncAfter&quot;:false,&quot;exclusive&quot;:true}" ecos:name_ml="{}" ecos:jobConfig="{&quot;jobPriority&quot;:null,&quot;jobRetryTimeCycle&quot;:null}">
+            <bpmn:incoming >Flow_0ek06iz</bpmn:incoming>
+        </bpmn:endEvent>
+        <bpmn:sequenceFlow sourceRef="Event_00kd2i9" targetRef="Activity_1bajju7" name="" id="Flow_0nj77bj" ecos:name_ml="{}" ecos:conditionConfig="{&quot;fn&quot;:&quot;&quot;,&quot;expression&quot;:&quot;&quot;,&quot;outcome&quot;:&quot;&quot;}" ecos:conditionType="NONE"/>
+        <bpmn:sequenceFlow sourceRef="Activity_1bajju7" targetRef="Event_0yn94si" name="" id="Flow_0ek06iz" ecos:name_ml="{}" ecos:conditionConfig="{&quot;fn&quot;:&quot;&quot;,&quot;expression&quot;:&quot;&quot;,&quot;outcome&quot;:&quot;&quot;}" ecos:conditionType="NONE"/>
+    </bpmn:process>
+    <bpmn:process isExecutable="true" id="Process_1b3e9xy">
+        <bpmn:startEvent isInterrupting="true" name="" id="Event_1ausarq" ecos:documentation="{}" ecos:eventFilterByRecordType="ANY" ecos:eventModel="{}" ecos:asyncConfig="{&quot;asyncBefore&quot;:false,&quot;asyncAfter&quot;:false,&quot;exclusive&quot;:true}" ecos:name_ml="{}" ecos:jobConfig="{&quot;jobPriority&quot;:null,&quot;jobRetryTimeCycle&quot;:null}" ecos:manualStatus="pause" ecos:eventManualMode="false" ecos:eventFilterByEcosType="emodel/type@deal" ecos:statusChangeType="AFTER" ecos:eventType="RECORD_STATUS_CHANGED">
+            <bpmn:outgoing >Flow_1izcija</bpmn:outgoing>
+            <bpmn:signalEventDefinition  signalRef="Signal_n5BGdJp" id="SignalEventDefinition_0lnd6fr"/>
+        </bpmn:startEvent>
+        <bpmn:scriptTask scriptFormat="javascript" name="" id="Activity_093glvx" ecos:documentation="{}" ecos:asyncConfig="{&quot;asyncBefore&quot;:false,&quot;asyncAfter&quot;:false,&quot;exclusive&quot;:true}" ecos:name_ml="{}" ecos:jobConfig="{&quot;jobPriority&quot;:null,&quot;jobRetryTimeCycle&quot;:null}" ecos:script="var recordId = event.get(&quot;record&quot;);&#10;var payments = Records.query({&#10;      &quot;sourceId&quot;: 'emodel/payment-crm',&#10;      &quot;query&quot;: {&#10;          &quot;t&quot;: &quot;and&quot;,&#10;          &quot;val&quot;: [&#10;              {&#10;                  &quot;t&quot;: &quot;eq&quot;,&#10;                  &quot;att&quot;: &quot;crm-links:deal&quot;,&#10;                  &quot;val&quot;: recordId&#10;              }&#10;          ]&#10;      },&#10;      &quot;language&quot;: 'predicate'&#10;  },{created: &quot;_created&quot;});&#10;var payments = payments.records || []&#10;&#10;if (payments===undefined || payments ===null || payments.length===0) {&#10;  throw new Error(&quot;Изменение статуса невозможно при отсутствии платежей. Добавьте платежи на соответствующей вкладке.&quot;);&#10;}">
+            <bpmn:incoming >Flow_1izcija</bpmn:incoming>
+            <bpmn:outgoing >Flow_08q0l1v</bpmn:outgoing>
+            <bpmn:script>var recordId = event.get("record");
+                var payments = Records.query({
+                "sourceId": 'emodel/payment-crm',
+                "query": {
+                "t": "and",
+                "val": [
+                {
+                "t": "eq",
+                "att": "crm-links:deal",
+                "val": recordId
+                }
+                ]
+                },
+                "language": 'predicate'
+                },{created: "_created"});
+                var payments = payments.records || []
+
+                if (payments===undefined || payments ===null || payments.length===0) {
+                throw new Error("Изменение статуса невозможно при отсутствии платежей. Добавьте платежи на соответствующей вкладке.");
+                }</bpmn:script>
+        </bpmn:scriptTask>
+        <bpmn:endEvent name="" id="Event_1q2z7ay" ecos:documentation="{}" ecos:asyncConfig="{&quot;asyncBefore&quot;:false,&quot;asyncAfter&quot;:false,&quot;exclusive&quot;:true}" ecos:name_ml="{}" ecos:jobConfig="{&quot;jobPriority&quot;:null,&quot;jobRetryTimeCycle&quot;:null}">
+            <bpmn:incoming >Flow_08q0l1v</bpmn:incoming>
+        </bpmn:endEvent>
+        <bpmn:sequenceFlow sourceRef="Event_1ausarq" targetRef="Activity_093glvx" name="" id="Flow_1izcija" ecos:name_ml="{}" ecos:conditionConfig="{&quot;fn&quot;:&quot;&quot;,&quot;expression&quot;:&quot;&quot;,&quot;outcome&quot;:&quot;&quot;}" ecos:conditionType="NONE"/>
+        <bpmn:sequenceFlow sourceRef="Activity_093glvx" targetRef="Event_1q2z7ay" name="" id="Flow_08q0l1v" ecos:name_ml="{}" ecos:conditionConfig="{&quot;fn&quot;:&quot;&quot;,&quot;expression&quot;:&quot;&quot;,&quot;outcome&quot;:&quot;&quot;}" ecos:conditionType="NONE"/>
+    </bpmn:process>
+    <bpmn:process isExecutable="true" id="Process_0wf3lue">
+        <bpmn:startEvent isInterrupting="true" name="" id="Event_18ot2xi" ecos:documentation="{}" ecos:eventFilterByRecordType="ANY" ecos:eventModel="{}" ecos:asyncConfig="{&quot;asyncBefore&quot;:false,&quot;asyncAfter&quot;:false,&quot;exclusive&quot;:true}" ecos:name_ml="{}" ecos:jobConfig="{&quot;jobPriority&quot;:null,&quot;jobRetryTimeCycle&quot;:null}" ecos:manualStatus="dropout" ecos:eventManualMode="false" ecos:eventFilterByEcosType="emodel/type@deal" ecos:statusChangeType="AFTER" ecos:eventType="RECORD_STATUS_CHANGED">
+            <bpmn:outgoing >Flow_0kriavc</bpmn:outgoing>
+            <bpmn:signalEventDefinition  signalRef="Signal_sIHvlgB" id="SignalEventDefinition_1o74nti"/>
+        </bpmn:startEvent>
+        <bpmn:scriptTask scriptFormat="javascript" name="" id="Activity_083b9s1" ecos:documentation="{}" ecos:asyncConfig="{&quot;asyncBefore&quot;:false,&quot;asyncAfter&quot;:false,&quot;exclusive&quot;:true}" ecos:name_ml="{}" ecos:jobConfig="{&quot;jobPriority&quot;:null,&quot;jobRetryTimeCycle&quot;:null}" ecos:script="var recordId = event.get(&quot;record&quot;);&#10;var payments = Records.query({&#10;      &quot;sourceId&quot;: 'emodel/payment-crm',&#10;      &quot;query&quot;: {&#10;          &quot;t&quot;: &quot;and&quot;,&#10;          &quot;val&quot;: [&#10;              {&#10;                  &quot;t&quot;: &quot;eq&quot;,&#10;                  &quot;att&quot;: &quot;crm-links:deal&quot;,&#10;                  &quot;val&quot;: recordId&#10;              }&#10;          ]&#10;      },&#10;      &quot;language&quot;: 'predicate'&#10;  },{created: &quot;_created&quot;});&#10;var payments = payments.records || []&#10;&#10;if (payments===undefined || payments ===null || payments.length===0) {&#10;  throw new Error(&quot;Изменение статуса невозможно при отсутствии платежей. Добавьте платежи на соответствующей вкладке.&quot;);&#10;}">
+            <bpmn:incoming >Flow_0kriavc</bpmn:incoming>
+            <bpmn:outgoing >Flow_09dtl5f</bpmn:outgoing>
+            <bpmn:script>var recordId = event.get("record");
+                var payments = Records.query({
+                "sourceId": 'emodel/payment-crm',
+                "query": {
+                "t": "and",
+                "val": [
+                {
+                "t": "eq",
+                "att": "crm-links:deal",
+                "val": recordId
+                }
+                ]
+                },
+                "language": 'predicate'
+                },{created: "_created"});
+                var payments = payments.records || []
+
+                if (payments===undefined || payments ===null || payments.length===0) {
+                throw new Error("Изменение статуса невозможно при отсутствии платежей. Добавьте платежи на соответствующей вкладке.");
+                }</bpmn:script>
+        </bpmn:scriptTask>
+        <bpmn:endEvent name="" id="Event_04v76xs" ecos:documentation="{}" ecos:asyncConfig="{&quot;asyncBefore&quot;:false,&quot;asyncAfter&quot;:false,&quot;exclusive&quot;:true}" ecos:name_ml="{}" ecos:jobConfig="{&quot;jobPriority&quot;:null,&quot;jobRetryTimeCycle&quot;:null}">
+            <bpmn:incoming >Flow_09dtl5f</bpmn:incoming>
+        </bpmn:endEvent>
+        <bpmn:sequenceFlow sourceRef="Event_18ot2xi" targetRef="Activity_083b9s1" name="" id="Flow_0kriavc" ecos:name_ml="{}" ecos:conditionConfig="{&quot;fn&quot;:&quot;&quot;,&quot;expression&quot;:&quot;&quot;,&quot;outcome&quot;:&quot;&quot;}" ecos:conditionType="NONE"/>
+        <bpmn:sequenceFlow sourceRef="Activity_083b9s1" targetRef="Event_04v76xs" name="" id="Flow_09dtl5f" ecos:name_ml="{}" ecos:conditionConfig="{&quot;fn&quot;:&quot;&quot;,&quot;expression&quot;:&quot;&quot;,&quot;outcome&quot;:&quot;&quot;}" ecos:conditionType="NONE"/>
+    </bpmn:process>
+    <bpmn:process isExecutable="true" id="Process_1lqgb0v">
+        <bpmn:startEvent isInterrupting="true" name="" id="Event_165owy9" ecos:documentation="{}" ecos:eventFilterByRecordType="ANY" ecos:eventModel="{}" ecos:asyncConfig="{&quot;asyncBefore&quot;:false,&quot;asyncAfter&quot;:false,&quot;exclusive&quot;:true}" ecos:name_ml="{}" ecos:jobConfig="{&quot;jobPriority&quot;:null,&quot;jobRetryTimeCycle&quot;:null}" ecos:manualStatus="old" ecos:eventManualMode="false" ecos:eventFilterByEcosType="emodel/type@deal" ecos:statusChangeType="AFTER" ecos:eventType="RECORD_STATUS_CHANGED">
+            <bpmn:outgoing >Flow_13nj7li</bpmn:outgoing>
+            <bpmn:signalEventDefinition  signalRef="Signal_LYBkWAk" id="SignalEventDefinition_0ms19n8"/>
+        </bpmn:startEvent>
+        <bpmn:scriptTask scriptFormat="javascript" name="" id="Activity_1xyesae" ecos:documentation="{}" ecos:asyncConfig="{&quot;asyncBefore&quot;:false,&quot;asyncAfter&quot;:false,&quot;exclusive&quot;:true}" ecos:name_ml="{}" ecos:jobConfig="{&quot;jobPriority&quot;:null,&quot;jobRetryTimeCycle&quot;:null}" ecos:script="var recordId = event.get(&quot;record&quot;);&#10;var payments = Records.query({&#10;      &quot;sourceId&quot;: 'emodel/payment-crm',&#10;      &quot;query&quot;: {&#10;          &quot;t&quot;: &quot;and&quot;,&#10;          &quot;val&quot;: [&#10;              {&#10;                  &quot;t&quot;: &quot;eq&quot;,&#10;                  &quot;att&quot;: &quot;crm-links:deal&quot;,&#10;                  &quot;val&quot;: recordId&#10;              }&#10;          ]&#10;      },&#10;      &quot;language&quot;: 'predicate'&#10;  },{created: &quot;_created&quot;});&#10;var payments = payments.records || []&#10;&#10;if (payments===undefined || payments ===null || payments.length===0) {&#10;  throw new Error(&quot;Изменение статуса невозможно при отсутствии платежей. Добавьте платежи на соответствующей вкладке.&quot;);&#10;}">
+            <bpmn:incoming >Flow_13nj7li</bpmn:incoming>
+            <bpmn:outgoing >Flow_1k52vhm</bpmn:outgoing>
+            <bpmn:script>var recordId = event.get("record");
+                var payments = Records.query({
+                "sourceId": 'emodel/payment-crm',
+                "query": {
+                "t": "and",
+                "val": [
+                {
+                "t": "eq",
+                "att": "crm-links:deal",
+                "val": recordId
+                }
+                ]
+                },
+                "language": 'predicate'
+                },{created: "_created"});
+                var payments = payments.records || []
+
+                if (payments===undefined || payments ===null || payments.length===0) {
+                throw new Error("Изменение статуса невозможно при отсутствии платежей. Добавьте платежи на соответствующей вкладке.");
+                }</bpmn:script>
+        </bpmn:scriptTask>
+        <bpmn:endEvent name="" id="Event_1wofuc7" ecos:documentation="{}" ecos:asyncConfig="{&quot;asyncBefore&quot;:false,&quot;asyncAfter&quot;:false,&quot;exclusive&quot;:true}" ecos:name_ml="{}" ecos:jobConfig="{&quot;jobPriority&quot;:null,&quot;jobRetryTimeCycle&quot;:null}">
+            <bpmn:incoming >Flow_1k52vhm</bpmn:incoming>
+        </bpmn:endEvent>
+        <bpmn:sequenceFlow sourceRef="Event_165owy9" targetRef="Activity_1xyesae" name="" id="Flow_13nj7li" ecos:name_ml="{}" ecos:conditionConfig="{&quot;fn&quot;:&quot;&quot;,&quot;expression&quot;:&quot;&quot;,&quot;outcome&quot;:&quot;&quot;}" ecos:conditionType="NONE"/>
+        <bpmn:sequenceFlow sourceRef="Activity_1xyesae" targetRef="Event_1wofuc7" name="" id="Flow_1k52vhm" ecos:name_ml="{}" ecos:conditionConfig="{&quot;fn&quot;:&quot;&quot;,&quot;expression&quot;:&quot;&quot;,&quot;outcome&quot;:&quot;&quot;}" ecos:conditionType="NONE"/>
+    </bpmn:process>
+    <bpmn:collaboration id="Collaboration_0nh5bez">
+        <bpmn:participant  name="Проверка перехода на Первичный контакт" processRef="crm-deals-issue-observer-process" id="Participant_0es8r9w" ecos:documentation="{}" ecos:name_ml="{&quot;ru&quot;:&quot;Проверка перехода на Первичный контакт&quot;}" ecos:ecosType="emodel/type@deal"/>
+        <bpmn:participant  name="Проверка перехода на Презентация" processRef="Process_16x2qig" id="Participant_10x2jv4" ecos:documentation="{}" ecos:name_ml="{&quot;ru&quot;:&quot;Проверка перехода на Презентация&quot;}" ecos:ecosType=""/>
+        <bpmn:participant  name="Проверка перехода на Подготовка КП" processRef="Process_151bmnh" id="Participant_1hnhjxx" ecos:documentation="{}" ecos:name_ml="{&quot;ru&quot;:&quot;Проверка перехода на Подготовка КП&quot;}" ecos:ecosType="emodel/type@deal"/>
+        <bpmn:participant  name="Проверка перехода на Сбор потребностей" processRef="Process_0obfffj" id="Participant_03ddcnm" ecos:documentation="{}" ecos:name_ml="{&quot;ru&quot;:&quot;Проверка перехода на Сбор потребностей&quot;}" ecos:ecosType="emodel/type@deal"/>
+        <bpmn:participant  name="Проверка перехода на Прототип" processRef="Process_0sfaa9r" id="Participant_15lfjiq" ecos:documentation="{}" ecos:name_ml="{&quot;ru&quot;:&quot;Проверка перехода на Прототип&quot;}" ecos:ecosType="emodel/type@deal"/>
+        <bpmn:participant  name="Проверка перехода на Принятие решения" processRef="Process_0lzc2fy" id="Participant_0cv8cid" ecos:documentation="{}" ecos:name_ml="{&quot;ru&quot;:&quot;Проверка перехода на Принятие решения&quot;}" ecos:ecosType="emodel/type@deal"/>
+        <bpmn:participant  name="Проверка перехода на Завершена" processRef="Process_10xff9r" id="Participant_1n9u2qp" ecos:documentation="{}" ecos:name_ml="{&quot;ru&quot;:&quot;Проверка перехода на Завершена&quot;}" ecos:ecosType="emodel/type@deal"/>
+        <bpmn:participant  name="Проверка перехода на Пауза" processRef="Process_1b3e9xy" id="Participant_1v9jpvh" ecos:documentation="{}" ecos:name_ml="{&quot;ru&quot;:&quot;Проверка перехода на Пауза&quot;}" ecos:ecosType="emodel/type@deal"/>
+        <bpmn:participant  name="Проверка перехода на Отсев" processRef="Process_0wf3lue" id="Participant_18b6wrr" ecos:documentation="{}" ecos:name_ml="{&quot;ru&quot;:&quot;Проверка перехода на Отсев&quot;}" ecos:ecosType="emodel/type@deal"/>
+        <bpmn:participant  name="Проверка перехода на Исторические заявки" processRef="Process_1lqgb0v" id="Participant_0xh0404" ecos:documentation="{}" ecos:name_ml="{&quot;ru&quot;:&quot;Проверка перехода на Исторические заявки&quot;}" ecos:ecosType="emodel/type@deal"/>
+    </bpmn:collaboration>
+    <bpmn:signal name="RECORD_STATUS_CHANGED;ANY;emodel/type@deal;pr_1a12002db063febfe8868a80bcf6637d" id="Signal_aaqoSv8"/>
+    <bpmn:signal name="RECORD_STATUS_CHANGED;ANY;emodel/type@deal;pr_2e20e9f788b37797d40174afcc7219d9" id="Signal_psFxnwB"/>
+    <bpmn:signal name="RECORD_STATUS_CHANGED;ANY;emodel/type@deal;pr_13505079ec738b8ade0415f32b3e5271" id="Signal_BGE1SfU"/>
+    <bpmn:signal name="RECORD_STATUS_CHANGED;ANY;emodel/type@deal;pr_b034c2cfbacb01db29953ce1593f9969" id="Signal_ZxGr1zx"/>
+    <bpmn:signal name="RECORD_STATUS_CHANGED;ANY;emodel/type@deal;pr_2183e4cbb9c4c74a1f033822c77eef00" id="Signal_V9v0wuj"/>
+    <bpmn:signal name="RECORD_STATUS_CHANGED;ANY;emodel/type@deal;pr_167335a81da131625c90a310e1b915a5" id="Signal_nlxk3pB"/>
+    <bpmn:signal name="RECORD_STATUS_CHANGED;ANY;emodel/type@deal;pr_bb8dd73e698bffd542197f4dac31f3dd" id="Signal_tmL4tTF"/>
+    <bpmn:signal name="RECORD_STATUS_CHANGED;ANY;emodel/type@deal;pr_22473a8bc9cc8130ec20ff3eb2bbaa98" id="Signal_n5BGdJp"/>
+    <bpmn:signal name="RECORD_STATUS_CHANGED;ANY;emodel/type@deal;pr_5a11b3c88eda03a6a8e9f269d5aad733" id="Signal_sIHvlgB"/>
+    <bpmn:signal name="RECORD_STATUS_CHANGED;ANY;emodel/type@deal;pr_74c9ed0c8286a30c7b9d90b42641f9ab" id="Signal_LYBkWAk"/>
+    <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+        <bpmndi:BPMNPlane  bpmnElement="Collaboration_0nh5bez" id="BPMNPlane_1">
+            <bpmndi:BPMNShape bpmnElement="Participant_0es8r9w" isExpanded="false" id="Participant_0es8r9w_di">
+                <dc:Bounds x="-60.0" y="-40.0" width="360.0" height="230.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="StartEvent_1ew9rff" isExpanded="false" id="Event_0s1imlk_di">
+                <dc:Bounds x="-8.0" y="62.0" width="36.0" height="36.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="Activity_0fl4m1m" isExpanded="false" id="Activity_0bc3tt1_di">
+                <dc:Bounds x="80.0" y="40.0" width="100.0" height="80.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="Event_0itd0o1" isExpanded="false" id="Event_0itd0o1_di">
+                <dc:Bounds x="232.0" y="62.0" width="36.0" height="36.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNEdge bpmnElement="Flow_1rmizj4" id="Flow_1rmizj4_di">
+                <di:waypoint x="28.0" y="80.0"/>
+                <di:waypoint x="80.0" y="80.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="Flow_0p27rir" id="Flow_0p27rir_di">
+                <di:waypoint x="180.0" y="80.0"/>
+                <di:waypoint x="232.0" y="80.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNShape bpmnElement="Participant_10x2jv4" isExpanded="false" id="BPMNShape_1awb3pi">
+                <dc:Bounds x="-60.0" y="480.0" width="360.0" height="230.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="Event_0obrzve" isExpanded="false" id="BPMNShape_1bdmsjj">
+                <dc:Bounds x="-8.0" y="582.0" width="36.0" height="36.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="Activity_13gvqj3" isExpanded="false" id="BPMNShape_0fbdrpg">
+                <dc:Bounds x="80.0" y="560.0" width="100.0" height="80.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="Event_015kg7d" isExpanded="false" id="BPMNShape_0iolwvc">
+                <dc:Bounds x="232.0" y="582.0" width="36.0" height="36.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNEdge bpmnElement="Flow_0eaef93" id="BPMNEdge_03kf4s7">
+                <di:waypoint x="28.0" y="600.0"/>
+                <di:waypoint x="80.0" y="600.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="Flow_03332gv" id="BPMNEdge_1gxki0z">
+                <di:waypoint x="180.0" y="600.0"/>
+                <di:waypoint x="232.0" y="600.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNShape bpmnElement="Participant_1hnhjxx" isExpanded="false" id="BPMNShape_194bupt">
+                <dc:Bounds x="-60.0" y="740.0" width="360.0" height="230.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="Event_1o8snbj" isExpanded="false" id="BPMNShape_0vn7crf">
+                <dc:Bounds x="-8.0" y="842.0" width="36.0" height="36.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="Activity_0q0skki" isExpanded="false" id="BPMNShape_084ikc9">
+                <dc:Bounds x="80.0" y="820.0" width="100.0" height="80.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="Event_1izkssu" isExpanded="false" id="BPMNShape_0g8v8i3">
+                <dc:Bounds x="232.0" y="842.0" width="36.0" height="36.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNEdge bpmnElement="Flow_1000yl9" id="BPMNEdge_04sa42j">
+                <di:waypoint x="28.0" y="860.0"/>
+                <di:waypoint x="80.0" y="860.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="Flow_0ejaek3" id="BPMNEdge_0s2r1f2">
+                <di:waypoint x="180.0" y="860.0"/>
+                <di:waypoint x="232.0" y="860.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNShape bpmnElement="Participant_03ddcnm" isExpanded="false" id="BPMNShape_1stjh1r">
+                <dc:Bounds x="-60.0" y="220.0" width="360.0" height="230.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="Event_0ko5hcv" isExpanded="false" id="BPMNShape_0hsgjb8">
+                <dc:Bounds x="-8.0" y="322.0" width="36.0" height="36.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="Activity_1lop1jk" isExpanded="false" id="BPMNShape_1gg5f1m">
+                <dc:Bounds x="80.0" y="300.0" width="100.0" height="80.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="Event_0ux22kk" isExpanded="false" id="BPMNShape_1scokdo">
+                <dc:Bounds x="232.0" y="322.0" width="36.0" height="36.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNEdge bpmnElement="Flow_1i8q5bs" id="BPMNEdge_0km97xs">
+                <di:waypoint x="28.0" y="340.0"/>
+                <di:waypoint x="80.0" y="340.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="Flow_1rnzo4t" id="BPMNEdge_1jnohx9">
+                <di:waypoint x="180.0" y="340.0"/>
+                <di:waypoint x="232.0" y="340.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNShape bpmnElement="Participant_15lfjiq" isExpanded="false" id="BPMNShape_1mtjeyk">
+                <dc:Bounds x="330.0" y="-40.0" width="360.0" height="230.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="Event_1u7jhfs" isExpanded="false" id="BPMNShape_0nj9ueq">
+                <dc:Bounds x="382.0" y="62.0" width="36.0" height="36.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="Activity_0muvogc" isExpanded="false" id="BPMNShape_0tcksi2">
+                <dc:Bounds x="470.0" y="40.0" width="100.0" height="80.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="Event_1sujmf8" isExpanded="false" id="BPMNShape_05wslup">
+                <dc:Bounds x="622.0" y="62.0" width="36.0" height="36.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNEdge bpmnElement="Flow_0xiuj8y" id="BPMNEdge_1i70d92">
+                <di:waypoint x="418.0" y="80.0"/>
+                <di:waypoint x="470.0" y="80.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="Flow_1dusxqz" id="BPMNEdge_0ijshh8">
+                <di:waypoint x="570.0" y="80.0"/>
+                <di:waypoint x="622.0" y="80.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNShape bpmnElement="Participant_0cv8cid" isExpanded="false" id="BPMNShape_04a5xxq">
+                <dc:Bounds x="330.0" y="220.0" width="360.0" height="230.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="Event_1ri56v7" isExpanded="false" id="BPMNShape_1pxgrrd">
+                <dc:Bounds x="382.0" y="322.0" width="36.0" height="36.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="Activity_05zvzv9" isExpanded="false" id="BPMNShape_1u1m53f">
+                <dc:Bounds x="470.0" y="300.0" width="100.0" height="80.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="Event_158dvvo" isExpanded="false" id="BPMNShape_1ridwx4">
+                <dc:Bounds x="622.0" y="322.0" width="36.0" height="36.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNEdge bpmnElement="Flow_0br4czh" id="BPMNEdge_0fkzwyx">
+                <di:waypoint x="418.0" y="340.0"/>
+                <di:waypoint x="470.0" y="340.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="Flow_16qt6an" id="BPMNEdge_1y32ouh">
+                <di:waypoint x="570.0" y="340.0"/>
+                <di:waypoint x="622.0" y="340.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNShape bpmnElement="Participant_1n9u2qp" isExpanded="false" id="BPMNShape_0epkm04">
+                <dc:Bounds x="330.0" y="480.0" width="360.0" height="230.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="Event_00kd2i9" isExpanded="false" id="BPMNShape_0rzph5b">
+                <dc:Bounds x="382.0" y="582.0" width="36.0" height="36.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="Activity_1bajju7" isExpanded="false" id="BPMNShape_0o2qbkq">
+                <dc:Bounds x="470.0" y="560.0" width="100.0" height="80.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="Event_0yn94si" isExpanded="false" id="BPMNShape_1pbqf2q">
+                <dc:Bounds x="622.0" y="582.0" width="36.0" height="36.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNEdge bpmnElement="Flow_0nj77bj" id="BPMNEdge_0wlq6zu">
+                <di:waypoint x="418.0" y="600.0"/>
+                <di:waypoint x="470.0" y="600.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="Flow_0ek06iz" id="BPMNEdge_18hlrqd">
+                <di:waypoint x="570.0" y="600.0"/>
+                <di:waypoint x="622.0" y="600.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNShape bpmnElement="Participant_1v9jpvh" isExpanded="false" id="BPMNShape_1ip4pbp">
+                <dc:Bounds x="330.0" y="740.0" width="360.0" height="230.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="Event_1ausarq" isExpanded="false" id="BPMNShape_10fi1di">
+                <dc:Bounds x="382.0" y="842.0" width="36.0" height="36.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="Activity_093glvx" isExpanded="false" id="BPMNShape_0dlh89a">
+                <dc:Bounds x="470.0" y="820.0" width="100.0" height="80.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="Event_1q2z7ay" isExpanded="false" id="BPMNShape_12xdg40">
+                <dc:Bounds x="622.0" y="842.0" width="36.0" height="36.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNEdge bpmnElement="Flow_1izcija" id="BPMNEdge_024j6pt">
+                <di:waypoint x="418.0" y="860.0"/>
+                <di:waypoint x="470.0" y="860.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="Flow_08q0l1v" id="BPMNEdge_1chffpz">
+                <di:waypoint x="570.0" y="860.0"/>
+                <di:waypoint x="622.0" y="860.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNShape bpmnElement="Participant_18b6wrr" isExpanded="false" id="BPMNShape_05okv3a">
+                <dc:Bounds x="720.0" y="-40.0" width="360.0" height="230.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="Event_18ot2xi" isExpanded="false" id="BPMNShape_0092vkc">
+                <dc:Bounds x="772.0" y="62.0" width="36.0" height="36.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="Activity_083b9s1" isExpanded="false" id="BPMNShape_1c31six">
+                <dc:Bounds x="860.0" y="40.0" width="100.0" height="80.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="Event_04v76xs" isExpanded="false" id="BPMNShape_1hqqoow">
+                <dc:Bounds x="1012.0" y="62.0" width="36.0" height="36.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNEdge bpmnElement="Flow_0kriavc" id="BPMNEdge_13yi18b">
+                <di:waypoint x="808.0" y="80.0"/>
+                <di:waypoint x="860.0" y="80.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="Flow_09dtl5f" id="BPMNEdge_0bdpjub">
+                <di:waypoint x="960.0" y="80.0"/>
+                <di:waypoint x="1012.0" y="80.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNShape bpmnElement="Participant_0xh0404" isExpanded="false" id="BPMNShape_0dscowt">
+                <dc:Bounds x="720.0" y="220.0" width="360.0" height="230.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="Event_165owy9" isExpanded="false" id="BPMNShape_1bmzrcr">
+                <dc:Bounds x="772.0" y="322.0" width="36.0" height="36.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="Activity_1xyesae" isExpanded="false" id="BPMNShape_1f8x65j">
+                <dc:Bounds x="860.0" y="300.0" width="100.0" height="80.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="Event_1wofuc7" isExpanded="false" id="BPMNShape_0u2stud">
+                <dc:Bounds x="1012.0" y="322.0" width="36.0" height="36.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNEdge bpmnElement="Flow_13nj7li" id="BPMNEdge_08jjrlm">
+                <di:waypoint x="808.0" y="340.0"/>
+                <di:waypoint x="860.0" y="340.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="Flow_1k52vhm" id="BPMNEdge_0sopeec">
+                <di:waypoint x="960.0" y="340.0"/>
+                <di:waypoint x="1012.0" y="340.0"/>
+            </bpmndi:BPMNEdge>
+        </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+</bpmn:definitions>
