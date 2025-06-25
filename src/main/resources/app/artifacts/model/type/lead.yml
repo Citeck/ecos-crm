@@ -65,10 +65,14 @@ model:
       statuses:
         - pause
     - name:
+        ru: Дисквалификация
+        en: Disqualification
+      statuses:
+        - disqualified
+    - name:
         ru: Завершен
         en: Completed
       statuses:
-        - disqualified
         - deal_creation
   attributes:
     - id: number
