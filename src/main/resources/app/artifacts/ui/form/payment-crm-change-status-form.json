@@ -47,6 +47,7 @@
           "required": true
         },
         "format": "yyyy-MM-dd",
+        "clearOnHide": false,
         "datePicker": {
           "minDate": "",
           "maxDate": ""
@@ -55,8 +56,8 @@
         "timePicker": {
           "showMeridian": false
         },
-        "defaultValue": "",
         "refreshOn": [],
+        "allowCalculateOverride": true,
         "optionalWhenDisabled": false,
         "conditional": {
           "show": "true",
@@ -66,7 +67,7 @@
         "type": "datetime",
         "input": true,
         "suffix": true,
-        "reorder": false
+        "defaultValue": ""
       },
       {
         "label": {
@@ -78,6 +79,7 @@
           "required": true
         },
         "format": "yyyy-MM-dd",
+        "clearOnHide": false,
         "datePicker": {
           "minDate": "",
           "maxDate": ""
@@ -87,6 +89,7 @@
           "showMeridian": false
         },
         "refreshOn": [],
+        "allowCalculateOverride": true,
         "optionalWhenDisabled": false,
         "conditional": {
           "show": "true",
@@ -96,7 +99,6 @@
         "type": "datetime",
         "input": true,
         "suffix": true,
-        "reorder": false,
         "defaultValue": ""
       },
       {
@@ -124,7 +126,95 @@
         "uploadOptions": "",
         "uploadDir": "",
         "as": "",
-        "reorder": false
+        "reorder": false,
+        "wysiwyg": {
+          "theme": "snow",
+          "placeholder": "",
+          "modules": {
+            "clipboard": {
+              "matchVisual": false
+            },
+            "toolbar": [
+              [
+                {
+                  "size": [
+                    "small",
+                    false,
+                    "large",
+                    "huge"
+                  ]
+                }
+              ],
+              [
+                {
+                  "header": [
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6,
+                    false
+                  ]
+                }
+              ],
+              [
+                {
+                  "font": []
+                }
+              ],
+              [
+                "bold",
+                "italic",
+                "underline",
+                "strike",
+                {
+                  "script": "sub"
+                },
+                {
+                  "script": "super"
+                },
+                "clean"
+              ],
+              [
+                {
+                  "color": []
+                },
+                {
+                  "background": []
+                }
+              ],
+              [
+                {
+                  "list": "ordered"
+                },
+                {
+                  "list": "bullet"
+                },
+                {
+                  "indent": "-1"
+                },
+                {
+                  "indent": "+1"
+                },
+                {
+                  "align": []
+                }
+              ],
+              [
+                "blockquote",
+                "code-block"
+              ],
+              [
+                "link",
+                "image",
+                "video",
+                "formula",
+                "source"
+              ]
+            ]
+          }
+        }
       },
       {
         "label": {

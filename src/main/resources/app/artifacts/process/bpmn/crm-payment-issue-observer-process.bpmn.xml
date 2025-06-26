@@ -6,18 +6,19 @@
             <bpmn:incoming >Flow_0wjpj1k</bpmn:incoming>
         </bpmn:endEvent>
         <bpmn:sequenceFlow sourceRef="Activity_0a7sdm6" targetRef="Event_0x7xc7q" name="" id="Flow_0wjpj1k" ecos:name_ml="{}" ecos:conditionConfig="{&quot;fn&quot;:&quot;&quot;,&quot;expression&quot;:&quot;&quot;,&quot;outcome&quot;:&quot;&quot;}" ecos:conditionType="NONE"/>
-        <bpmn:scriptTask scriptFormat="javascript" name="Проверка условий перехода" id="Activity_0a7sdm6" ecos:documentation="{}" ecos:asyncConfig="{&quot;asyncBefore&quot;:false,&quot;asyncAfter&quot;:false,&quot;exclusive&quot;:false}" ecos:name_ml="{&quot;ru&quot;:&quot;Проверка условий перехода&quot;}" ecos:jobConfig="{&quot;jobPriority&quot;:null,&quot;jobRetryTimeCycle&quot;:null}" ecos:script="const comment = document.load(&quot;comment&quot;);&#10;&#10;if (!comment) {&#10;  throw new Error(&quot;Необходимо указать комментарий при отмене платежа&quot;);&#10;}">
+        <bpmn:scriptTask scriptFormat="javascript" name="Проверка условий перехода" id="Activity_0a7sdm6" ecos:documentation="{}" ecos:asyncConfig="{&quot;asyncBefore&quot;:false,&quot;asyncAfter&quot;:false,&quot;exclusive&quot;:true}" ecos:name_ml="{&quot;ru&quot;:&quot;Проверка условий перехода&quot;}" ecos:jobConfig="{&quot;jobPriority&quot;:null,&quot;jobRetryTimeCycle&quot;:null}" ecos:script="var recordId = event.get(&quot;record&quot;);&#10;var comment = Records.get(recordId.toString().slice(1, -1)).load(&quot;comment&quot;)&#10;&#10;if (!comment) {&#10;  throw new Error(&quot;Необходимо указать комментарий при отмене платежа&quot;);&#10;}">
             <bpmn:incoming >Flow_05ttlye</bpmn:incoming>
             <bpmn:outgoing >Flow_0wjpj1k</bpmn:outgoing>
-            <bpmn:script>const comment = document.load("comment");
+            <bpmn:script>var recordId = event.get("record");
+                var comment = Records.get(recordId.toString().slice(1, -1)).load("comment")
 
-if (!comment) {
-  throw new Error("Необходимо указать комментарий при отмене платежа");
-}</bpmn:script>
+                if (!comment) {
+                throw new Error("Необходимо указать комментарий при отмене платежа");
+                }</bpmn:script>
         </bpmn:scriptTask>
         <bpmn:startEvent isInterrupting="true" name="Статус: Отменен" id="StartEvent_1ew9rff" ecos:documentation="{}" ecos:eventFilterByRecordType="ANY" ecos:eventModel="{}" ecos:asyncConfig="{&quot;asyncBefore&quot;:false,&quot;asyncAfter&quot;:false,&quot;exclusive&quot;:false}" ecos:name_ml="{&quot;ru&quot;:&quot;Статус: Отменен&quot;}" ecos:jobConfig="{&quot;jobPriority&quot;:null,&quot;jobRetryTimeCycle&quot;:null}" ecos:manualStatus="canceled" ecos:eventManualMode="false" ecos:eventFilterByEcosType="emodel/type@payment-crm" ecos:statusChangeType="AFTER" ecos:eventType="RECORD_STATUS_CHANGED">
             <bpmn:outgoing >Flow_05ttlye</bpmn:outgoing>
-            <bpmn:signalEventDefinition  signalRef="Signal_tnclsz8" id="SignalEventDefinition_0gk5t5y"/>
+            <bpmn:signalEventDefinition  signalRef="Signal_QJ5YbOh" id="SignalEventDefinition_0gk5t5y"/>
         </bpmn:startEvent>
     </bpmn:process>
     <bpmn:process isExecutable="true" id="Process_1trn1ko">
@@ -28,16 +29,17 @@ if (!comment) {
         <bpmn:sequenceFlow sourceRef="Activity_08op0pz" targetRef="Event_0hc55j0" name="" id="Flow_1oaacop" ecos:name_ml="{}" ecos:conditionConfig="{&quot;fn&quot;:&quot;&quot;,&quot;expression&quot;:&quot;&quot;,&quot;outcome&quot;:&quot;&quot;}" ecos:conditionType="NONE"/>
         <bpmn:startEvent isInterrupting="true" name="Статус: Запланирован" id="Event_1772dp0" ecos:documentation="{}" ecos:eventFilterByRecordType="ANY" ecos:eventModel="{}" ecos:asyncConfig="{&quot;asyncBefore&quot;:false,&quot;asyncAfter&quot;:false,&quot;exclusive&quot;:false}" ecos:name_ml="{&quot;ru&quot;:&quot;Статус: Запланирован&quot;}" ecos:jobConfig="{&quot;jobPriority&quot;:null,&quot;jobRetryTimeCycle&quot;:null}" ecos:manualStatus="planned" ecos:eventManualMode="false" ecos:eventFilterByEcosType="emodel/type@payment-crm" ecos:statusChangeType="AFTER" ecos:eventType="RECORD_STATUS_CHANGED">
             <bpmn:outgoing >Flow_1ynprht</bpmn:outgoing>
-            <bpmn:signalEventDefinition  signalRef="Signal_1yVG4OZ" id="SignalEventDefinition_07ttujs"/>
+            <bpmn:signalEventDefinition  signalRef="Signal_Zjythjr" id="SignalEventDefinition_07ttujs"/>
         </bpmn:startEvent>
-        <bpmn:scriptTask scriptFormat="javascript" name="Проверка условий перехода" id="Activity_08op0pz" ecos:documentation="{}" ecos:asyncConfig="{&quot;asyncBefore&quot;:false,&quot;asyncAfter&quot;:false,&quot;exclusive&quot;:false}" ecos:name_ml="{&quot;ru&quot;:&quot;Проверка условий перехода&quot;}" ecos:jobConfig="{&quot;jobPriority&quot;:null,&quot;jobRetryTimeCycle&quot;:null}" ecos:script="const plannedPaymentDate = document.load(&quot;plannedPaymentDate&quot;);&#10;&#10;if (!plannedPaymentDate) {&#10;  throw new Error(&quot;Необходимо указать планируемую дату платежа&quot;);&#10;}">
+        <bpmn:scriptTask scriptFormat="javascript" name="Проверка условий перехода" id="Activity_08op0pz" ecos:documentation="{}" ecos:asyncConfig="{&quot;asyncBefore&quot;:false,&quot;asyncAfter&quot;:false,&quot;exclusive&quot;:true}" ecos:name_ml="{&quot;ru&quot;:&quot;Проверка условий перехода&quot;}" ecos:jobConfig="{&quot;jobPriority&quot;:null,&quot;jobRetryTimeCycle&quot;:null}" ecos:script="var recordId = event.get(&quot;record&quot;);&#10;var plannedPaymentDate = Records.get(recordId.toString().slice(1, -1)).load(&quot;plannedPaymentDate&quot;)&#10;&#10;if (!plannedPaymentDate) {&#10;  throw new Error(&quot;Необходимо указать планируемую дату платежа&quot;);&#10;}">
             <bpmn:incoming >Flow_1ynprht</bpmn:incoming>
             <bpmn:outgoing >Flow_1oaacop</bpmn:outgoing>
-            <bpmn:script>const plannedPaymentDate = document.load("plannedPaymentDate");
+            <bpmn:script>var recordId = event.get("record");
+                var plannedPaymentDate = Records.get(recordId.toString().slice(1, -1)).load("plannedPaymentDate")
 
-if (!plannedPaymentDate) {
-  throw new Error("Необходимо указать планируемую дату платежа");
-}</bpmn:script>
+                if (!plannedPaymentDate) {
+                throw new Error("Необходимо указать планируемую дату платежа");
+                }</bpmn:script>
         </bpmn:scriptTask>
     </bpmn:process>
     <bpmn:process isExecutable="true" id="Process_1ilk77r">
@@ -48,16 +50,17 @@ if (!plannedPaymentDate) {
         <bpmn:sequenceFlow sourceRef="Activity_0qgj231" targetRef="Event_1x00990" name="" id="Flow_01wdadp" ecos:name_ml="{}" ecos:conditionConfig="{&quot;fn&quot;:&quot;&quot;,&quot;expression&quot;:&quot;&quot;,&quot;outcome&quot;:&quot;&quot;}" ecos:conditionType="NONE"/>
         <bpmn:startEvent isInterrupting="true" name="Статус: Оплачен" id="Event_10a3kxw" ecos:documentation="{}" ecos:eventFilterByRecordType="ANY" ecos:eventModel="{}" ecos:asyncConfig="{&quot;asyncBefore&quot;:false,&quot;asyncAfter&quot;:false,&quot;exclusive&quot;:false}" ecos:name_ml="{&quot;ru&quot;:&quot;Статус: Оплачен&quot;}" ecos:jobConfig="{&quot;jobPriority&quot;:null,&quot;jobRetryTimeCycle&quot;:null}" ecos:manualStatus="paid" ecos:eventManualMode="false" ecos:eventFilterByEcosType="emodel/type@payment-crm" ecos:statusChangeType="AFTER" ecos:eventType="RECORD_STATUS_CHANGED">
             <bpmn:outgoing >Flow_1tr46ro</bpmn:outgoing>
-            <bpmn:signalEventDefinition  signalRef="Signal_rTg9qa1" id="SignalEventDefinition_1nsv2t9"/>
+            <bpmn:signalEventDefinition  signalRef="Signal_iSJKuJ3" id="SignalEventDefinition_1nsv2t9"/>
         </bpmn:startEvent>
-        <bpmn:scriptTask scriptFormat="javascript" name="Проверка условий перехода" id="Activity_0qgj231" ecos:documentation="{}" ecos:asyncConfig="{&quot;asyncBefore&quot;:false,&quot;asyncAfter&quot;:false,&quot;exclusive&quot;:false}" ecos:name_ml="{&quot;ru&quot;:&quot;Проверка условий перехода&quot;}" ecos:jobConfig="{&quot;jobPriority&quot;:null,&quot;jobRetryTimeCycle&quot;:null}" ecos:script="const factPaymentDate = document.load(&quot;factPaymentDate&quot;);&#10;&#10;if (!factPaymentDate) {&#10;  throw new Error(&quot;Необходимо указать фактическую дату платежа&quot;);&#10;}">
+        <bpmn:scriptTask scriptFormat="javascript" name="Проверка условий перехода" id="Activity_0qgj231" ecos:documentation="{}" ecos:asyncConfig="{&quot;asyncBefore&quot;:false,&quot;asyncAfter&quot;:false,&quot;exclusive&quot;:true}" ecos:name_ml="{&quot;ru&quot;:&quot;Проверка условий перехода&quot;}" ecos:jobConfig="{&quot;jobPriority&quot;:null,&quot;jobRetryTimeCycle&quot;:null}" ecos:script="var recordId = event.get(&quot;record&quot;);&#10;var factPaymentDate = Records.get(recordId.toString().slice(1, -1)).load(&quot;factPaymentDate&quot;)&#10;&#10;if (!factPaymentDate) {&#10;  throw new Error(&quot;Необходимо указать фактическую дату платежа&quot;);&#10;}">
             <bpmn:incoming >Flow_1tr46ro</bpmn:incoming>
             <bpmn:outgoing >Flow_01wdadp</bpmn:outgoing>
-            <bpmn:script>const factPaymentDate = document.load("factPaymentDate");
+            <bpmn:script>var recordId = event.get("record");
+                var factPaymentDate = Records.get(recordId.toString().slice(1, -1)).load("factPaymentDate")
 
-if (!factPaymentDate) {
-  throw new Error("Необходимо указать фактическую дату платежа");
-}</bpmn:script>
+                if (!factPaymentDate) {
+                throw new Error("Необходимо указать фактическую дату платежа");
+                }</bpmn:script>
         </bpmn:scriptTask>
     </bpmn:process>
     <bpmn:collaboration id="Collaboration_1yii51s">
@@ -65,9 +68,9 @@ if (!factPaymentDate) {
         <bpmn:participant  name="Проверка перехода на Запланирован" processRef="Process_1trn1ko" id="Participant_1mjjy67" ecos:documentation="{}" ecos:name_ml="{&quot;ru&quot;:&quot;Проверка перехода на Запланирован&quot;}" ecos:ecosType="emodel/type@payment-crm"/>
         <bpmn:participant  name="Проверка перехода на Оплачен" processRef="Process_1ilk77r" id="Participant_1jmt2nv" ecos:documentation="{}" ecos:name_ml="{&quot;ru&quot;:&quot;Проверка перехода на Оплачен&quot;}" ecos:ecosType="emodel/type@payment-crm"/>
     </bpmn:collaboration>
-    <bpmn:signal name="RECORD_STATUS_CHANGED;ANY;emodel/type@payment-crm;pr_52a3016ea8c0747cb9016add1104315f" id="Signal_tnclsz8"/>
-    <bpmn:signal name="RECORD_STATUS_CHANGED;ANY;emodel/type@payment-crm;pr_37453a84649487b2ac3851343b5af9a8" id="Signal_1yVG4OZ"/>
-    <bpmn:signal name="RECORD_STATUS_CHANGED;ANY;emodel/type@payment-crm;pr_87815f918158d0672017791d9fbf909a" id="Signal_rTg9qa1"/>
+    <bpmn:signal name="RECORD_STATUS_CHANGED;ANY;emodel/type@payment-crm;pr_52a3016ea8c0747cb9016add1104315f" id="Signal_QJ5YbOh"/>
+    <bpmn:signal name="RECORD_STATUS_CHANGED;ANY;emodel/type@payment-crm;pr_37453a84649487b2ac3851343b5af9a8" id="Signal_Zjythjr"/>
+    <bpmn:signal name="RECORD_STATUS_CHANGED;ANY;emodel/type@payment-crm;pr_87815f918158d0672017791d9fbf909a" id="Signal_iSJKuJ3"/>
     <bpmndi:BPMNDiagram id="BPMNDiagram_1">
         <bpmndi:BPMNPlane  bpmnElement="Collaboration_1yii51s" id="BPMNPlane_1">
             <bpmndi:BPMNShape bpmnElement="Participant_13tzek4" isExpanded="false" id="Participant_13tzek4_di">
