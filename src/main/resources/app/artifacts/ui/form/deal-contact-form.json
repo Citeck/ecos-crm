@@ -17,7 +17,7 @@
         "refreshOn": [
           "counterpartyContacts"
         ],
-        "calculateValue": "const contacts = _.get(data, 'contacts', []);\n\nlet legacyContactsExists = false;\n\nconst contactIsNotEmpty = (contact) => {\n    return !!contact.contactFio ||\n        !!contact.contactDepartment ||\n        !!contact.contactEmail ||\n        !!contact.contactPhone ||\n        !!contact.contactPosition ||\n        !!contact.contactComment;\n}\n\nfor (const contact of contacts) {\n    if (contactIsNotEmpty(contact)) {\n        legacyContactsExists = true;\n        break;\n    }\n}\n\nvalue = legacyContactsExists;",
+        "calculateValue": "const contacts = _.get(data, 'contacts', []);\n\nlet legacyContactsExists = false;\n\nconst contactIsNotEmpty = (contact) => {\n    return !!contact.contactFio ||\n        !!contact.contactDepartment ||\n        !!contact.contactEmail ||\n        !!contact.contactPhone ||\n        !!contact.contactPosition ||\n        !!contact.contactComment;\n}\n\nfor (const contact of contacts) {\n    if (contactIsNotEmpty(contact)) {\n        legacyContactsExists = true;\n        break;\n    }\n}\n\nvalue = legacyContactsExists;\n\nconst placeholderElement = document.querySelector('.citeck-contacts-widget_placeholder');\nif (placeholderElement) {\n  const htmlPlaceholder = placeholderElement.parentElement;\n  \n  if (htmlPlaceholder) {\n    if (!contacts.length) {\n      htmlPlaceholder.removeAttribute('hidden');\n      htmlPlaceholder.removeAttribute('style');\n    } else {\n      htmlPlaceholder.setAttribute('hidden', true);\n    }\n  }\n}\n\nconst firstPanel = document.querySelectorAll('.citeck-widget-contacts__not-collapsed .panel-body')[0];\nif (firstPanel) {\n  firstPanel.removeAttribute('hidden');\n  firstPanel.removeAttribute('style');\n  \n  const parentElement = firstPanel.parentElement;\n  if (parentElement) {\n    const iconElement = parentElement.querySelector('.citeck-panel-icon-chevron');\n  \n    if (iconElement) {\n      iconElement.className = \"citeck-panel-icon-chevron down\";\n    }\n  }\n}",
         "optionalWhenDisabled": false,
         "type": "hidden",
         "input": true,
@@ -63,11 +63,12 @@
               "ru": "HTML",
               "en": "HTML"
             },
-            "key": "html",
+            "key": "htmlStyles",
             "hidden": true,
             "className": "",
             "content": {
-              "ru": "text\n\n<style>\n    .citeck-widget-contacts .table-bordered {\n        border: none;\n    }\n    .citeck-widget-contacts .table-bordered th, .table-bordered td {\n        border: none;\n    }\n    \n    .citeck-widget-contacts .table th, .table td {\n        padding: 0;\n    }\n    \n    .citeck-widget-contacts .form-group {\n        margin: 0;\n    }\n    \n    .citeck-widget-contacts .formio-form_view-mode.formio-form .card .card-title {\n        font-size: 14px;\n    }\n    \n    .citeck-widget-contacts .card-body .panel-body {\n        padding: 0 28px !important;\n        margin-bottom: 12px;\n    }\n    \n    .formio-form_view-mode dl {\n        border-bottom: none !important;\n        padding: 5px 0;\n    }\n    \n    .formio-form_view-mode dd {\n        color: #444444;\n        font-weight: 600;\n    }\n    \n    .formio-form_view-mode dt {\n        color: #B7B7B7;\n    }\n    .formio-form_view-mode dt:after {\n        content: \":\";\n    }\n    \n    .citeck-widget-contacts .formio-dialog-content .preview-panel .card .card-title {\n        padding: 0;\n        margin-top: 2px;\n        margin-bottom: 12px !important;\n        \n        display: flex;\n        gap: 3px;\n        align-items: center;\n    }\n</style>"
+              "ru": "text\n\n<style>\n    .citeck-widget-contacts .table-bordered {\n        border: none;\n    }\n    .citeck-widget-contacts .table-bordered th, .table-bordered td {\n        border: none;\n    }\n    \n    .citeck-widget-contacts .table th, .table td {\n        padding: 0;\n    }\n    \n    .citeck-widget-contacts .form-group {\n        margin: 0;\n    }\n    \n    .citeck-widget-contacts .card-body .panel-body {\n        padding: 0 28px !important;\n        margin-bottom: 12px;\n    }\n    \n    .citeck-widget-contacts-comment_view-mode,\n    .citeck-widget-contacts-columns dl {\n        border-bottom: none !important;\n        padding: 5px 0 !important;\n    }\n    \n    .citeck-widget-contacts-comment_view-mode dd,\n    .citeck-widget-contacts-columns dd {\n        color: #444444;\n        font-weight: 600;\n    }\n    \n    .citeck-widget-contacts-comment_view-mode dt,\n    .citeck-widget-contacts-columns dt {\n        color: #B7B7B7;\n    }\n    .citeck-widget-contacts-comment_view-mode dt:after,\n    .citeck-widget-contacts-columns dt:after {\n        content: \":\";\n    }\n    \n    .citeck-widget-contacts .card .card-title {\n        padding: 0;\n        margin-top: 2px;\n        margin-bottom: 12px !important;\n        margin-left: 0;\n        font-size: 14px !important;\n        \n        display: flex;\n        gap: 3px;\n        align-items: center;\n    }\n</style>",
+              "en": "text\n\n<style>\n    .citeck-widget-contacts .table-bordered {\n        border: none;\n    }\n    .citeck-widget-contacts .table-bordered th, .table-bordered td {\n        border: none;\n    }\n    \n    .citeck-widget-contacts .table th, .table td {\n        padding: 0;\n    }\n    \n    .citeck-widget-contacts .form-group {\n        margin: 0;\n    }\n    \n    .citeck-widget-contacts .card-body .panel-body {\n        padding: 0 28px !important;\n        margin-bottom: 12px;\n    }\n    \n    .citeck-widget-contacts-comment_view-mode,\n    .citeck-widget-contacts-columns dl {\n        border-bottom: none !important;\n        padding: 5px 0 !important;\n    }\n    \n    .citeck-widget-contacts-comment_view-mode dd,\n    .citeck-widget-contacts-columns dd {\n        color: #444444;\n        font-weight: 600;\n    }\n    \n    .citeck-widget-contacts-comment_view-mode dt,\n    .citeck-widget-contacts-columns dt {\n        color: #B7B7B7;\n    }\n    .citeck-widget-contacts-comment_view-mode dt:after,\n    .citeck-widget-contacts-columns dt:after {\n        content: \":\";\n    }\n    \n    .citeck-widget-contacts .card .card-title {\n        padding: 0;\n        margin-top: 2px;\n        margin-bottom: 12px !important;\n        margin-left: 0;\n        font-size: 14px !important;\n        \n        display: flex;\n        gap: 3px;\n        align-items: center;\n    }\n</style>"
             },
             "refreshOnChange": false,
             "refreshOn": [],
@@ -75,6 +76,39 @@
             "type": "htmlelement",
             "input": false,
             "reorder": false
+          },
+          {
+            "label": {
+              "ru": "HTML",
+              "en": "HTML"
+            },
+            "key": "html2",
+            "hidden": true,
+            "className": "citeck-contacts-widget_placeholder",
+            "content": {
+              "ru": "<div\n    style=\"\n        width: 100%; \n        height: 70px;\n        font-weight: 600;\n        display: flex;\n        align-items: center;\n        justify-content: center;\n        margin-top: 1rem;\n    \"\n>\n    Контакты отсутствуют\n</div>",
+              "en": "<div\n    style=\"\n        width: 100%; \n        height: 70px;\n        font-weight: 600;\n        display: flex;\n        align-items: center;\n        justify-content: center;\n        margin-top: 1rem;\n    \"\n>\n    There are no contacts\n</div>"
+            },
+            "refreshOnChange": false,
+            "refreshOn": [],
+            "optionalWhenDisabled": false,
+            "type": "htmlelement",
+            "input": false,
+            "reorder": false
+          },
+          {
+            "label": {
+              "ru": "HTML",
+              "en": "HTML"
+            },
+            "key": "html",
+            "hidden": true,
+            "className": "",
+            "refreshOnChange": false,
+            "refreshOn": [],
+            "optionalWhenDisabled": false,
+            "type": "htmlelement",
+            "input": false
           },
           {
             "label": {
@@ -90,7 +124,8 @@
               "maxLength": ""
             },
             "placeholder": {
-              "ru": "Контакты отсутствуют"
+              "ru": "Контакты отсутствуют",
+              "en": "There are no contacts"
             },
             "disableAddingRemovingRows": false,
             "addAnotherPosition": "bottom",
@@ -143,7 +178,6 @@
                 "collapsible": true,
                 "collapsed": true,
                 "refreshOn": [],
-                "customDefaultValue": "const firstPanel = document.querySelectorAll('.citeck-widget-contacts__not-collapsed .panel-body')[0];\nif (firstPanel) {\n  firstPanel.removeAttribute('hidden');\n  firstPanel.removeAttribute('style');\n}",
                 "optionalWhenDisabled": false,
                 "type": "panel",
                 "input": false,
@@ -279,6 +313,7 @@
                       }
                     ],
                     "oneColumnInViewMode": false,
+                    "customClass": "citeck-widget-contacts-columns",
                     "type": "columns",
                     "input": false
                   },
@@ -289,7 +324,7 @@
                     },
                     "key": "contactComment",
                     "disabled": true,
-                    "customClass": "citeck-widget-contacts__comment",
+                    "customClass": "citeck-widget-contacts-comment",
                     "defaultValue": "",
                     "refreshOn": [],
                     "optionalWhenDisabled": false,
@@ -330,7 +365,7 @@
                 },
                 "key": "syncContacts",
                 "refreshOn": [],
-                "calculateValue": "let checkMainContact = false;\r\nfor (const contact of data.contacts) {\r\n  if (contact.contactMain) {\r\n    checkMainContact = true;\r\n    break;\r\n  }\r\n}\r\n\r\nif (checkMainContact && !data.contacts[0].contactMain) {\r\n  const sortedContacts = data.contacts;\r\n  sortedContacts.sort((a, b) => b.contactMain - a.contactMain);\r\n  var dataGridInst = util.searchComponents(instance.parent.components, \"contacts\");\r\n  dataGridInst[0].setValue(sortedContacts);\r\n}",
+                "calculateValue": "let checkMainContact = false;\r\nfor (const contact of data.contacts) {\r\n  if (contact.contactMain) {\r\n    checkMainContact = true;\r\n    break;\r\n  }\r\n}\r\n\r\nif (checkMainContact && !data.contacts[0].contactMain) {\r\n  const sortedContacts = data.contacts;\r\n  sortedContacts.sort((a, b) => b.contactMain - a.contactMain);\r\n  var dataGridInst = util.searchComponents(instance.parent.components, \"contacts\");\r\n  dataGridInst[0].setValue(sortedContacts);\r\n}\r\n\r\nconst placeholderElement = document.querySelector('.citeck-contacts-widget_placeholder');\r\nif (placeholderElement) {\r\n  const htmlPlaceholder = placeholderElement.parentElement;\r\n  \r\n  if (htmlPlaceholder) {\r\n    if (!_.get(data, 'asyncCounterparty.contacts.length')) {\r\n      htmlPlaceholder.removeAttribute('hidden');\r\n      htmlPlaceholder.removeAttribute('style');\r\n    } else {\r\n      htmlPlaceholder.setAttribute('hidden', true);\r\n    }\r\n  }\r\n}\r\n\r\nconst firstPanel = document.querySelectorAll('.citeck-widget-contacts__not-collapsed .panel-body')[0];\r\nif (firstPanel) {\r\n  firstPanel.removeAttribute('hidden');\r\n  firstPanel.removeAttribute('style');\r\n  \r\n  const parentElement = firstPanel.parentElement;\r\n  if (parentElement) {\r\n    const iconElement = parentElement.querySelector('.citeck-panel-icon-chevron');\r\n  \r\n    if (iconElement) {\r\n      iconElement.className = \"citeck-panel-icon-chevron down\";\r\n    }\r\n  }\r\n}",
                 "optionalWhenDisabled": false,
                 "type": "hidden",
                 "input": true,
@@ -348,6 +383,10 @@
                   "minLength": "",
                   "maxLength": ""
                 },
+                "placeholder": {
+                  "ru": "Контакты отсутствуют",
+                  "en": "There are no contacts"
+                },
                 "disableAddingRemovingRows": false,
                 "addAnotherPosition": "bottom",
                 "removePlacement": "col",
@@ -355,17 +394,6 @@
                 "layoutFixed": false,
                 "enableRowGroups": false,
                 "reorder": false,
-                "defaultValue": [
-                  {
-                    "contactFio": "",
-                    "contactPosition": "",
-                    "contactDepartment": "",
-                    "contactPhone": "",
-                    "contactEmail": "",
-                    "contactMain": false,
-                    "contactComment": ""
-                  }
-                ],
                 "refreshOn": [],
                 "optionalWhenDisabled": false,
                 "conditional": {
@@ -393,7 +421,6 @@
                     "collapsible": true,
                     "collapsed": true,
                     "refreshOn": [],
-                    "customDefaultValue": "const firstPanel = document.querySelectorAll('.citeck-widget-contacts__not-collapsed .panel-body')[0];\nif (firstPanel) {\n  firstPanel.removeAttribute('hidden');\n  firstPanel.removeAttribute('style');\n}",
                     "optionalWhenDisabled": false,
                     "type": "panel",
                     "input": false,
@@ -514,6 +541,7 @@
                           }
                         ],
                         "oneColumnInViewMode": false,
+                        "customClass": "citeck-widget-contacts-columns",
                         "type": "columns",
                         "input": false
                       },
@@ -523,12 +551,18 @@
                           "en": "Comment"
                         },
                         "key": "contactComment",
-                        "customClass": "citeck-widget-contacts__comment",
+                        "customClass": "citeck-widget-contacts-comment",
                         "defaultValue": "",
                         "refreshOn": [],
                         "optionalWhenDisabled": false,
                         "type": "textarea",
-                        "input": true
+                        "input": true,
+                        "uploadStorage": "",
+                        "uploadUrl": "",
+                        "uploadOptions": "",
+                        "uploadDir": "",
+                        "as": "",
+                        "reorder": false
                       }
                     ],
                     "row": "0-0"
@@ -537,7 +571,8 @@
                 "rowGroups": [
                   {}
                 ],
-                "groupToggle": false
+                "groupToggle": false,
+                "defaultValue": []
               }
             ],
             "collapsed": false,
