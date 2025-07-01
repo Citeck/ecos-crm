@@ -121,44 +121,6 @@
               "allowedFor": []
             },
             {
-              "id": "contracts",
-              "label": {
-                "ru": "Договоры",
-                "en": "Contracts"
-              },
-              "icon": "ui/icon@i-leftmenu-contracts",
-              "hidden": false,
-              "type": "JOURNAL",
-              "config": {
-                "recordRef": "uiserv/journal@ecos-contract-journal"
-              },
-              "action": {
-                "type": "",
-                "config": {}
-              },
-              "items": [],
-              "allowedFor": []
-            },
-            {
-              "id": "suppagreements",
-              "label": {
-                "ru": "Доп. соглашения",
-                "en": "Supp. agreements"
-              },
-              "icon": "ui/icon@i-leftmenu-files",
-              "hidden": false,
-              "type": "JOURNAL",
-              "config": {
-                "recordRef": "uiserv/journal@ecos-supplementary-agreement-journal"
-              },
-              "action": {
-                "type": "",
-                "config": {}
-              },
-              "items": [],
-              "allowedFor": []
-            },
-            {
               "id": "workspace-files",
               "label": {
                 "ru": "Библиотека документов",
@@ -195,6 +157,25 @@
               },
               "items": [],
               "allowedFor": []
+            },
+            {
+              "id": "f5742732-3097-4267-8f1c-57f31501d115",
+              "label": {
+                "ru": "Заказчики",
+                "en": "Customers"
+              },
+              "icon": "ui/icon@i-leftmenu-cases",
+              "hidden": false,
+              "type": "JOURNAL",
+              "config": {
+                "recordRef": "uiserv/journal@ecos-counterparty-buyer"
+              },
+              "action": {
+                "type": "",
+                "config": {}
+              },
+              "items": [],
+              "allowedFor": []
             }
           ],
           "allowedFor": []
@@ -214,24 +195,6 @@
             "config": {}
           },
           "items": [
-            {
-              "id": "f5742732-3097-4267-8f1c-57f31501d115",
-              "label": {
-                "en": "Контрагенты"
-              },
-              "icon": "ui/icon@i-leftmenu-cases",
-              "hidden": false,
-              "type": "JOURNAL",
-              "config": {
-                "recordRef": "uiserv/journal@ecos-counterparty"
-              },
-              "action": {
-                "type": "",
-                "config": {}
-              },
-              "items": [],
-              "allowedFor": []
-            },
             {
               "id": "71e352c5-66cb-43b7-885a-1c19b13d7750",
               "label": {
