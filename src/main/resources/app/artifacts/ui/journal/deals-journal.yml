@@ -49,6 +49,12 @@ columns:
       en: Status
     type: TEXT
     groupable: true
+  - id: _stage
+    name:
+      ru: Этап
+      en: Stage
+    type: TEXT
+    groupable: true
   - id: dateReceived
     name:
       ru: Дата создания
