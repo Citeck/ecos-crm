@@ -3,10 +3,10 @@ id: ecos-counterparty-buyer
 name:
   en: Counterparties
   ru: Контрагенты
-predicate:
-  t: eq
-  att: counterpartyType
-  val: buyer
+defaultFilters:
+  - t: eq
+    att: counterpartyType
+    val: buyer
 typeRef: emodel/type@ecos-counterparty
 editable: false
 columns:

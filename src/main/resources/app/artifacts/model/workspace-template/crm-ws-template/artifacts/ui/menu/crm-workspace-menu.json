@@ -161,8 +161,8 @@
             {
               "id": "f5742732-3097-4267-8f1c-57f31501d115",
               "label": {
-                "ru": "Заказчики",
-                "en": "Customers"
+                "ru": "Клиенты",
+                "en": "Clients"
               },
               "icon": "ui/icon@i-leftmenu-cases",
               "hidden": false,
