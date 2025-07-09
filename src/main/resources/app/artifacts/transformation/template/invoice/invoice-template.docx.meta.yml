@@ -21,10 +21,10 @@ model:
   userJobTitle: $user.jobTitle
   userPhone: $user.phoneNumber
   userEmail: $user.email
-  orders: has-pas:product-and-services[]{name, quantity, unit.unitShortName.ru, priceWithDiscount | fmt("0.00"), amount}
-  totalAmount: has-pas:totalAmount | fmt("0.00")
-  totalVat: has-pas:totalVat | fmt("0.00")
-  totalAmountWithVat: has-pas:totalAmountWithVat | fmt("0.00")
+  orders: has-pas:product-and-services[]{name, quantity, unit.unitShortName.ru, priceWithDiscount | fmt("#,##0.00", "ru"), amount}
+  totalAmount: has-pas:totalAmount | fmt("#,##0.00", "ru")
+  totalVat: has-pas:totalVat | fmt("#,##0.00", "ru")
+  totalAmountWithVat: has-pas:totalAmountWithVat | fmt("#,##0.00", "ru")
 computedAttributes:
   - id: ''
     type: ''
