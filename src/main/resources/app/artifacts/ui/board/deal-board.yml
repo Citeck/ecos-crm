@@ -3,8 +3,10 @@ id: deal-board
 typeRef: emodel/type@deal
 journalRef: uiserv/journal@deals-journal
 cardFormRef: uiserv/form@deal-board-form
+cardTitleTemplate: ${name?str!}
+cardFieldsLabelLayout: TOP
 readOnly: false
-disableTitle: true
+disableTitle: false
 name:
   ru: Доска Сделок
   en: Deals board
