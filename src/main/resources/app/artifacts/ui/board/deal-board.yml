@@ -13,39 +13,59 @@ columns:
     name:
       ru: Не обработана
       en: New
+    hasSum: true
+    sumAtt: amount
   - id: firstContact
     name:
       ru: Первичный контакт
       en: First contact
+    hasSum: true
+    sumAtt: amount
   - id: identifyNeeds
     name:
       ru: Сбор потребностей
       en: Identify needs
+    hasSum: true
+    sumAtt: amount
   - id: presentation
     name:
       ru: Презентация
       en: Presentation
+    hasSum: true
+    sumAtt: amount
   - id: offerPreparation
     name:
       ru: Подготовка КП
       en: Offer preparation
+    hasSum: true
+    sumAtt: amount
   - id: prototype
     name:
       ru: Прототип
       en: Prototype
+    hasSum: true
+    sumAtt: amount
   - id: decision
     name:
       ru: Принятие решения
       en: Decision
+    hasSum: true
+    sumAtt: amount
   - id: completed
     name:
       ru: Завершена
       en: Completed
+    hasSum: true
+    sumAtt: amount
   - id: pause
     name:
       ru: Пауза
       en: Pause
+    hasSum: true
+    sumAtt: amount
   - id: refusal
     name:
       ru: Отказ
       en: Refusal
+    hasSum: true
+    sumAtt: amount
