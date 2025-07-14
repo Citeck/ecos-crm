@@ -43,6 +43,14 @@
                   "dateParam": null,
                   "dateRange": null,
                   "type": "person"
+                },
+                {
+                  "attribute": "dateReceived",
+                  "label": "Дата создания",
+                  "isDateColumn": true,
+                  "dateParam": "month",
+                  "dateRange": null,
+                  "type": "datetime"
                 }
               ],
               "aggregationParam": "count(*)",
@@ -125,6 +133,14 @@
                   "dateParam": null,
                   "dateRange": null,
                   "type": "text"
+                },
+                {
+                  "attribute": "_created",
+                  "label": "Дата создания",
+                  "isDateColumn": true,
+                  "dateParam": "month",
+                  "dateRange": null,
+                  "type": "datetime"
                 }
               ],
               "aggregationParam": "sum(amount)",
@@ -212,6 +228,14 @@
                   "dateParam": null,
                   "dateRange": null,
                   "type": "text"
+                },
+                {
+                  "attribute": "dateReceived",
+                  "label": "Дата создания",
+                  "isDateColumn": true,
+                  "dateParam": "month",
+                  "dateRange": null,
+                  "type": "datetime"
                 }
               ],
               "aggregationParam": "count(*)",
