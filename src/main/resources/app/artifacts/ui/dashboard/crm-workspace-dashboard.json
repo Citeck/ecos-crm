@@ -15,98 +15,174 @@
           "name": "charts",
           "label": "dashboard-settings.widget.charts",
           "additionalProps": {},
-          "dndId": "c45729f9-f510-42a4-974b-053921902033",
-          "id": "72eeb92f-cc9f-4bb8-80a5-3b83da7846a0",
+          "dndId": "9a62cc32-e348-497a-8aa6-1644f3922560",
+          "id": "d7907279-604e-4a08-9fd6-f649a4a6ebbe",
           "props": {
-            "id": "72eeb92f-cc9f-4bb8-80a5-3b83da7846a0",
+            "id": "d7907279-604e-4a08-9fd6-f649a4a6ebbe",
             "config": {
-              "widgetDisplayCondition": null,
-              "elementsDisplayCondition": {},
-              "crm-workspace-dashboard": {
-                "title": {
-                  "ru": "Категории обращений",
-                  "en": "Categories of requests"
+              "title": {
+                "ru": "Воронка продаж",
+                "en": "Sales Funnel"
+              },
+              "graphicTypeId": "funnel",
+              "journalId": "uiserv/journal@deals-journal",
+              "typeRef": "emodel/type@deal",
+              "groupByParams": [
+                {
+                  "attribute": "_stage",
+                  "label": "Этап",
+                  "isDateColumn": false,
+                  "dateParam": null,
+                  "dateRange": null,
+                  "type": "text"
                 },
-                "graphicTypeId": "doughnut",
-                "journalId": "uiserv/journal@deals-journal",
-                "typeRef": "emodel/type@deal",
-                "groupByParams": [
-                  {
-                    "attribute": "requestCategory",
-                    "label": "Категория обращения",
-                    "isDateColumn": false,
-                    "dateParam": null,
-                    "dateRange": null,
-                    "type": "assoc"
+                {
+                  "attribute": "manager",
+                  "label": "Ответственный",
+                  "isDateColumn": false,
+                  "dateParam": null,
+                  "dateRange": null,
+                  "type": "person"
+                }
+              ],
+              "aggregationParam": "count(*)",
+              "selectedPreset": {
+                "id": "default",
+                "displayName": "По умолчанию",
+                "settings": {
+                  "predicate": {
+                    "t": "eq",
+                    "att": "_type",
+                    "val": "emodel/type@deal"
                   }
-                ],
-                "aggregationParam": "count(*)",
-                "selectedPreset": {
-                  "id": "default",
-                  "displayName": "По умолчанию",
-                  "settings": {
-                    "predicate": {
-                      "t": "eq",
-                      "att": "_type",
-                      "val": "emodel/type@deal"
-                    }
-                  }
-                },
-                "doughnut": {}
-              }
-            }
-          }
-        },
-        {
-          "name": "charts",
-          "label": "dashboard-settings.widget.charts",
-          "additionalProps": {},
-          "dndId": "8913af68-ad11-40b8-b10d-7ecd358d6049",
-          "id": "5618504e-1e21-446d-a3f3-7828878cec04",
-          "props": {
-            "id": "5618504e-1e21-446d-a3f3-7828878cec04",
-            "config": {
-              "widgetDisplayCondition": null,
-              "elementsDisplayCondition": {},
-              "crm-workspace-dashboard": {
-                "title": {
-                  "ru": "Источники, контрагенты и бюджет",
-                  "en": "Sources, counterparties, and budget"
-                },
-                "graphicTypeId": "vertical-bar",
-                "journalId": "uiserv/journal@deals-journal",
-                "typeRef": "emodel/type@deal",
-                "groupByParams": [
+                }
+              },
+              "funnel": {
+                "stages": [
                   {
-                    "attribute": "requestSource",
-                    "label": "Источник обращения",
-                    "isDateColumn": false,
-                    "dateParam": null,
-                    "dateRange": null,
-                    "type": "assoc"
+                    "id": "bwo3k",
+                    "label": "0% - Обработка",
+                    "visible": true,
+                    "color": "#bae6fd"
                   },
                   {
-                    "attribute": "counterparty",
-                    "label": "Контрагент",
-                    "isDateColumn": false,
-                    "dateParam": null,
-                    "dateRange": null,
-                    "type": "assoc"
+                    "id": "bwvtc",
+                    "label": "20% - Квалификация",
+                    "visible": true,
+                    "color": "#7dd3fc"
+                  },
+                  {
+                    "id": "bx3j4",
+                    "label": "40% - Развитие",
+                    "visible": true,
+                    "color": "#38bdf8"
+                  },
+                  {
+                    "id": "bxb8w",
+                    "label": "60% - Подтверждение",
+                    "visible": true,
+                    "color": "#0ea5e9"
+                  },
+                  {
+                    "id": "bxqog",
+                    "label": "Отказ/Пауза",
+                    "visible": true,
+                    "color": "#f87171"
+                  },
+                  {
+                    "id": "bxiyo",
+                    "label": "100% - Победа",
+                    "visible": true,
+                    "color": "#34d399"
                   }
-                ],
-                "aggregationParam": "sum(amount)",
-                "selectedPreset": {
-                  "id": "default",
-                  "displayName": "По умолчанию",
-                  "settings": {
-                    "predicate": {
-                      "t": "eq",
-                      "att": "_type",
-                      "val": "emodel/type@deal"
-                    }
+                ]
+              }
+            }
+          },
+          "description": "Вкладка"
+        },
+        {
+          "name": "charts",
+          "label": "dashboard-settings.widget.charts",
+          "additionalProps": {},
+          "dndId": "70e98265-cd9c-4ac2-8dac-e1f7a1be9969",
+          "id": "006076e1-62a4-4360-b3a6-4e5244e1d516",
+          "props": {
+            "id": "006076e1-62a4-4360-b3a6-4e5244e1d516",
+            "config": {
+              "title": {
+                "ru": "Воронка платежей",
+                "en": "Payment Funnel"
+              },
+              "graphicTypeId": "funnel",
+              "journalId": "uiserv/journal@payments-crm-journal",
+              "typeRef": "emodel/type@payment-crm",
+              "groupByParams": [
+                {
+                  "attribute": "_status",
+                  "label": "Статус",
+                  "isDateColumn": false,
+                  "dateParam": null,
+                  "dateRange": null,
+                  "type": "text"
+                }
+              ],
+              "aggregationParam": "sum(amount)",
+              "selectedPreset": {
+                "id": "default",
+                "displayName": "По умолчанию",
+                "settings": {
+                  "predicate": {
+                    "t": "eq",
+                    "att": "_type",
+                    "val": "emodel/type@payment-crm"
                   }
-                },
-                "vertical-bar": {}
+                }
+              },
+              "funnel": {
+                "stages": [
+                  {
+                    "id": "draft",
+                    "label": "Черновик",
+                    "visible": false
+                  },
+                  {
+                    "id": "planned",
+                    "label": "Запланирован",
+                    "visible": true,
+                    "color": "#7dd3fc"
+                  },
+                  {
+                    "id": "confirmed",
+                    "label": "Подтвержден",
+                    "visible": true,
+                    "color": "#38bdf8"
+                  },
+                  {
+                    "id": "expired",
+                    "label": "Просрочен",
+                    "visible": true,
+                    "color": "#0ea5e9"
+                  },
+                  {
+                    "id": "canceled",
+                    "label": "Отменен",
+                    "visible": true,
+                    "color": "#f87171"
+                  },
+                  {
+                    "id": "partialPayed",
+                    "label": "Частично оплачен",
+                    "visible": true,
+                    "color": "#6ee7b7"
+                  },
+                  {
+                    "id": "paid",
+                    "label": "Оплачен",
+                    "visible": true,
+                    "color": "#34d399"
+                  }
+                ]
               }
             }
           }
@@ -115,45 +191,117 @@
           "name": "charts",
           "label": "dashboard-settings.widget.charts",
           "additionalProps": {},
-          "dndId": "30a831e3-7a41-4bd2-ba48-c9f2617e6c57",
-          "id": "828943aa-76ec-4d43-9e55-4b5e3f93b15e",
+          "dndId": "9cecd9a9-9709-4af2-ae53-1c0d194726d8",
+          "id": "ee81a0fd-1c8e-4581-8c7a-919a0455da83",
           "props": {
-            "id": "828943aa-76ec-4d43-9e55-4b5e3f93b15e",
+            "id": "ee81a0fd-1c8e-4581-8c7a-919a0455da83",
             "config": {
-              "widgetDisplayCondition": null,
-              "elementsDisplayCondition": {},
-              "crm-workspace-dashboard": {
-                "title": {
-                  "ru": "Бюджет по источникам",
-                  "en": "Budget by sources"
-                },
-                "graphicTypeId": "line",
-                "journalId": "uiserv/journal@deals-journal",
-                "typeRef": "emodel/type@deal",
-                "groupByParams": [
+              "title": {
+                "ru": "Воронка лидов",
+                "en": "Lead Funnel"
+              },
+              "graphicTypeId": "funnel",
+              "journalId": "uiserv/journal@leads-journal",
+              "typeRef": "emodel/type@lead",
+              "groupByParams": [
+                {
+                  "attribute": "_stage",
+                  "label": "Этап",
+                  "isDateColumn": false,
+                  "dateParam": null,
+                  "dateRange": null,
+                  "type": "text"
+                }
+              ],
+              "aggregationParam": "count(*)",
+              "selectedPreset": {
+                "id": "default",
+                "displayName": "По умолчанию",
+                "settings": {
+                  "predicate": {
+                    "t": "eq",
+                    "att": "_type",
+                    "val": "emodel/type@lead"
+                  }
+                }
+              },
+              "funnel": {
+                "stages": [
                   {
-                    "attribute": "counterparty",
-                    "label": "Контрагент",
-                    "isDateColumn": false,
-                    "dateParam": null,
-                    "dateRange": null,
-                    "type": "assoc"
+                    "id": "bwo3k",
+                    "label": "Не обработан",
+                    "visible": true,
+                    "color": "#7dd3fc"
+                  },
+                  {
+                    "id": "bwvtc",
+                    "label": "Квалификация",
+                    "visible": true,
+                    "color": "#38bdf8"
+                  },
+                  {
+                    "id": "bx3j4",
+                    "label": "Пауза",
+                    "visible": true,
+                    "color": "#0ea5e9"
+                  },
+                  {
+                    "id": "bxb8w",
+                    "label": "Дисквалификация",
+                    "visible": true,
+                    "color": "#f87171"
+                  },
+                  {
+                    "id": "bxiyo",
+                    "label": "Завершен",
+                    "visible": true,
+                    "color": "#34d399"
                   }
-                ],
-                "aggregationParam": "sum(amount)",
-                "selectedPreset": {
-                  "id": "default",
-                  "displayName": "По умолчанию",
-                  "settings": {
-                    "predicate": {
-                      "t": "eq",
-                      "att": "_type",
-                      "val": "emodel/type@deal"
-                    }
-                  }
-                },
-                "line": {}
+                ]
               }
+            }
+          },
+          "description": "Вкладка"
+        },
+        {
+          "name": "charts",
+          "label": "dashboard-settings.widget.charts",
+          "additionalProps": {},
+          "dndId": "93d2be70-0ce2-4f45-9281-67b929ef2a3e",
+          "id": "d12de57a-1335-4428-b50b-7389cbf47a07",
+          "props": {
+            "id": "d12de57a-1335-4428-b50b-7389cbf47a07",
+            "config": {
+              "title": {
+                "ru": "Статистика по менеджерам",
+                "en": "Statistics on managers"
+              },
+              "graphicTypeId": "vertical-bar",
+              "journalId": "uiserv/journal@deals-journal",
+              "typeRef": "emodel/type@deal",
+              "groupByParams": [
+                {
+                  "attribute": "manager",
+                  "label": "Ответственный",
+                  "isDateColumn": false,
+                  "dateParam": null,
+                  "dateRange": null,
+                  "type": "person"
+                }
+              ],
+              "aggregationParam": "count(*)",
+              "selectedPreset": {
+                "id": "default",
+                "displayName": "По умолчанию",
+                "settings": {
+                  "predicate": {
+                    "t": "eq",
+                    "att": "_type",
+                    "val": "emodel/type@deal"
+                  }
+                }
+              },
+              "vertical-bar": {}
             }
           }
         }
@@ -165,28 +313,21 @@
             "label": "Вкладка",
             "idLayout": "layout_a0ee8ffa-f44b-4ef6-9978-a755e2d12efb"
           },
-          "type": "2-columns-small-big-with-footer",
+          "type": "2-columns-small-big",
           "columns": [
-            [
-              {
-                "widgets": [
-                  "72eeb92f-cc9f-4bb8-80a5-3b83da7846a0"
-                ],
-                "width": "25%"
-              },
-              {
-                "widgets": [
-                  "5618504e-1e21-446d-a3f3-7828878cec04"
-                ]
-              }
-            ],
-            [
-              {
-                "widgets": [
-                  "828943aa-76ec-4d43-9e55-4b5e3f93b15e"
-                ]
-              }
-            ]
+            {
+              "widgets": [
+                "d7907279-604e-4a08-9fd6-f649a4a6ebbe",
+                "006076e1-62a4-4360-b3a6-4e5244e1d516",
+                "ee81a0fd-1c8e-4581-8c7a-919a0455da83"
+              ],
+              "width": "25%"
+            },
+            {
+              "widgets": [
+                "d12de57a-1335-4428-b50b-7389cbf47a07"
+              ]
+            }
           ]
         }
       ],
@@ -201,9 +342,7 @@
           "columns": [
             {
               "widgets": [
-                "72eeb92f-cc9f-4bb8-80a5-3b83da7846a0",
-                "5618504e-1e21-446d-a3f3-7828878cec04",
-                "828943aa-76ec-4d43-9e55-4b5e3f93b15e"
+                "ee81a0fd-1c8e-4581-8c7a-919a0455da83"
               ]
             }
           ]
