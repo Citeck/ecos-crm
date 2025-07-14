@@ -144,7 +144,8 @@
                   {
                     "id": "draft",
                     "label": "Черновик",
-                    "visible": false
+                    "visible": true,
+                    "color": "#bae6fd"
                   },
                   {
                     "id": "planned",
