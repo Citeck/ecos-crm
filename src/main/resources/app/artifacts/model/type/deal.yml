@@ -162,6 +162,7 @@ model:
         typeRef: emodel/type@ecos-contract
         child: false
 aspects:
+  - ref: emodel/aspect@has-product-and-services
   - ref: emodel/aspect@history-config
     config:
       disableHistory: false
