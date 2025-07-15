@@ -29,6 +29,7 @@ columns:
   - id: plannedPaymentDate
   - id: factPaymentDate
   - id: _status
+    groupable: true
   - id: responsible
   - id: _created
     name:
