@@ -25,7 +25,9 @@ model:
   vatList: has-pas:arrayVat[]
   totalAmount: has-pas:totalAmount | fmt("#,##0.00", "ru")
   totalVat: has-pas:totalVat | fmt("#,##0.00", "ru")
+  totalVatNotFormatted: has-pas:totalVat?num
   totalAmountWithVat: has-pas:totalAmountWithVat | fmt("#,##0.00", "ru")
+  totalAmountWithVatNotFormatted: has-pas:totalAmountWithVat?num
 computedAttributes:
   - id: ''
     type: ''
