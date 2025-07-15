@@ -22,6 +22,7 @@ model:
   userPhone: $user.phoneNumber
   userEmail: $user.email
   orders: has-pas:product-and-services[]{name, quantity, unit.unitShortName.ru, priceWithDiscount | fmt("#,##0.00", "ru"), amount}
+  vatList: has-pas:arrayVat[]
   totalAmount: has-pas:totalAmount | fmt("#,##0.00", "ru")
   totalVat: has-pas:totalVat | fmt("#,##0.00", "ru")
   totalAmountWithVat: has-pas:totalAmountWithVat | fmt("#,##0.00", "ru")
