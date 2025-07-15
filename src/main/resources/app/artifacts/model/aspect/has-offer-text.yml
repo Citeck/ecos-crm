@@ -1,0 +1,11 @@
+---
+id: has-offer-text
+name:
+  ru: Текст предложения
+  en: Offer text
+attributes:
+  - id: offerText
+    name:
+      en: Offer text
+      ru: Текст предложения
+    type: TEXT

@@ -17,6 +17,7 @@ model:
   userJobTitle: $user.jobTitle
   userPhone: $user.phoneNumber
   userEmail: $user.email
+  offerText: has-offer-text:offerText!""
 computedAttributes:
   - id: ''
     type: ''

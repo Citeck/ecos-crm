@@ -163,6 +163,7 @@ model:
         child: false
 aspects:
   - ref: emodel/aspect@has-product-and-services
+  - ref: emodel/aspect@has-offer-text
   - ref: emodel/aspect@history-config
     config:
       disableHistory: false
