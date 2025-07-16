@@ -252,6 +252,24 @@
               "allowedFor": []
             },
             {
+              "id": "ecos-contract-subjects",
+              "label": {
+                "en": "Предметы договора"
+              },
+              "icon": "ui/icon@i-leftmenu-contracts",
+              "hidden": false,
+              "type": "JOURNAL",
+              "config": {
+                "recordRef": "uiserv/journal@ecos-contract-subjects"
+              },
+              "action": {
+                "type": "",
+                "config": {}
+              },
+              "items": [],
+              "allowedFor": []
+            },
+            {
               "id": "crm-request-categories",
               "label": {
                 "ru": "Категории обращений",
