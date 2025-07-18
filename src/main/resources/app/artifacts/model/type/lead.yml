@@ -185,3 +185,8 @@ model:
       multiple: false
       config:
         typeRef: emodel/type@deal
+    - id: startProcessingDate
+      name:
+        ru: Дата начала обработки
+        en: Start processing date
+      type: DATETIME
