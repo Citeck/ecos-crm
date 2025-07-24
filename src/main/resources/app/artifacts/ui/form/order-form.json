@@ -89,6 +89,81 @@
         "triggerEventOnChange": false
       },
       {
+        "label": "count no vat",
+        "source": {
+          "type": "custom",
+          "custom": {
+            "syncData": "value = _.get(data, 'has-pas:product-and-services', []);",
+            "asyncData": "const products = data;\nvar counter = 0\n\nconst promises = products.map(function(item) {\n    return Records.get(item).load('vat.name.ru').then(name => {\n        if (name==='Без НДС') {\n            return 1;\n        }\n        return 0;\n    });\n});\n\nvalue = Promise.all(promises).then(amounts => {\n    const totalAmount = amounts.reduce((total, amount) => total + amount, 0);\n    return totalAmount;\n});"
+          },
+          "forceLoad": false
+        },
+        "update": {
+          "type": "once",
+          "rate": 500
+        },
+        "refreshOn": [
+          {
+            "label": "has-pas:product-and-services",
+            "value": "has-pas:product-and-services"
+          }
+        ],
+        "key": "countNoVat",
+        "type": "asyncData",
+        "input": true,
+        "triggerEventOnChange": false
+      },
+      {
+        "label": "count zero vat",
+        "source": {
+          "type": "custom",
+          "custom": {
+            "syncData": "value = _.get(data, 'has-pas:product-and-services', []);",
+            "asyncData": "const products = data;\n\nconst promises = products.map(function(item) {\n    return Records.get(item).load('vat.name.ru').then(name => {\n        if (name==='Нулевая') {\n            return 1;\n        }\n        return 0;\n    });\n});\n\nvalue = Promise.all(promises).then(amounts => {\n    const totalAmount = amounts.reduce((total, amount) => total + amount, 0);\n    return totalAmount;\n});"
+          },
+          "forceLoad": false
+        },
+        "update": {
+          "type": "once",
+          "rate": 500
+        },
+        "refreshOn": [
+          {
+            "label": "has-pas:product-and-services",
+            "value": "has-pas:product-and-services"
+          }
+        ],
+        "key": "countZeroVat",
+        "type": "asyncData",
+        "input": true,
+        "triggerEventOnChange": false
+      },
+      {
+        "label": "count normal vat",
+        "source": {
+          "type": "custom",
+          "custom": {
+            "syncData": "value = _.get(data, 'has-pas:product-and-services', []);",
+            "asyncData": "const products = data;\n\nconst promises = products.map(function(item) {\n    return Records.get(item).load('vat.name.ru').then(name => {\n        if (name!=='Без НДС' && name!=='Нулевая') {\n            return 1;\n        }\n        return 0;\n    });\n});\n\nvalue = Promise.all(promises).then(amounts => {\n    const totalAmount = amounts.reduce((total, amount) => total + amount, 0);\n    return totalAmount;\n});"
+          },
+          "forceLoad": false
+        },
+        "update": {
+          "type": "once",
+          "rate": 500
+        },
+        "refreshOn": [
+          {
+            "label": "has-pas:product-and-services",
+            "value": "has-pas:product-and-services"
+          }
+        ],
+        "key": "countNormalVat",
+        "type": "asyncData",
+        "input": true,
+        "triggerEventOnChange": false
+      },
+      {
         "scrollableContent": true,
         "key": "panel2",
         "type": "panel",
@@ -318,6 +393,9 @@
                         "key": "has-pas:product-and-services",
                         "hideLabel": true,
                         "multiple": true,
+                        "validate": {
+                          "custom": "var no = parseInt(data.countNoVat);\nvar zero = parseInt(data.countZeroVat);\nvar norm = parseInt(data.countNormalVat);\nconsole.log(no, zero, norm, res)\n\nvar res = true;\nif(no!==0 && norm!==0)res=false;\nif(no!==0 && zero!==0)res=false;\nif(zero!==0 && norm!==0)res=false;\n\nconsole.log(no, zero, norm, res)\n\n\nvalid = res ? true : \"Один заказ не может содержать продукты\\\\услуги со ставками \\\"Без НДС\\\", \\\"Нулевая\\\" и с процентными ставками.\""
+                        },
                         "customButtonName": "",
                         "reorder": false,
                         "source": {
