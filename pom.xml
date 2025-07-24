@@ -7,7 +7,7 @@
 
     <groupId>ru.citeck.ecos.eapps.crm</groupId>
     <artifactId>ecos-crm</artifactId>
-    <version>2.2.1-SNAPSHOT</version>
+    <version>2.2.1</version>
 
     <parent>
         <groupId>ru.citeck.ecos.eapps.project</groupId>
