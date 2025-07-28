@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<bpmn:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:ecos="http://www.citeck.ru/ecos/bpmn/1.0" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" id="Definitions_Mi5OJ3Q" name="" targetNamespace="http://bpmn.io/schema/bpmn" exporter="bpmn-js (https://demo.bpmn.io)" exporterVersion="8.2.0" ecos:workingCopySourceRef="" ecos:name_ml="{&quot;ru&quot;:&quot;CRM Лид, системные обработчики&quot;}" ecos:formRef="" ecos:autoDeleteEnabled="false" ecos:sectionRef="eproc/bpmn-section@DEFAULT" ecos:enabled="true" ecos:autoStartEnabled="false" ecos:defState="CONVERTED" ecos:processDefId="crm-lead-issue-observer-process" ecos:ecosType="">
+<bpmn:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:ecos="http://www.citeck.ru/ecos/bpmn/1.0" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" id="Definitions_Mi5OJ3Q" name="CRM Лид, системные обработчики" targetNamespace="http://bpmn.io/schema/bpmn" exporter="bpmn-js (https://demo.bpmn.io)" exporterVersion="8.2.0" ecos:workingCopySourceRef="" ecos:name_ml="{&quot;ru&quot;:&quot;CRM Лид, системные обработчики&quot;}" ecos:formRef="" ecos:autoDeleteEnabled="false" ecos:sectionRef="eproc/bpmn-section@DEFAULT" ecos:enabled="true" ecos:autoStartEnabled="false" ecos:defState="CONVERTED" ecos:processDefId="crm-lead-issue-observer-process" ecos:ecosType="">
     <bpmn:process isExecutable="true" id="crm-lead-issue-observer-process">
         <bpmn:startEvent isInterrupting="true" name="Статус: Создание сделки" id="StartEvent_1ew9rff" ecos:documentation="{}" ecos:eventFilterByRecordType="ANY" ecos:eventModel="{}" ecos:asyncConfig="{&quot;asyncBefore&quot;:false,&quot;asyncAfter&quot;:false,&quot;exclusive&quot;:false}" ecos:name_ml="{&quot;ru&quot;:&quot;Статус: Создание сделки&quot;}" ecos:jobConfig="{&quot;jobPriority&quot;:null,&quot;jobRetryTimeCycle&quot;:null}" ecos:manualStatus="deal_creation" ecos:eventManualMode="false" ecos:eventFilterByEcosType="emodel/type@lead" ecos:statusChangeType="AFTER" ecos:eventType="RECORD_STATUS_CHANGED">
             <bpmn:outgoing >Flow_0tjb20o</bpmn:outgoing>
-            <bpmn:signalEventDefinition  signalRef="Signal_D9VHsCh" id="SignalEventDefinition_07pq3pt"/>
+            <bpmn:signalEventDefinition  signalRef="Signal_pGKlGpZ" id="SignalEventDefinition_07pq3pt"/>
         </bpmn:startEvent>
         <bpmn:sequenceFlow sourceRef="StartEvent_1ew9rff" targetRef="Activity_11i6vyp" name="" id="Flow_0tjb20o" ecos:name_ml="{}" ecos:conditionConfig="{&quot;fn&quot;:&quot;&quot;,&quot;expression&quot;:&quot;&quot;,&quot;outcome&quot;:&quot;&quot;}" ecos:conditionType="NONE"/>
         <bpmn:sequenceFlow sourceRef="Activity_11i6vyp" targetRef="Gateway_1upady2" name="" id="Flow_0bd4e1v" ecos:name_ml="{}" ecos:conditionConfig="{&quot;fn&quot;:&quot;&quot;,&quot;expression&quot;:&quot;&quot;,&quot;outcome&quot;:&quot;&quot;}" ecos:conditionType="NONE"/>
@@ -12,9 +12,9 @@
             <bpmn:outgoing >Flow_0bd4e1v</bpmn:outgoing>
             <bpmn:script>const counterparty = document.load("counterparty?id");
 
-if (!counterparty) {
-  throw new Error("Необходимо заполнить контрагента на карточке Лида");
-}</bpmn:script>
+                if (!counterparty) {
+                throw new Error("Необходимо заполнить контрагента на карточке Лида");
+                }</bpmn:script>
         </bpmn:scriptTask>
         <bpmn:sequenceFlow sourceRef="Activity_014uz5y" targetRef="Event_1j21mak" name="" id="Flow_0jsx2yc" ecos:name_ml="{}" ecos:conditionConfig="{&quot;fn&quot;:&quot;&quot;,&quot;expression&quot;:&quot;&quot;,&quot;outcome&quot;:&quot;&quot;}" ecos:conditionType="NONE"/>
         <bpmn:exclusiveGateway default="Flow_02m65ix" name="Есть созданные сделки?" id="Gateway_1upady2" ecos:documentation="{}" ecos:name_ml="{&quot;ru&quot;:&quot;Есть созданные сделки?&quot;}">
@@ -32,29 +32,29 @@ if (!counterparty) {
             <bpmn:outgoing >Flow_0jsx2yc</bpmn:outgoing>
             <bpmn:script>const deal = Records.get("emodel/deal@");
 
-const leadName = document.load("name");
-const counterparty = document.load("counterparty?id");
-const manager = document.load("manager?id");
-const comment = document.load("comment");
-const requestSource = document.load("requestSource?id");
-const requestCategory = document.load("requestCategory?id");
-const dealWs = document.load("_workspace?id");
-const description = document.load("description");
+                const leadName = document.load("name");
+                const counterparty = document.load("counterparty?id");
+                const manager = document.load("manager?id");
+                const comment = document.load("comment");
+                const requestSource = document.load("requestSource?id");
+                const requestCategory = document.load("requestCategory?id");
+                const dealWs = document.load("_workspace?id");
+                const description = document.load("description");
 
-deal.att("name", leadName);
-deal.att("counterparty", counterparty);
-deal.att("manager", manager);
-deal.att("comment", comment);
-deal.att("requestSource", requestSource);
-deal.att("requestCategory", requestCategory);
-deal.att("createdFromLead", document.getRef());
-deal.att("_workspace", dealWs);
-deal.att("description", description);
+                deal.att("name", leadName);
+                deal.att("counterparty", counterparty);
+                deal.att("manager", manager);
+                deal.att("comment", comment);
+                deal.att("requestSource", requestSource);
+                deal.att("requestCategory", requestCategory);
+                deal.att("createdFromLead", document.getRef());
+                deal.att("_workspace", dealWs);
+                deal.att("description", description);
 
-const createdDeal = deal.save().getRef();
+                const createdDeal = deal.save().getRef();
 
-document.att("createdDeal", createdDeal);
-document.save();</bpmn:script>
+                document.att("createdDeal", createdDeal);
+                document.save();</bpmn:script>
         </bpmn:scriptTask>
         <bpmn:endEvent name="" id="Event_1a73x0v" ecos:documentation="{}" ecos:asyncConfig="{&quot;asyncBefore&quot;:false,&quot;asyncAfter&quot;:false,&quot;exclusive&quot;:true}" ecos:name_ml="{}" ecos:jobConfig="{&quot;jobPriority&quot;:null,&quot;jobRetryTimeCycle&quot;:null}">
             <bpmn:incoming >Flow_02m65ix</bpmn:incoming>
@@ -63,7 +63,7 @@ document.save();</bpmn:script>
     <bpmn:process isExecutable="true" id="Process_0pvt667">
         <bpmn:startEvent isInterrupting="true" name="Статус: Дисквалифицирован" id="Event_03uahzo" ecos:documentation="{}" ecos:eventFilterByRecordType="ANY" ecos:eventModel="{}" ecos:asyncConfig="{&quot;asyncBefore&quot;:false,&quot;asyncAfter&quot;:false,&quot;exclusive&quot;:false}" ecos:name_ml="{&quot;ru&quot;:&quot;Статус: Дисквалифицирован&quot;}" ecos:jobConfig="{&quot;jobPriority&quot;:null,&quot;jobRetryTimeCycle&quot;:null}" ecos:manualStatus="disqualified" ecos:eventManualMode="false" ecos:eventFilterByEcosType="emodel/type@lead" ecos:statusChangeType="AFTER" ecos:eventType="RECORD_STATUS_CHANGED">
             <bpmn:outgoing >Flow_0t6417e</bpmn:outgoing>
-            <bpmn:signalEventDefinition  signalRef="Signal_IPcWnsd" id="SignalEventDefinition_07kax8d"/>
+            <bpmn:signalEventDefinition  signalRef="Signal_tcqp41p" id="SignalEventDefinition_07kax8d"/>
         </bpmn:startEvent>
         <bpmn:endEvent name="" id="Event_0eemnyr" ecos:documentation="{}" ecos:asyncConfig="{&quot;asyncBefore&quot;:false,&quot;asyncAfter&quot;:false,&quot;exclusive&quot;:true}" ecos:name_ml="{}" ecos:jobConfig="{&quot;jobPriority&quot;:null,&quot;jobRetryTimeCycle&quot;:null}">
             <bpmn:incoming >Flow_0kfu1f4</bpmn:incoming>
@@ -73,19 +73,38 @@ document.save();</bpmn:script>
             <bpmn:outgoing >Flow_0kfu1f4</bpmn:outgoing>
             <bpmn:script>const disqualificationReason = document.load("disqualificationReason?str");
 
-if (!disqualificationReason) {
-  throw new Error("Необходимо указать причину дисквалификации");
-}</bpmn:script>
+                if (!disqualificationReason) {
+                throw new Error("Необходимо указать причину дисквалификации");
+                }</bpmn:script>
         </bpmn:scriptTask>
         <bpmn:sequenceFlow sourceRef="Event_03uahzo" targetRef="Activity_1ln4545" name="" id="Flow_0t6417e" ecos:name_ml="{}" ecos:conditionConfig="{&quot;fn&quot;:&quot;&quot;,&quot;expression&quot;:&quot;&quot;,&quot;outcome&quot;:&quot;&quot;}" ecos:conditionType="NONE"/>
         <bpmn:sequenceFlow sourceRef="Activity_1ln4545" targetRef="Event_0eemnyr" name="" id="Flow_0kfu1f4" ecos:name_ml="{}" ecos:conditionConfig="{&quot;fn&quot;:&quot;&quot;,&quot;expression&quot;:&quot;&quot;,&quot;outcome&quot;:&quot;&quot;}" ecos:conditionType="NONE"/>
     </bpmn:process>
+    <bpmn:process isExecutable="true" id="Process_1elghdf">
+        <bpmn:startEvent isInterrupting="true" name="Статус изменен" id="Event_1aarp7w" ecos:documentation="{}" ecos:eventFilterByRecordType="ANY" ecos:eventModel="{}" ecos:asyncConfig="{&quot;asyncBefore&quot;:false,&quot;asyncAfter&quot;:false,&quot;exclusive&quot;:false}" ecos:name_ml="{&quot;ru&quot;:&quot;Статус изменен&quot;}" ecos:jobConfig="{&quot;jobPriority&quot;:null,&quot;jobRetryTimeCycle&quot;:null}" ecos:eventManualMode="false" ecos:eventFilterByEcosType="emodel/type@lead" ecos:eventType="RECORD_STATUS_CHANGED" ecos:eventFilterByPredicate="{&quot;t&quot;:&quot;and&quot;,&quot;val&quot;:[{&quot;t&quot;:&quot;eq&quot;,&quot;att&quot;:&quot;before.id&quot;,&quot;val&quot;:&quot;new&quot;},{&quot;t&quot;:&quot;empty&quot;,&quot;att&quot;:&quot;record.startProcessingDate&quot;}]}">
+            <bpmn:outgoing >Flow_1ivaklt</bpmn:outgoing>
+            <bpmn:signalEventDefinition  signalRef="Signal_8mO4fy4" id="SignalEventDefinition_1s07hoa"/>
+        </bpmn:startEvent>
+        <bpmn:sequenceFlow sourceRef="Event_1aarp7w" targetRef="Activity_11tu6kh" name="" id="Flow_1ivaklt" ecos:name_ml="{}" ecos:conditionConfig="{&quot;fn&quot;:&quot;&quot;,&quot;expression&quot;:&quot;&quot;,&quot;outcome&quot;:&quot;&quot;}" ecos:conditionType="NONE"/>
+        <bpmn:scriptTask scriptFormat="javascript" name="Сохранение даты начала обработки" id="Activity_11tu6kh" ecos:documentation="{}" ecos:asyncConfig="{&quot;asyncBefore&quot;:false,&quot;asyncAfter&quot;:false,&quot;exclusive&quot;:false}" ecos:name_ml="{&quot;ru&quot;:&quot;Сохранение даты начала обработки&quot;}" ecos:jobConfig="{&quot;jobPriority&quot;:null,&quot;jobRetryTimeCycle&quot;:null}" ecos:script="document.att(&quot;startProcessingDate&quot;, new Date().toISOString());&#10;document.save();">
+            <bpmn:incoming >Flow_1ivaklt</bpmn:incoming>
+            <bpmn:outgoing >Flow_0ch1u00</bpmn:outgoing>
+            <bpmn:script>document.att("startProcessingDate", new Date().toISOString());
+                document.save();</bpmn:script>
+        </bpmn:scriptTask>
+        <bpmn:endEvent name="" id="Event_0rer77r" ecos:documentation="{}" ecos:asyncConfig="{&quot;asyncBefore&quot;:false,&quot;asyncAfter&quot;:false,&quot;exclusive&quot;:true}" ecos:name_ml="{}" ecos:jobConfig="{&quot;jobPriority&quot;:null,&quot;jobRetryTimeCycle&quot;:null}">
+            <bpmn:incoming >Flow_0ch1u00</bpmn:incoming>
+        </bpmn:endEvent>
+        <bpmn:sequenceFlow sourceRef="Activity_11tu6kh" targetRef="Event_0rer77r" name="" id="Flow_0ch1u00" ecos:name_ml="{}" ecos:conditionConfig="{&quot;fn&quot;:&quot;&quot;,&quot;expression&quot;:&quot;&quot;,&quot;outcome&quot;:&quot;&quot;}" ecos:conditionType="NONE"/>
+    </bpmn:process>
     <bpmn:collaboration id="Collaboration_027w2fx">
         <bpmn:participant  name="Проверка перехода на Создание сделки" processRef="crm-lead-issue-observer-process" id="Participant_1vf8j93" ecos:documentation="{}" ecos:name_ml="{&quot;ru&quot;:&quot;Проверка перехода на Создание сделки&quot;}" ecos:ecosType="emodel/type@lead"/>
         <bpmn:participant  name="Проверка перехода на Дисквалификацию" processRef="Process_0pvt667" id="Participant_1ch8wzw" ecos:documentation="{}" ecos:name_ml="{&quot;ru&quot;:&quot;Проверка перехода на Дисквалификацию&quot;}" ecos:ecosType="emodel/type@lead"/>
+        <bpmn:participant  name="Сохранение даты начала обработки Лида" processRef="Process_1elghdf" id="Participant_01vlc1c" ecos:documentation="{}" ecos:name_ml="{&quot;ru&quot;:&quot;Сохранение даты начала обработки Лида&quot;}" ecos:ecosType="emodel/type@lead"/>
     </bpmn:collaboration>
-    <bpmn:signal name="RECORD_STATUS_CHANGED;ANY;emodel/type@lead;pr_af473a3fef4d683d31833a0bc82bb364" id="Signal_D9VHsCh"/>
-    <bpmn:signal name="RECORD_STATUS_CHANGED;ANY;emodel/type@lead;pr_8319b6940d7e9c2804480532d640ba8f" id="Signal_IPcWnsd"/>
+    <bpmn:signal name="RECORD_STATUS_CHANGED;ANY;emodel/type@lead;pr_af473a3fef4d683d31833a0bc82bb364" id="Signal_pGKlGpZ"/>
+    <bpmn:signal name="RECORD_STATUS_CHANGED;ANY;emodel/type@lead;pr_8319b6940d7e9c2804480532d640ba8f" id="Signal_tcqp41p"/>
+    <bpmn:signal name="RECORD_STATUS_CHANGED;ANY;emodel/type@lead;pr_6279cfce91bce3df86c73ad5f14532b0" id="Signal_8mO4fy4"/>
     <bpmndi:BPMNDiagram id="BPMNDiagram_1">
         <bpmndi:BPMNPlane  bpmnElement="Collaboration_027w2fx" id="BPMNPlane_1">
             <bpmndi:BPMNShape bpmnElement="Participant_1vf8j93" isExpanded="false" id="Participant_1vf8j93_di">
@@ -149,6 +168,26 @@ if (!disqualificationReason) {
             <bpmndi:BPMNEdge bpmnElement="Flow_0kfu1f4" id="BPMNEdge_0ckkh9v">
                 <di:waypoint x="350.0" y="505.0"/>
                 <di:waypoint x="412.0" y="505.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNShape bpmnElement="Participant_01vlc1c" isExpanded="false" id="Participant_01vlc1c_di">
+                <dc:Bounds x="70.0" y="700.0" width="380.0" height="250.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="Event_1aarp7w" isExpanded="false" id="Event_0z1ggr3_di">
+                <dc:Bounds x="142.0" y="802.0" width="36.0" height="36.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="Activity_11tu6kh" isExpanded="false" id="Activity_1fs9q4o_di">
+                <dc:Bounds x="230.0" y="780.0" width="100.0" height="80.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="Event_0rer77r" isExpanded="false" id="Event_0rer77r_di">
+                <dc:Bounds x="382.0" y="802.0" width="36.0" height="36.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNEdge bpmnElement="Flow_1ivaklt" id="Flow_1ivaklt_di">
+                <di:waypoint x="178.0" y="820.0"/>
+                <di:waypoint x="230.0" y="820.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="Flow_0ch1u00" id="Flow_0ch1u00_di">
+                <di:waypoint x="330.0" y="820.0"/>
+                <di:waypoint x="382.0" y="820.0"/>
             </bpmndi:BPMNEdge>
         </bpmndi:BPMNPlane>
     </bpmndi:BPMNDiagram>
