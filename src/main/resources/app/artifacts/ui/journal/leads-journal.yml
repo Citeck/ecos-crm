@@ -39,6 +39,36 @@ columns:
       en: Stage
     type: TEXT
     groupable: true
+  - id: requestType
+    name:
+      ru: Тип запроса
+      en: Request type
+    type: TEXT
+    visible: false
+  - id: counterpartyText
+    name:
+      ru: Компания
+      en: Company
+    type: TEXT
+    visible: false
+  - id: disqualificationReason
+    name:
+      ru: Причина дисквалификации
+      en: Disqualification reason
+    type: TEXT
+    visible: false
+  - id: amount
+    name:
+      ru: Бюджет
+      en: Budget
+    type: NUMBER
+    visible: false
+  - id: description
+    name:
+      ru: Описание
+      en: Description
+    type: TEXT
+    visible: false
   - id: dateReceived
     name:
       ru: Дата создания
@@ -51,6 +81,13 @@ columns:
       en: Responsible
     type: PERSON
     groupable: true
+  - id: viewers
+    name:
+      en: Viewers
+      ru: Наблюдатели
+    type: PERSON
+    groupable: true
+    visible: false
   - id: numberOfUsers
     name:
       ru: Кол-во пользователей
@@ -89,3 +126,9 @@ columns:
       ru: Категория обращения
       en: Request category
     type: ASSOC
+  - id: createdDeal
+    name:
+      ru: Созданная сделка
+      en: Created deal
+    type: ASSOC
+    visible: false
