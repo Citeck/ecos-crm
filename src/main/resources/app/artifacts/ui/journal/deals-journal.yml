@@ -120,3 +120,15 @@ columns:
       ru: Категория обращения
       en: Request category
     type: ASSOC
+  - id: createdFromLead
+    name:
+      ru: Создана из лида
+      en: Created from lead
+    type: ASSOC
+    visible: false
+  - id: contract
+    name:
+      ru: Договор
+      en: Contract
+    type: ASSOC
+    visible: false
