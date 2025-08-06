@@ -105,11 +105,12 @@ columns:
       en: Phone
     type: TEXT
     attribute: contacts.contactPhone
-  - id: emessage
+  - id: e_message
     name:
       ru: Письмо
       en: Message
     type: TEXT
+    attribute: createdFromLead.emessage
   - id: requestSource
     name:
       ru: Источник обращения

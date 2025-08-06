@@ -116,6 +116,11 @@ columns:
       en: Phone
     type: TEXT
     attribute: contacts.contactPhone
+  - id: emessage
+    name:
+      ru: Письмо
+      en: Message
+    type: TEXT
   - id: requestSource
     name:
       ru: Источник обращения
