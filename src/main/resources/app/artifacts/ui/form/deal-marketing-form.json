@@ -14,14 +14,118 @@
     "components": [
       {
         "label": {
-          "ru": "lead emessage"
+          "ru": "Columns"
         },
-        "key": "createdFromLead.emessage",
-        "refreshOn": [],
-        "optionalWhenDisabled": false,
-        "type": "hidden",
-        "input": true,
-        "reorder": false
+        "key": "columns3",
+        "columns": [
+          {
+            "components": [
+              {
+                "label": {
+                  "ru": "actual_ga"
+                },
+                "key": "createdFromLead.ga_client_id",
+                "refreshOn": [],
+                "optionalWhenDisabled": false,
+                "type": "hidden",
+                "input": true,
+                "reorder": false
+              },
+              {
+                "label": {
+                  "ru": "actual_ym"
+                },
+                "key": "createdFromLead.ym_client_id",
+                "refreshOn": [],
+                "optionalWhenDisabled": false,
+                "type": "hidden",
+                "input": true,
+                "reorder": false
+              },
+              {
+                "label": {
+                  "ru": "actual_site_from"
+                },
+                "key": "createdFromLead.siteFrom",
+                "refreshOn": [],
+                "optionalWhenDisabled": false,
+                "type": "hidden",
+                "input": true,
+                "reorder": false
+              },
+              {
+                "label": {
+                  "ru": "actual_emessage"
+                },
+                "key": "createdFromLead.emessage",
+                "refreshOn": [],
+                "optionalWhenDisabled": false,
+                "type": "hidden",
+                "input": true,
+                "reorder": false
+              }
+            ],
+            "type": "column",
+            "input": false,
+            "key": "column",
+            "index": 0
+          },
+          {
+            "index": 1,
+            "type": "column",
+            "input": false,
+            "key": "column",
+            "components": [
+              {
+                "label": {
+                  "ru": "legacy_ga"
+                },
+                "key": "ga_client_id",
+                "refreshOn": [],
+                "optionalWhenDisabled": false,
+                "type": "hidden",
+                "input": true,
+                "reorder": false
+              },
+              {
+                "label": {
+                  "ru": "legacy_ym"
+                },
+                "key": "ym_client_id",
+                "refreshOn": [],
+                "optionalWhenDisabled": false,
+                "type": "hidden",
+                "input": true,
+                "reorder": false
+              },
+              {
+                "label": {
+                  "ru": "legacy_site_from"
+                },
+                "key": "siteFrom",
+                "refreshOn": [],
+                "optionalWhenDisabled": false,
+                "type": "hidden",
+                "input": true,
+                "reorder": false
+              },
+              {
+                "label": {
+                  "ru": "legacy_emessage"
+                },
+                "key": "emessage",
+                "refreshOn": [],
+                "optionalWhenDisabled": false,
+                "type": "hidden",
+                "input": true,
+                "reorder": false
+              }
+            ]
+          }
+        ],
+        "oneColumnInViewMode": false,
+        "type": "columns",
+        "input": false
       },
       {
         "scrollableContent": true,
@@ -29,6 +133,18 @@
         "type": "panel",
         "input": false,
         "components": [
+          {
+            "label": {
+              "ru": "processed_emessage"
+            },
+            "key": "processed_emessage",
+            "refreshOn": [],
+            "calculateValue": "let actual = _.get(data, 'createdFromLead.emessage', null);\nlet legacy = _.get(data, 'emessage', null);\n\nvalue = actual || legacy;",
+            "optionalWhenDisabled": false,
+            "type": "hidden",
+            "input": true,
+            "reorder": false
+          },
           {
             "label": {
               "ru": "requestCategory"
@@ -90,10 +206,11 @@
                   "ru": "Страница заполнения заявки",
                   "en": "Deal request page"
                 },
-                "key": "createdFromLead.siteFrom",
+                "key": "site_from",
                 "disabled": true,
                 "defaultValue": "",
                 "refreshOn": [],
+                "calculateValue": "let actual = _.get(data, 'createdFromLead.siteFrom', null);\nlet legacy = _.get(data, 'siteFrom', null);\n\nvalue = actual || legacy;",
                 "optionalWhenDisabled": false,
                 "type": "textfield",
                 "input": true,
@@ -108,10 +225,11 @@
                   "ru": "Идентификатор GA",
                   "en": "GA ID"
                 },
-                "key": "createdFromLead.ga_client_id",
+                "key": "ga",
                 "disabled": true,
                 "defaultValue": "",
                 "refreshOn": [],
+                "calculateValue": "let actual = _.get(data, 'createdFromLead.ga_client_id', null);\nlet legacy = _.get(data, 'ga_client_id', null);\n\nvalue = actual || legacy;",
                 "optionalWhenDisabled": false,
                 "type": "textfield",
                 "input": true,
@@ -126,10 +244,11 @@
                   "ru": "Идентификатор YM",
                   "en": "YM ID"
                 },
-                "key": "createdFromLead.ym_client_id",
+                "key": "ym",
                 "disabled": true,
                 "defaultValue": "",
                 "refreshOn": [],
+                "calculateValue": "let actual = _.get(data, 'createdFromLead.ym_client_id', null);\nlet legacy = _.get(data, 'ym_client_id', null);\n\nvalue = actual || legacy;",
                 "optionalWhenDisabled": false,
                 "type": "textfield",
                 "input": true,
@@ -170,7 +289,7 @@
                 ],
                 "optionalWhenDisabled": false,
                 "content": {
-                  "ru": "<div style=\"border: 1px solid #e0e0e0; border-radius: 4px; padding: 15px; max-height: 500px; overflow-y: auto; background-color: #fff; white-space: pre-wrap; font-family: monospace;\">{{ data.createdFromLead.emessage }}</div>"
+                  "ru": "<div style=\"border: 1px solid #e0e0e0; border-radius: 4px; padding: 15px; max-height: 500px; overflow-y: auto; background-color: #fff; white-space: pre-wrap; font-family: monospace;\">{{ data.processed_emessage }}</div>"
                 },
                 "type": "htmlelement",
                 "input": false,
@@ -211,7 +330,6 @@
             "key": "column",
             "label": "Column",
             "md": 3,
-            "clearOnHide": false,
             "conditional": {
               "show": null,
               "when": null
@@ -224,7 +342,6 @@
             "input": false,
             "key": "column",
             "label": "Column",
-            "clearOnHide": false,
             "conditional": {
               "show": null,
               "when": null
@@ -239,7 +356,6 @@
             "key": "column",
             "label": "Column",
             "components": [],
-            "clearOnHide": false,
             "conditional": {
               "show": null,
               "when": null
