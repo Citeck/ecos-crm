@@ -1,0 +1,6 @@
+---
+id: enable-crm-lead-ai-spam-check
+name:
+  ru: Включить AI проверку на спам в CRM-лидах
+  en: Enable AI spam check for CRM leads
+value: false

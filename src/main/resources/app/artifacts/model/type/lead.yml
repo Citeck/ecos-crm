@@ -47,12 +47,17 @@ model:
       name:
         ru: Сделка
         en: Deal
+    - id: spam_check
+      name:
+        ru: Проверка на спам
+        en: Spam check
   stages:
     - name:
         ru: Не обработан
         en: Unprocessed
       statuses:
         - new
+        - spam_check
     - name:
         ru: Квалификация
         en: Qualification
@@ -190,3 +195,8 @@ model:
         ru: Дата начала обработки
         en: Start processing date
       type: DATETIME
+    - id: explicitLeadText
+      name:
+        ru: Текст лида
+        en: Lead text
+      type: TEXT
