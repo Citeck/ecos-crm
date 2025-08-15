@@ -30,6 +30,8 @@ columns:
   - id: factPaymentDate
   - id: _status
     groupable: true
+  - id: _stage
+    groupable: true
   - id: responsible
   - id: _created
     name:
