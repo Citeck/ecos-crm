@@ -24,4 +24,4 @@ If you need any assistance or have any questions regarding Citeck `CRM`, please 
 
 ## License
 
-Citeck `CRM` is released under the [GNU Lesser General Public License](LICENSE).
+Citeck `CRM` enterprise edition is released under the Citeck license.
