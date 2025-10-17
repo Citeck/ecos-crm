@@ -26,4 +26,4 @@
 
 ## Лицензия
 
-Citeck `CRM` распространяется под лицензией [GNU Lesser General Public License](LICENSE).
+Citeck `CRM` версии Enterprise распространяется под лицензией Citeck.
