@@ -7,6 +7,8 @@ name:
 target: 'ui/menu$data-lists-menu'
 enabled: false
 
+workspace: data-lists-workspace
+
 type: json
 config:
   operations:
