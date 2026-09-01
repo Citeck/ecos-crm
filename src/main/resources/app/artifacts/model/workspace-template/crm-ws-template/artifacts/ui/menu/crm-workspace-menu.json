@@ -311,6 +311,28 @@
             }
           ],
           "allowedFor": []
+        },
+        {
+          "id": "administration",
+          "label": {
+            "ru": "Администрирование",
+            "en": "Administration"
+          },
+          "hidden": false,
+          "type": "SECTION",
+          "config": {},
+          "collapsed": true,
+          "allowedFor": ["ROLE_WS_MANAGER"],
+          "items": [
+            {
+              "id": "default-ws-admin-menu-items",
+              "hidden": false,
+              "type": "INCLUDE_MENU",
+              "config": {
+                "menuRef": "uiserv/menu@default-ws-admin-menu-items"
+              }
+            }
+          ]
         }
       ]
     },
