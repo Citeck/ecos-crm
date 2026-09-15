@@ -45,7 +45,9 @@
               "record": {
                 "id": "{{recordId}}",
                 "attributes": {
-                  "contacts": "counterparty.contacts[]?json"
+                  "contacts": "counterparty.contacts[]?json",
+                  "ref": "counterparty?id",
+                  "name": "counterparty?disp"
                 }
               },
               "forceLoad": false
@@ -357,6 +359,27 @@
             ],
             "groupToggle": false,
             "customConditional": "const isViewMode = !!_.get(instance, 'root.options.viewAsHtml');\nshow = isViewMode && _.get(data, 'asyncCounterparty.contacts.length', 0) > 0;"
+          },
+          {
+            "label": {
+              "ru": "HTML",
+              "en": "HTML"
+            },
+            "key": "counterpartyContactsHint",
+            "className": "",
+            "content": {
+              "ru": "<div style=\"padding: 10px 12px; margin-bottom: 12px; border-radius: 6px; background-color: #f4f6f8; color: #444444; font-size: 13px;\">Контакты контрагента <b>{{ data.asyncCounterparty.name }}</b> хранятся в его карточке и здесь не редактируются — <a href=\"/v2/dashboard?recordRef={{ data.asyncCounterparty.ref }}\" target=\"_blank\" rel=\"noopener\">открыть карточку контрагента</a>.</div>",
+              "en": "<div style=\"padding: 10px 12px; margin-bottom: 12px; border-radius: 6px; background-color: #f4f6f8; color: #444444; font-size: 13px;\">The contacts of <b>{{ data.asyncCounterparty.name }}</b> are kept on the counterparty card and cannot be edited here — <a href=\"/v2/dashboard?recordRef={{ data.asyncCounterparty.ref }}\" target=\"_blank\" rel=\"noopener\">open the counterparty</a>.</div>"
+            },
+            "refreshOnChange": true,
+            "refreshOn": [
+              "asyncCounterparty"
+            ],
+            "optionalWhenDisabled": false,
+            "type": "htmlelement",
+            "input": false,
+            "reorder": false,
+            "customConditional": "const isViewMode = !!_.get(instance, 'root.options.viewAsHtml');\nshow = !isViewMode && _.get(data, 'asyncCounterparty.contacts.length', 0) > 0;"
           },
           {
             "label": {
