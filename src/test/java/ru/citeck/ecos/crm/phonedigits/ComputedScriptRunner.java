@@ -24,7 +24,7 @@ import org.yaml.snakeyaml.Yaml;
  * <ul>
  *     <li>the same host access configuration and no engine options besides the platform ones,</li>
  *     <li>the same {@code (function(){...})()} wrapping rule, applied whenever the script
- *         contains the substring {@code "return"},</li>
+ *         contains the substring {@code "return "} - with a trailing space,</li>
  *     <li>{@code value.load(...)} returns plain java collections, wrapped by GraalJS the same way
  *         as in production - see ComputedScriptRunnerTest for what a script may rely on.</li>
  * </ul>
@@ -253,13 +253,13 @@ public final class ComputedScriptRunner {
     }
 
     /**
-     * Copy of ScriptExecutorImpl.prepareScript: a plain substring check for "return", without a
-     * trailing space. The check is deliberately dumb in the platform too - "return['a']" and even
-     * the word "return" inside a comment are enough to wrap the script - and the harness must
-     * reproduce that, otherwise a script broken in production looks green here.
+     * Copy of ScriptExecutorImpl.prepareScript: the wrapper needs "return " - with a space. The
+     * check is deliberately dumb in the platform too - a "return " inside a comment is enough to
+     * wrap the script, while "return['a']" is not wrapped and then fails as an illegal return -
+     * and the harness must reproduce that, otherwise a script broken in production looks green.
      */
     private static String prepareScript(String script) {
-        return script.contains("return") ? "(function(){" + script + "})()" : script;
+        return script.contains("return ") ? "(function(){" + script + "})()" : script;
     }
 
     @SuppressWarnings("unchecked")

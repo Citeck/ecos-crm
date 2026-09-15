@@ -11,6 +11,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.graalvm.polyglot.PolyglotException;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -110,25 +111,42 @@ public class ComputedScriptRunnerTest {
     }
 
     @Test
-    void returnWithoutSpaceIsWrappedJustLikeInProduction() {
+    void returnWithoutSpaceIsNotWrappedAndFailsAsInProduction() {
 
-        // ScriptExecutorImpl wraps the script into (function(){...})() whenever it contains
-        // "return" - no trailing space is required, so "return['a']" is wrapped and evaluates fine
-        assertEquals(
-            List.of("a", "b"),
-            ComputedScriptRunner.ofScript("return['a', 'b'];").executeToStringList(Map.of())
+        // ScriptExecutorImpl wraps the script into (function(){...})() only when it contains
+        // "return " WITH a trailing space, so "return['a']" is left unwrapped and the engine
+        // rejects the top-level return. Wrapping it here would green-light a script that never
+        // produces a value in production.
+        PolyglotException thrown = assertThrows(
+            PolyglotException.class,
+            () -> ComputedScriptRunner.ofScript("return['a', 'b'];").executeToStringList(Map.of())
+        );
+        assertTrue(
+            thrown.getMessage().contains("return"),
+            "expected an illegal-return SyntaxError, got: " + thrown.getMessage()
         );
     }
 
     @Test
-    void theWordReturnInACommentIsEnoughToWrapTheScript() {
+    void theWordReturnsInACommentDoesNotWrapTheScript() {
 
-        // the platform rule is a plain substring check, so a script whose only "return" sits in a
+        // "returns" has no trailing space after "return", so the substring check misses it and the
+        // script keeps evaluating to its last expression
+        assertEquals(
+            List.of("a", "b"),
+            ComputedScriptRunner.ofScript("// returns nothing yet\n['a', 'b'];").executeToStringList(Map.of())
+        );
+    }
+
+    @Test
+    void aReturnWithASpaceInACommentIsEnoughToWrapTheScript() {
+
+        // the platform rule is a plain substring check, so a script whose only "return " sits in a
         // comment gets wrapped too - and then yields undefined instead of its last expression.
         // This is the trap the harness must reproduce rather than smooth over.
         assertEquals(
             null,
-            ComputedScriptRunner.ofScript("// returns nothing yet\n['a', 'b'];").executeToStringList(Map.of())
+            ComputedScriptRunner.ofScript("// return the keys later\n['a', 'b'];").executeToStringList(Map.of())
         );
     }
 
