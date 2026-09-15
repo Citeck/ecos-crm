@@ -1,0 +1,15 @@
+---
+id: fill-opportunity-phone-digits
+date: 2026-09-15T00:00:00Z
+type: mutate
+targetApp: emodel
+config:
+  records:
+    - id: emodel/group-action@
+      attributes:
+        values:
+          type: admin-action-records-of-type
+          config:
+            typeRef: emodel/type@opportunity
+        execution:
+          type: update-calculated-atts
