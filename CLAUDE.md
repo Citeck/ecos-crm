@@ -41,6 +41,12 @@ fixture and the script disagree, which must fail rather than return null.
 listing is compared line by line and every row of its example table is replayed against the real
 script. Editing the script without regenerating the listing fails the build.
 
+The same class also compares `collectPhoneKeys` with its copy in the sibling clone `ecos-datalist`.
+That comparison needs the clone to be next to this one, which is never true on the Jenkins agent, so
+by default a missing clone **skips** the check and a green CI run proves nothing about the symmetry
+of the copies. Run `mvn test -Dphonedigits.requireSiblings=true` before a release or after touching
+the normalization: the flag turns a missing or outdated sibling into a build failure.
+
 ## Verifying on a stand (Records API / Playwright)
 
 Gotchas established while accepting `phoneDigits`, all of them silent:

@@ -3,6 +3,7 @@ package ru.citeck.ecos.crm.phonedigits;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertLinesMatch;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
@@ -17,6 +18,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
@@ -25,6 +27,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.opentest4j.TestAbortedException;
 
 /**
  * Keeps docs/phone-digits.md - the phoneDigits contract for COREDEV-510 - in sync with the code.
@@ -59,6 +62,22 @@ public class PhoneDigitsContractDocTest {
 
     /** Repositories the contract points at, cloned next to this one. */
     private static final List<String> SIBLING_REPOS = List.of("ecos-datalist", "ecos-crm-citeck");
+
+    /**
+     * Turns every cross-repository check from a skip into a failure.
+     *
+     * <p>The symmetry of the copies of collectPhoneKeys is the main requirement of ECOSCRM-106, but
+     * it can only be checked against a clone that happens to lie next to this one. The Jenkinsfile
+     * is a bare ecosBuild() over this repository alone, so on the build agent the sibling is never
+     * there and these checks skip - a green CI run says nothing about the invariant. Set
+     * -Dphonedigits.requireSiblings=true when the answer has to be trustworthy (before a release,
+     * or from a job that checks both clones out) and the missing clone becomes a failure instead of
+     * a silent pass.
+     */
+    private static final String REQUIRE_SIBLINGS = "phonedigits.requireSiblings";
+
+    /** One filesystem scan per sibling per run: the answer cannot change while the JVM is alive. */
+    private static final Map<String, Boolean> SIBLING_CARRIES_FEATURE = new ConcurrentHashMap<>();
 
     @Test
     @DisplayName("the contract document exists")
@@ -215,6 +234,7 @@ public class PhoneDigitsContractDocTest {
 
         List<String> missing = new ArrayList<>();
         List<String> unknownRepo = new ArrayList<>();
+        List<String> unverified = new ArrayList<>();
         int inThisRepo = 0;
         int inSiblings = 0;
         while (matcher.find()) {
@@ -243,14 +263,27 @@ public class PhoneDigitsContractDocTest {
             // marker is the feature anywhere in the repository, not the referenced file itself,
             // so a misspelled path is still caught rather than skipped along with it
             Path sibling = Paths.get("..", repo);
-            if (siblingCarriesPhoneDigits(repo)
-                && !Files.isRegularFile(sibling.resolve(matched.substring(repo.length() + 1)))) {
+            if (!siblingCarriesPhoneDigits(repo)) {
+                // the clone is absent or predates the feature, so its files say nothing about the
+                // document - unless the run was asked to treat that as an answer it cannot give
+                unverified.add(matched);
+                continue;
+            }
+            if (!Files.isRegularFile(sibling.resolve(matched.substring(repo.length() + 1)))) {
                 missing.add(matched);
             }
         }
 
         assertEquals(List.of(), unknownRepo, "The document points at repositories that do not exist");
         assertEquals(List.of(), missing, "The document refers to files that do not exist");
+        if (siblingsAreRequired()) {
+            assertEquals(
+                List.of(), unverified,
+                "-D" + REQUIRE_SIBLINGS + "=true forbids leaving cross-repository references "
+                    + "unchecked: clone the repositories they point at next to this one, on a "
+                    + "revision that carries phoneDigits"
+            );
+        }
         // without these the test is a no-op as soon as the paths of the document are reformatted:
         // no match means an empty list, which equals the expectation
         assertTrue(inThisRepo >= 3, "The document must keep pointing at the artifacts it describes");
@@ -258,6 +291,42 @@ public class PhoneDigitsContractDocTest {
             inSiblings >= 3,
             "The document must keep pointing at the counterparty type, its patch and the community journal"
         );
+    }
+
+    @Test
+    @DisplayName("a missing sibling clone skips by default and fails the build when it is required")
+    void aMissingSiblingIsASkipByDefaultAndAFailureWhenRequired() {
+
+        // a name no clone can carry, so the outcome depends on the flag alone and not on what
+        // happens to lie next to this checkout on the machine running the test
+        String absent = "ecos-repository-that-is-not-cloned";
+
+        String previous = System.getProperty(REQUIRE_SIBLINGS);
+        try {
+            System.clearProperty(REQUIRE_SIBLINGS);
+            assertThrows(
+                TestAbortedException.class,
+                () -> assumeSiblingCarriesPhoneDigits(absent),
+                "Without the flag a missing clone must skip the check, not fail the build"
+            );
+
+            System.setProperty(REQUIRE_SIBLINGS, "true");
+            AssertionError required = assertThrows(
+                AssertionError.class,
+                () -> assumeSiblingCarriesPhoneDigits(absent),
+                "With the flag a missing clone must fail the build instead of skipping"
+            );
+            assertTrue(
+                required.getMessage().contains(absent),
+                "The failure must name the clone that is missing: " + required.getMessage()
+            );
+        } finally {
+            if (previous == null) {
+                System.clearProperty(REQUIRE_SIBLINGS);
+            } else {
+                System.setProperty(REQUIRE_SIBLINGS, previous);
+            }
+        }
     }
 
     /** Rows of the example table of the document: the input and the keys it must produce. */
@@ -356,15 +425,32 @@ public class PhoneDigitsContractDocTest {
      * clone happened to be on, and reported it as a defect of this one.
      */
     private static void assumeSiblingCarriesPhoneDigits(String repo) {
-        assumeTrue(
-            siblingCarriesPhoneDigits(repo),
-            repo + " is not checked out next to this repository, or is on a revision that predates "
-                + "phoneDigits - there is nothing to compare with"
-        );
+        if (siblingCarriesPhoneDigits(repo)) {
+            return;
+        }
+        String reason = repo + " is not checked out next to this repository, or is on a revision "
+            + "that predates phoneDigits - there is nothing to compare with";
+        if (siblingsAreRequired()) {
+            throw new AssertionError(
+                reason + ". -D" + REQUIRE_SIBLINGS + "=true forbids skipping this check: clone "
+                    + repo + " next to this repository on a revision that carries phoneDigits, or "
+                    + "drop the flag and accept that the copies of the algorithm are unverified"
+            );
+        }
+        assumeTrue(false, reason);
+    }
+
+    /** Whether a missing sibling clone must fail the build instead of skipping the check. */
+    private static boolean siblingsAreRequired() {
+        return Boolean.parseBoolean(System.getProperty(REQUIRE_SIBLINGS, "false"));
     }
 
     /** Whether a sibling clone is present and already carries the feature the contract describes. */
     private static boolean siblingCarriesPhoneDigits(String repo) {
+        return SIBLING_CARRIES_FEATURE.computeIfAbsent(repo, PhoneDigitsContractDocTest::scanSibling);
+    }
+
+    private static boolean scanSibling(String repo) {
         Path artifacts = Paths.get("..", repo, "src", "main", "resources", "app", "artifacts");
         if (!Files.isDirectory(artifacts)) {
             return false;
