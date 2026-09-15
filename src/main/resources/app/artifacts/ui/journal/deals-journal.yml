@@ -104,7 +104,14 @@ columns:
       ru: Телефон
       en: Phone
     type: TEXT
+    # the cell is displayed from the JSON contacts - loading a path inside a JSON attribute works,
+    # but a predicate over the same path is cut to alwaysFalse in ecos-data and the filter silently
+    # returns nothing. So filtering is redirected to the indexed computed attribute (ECOSCRM-106).
+    # The value to type is the 10-digit key: a predicate over a multiple column becomes an array
+    # overlap (&& ARRAY[?]), that is an exact match of one element, not a substring search.
     attribute: contacts.contactPhone
+    searchConfig:
+      searchAttribute: phoneDigits
   - id: e_message
     name:
       ru: Письмо
