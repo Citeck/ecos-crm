@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertLinesMatch;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;
@@ -50,6 +51,12 @@ public class PhoneDigitsContractDocTest {
 
     /** First segment of a path of this repository, as the document spells it. */
     private static final List<String> IN_REPO_PREFIXES = List.of("ecos-crm", "docs", "src");
+    /** The counterparty type: the second copy of the algorithm, in a repository cloned next to this one. */
+    private static final Path COUNTERPARTY = Paths.get(
+        "..", "ecos-datalist", "src", "main", "resources", "app", "artifacts", "model", "type",
+        "ecos-counterparty.yml"
+    ).toAbsolutePath().normalize();
+
     /** Repositories the contract points at, cloned next to this one. */
     private static final List<String> SIBLING_REPOS = List.of("ecos-datalist", "ecos-crm-citeck");
 
@@ -99,6 +106,51 @@ public class PhoneDigitsContractDocTest {
             counterpartyBlock.contains("collectPhoneKeys(phones[i], result)"),
             "The counterparty prologue must feed every source into the shared function"
         );
+    }
+
+    @Test
+    @DisplayName("the counterparty script carries the same collectPhoneKeys, character for character")
+    void counterpartyScriptCarriesTheSameCollectPhoneKeys() {
+
+        // the invariant the whole design rests on: if the two copies of the function diverge, the
+        // types produce different keys for the same number and every lookup misses without an error.
+        // Until now only a reviewer could notice that; the sibling clone is not guaranteed to be
+        // checked out, so the comparison runs whenever it is - the policy the path check below uses
+        assumeSiblingCloneIsPresent();
+
+        String expected = sharedFunctionOf(ComputedScriptRunner.readAttributeScript(OPPORTUNITY, "phoneDigits"));
+        String actual = sharedFunctionOf(ComputedScriptRunner.readAttributeScript(COUNTERPARTY, "phoneDigits"));
+
+        assertLinesMatch(
+            List.of(expected.split("\\R")),
+            List.of(actual.split("\\R")),
+            "collectPhoneKeys of " + COUNTERPARTY.getFileName() + " no longer matches the one of "
+                + OPPORTUNITY.getFileName() + ". The copies must change together, and together with "
+                + "the third one in the Mango route of COREDEV-510."
+        );
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    @DisplayName("the documented counterparty prologue is the one the counterparty type really runs")
+    void documentedCounterpartyPrologueIsTheRealOne() {
+
+        // the test above this one can only see what the document claims about the counterparty;
+        // this one compares that claim with the artifact, so a prologue changed in ecos-datalist
+        // alone can not leave the contract describing sources the type no longer reads
+        assumeSiblingCloneIsPresent();
+
+        String expected = prologueOf(ComputedScriptRunner.readAttributeScript(COUNTERPARTY, "phoneDigits"))
+            .stripTrailing();
+        String actual = jsBlocks().get(1).stripTrailing();
+
+        assertLinesMatch(
+            List.of(expected.split("\\R")),
+            List.of(actual.split("\\R")),
+            "The counterparty listing of " + DOC.getFileName() + " no longer matches "
+                + COUNTERPARTY.getFileName() + ". Regenerate the document instead of editing the listing."
+        );
+        assertEquals(expected, actual);
     }
 
     @ParameterizedTest(name = "[{index}] {0} = \"{1}\" -> {2}")
@@ -267,10 +319,33 @@ public class PhoneDigitsContractDocTest {
      * prologue of another type can be appended to it and executed.
      */
     private static String sharedFunction() {
-        String block = jsBlocks().get(0);
-        int prologue = block.indexOf("\nvar result = []");
-        assertTrue(prologue > 0, "The first listing must end with the prologue of opportunity");
-        return block.substring(0, prologue);
+        return jsBlocks().get(0).substring(0, prologueStart(jsBlocks().get(0)));
+    }
+
+    /** The part of a script that must be identical in every copy: the shared function itself. */
+    private static String sharedFunctionOf(String script) {
+        int start = script.indexOf("function collectPhoneKeys");
+        assertTrue(start >= 0, "The script must declare collectPhoneKeys");
+        return script.substring(start, prologueStart(script));
+    }
+
+    /** The part of a script that is allowed to differ per type: the prologue feeding the function. */
+    private static String prologueOf(String script) {
+        return script.substring(prologueStart(script) + 1);
+    }
+
+    /** Offset of the newline before the prologue - the single place the two parts are told apart. */
+    private static int prologueStart(String script) {
+        int prologue = script.indexOf("\nvar result = []");
+        assertTrue(prologue > 0, "The script must end with a prologue starting with 'var result = []'");
+        return prologue;
+    }
+
+    private static void assumeSiblingCloneIsPresent() {
+        assumeTrue(
+            Files.isRegularFile(COUNTERPARTY),
+            "ecos-datalist is not checked out next to this repository, nothing to compare with: " + COUNTERPARTY
+        );
     }
 
     private static List<String> jsBlocks() {
