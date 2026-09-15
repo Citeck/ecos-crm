@@ -177,7 +177,7 @@ model:
                 }
                 // split before extracting the digits: the other way round an extension glues
                 // itself to the main number and produces a key that does not exist
-                var parts = ('' + raw).split(/[,;#]|доб|вн\.|ext/i);
+                var parts = ('' + raw).split(/[,;#\/\r\n]|доб|доп|вн\.?|ext/i);
                 for (var p = 0; p < parts.length; p++) {
                     var digits = parts[p].replace(/[^0-9]/g, '');
                     if (digits.length < 10) {

@@ -7,8 +7,10 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -30,8 +32,8 @@ public class PhoneDigitsFillPatchTest {
     /** The type the attribute is declared on; lead and deal are picked up as its children. */
     private static final String TYPE_REF = "emodel/type@opportunity";
 
-    /** The sample the structure of this patch is taken from. */
-    private static final String SAMPLE_PATCH_ID = "move-crm-deals-to-crm-workspace";
+    /** The types that inherit phoneDigits from TYPE_REF and are recalculated through it. */
+    private static final List<String> CHILD_TYPES = List.of("deal", "lead");
 
     @Test
     @DisplayName("the patch runs the standard recalculation action over records of opportunity")
@@ -79,34 +81,35 @@ public class PhoneDigitsFillPatchTest {
             Boolean.TRUE.equals(patch.get("manual")),
             "the patch must be applied automatically on deploy, see the decision in the plan"
         );
+    }
 
+    @Test
+    @DisplayName("the group action is described by the two attributes it needs and nothing else")
+    void groupActionIsFullyDescribedTest() {
+        // a group action record with a missing half - a selection without an execution or the other
+        // way round - is created by the patch without an error and simply never processes anything
         assertEquals(
-            Boolean.TRUE,
-            PhoneDigitsHistoryExclusionTest.loadYaml(patchFile(SAMPLE_PATCH_ID)).get("manual"),
-            "the sample patch is expected to be manual - that is what this test guards against copying"
+            Set.of("values", "execution"),
+            new HashSet<>(groupActionAttributes(patchFile(PATCH_ID)).keySet()),
+            "the group action must describe what to select ('values') and what to do ('execution')"
         );
     }
 
     @Test
-    @DisplayName("the structure matches the sample patch, only the execution differs")
-    void structureMatchesSamplePatchTest() {
-        Map<?, ?> sample = groupActionAttributes(patchFile(SAMPLE_PATCH_ID));
-        Map<?, ?> actual = groupActionAttributes(patchFile(PATCH_ID));
-
-        assertEquals(
-            sample.keySet(),
-            actual.keySet(),
-            "the group action must be described by the same attributes as in the sample"
-        );
-        assertEquals(
-            section(sample, "values").get("type"),
-            section(actual, "values").get("type"),
-            "records are selected the same way as in the sample: by type"
-        );
-        assertFalse(
-            section(sample, "execution").get("type").equals(section(actual, "execution").get("type")),
-            "the sample moves records between workspaces, this patch recalculates attributes"
-        );
+    @DisplayName("the recalculated types inherit the attribute from the type the patch selects")
+    void childTypesInheritFromTheSelectedTypeTest() {
+        // the patch selects records of opportunity, which has no table of its own: it reaches lead
+        // and deal only because they are its children. Re-parenting either of them makes the patch
+        // silently skip its records and leaves them unsearchable by phone.
+        String parentRef = TYPE_REF;
+        for (String typeId : CHILD_TYPES) {
+            assertEquals(
+                parentRef,
+                PhoneDigitsHistoryExclusionTest.loadYaml(ComputedScriptRunner.typeFile(typeId))
+                    .get("parentRef"),
+                typeId + ".yml must stay a child of " + parentRef + ", the patch reaches it through the parent"
+            );
+        }
     }
 
     @Test

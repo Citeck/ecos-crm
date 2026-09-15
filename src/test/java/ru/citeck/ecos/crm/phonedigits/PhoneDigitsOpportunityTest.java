@@ -30,7 +30,7 @@ public class PhoneDigitsOpportunityTest {
     private static final Path OPPORTUNITY = ComputedScriptRunner.typeFile("opportunity");
     private static final String CONTACT_PHONES = "contacts[].contactPhone";
 
-    /** All 14 rows of the example table of ECOSCRM-106, in the order they are listed there. */
+    /** All 15 rows of the example table of ECOSCRM-106, in the order they are listed there. */
     static Stream<Arguments> exampleTable() {
         return Stream.of(
             // 11 digits, leading 8 dropped
@@ -49,7 +49,7 @@ public class PhoneDigitsOpportunityTest {
             Arguments.of("+375 (44) 523 14 73", List.of("5445231473")),
             // from the contacts of a counterparty
             Arguments.of("+7-917-946-7975", List.of("9179467975")),
-            // 6 digits, shorter than 10
+            // 7 digits, shorter than 10
             Arguments.of("630-20-10", List.of()),
             // fewer than 10 digits or none at all
             Arguments.of("1", List.of()),
@@ -107,6 +107,32 @@ public class PhoneDigitsOpportunityTest {
         assertEquals(List.of("4955564595"), phoneDigits("8-495-556-45-95 доб 422"));
         assertEquals(List.of("4955564595"), phoneDigits("8-495-556-45-95 вн. 422"));
         assertEquals(List.of("4955564595"), phoneDigits("8-495-556-45-95 ext 422"));
+        // the dot after "вн" is optional, the way it already is after "доб" and "ext": a value
+        // written without it used to produce the phantom key 5564595422 and lose the real number
+        assertEquals(List.of("4955564595"), phoneDigits("8-495-556-45-95 вн 422"));
+        assertEquals(List.of("4955564595"), phoneDigits("8-495-556-45-95 (вн 422)"));
+        assertEquals(List.of("4955564595"), phoneDigits("8-495-556-45-95 внутр. 422"));
+        assertEquals(List.of("4955564595"), phoneDigits("8-495-556-45-95 доп. 422"));
+    }
+
+    @Test
+    void slashAndNewLineSeparateTwoNumbersInsteadOfGluingThem() {
+        // both are ordinary ways to put a second number into one field; without them the digits of
+        // the two numbers concatenate and "take the last 10" invents a key that belongs to nobody
+        assertEquals(
+            List.of("9161177716", "4951234567"),
+            phoneDigits("+7 916 117-77-16 / +7 495 123-45-67")
+        );
+        assertEquals(
+            List.of("9161177716", "4951234567"),
+            phoneDigits("+7 916 117-77-16\n+7 495 123-45-67")
+        );
+        assertEquals(
+            List.of("9161177716", "4951234567"),
+            phoneDigits("+7 916 117-77-16\r\n+7 495 123-45-67")
+        );
+        // a short remainder after the slash is dropped by length and does not corrupt the key
+        assertEquals(List.of("4955564595"), phoneDigits("+7 495 556-45-95 / 12"));
     }
 
     @Test

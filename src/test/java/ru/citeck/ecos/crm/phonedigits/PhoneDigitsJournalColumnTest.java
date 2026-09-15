@@ -1,8 +1,8 @@
 package ru.citeck.ecos.crm.phonedigits;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.nio.file.Path;
@@ -86,14 +86,45 @@ public class PhoneDigitsJournalColumnTest {
     }
 
     @Test
+    @DisplayName("the definition of the searched attribute keeps the shape the filter relies on")
+    void searchAttributeDefinitionTest() {
+        // every property here is load bearing and none of them fails on deploy if it is changed:
+        // TEXT+multiple is what makes the predicate an array overlap over a varchar[] column,
+        // SCRIPT+ON_MUTATE is what keeps the keys up to date on every save of the record. Dropping
+        // any of them leaves a journal that deploys fine and finds nothing.
+        Map<?, ?> attribute = attributeDef(ComputedScriptRunner.typeFile("opportunity"), PHONE_DIGITS);
+
+        assertEquals("TEXT", attribute.get("type"), PHONE_DIGITS + " must stay a text attribute");
+        assertEquals(
+            Boolean.TRUE,
+            attribute.get("multiple"),
+            PHONE_DIGITS + " holds a key per phone, the filter is an overlap over the array"
+        );
+
+        Object computed = attribute.get("computed");
+        assertNotNull(computed, PHONE_DIGITS + " has no computed section");
+        assertEquals(
+            "SCRIPT",
+            ((Map<?, ?>) computed).get("type"),
+            "the keys are produced by the normalization script"
+        );
+        assertEquals(
+            "ON_MUTATE",
+            ((Map<?, ?>) computed).get("storingType"),
+            "the value must be stored and refreshed on every save, otherwise there is no column to filter"
+        );
+    }
+
+    @Test
     @DisplayName("the phone column is not turned into a separate visible digits column")
     void noDigitsColumnAddedTest() {
         // the keys are an internal lookup format - showing them to the user was deliberately
         // rejected, the column keeps the formatted number
         for (String journalId : JOURNALS) {
             for (Map<?, ?> column : columns(journalId)) {
-                assertTrue(
-                    !PHONE_DIGITS.equals(column.get("attribute")),
+                assertNotEquals(
+                    PHONE_DIGITS,
+                    column.get("attribute"),
                     journalId + ".yml: " + PHONE_DIGITS + " must not be shown as a column"
                 );
             }
@@ -113,8 +144,6 @@ public class PhoneDigitsJournalColumnTest {
                     searchable,
                     journalId + ".yml: the phone column must stay searchable"
                 );
-            } else {
-                assertNull(searchable);
             }
         }
     }

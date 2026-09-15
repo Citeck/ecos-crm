@@ -45,6 +45,8 @@ public class PhoneDigitsContractDocTest {
 
     private static final String EXAMPLE_TABLE_HEADER = "| Вход | Ключи | Правило |";
     private static final String NO_KEYS = "— нет";
+    /** The input cell of the empty-value row: an empty inline code span renders as two backticks. */
+    private static final String EMPTY_INPUT = "(пустая строка)";
 
     @Test
     @DisplayName("the contract document exists")
@@ -94,6 +96,39 @@ public class PhoneDigitsContractDocTest {
         );
     }
 
+    @ParameterizedTest(name = "[{index}] {0} = \"{1}\" -> {2}")
+    @MethodSource("counterpartySources")
+    @DisplayName("the documented counterparty prologue really produces the documented keys")
+    void documentedCounterpartyPrologueProducesTheDocumentedKeys(
+        String source,
+        String phone,
+        List<String> expected
+    ) {
+        // grepping the listing above only proves the sources are mentioned - a wrong order, a lost
+        // string guard around the scalar phone/cellPhone or a missing dedup would pass it. The
+        // prologue is what the Mango route of COREDEV-510 copies, so it is executed here for real.
+        String script = sharedFunction() + "\n" + jsBlocks().get(1);
+
+        Map<String, Object> atts = new HashMap<>();
+        atts.put("phone", null);
+        atts.put("cellPhone", null);
+        atts.put(CONTACT_PHONES, List.of());
+        atts.put(source, CONTACT_PHONES.equals(source) ? List.of(phone) : phone);
+
+        assertEquals(expected, ComputedScriptRunner.ofScript(script).executeToStringList(atts));
+    }
+
+    /** Every source of the counterparty prologue, each carrying the same number in turn. */
+    static Stream<Arguments> counterpartySources() {
+        return Stream.of(
+            Arguments.of("phone", "+7 (917) 582-92-99", List.of("9175829299")),
+            Arguments.of("cellPhone", "+7 (917) 582-92-99", List.of("9175829299")),
+            Arguments.of(CONTACT_PHONES, "+7 (917) 582-92-99", List.of("9175829299")),
+            Arguments.of("phone", "630-20-10", List.of()),
+            Arguments.of("cellPhone", "", List.of())
+        );
+    }
+
     @Test
     @DisplayName("the example table of the document is not empty and lists every documented rule")
     void exampleTableOfTheDocumentIsNotEmpty() {
@@ -115,17 +150,27 @@ public class PhoneDigitsContractDocTest {
     @DisplayName("every file the document points to exists in this repository")
     void everyFileTheDocumentPointsToExistsInThisRepository() {
 
-        Pattern path = Pattern.compile("`(ecos-crm/[\\w./-]+\\.(?:yml|md))`");
+        // both spellings the document uses for a file of this repository: prefixed with the
+        // project name, as the cross-repository references are, and repo relative
+        Pattern path = Pattern.compile("`((?:ecos-crm/|docs/|src/)[\\w./-]+\\.(?:yml|md))`");
         Matcher matcher = path.matcher(read(DOC));
 
         List<String> missing = new ArrayList<>();
+        int checked = 0;
         while (matcher.find()) {
-            String relative = matcher.group(1).substring("ecos-crm/".length());
+            checked++;
+            String matched = matcher.group(1);
+            String relative = matched.startsWith("ecos-crm/")
+                ? matched.substring("ecos-crm/".length())
+                : matched;
             if (!Files.isRegularFile(Paths.get(relative))) {
-                missing.add(matcher.group(1));
+                missing.add(matched);
             }
         }
         assertEquals(List.of(), missing, "The document refers to files that do not exist");
+        // without this the test is a no-op as soon as the paths of the document are reformatted:
+        // no match means an empty list, which equals the expectation
+        assertTrue(checked >= 3, "The document must keep pointing at the artifacts it describes");
     }
 
     /** Rows of the example table of the document: the input and the keys it must produce. */
@@ -177,10 +222,24 @@ public class PhoneDigitsContractDocTest {
      */
     private static String unwrapCode(String cell) {
         String value = cell.trim();
+        if (value.equals(EMPTY_INPUT)) {
+            return "";
+        }
         if (!value.startsWith("`") || !value.endsWith("`") || value.length() < 2) {
             throw new IllegalStateException("Table cell is not an inline code span: '" + cell + "'");
         }
         return value.substring(1, value.length() - 1);
+    }
+
+    /**
+     * The first listing without its opportunity prologue: the shared collectPhoneKeys only, so the
+     * prologue of another type can be appended to it and executed.
+     */
+    private static String sharedFunction() {
+        String block = jsBlocks().get(0);
+        int prologue = block.indexOf("\nvar result = []");
+        assertTrue(prologue > 0, "The first listing must end with the prologue of opportunity");
+        return block.substring(0, prologue);
     }
 
     private static List<String> jsBlocks() {
