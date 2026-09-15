@@ -148,3 +148,6 @@ Desktop.ini
 
 # local tooling state (Serena MCP indexes)
 .serena/
+
+# Playwright MCP run artifacts (snapshots, console logs)
+.playwright-mcp/
