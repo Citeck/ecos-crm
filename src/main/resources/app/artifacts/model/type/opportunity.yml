@@ -153,3 +153,58 @@ model:
       name:
         ru: Количество пользователей
         en: Number of users
+    - id: phoneDigits
+      name:
+        ru: Телефон (цифры)
+        en: Phone digits
+      type: TEXT
+      multiple: true
+      # a GIN index over VARCHAR[] - it is NOT created unless this flag is set explicitly
+      index:
+        enabled: true
+      computed:
+        type: SCRIPT
+        storingType: ON_MUTATE
+        config:
+          fn: |
+            // Normalized 10-digit lookup keys of every phone of the record, see ECOSCRM-106.
+            // The collectPhoneKeys function below must stay character-identical to its copies in
+            // ecos-datalist/model/type/ecos-counterparty.yml and in the Mango route of COREDEV-510:
+            // a divergence in any step makes the keys differ and the lookup silently miss.
+            function collectPhoneKeys(raw, target) {
+                if (raw === null || raw === undefined) {
+                    return;
+                }
+                // split before extracting the digits: the other way round an extension glues
+                // itself to the main number and produces a key that does not exist
+                var parts = ('' + raw).split(/[,;#]|доб|вн\.|ext/i);
+                for (var p = 0; p < parts.length; p++) {
+                    var digits = parts[p].replace(/[^0-9]/g, '');
+                    if (digits.length < 10) {
+                        continue;
+                    }
+                    var key = digits.substring(digits.length - 10);
+                    var known = false;
+                    for (var k = 0; k < target.length; k++) {
+                        if (target[k] === key) {
+                            known = true;
+                            break;
+                        }
+                    }
+                    if (!known) {
+                        target.push(key);
+                    }
+                }
+            }
+
+            var result = [];
+            var phones = value.load('contacts[].contactPhone');
+            if (phones !== null && phones !== undefined) {
+                if (typeof phones === 'string') {
+                    phones = [phones];
+                }
+                for (var i = 0; i < phones.length; i++) {
+                    collectPhoneKeys(phones[i], result);
+                }
+            }
+            return result;
