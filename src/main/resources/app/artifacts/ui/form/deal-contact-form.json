@@ -2,7 +2,8 @@
   "id": "deal-contact-form",
   "formKey": "",
   "title": {
-    "en": "Контакты"
+    "ru": "Контакты",
+    "en": "Contacts"
   },
   "description": {},
   "customModule": "",
@@ -17,7 +18,7 @@
         "refreshOn": [
           "counterpartyContacts"
         ],
-        "calculateValue": "const contacts = _.get(data, 'contacts', []);\n\nlet legacyContactsExists = false;\n\nconst contactIsNotEmpty = (contact) => {\n    return !!contact.contactFio ||\n        !!contact.contactDepartment ||\n        !!contact.contactEmail ||\n        !!contact.contactPhone ||\n        !!contact.contactPosition ||\n        !!contact.contactComment;\n}\n\nfor (const contact of contacts) {\n    if (contactIsNotEmpty(contact)) {\n        legacyContactsExists = true;\n        break;\n    }\n}\n\nvalue = legacyContactsExists;\n\nconst placeholderElement = document.querySelector('.citeck-contacts-widget_placeholder');\nif (placeholderElement) {\n  const htmlPlaceholder = placeholderElement.parentElement;\n  \n  if (htmlPlaceholder) {\n    if (!contacts.length && !_.get(data, 'counterpartyContacts.length')) {\n      htmlPlaceholder.removeAttribute('hidden');\n      htmlPlaceholder.removeAttribute('style');\n    } else {\n      htmlPlaceholder.setAttribute('hidden', true);\n    }\n  }\n}\n\nconst firstPanel = document.querySelectorAll('.citeck-widget-contacts__not-collapsed .panel-body')[0];\nif (firstPanel) {\n  firstPanel.removeAttribute('hidden');\n  firstPanel.removeAttribute('style');\n  \n  const parentElement = firstPanel.parentElement;\n  if (parentElement) {\n    const iconElement = parentElement.querySelector('.citeck-panel-icon-chevron');\n  \n    if (iconElement) {\n      iconElement.className = \"citeck-panel-icon-chevron down\";\n    }\n  }\n}",
+        "calculateValue": "const contacts = _.get(data, 'contacts', []);\n\nlet legacyContactsExists = false;\n\nconst contactIsNotEmpty = (contact) => {\n    return !!contact.contactFio ||\n        !!contact.contactDepartment ||\n        !!contact.contactEmail ||\n        !!contact.contactPhone ||\n        !!contact.contactPosition ||\n        !!contact.contactComment;\n}\n\nfor (const contact of contacts) {\n    if (contactIsNotEmpty(contact)) {\n        legacyContactsExists = true;\n        break;\n    }\n}\n\nvalue = legacyContactsExists;\n\n// The counterparty contacts arrive asynchronously. Until that request resolves the form knows\n// nothing about them, so the placeholder has to stay hidden - otherwise every deal whose\n// contacts live on the counterparty claims \"there are no contacts\" for the first seconds.\nconst counterpartyLoaded = !_.isUndefined(_.get(data, 'asyncCounterparty'));\nconst noContactsAtAll = !_.get(data, 'contacts.length') && !_.get(data, 'counterpartyContacts.length');\n\nconst placeholderElement = document.querySelector('.citeck-contacts-widget_placeholder');\nif (placeholderElement) {\n  const htmlPlaceholder = placeholderElement.parentElement;\n\n  if (htmlPlaceholder) {\n    if (counterpartyLoaded && noContactsAtAll) {\n      htmlPlaceholder.removeAttribute('hidden');\n      htmlPlaceholder.removeAttribute('style');\n    } else {\n      htmlPlaceholder.setAttribute('hidden', true);\n    }\n  }\n}\n\n// Both branches mark their first card as the one to open, and only one branch is rendered at a\n// time. Taking [0] blindly expanded the hidden branch and left the visible card collapsed, so\n// the widget looked empty - skip anything sitting inside a hidden component.\nconst notCollapsedPanels = document.querySelectorAll('.citeck-widget-contacts__not-collapsed');\nfor (let i = 0; i < notCollapsedPanels.length; i++) {\n  const panel = notCollapsedPanels[i];\n\n  if (panel.closest('[hidden]')) {\n    continue;\n  }\n\n  const panelBody = panel.querySelector('.panel-body');\n  if (!panelBody) {\n    continue;\n  }\n\n  panelBody.removeAttribute('hidden');\n  panelBody.removeAttribute('style');\n\n  const iconElement = panel.querySelector('.citeck-panel-icon-chevron');\n  if (iconElement) {\n    iconElement.className = \"citeck-panel-icon-chevron down\";\n  }\n\n  break;\n}",
         "optionalWhenDisabled": false,
         "type": "hidden",
         "input": true,
@@ -67,8 +68,8 @@
             "hidden": true,
             "className": "",
             "content": {
-              "ru": "text\n\n<style>\n    .citeck-widget-contacts .table-bordered {\n        border: none;\n    }\n    .citeck-widget-contacts .table-bordered th, .table-bordered td {\n        border: none;\n    }\n    \n    .citeck-widget-contacts .table th, .table td {\n        padding: 0;\n    }\n    \n    .citeck-widget-contacts .form-group {\n        margin: 0;\n    }\n    \n    .citeck-widget-contacts .card-body .panel-body {\n        padding: 0 28px !important;\n        margin-bottom: 12px;\n    }\n    \n    .citeck-widget-contacts-comment_view-mode,\n    .citeck-widget-contacts-columns dl {\n        border-bottom: none !important;\n        padding: 5px 0 !important;\n    }\n    \n    .citeck-widget-contacts-comment_view-mode dd,\n    .citeck-widget-contacts-columns dd {\n        color: #444444;\n        font-weight: 600;\n    }\n    \n    .citeck-widget-contacts-comment_view-mode dt,\n    .citeck-widget-contacts-columns dt {\n        color: #B7B7B7;\n    }\n    .citeck-widget-contacts-comment_view-mode dt:after,\n    .citeck-widget-contacts-columns dt:after {\n        content: \":\";\n    }\n    \n    .citeck-widget-contacts .card .card-title {\n        padding: 0;\n        margin-top: 2px;\n        margin-bottom: 12px !important;\n        margin-left: 0;\n        font-size: 14px !important;\n        \n        display: flex;\n        gap: 3px;\n        align-items: center;\n    }\n</style>",
-              "en": "text\n\n<style>\n    .citeck-widget-contacts .table-bordered {\n        border: none;\n    }\n    .citeck-widget-contacts .table-bordered th, .table-bordered td {\n        border: none;\n    }\n    \n    .citeck-widget-contacts .table th, .table td {\n        padding: 0;\n    }\n    \n    .citeck-widget-contacts .form-group {\n        margin: 0;\n    }\n    \n    .citeck-widget-contacts .card-body .panel-body {\n        padding: 0 28px !important;\n        margin-bottom: 12px;\n    }\n    \n    .citeck-widget-contacts-comment_view-mode,\n    .citeck-widget-contacts-columns dl {\n        border-bottom: none !important;\n        padding: 5px 0 !important;\n    }\n    \n    .citeck-widget-contacts-comment_view-mode dd,\n    .citeck-widget-contacts-columns dd {\n        color: #444444;\n        font-weight: 600;\n    }\n    \n    .citeck-widget-contacts-comment_view-mode dt,\n    .citeck-widget-contacts-columns dt {\n        color: #B7B7B7;\n    }\n    .citeck-widget-contacts-comment_view-mode dt:after,\n    .citeck-widget-contacts-columns dt:after {\n        content: \":\";\n    }\n    \n    .citeck-widget-contacts .card .card-title {\n        padding: 0;\n        margin-top: 2px;\n        margin-bottom: 12px !important;\n        margin-left: 0;\n        font-size: 14px !important;\n        \n        display: flex;\n        gap: 3px;\n        align-items: center;\n    }\n</style>"
+              "ru": "text\n\n<style>\n    .citeck-widget-contacts .form-group {\n        margin: 0;\n    }\n\n    /* The platform sets a border and 0.65rem/0.5rem padding on every datagrid cell. Here each\n       cell holds a whole contact card, so the cell must not add any frame of its own. The\n       selector has to stay inside .citeck-widget-contacts and outrank\n       `.formio-component-datagrid table.table-bordered td`, otherwise it either leaks onto\n       every table of the page or loses and does nothing. */\n    .citeck-widget-contacts .formio-component-datagrid table.table-bordered th,\n    .citeck-widget-contacts .formio-component-datagrid table.table-bordered td {\n        padding: 0;\n        border: none;\n        height: auto;\n    }\n\n    /* Direct child, not descendant: the legacy branch nests one panel body inside another, so a\n       descendant selector applied this inset twice and squeezed the content into the middle of\n       the widget. Zero keeps the contact fields aligned with the neighbouring dashlets, which\n       rely on the dashlet's own padding alone. */\n    .citeck-widget-contacts .card > .card-body.panel-body {\n        padding: 0 !important;\n        margin-bottom: 12px;\n    }\n\n    .citeck-widget-contacts-comment_view-mode,\n    .citeck-widget-contacts-columns dl {\n        border-bottom: none !important;\n        padding: 5px 0 !important;\n    }\n\n    .citeck-widget-contacts-comment_view-mode dd,\n    .citeck-widget-contacts-columns dd {\n        color: #444444;\n        font-weight: 600;\n    }\n\n    .citeck-widget-contacts-comment_view-mode dt,\n    .citeck-widget-contacts-columns dt {\n        color: #B7B7B7;\n    }\n    .citeck-widget-contacts-comment_view-mode dt:after,\n    .citeck-widget-contacts-columns dt:after {\n        content: \":\";\n    }\n\n    .citeck-widget-contacts .card .card-title {\n        padding: 0;\n        margin-top: 2px;\n        margin-bottom: 12px !important;\n        margin-left: 0;\n        font-size: 14px !important;\n\n        display: flex;\n        gap: 3px;\n        align-items: center;\n    }\n</style>",
+              "en": "text\n\n<style>\n    .citeck-widget-contacts .form-group {\n        margin: 0;\n    }\n\n    /* The platform sets a border and 0.65rem/0.5rem padding on every datagrid cell. Here each\n       cell holds a whole contact card, so the cell must not add any frame of its own. The\n       selector has to stay inside .citeck-widget-contacts and outrank\n       `.formio-component-datagrid table.table-bordered td`, otherwise it either leaks onto\n       every table of the page or loses and does nothing. */\n    .citeck-widget-contacts .formio-component-datagrid table.table-bordered th,\n    .citeck-widget-contacts .formio-component-datagrid table.table-bordered td {\n        padding: 0;\n        border: none;\n        height: auto;\n    }\n\n    /* Direct child, not descendant: the legacy branch nests one panel body inside another, so a\n       descendant selector applied this inset twice and squeezed the content into the middle of\n       the widget. Zero keeps the contact fields aligned with the neighbouring dashlets, which\n       rely on the dashlet's own padding alone. */\n    .citeck-widget-contacts .card > .card-body.panel-body {\n        padding: 0 !important;\n        margin-bottom: 12px;\n    }\n\n    .citeck-widget-contacts-comment_view-mode,\n    .citeck-widget-contacts-columns dl {\n        border-bottom: none !important;\n        padding: 5px 0 !important;\n    }\n\n    .citeck-widget-contacts-comment_view-mode dd,\n    .citeck-widget-contacts-columns dd {\n        color: #444444;\n        font-weight: 600;\n    }\n\n    .citeck-widget-contacts-comment_view-mode dt,\n    .citeck-widget-contacts-columns dt {\n        color: #B7B7B7;\n    }\n    .citeck-widget-contacts-comment_view-mode dt:after,\n    .citeck-widget-contacts-columns dt:after {\n        content: \":\";\n    }\n\n    .citeck-widget-contacts .card .card-title {\n        padding: 0;\n        margin-top: 2px;\n        margin-bottom: 12px !important;\n        margin-left: 0;\n        font-size: 14px !important;\n\n        display: flex;\n        gap: 3px;\n        align-items: center;\n    }\n</style>"
             },
             "refreshOnChange": false,
             "refreshOn": [],
@@ -171,7 +172,7 @@
                 "key": "panel5",
                 "title": {
                   "ru": "${contactFio}",
-                  "en": "Contact: ${contactFio}"
+                  "en": "${contactFio}"
                 },
                 "theme": "transparent",
                 "customClass": "citeck-widget-contacts__not-collapsed",
@@ -365,7 +366,7 @@
                 },
                 "key": "syncContacts",
                 "refreshOn": [],
-                "calculateValue": "let checkMainContact = false;\r\nfor (const contact of data.contacts) {\r\n  if (contact.contactMain) {\r\n    checkMainContact = true;\r\n    break;\r\n  }\r\n}\r\n\r\nif (checkMainContact && !data.contacts[0].contactMain) {\r\n  const sortedContacts = data.contacts;\r\n  sortedContacts.sort((a, b) => b.contactMain - a.contactMain);\r\n  var dataGridInst = util.searchComponents(instance.parent.components, \"contacts\");\r\n  dataGridInst[0].setValue(sortedContacts);\r\n}\r\n\r\nconst placeholderElement = document.querySelector('.citeck-contacts-widget_placeholder');\r\nif (placeholderElement) {\r\n  const htmlPlaceholder = placeholderElement.parentElement;\r\n  \r\n  if (htmlPlaceholder) {\r\n    if (!_.get(data, 'asyncCounterparty.contacts.length') && !_.get(data, 'counterpartyContacts.length')) {\r\n      htmlPlaceholder.removeAttribute('hidden');\r\n      htmlPlaceholder.removeAttribute('style');\r\n    } else {\r\n      htmlPlaceholder.setAttribute('hidden', true);\r\n    }\r\n  }\r\n}\r\n\r\nconst firstPanel = document.querySelectorAll('.citeck-widget-contacts__not-collapsed .panel-body')[0];\r\nif (firstPanel) {\r\n  firstPanel.removeAttribute('hidden');\r\n  firstPanel.removeAttribute('style');\r\n  \r\n  const parentElement = firstPanel.parentElement;\r\n  if (parentElement) {\r\n    const iconElement = parentElement.querySelector('.citeck-panel-icon-chevron');\r\n  \r\n    if (iconElement) {\r\n      iconElement.className = \"citeck-panel-icon-chevron down\";\r\n    }\r\n  }\r\n}",
+                "calculateValue": "let checkMainContact = false;\nfor (const contact of data.contacts) {\n  if (contact.contactMain) {\n    checkMainContact = true;\n    break;\n  }\n}\n\nif (checkMainContact && !data.contacts[0].contactMain) {\n  const sortedContacts = data.contacts;\n  sortedContacts.sort((a, b) => b.contactMain - a.contactMain);\n  var dataGridInst = util.searchComponents(instance.parent.components, \"contacts\");\n  dataGridInst[0].setValue(sortedContacts);\n}\n\n// The counterparty contacts arrive asynchronously. Until that request resolves the form knows\n// nothing about them, so the placeholder has to stay hidden - otherwise every deal whose\n// contacts live on the counterparty claims \"there are no contacts\" for the first seconds.\nconst counterpartyLoaded = !_.isUndefined(_.get(data, 'asyncCounterparty'));\nconst noContactsAtAll = !_.get(data, 'contacts.length') && !_.get(data, 'counterpartyContacts.length');\n\nconst placeholderElement = document.querySelector('.citeck-contacts-widget_placeholder');\nif (placeholderElement) {\n  const htmlPlaceholder = placeholderElement.parentElement;\n\n  if (htmlPlaceholder) {\n    if (counterpartyLoaded && noContactsAtAll) {\n      htmlPlaceholder.removeAttribute('hidden');\n      htmlPlaceholder.removeAttribute('style');\n    } else {\n      htmlPlaceholder.setAttribute('hidden', true);\n    }\n  }\n}\n\n// Both branches mark their first card as the one to open, and only one branch is rendered at a\n// time. Taking [0] blindly expanded the hidden branch and left the visible card collapsed, so\n// the widget looked empty - skip anything sitting inside a hidden component.\nconst notCollapsedPanels = document.querySelectorAll('.citeck-widget-contacts__not-collapsed');\nfor (let i = 0; i < notCollapsedPanels.length; i++) {\n  const panel = notCollapsedPanels[i];\n\n  if (panel.closest('[hidden]')) {\n    continue;\n  }\n\n  const panelBody = panel.querySelector('.panel-body');\n  if (!panelBody) {\n    continue;\n  }\n\n  panelBody.removeAttribute('hidden');\n  panelBody.removeAttribute('style');\n\n  const iconElement = panel.querySelector('.citeck-panel-icon-chevron');\n  if (iconElement) {\n    iconElement.className = \"citeck-panel-icon-chevron down\";\n  }\n\n  break;\n}",
                 "optionalWhenDisabled": false,
                 "type": "hidden",
                 "input": true,
@@ -425,6 +426,13 @@
                     "type": "panel",
                     "input": false,
                     "components": [
+                      {
+                        "key": "contactFio",
+                        "optionalWhenDisabled": false,
+                        "type": "hidden",
+                        "input": true,
+                        "reorder": false
+                      },
                       {
                         "label": {
                           "ru": "Columns"
@@ -565,7 +573,8 @@
                         "reorder": false
                       }
                     ],
-                    "row": "0-0"
+                    "row": "0-0",
+                    "customClass": "citeck-widget-contacts__not-collapsed"
                   }
                 ],
                 "rowGroups": [
@@ -663,7 +672,12 @@
                 "refreshOn": [],
                 "optionalWhenDisabled": false,
                 "type": "button",
-                "input": true
+                "input": true,
+                "conditional": {
+                  "show": "true",
+                  "when": "is_legacy_contacts",
+                  "eq": "true"
+                }
               }
             ]
           }
