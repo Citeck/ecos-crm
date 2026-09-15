@@ -17,6 +17,15 @@
         <version>1.1.1</version>
     </parent>
 
+    <properties>
+        <!--
+            Tests require Java 17+ (GraalJS 24.x), while the parent pom compiles with source/target 1.8.
+            The jdk17-tests profile below enables them; on an older JDK test sources are skipped
+            entirely, so the artifacts build stays green regardless of the JDK on the CI agent.
+        -->
+        <maven.test.skip>true</maven.test.skip>
+    </properties>
+
     <repositories>
         <repository>
             <id>citeck-public</id>
@@ -30,5 +39,53 @@
             <url>http://nexus.citeck.ru/repository/maven-public</url>
         </pluginRepository>
     </pluginRepositories>
+
+    <profiles>
+        <profile>
+            <id>jdk17-tests</id>
+            <activation>
+                <jdk>[17,)</jdk>
+            </activation>
+            <properties>
+                <maven.test.skip>false</maven.test.skip>
+                <maven.compiler.source>17</maven.compiler.source>
+                <maven.compiler.target>17</maven.compiler.target>
+                <junit.version>5.12.2</junit.version>
+                <graaljs.version>24.2.2</graaljs.version>
+                <snakeyaml.version>2.2</snakeyaml.version>
+                <surefire.version>3.5.4</surefire.version>
+            </properties>
+            <dependencies>
+                <dependency>
+                    <groupId>org.junit.jupiter</groupId>
+                    <artifactId>junit-jupiter</artifactId>
+                    <version>${junit.version}</version>
+                    <scope>test</scope>
+                </dependency>
+                <dependency>
+                    <groupId>org.graalvm.js</groupId>
+                    <artifactId>js</artifactId>
+                    <version>${graaljs.version}</version>
+                    <type>pom</type>
+                    <scope>test</scope>
+                </dependency>
+                <dependency>
+                    <groupId>org.yaml</groupId>
+                    <artifactId>snakeyaml</artifactId>
+                    <version>${snakeyaml.version}</version>
+                    <scope>test</scope>
+                </dependency>
+            </dependencies>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <version>${surefire.version}</version>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 
 </project>

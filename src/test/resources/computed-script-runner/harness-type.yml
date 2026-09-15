@@ -1,0 +1,55 @@
+---
+# Fixture for ComputedScriptRunnerTest: checks the harness itself, not any business logic.
+# Shaped exactly like a real type artifact, so the runner is exercised on the same yaml layout.
+id: computed-script-runner-harness
+name:
+  ru: Обвязка для тестов вычисляемых скриптов
+model:
+  attributes:
+    - id: harnessTwoStrings
+      type: TEXT
+      multiple: true
+      computed:
+        type: SCRIPT
+        config:
+          fn: |
+            var result = [];
+            result.push('first');
+            result.push('second');
+            return result;
+    - id: harnessLoadedValueKind
+      type: TEXT
+      multiple: true
+      computed:
+        type: SCRIPT
+        config:
+          fn: |
+            var phones = value.load('contacts[].contactPhone');
+            var result = [];
+            result.push('' + Array.isArray(phones));
+            result.push(typeof phones.map);
+            result.push('' + phones.length);
+            result.push('' + phones[0]);
+            return result;
+    - id: harnessLoadedObjectKind
+      type: TEXT
+      multiple: true
+      computed:
+        type: SCRIPT
+        config:
+          fn: |
+            var contact = value.load('contacts[0]');
+            var result = [];
+            result.push('' + contact.contactPhone);
+            result.push('keys:' + Object.keys(contact).length);
+            return result;
+    - id: harnessWithoutReturnKeyword
+      type: TEXT
+      multiple: true
+      computed:
+        type: SCRIPT
+        config:
+          fn: |
+            ['first', 'second'];
+    - id: harnessWithoutComputed
+      type: TEXT
