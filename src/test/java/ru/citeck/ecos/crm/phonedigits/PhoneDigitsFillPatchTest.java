@@ -5,6 +5,9 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.io.IOException;
+import java.io.UncheckedIOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -13,6 +16,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -29,6 +33,8 @@ import org.junit.jupiter.api.Test;
 public class PhoneDigitsFillPatchTest {
 
     private static final String PATCHES_DIR = "src/main/resources/app/artifacts/app/patch";
+
+    private static final String TYPES_DIR = "src/main/resources/app/artifacts/model/type";
 
     private static final String PATCH_ID = "fill-opportunity-phone-digits";
     /** The type the attribute is declared on; lead and deal are picked up as its children. */
@@ -111,11 +117,18 @@ public class PhoneDigitsFillPatchTest {
         // automatically on every stand it reaches. The selector must therefore leave those records
         // out; they keep an empty phoneDigits, which is recoverable, instead of losing a date,
         // which is not.
-        List<String> onEmptyAtts = onEmptyAttributeIds(ComputedScriptRunner.typeFile(TYPE_ID));
+        //
+        // The scan covers the children too: opportunity has no table of its own, the group action
+        // reaches lead and deal by recursing into the children of the selected type and
+        // recalculates each of them with its OWN model. An ON_EMPTY attribute declared on deal.yml
+        // or lead.yml is therefore just as exposed as one on the parent, and looking only at
+        // opportunity.yml would leave two of the three recalculated types unguarded.
+        List<String> onEmptyAtts = guardedOnEmptyAttributeIds();
         assertFalse(
             onEmptyAtts.isEmpty(),
-            "opportunity is expected to declare at least one ON_EMPTY attribute (dateReceived); "
-                + "if that is no longer true, the guard predicate below can be dropped deliberately"
+            "opportunity or one of its children is expected to declare at least one ON_EMPTY "
+                + "attribute (dateReceived); if that is no longer true, the guard predicate below "
+                + "can be dropped deliberately"
         );
 
         Object predicate = section(
@@ -126,8 +139,12 @@ public class PhoneDigitsFillPatchTest {
         assertEquals(
             expectedGuard(onEmptyAtts),
             predicate,
-            "every ON_EMPTY attribute of " + TYPE_ID + " must be guarded by a not-empty condition "
-                + "in the patch selector, otherwise the recalculation rewrites it with a fresh value"
+            "every ON_EMPTY attribute of " + TYPE_ID + " and of its recalculated children "
+                + CHILD_TYPES + " must be guarded by a not-empty condition in the patch selector, "
+                + "otherwise the recalculation rewrites it with a fresh value. Found " + onEmptyAtts
+                + " - if an attribute here is declared on a child only, decide deliberately whether "
+                + "the guard belongs in the shared selector: the predicate is applied to every "
+                + "recalculated type, including the ones that do not declare that attribute"
         );
     }
 
@@ -158,6 +175,35 @@ public class PhoneDigitsFillPatchTest {
                 typeId + ".yml must stay a child of " + parentRef + ", the patch reaches it through the parent"
             );
         }
+    }
+
+    @Test
+    @DisplayName("CHILD_TYPES lists every type the patch recalculates through the parent")
+    void childTypesListIsCompleteTest() {
+        // the ON_EMPTY guard above is only as complete as this list: the group action recurses into
+        // every child of the selected type, so a third child added to the project without being
+        // added here would be recalculated with a guard that never looked at its model.
+        Set<String> declaredChildren = new HashSet<>();
+        try (Stream<Path> typeFiles = Files.list(Paths.get(TYPES_DIR))) {
+            typeFiles.filter(file -> file.getFileName().toString().endsWith(".yml"))
+                .forEach(file -> {
+                    Object parentRef = PhoneDigitsHistoryExclusionTest.loadYaml(file.toAbsolutePath())
+                        .get("parentRef");
+                    if (TYPE_REF.equals(parentRef)) {
+                        String fileName = file.getFileName().toString();
+                        declaredChildren.add(fileName.substring(0, fileName.length() - ".yml".length()));
+                    }
+                });
+        } catch (IOException e) {
+            throw new UncheckedIOException("Can't list type files in " + TYPES_DIR, e);
+        }
+
+        assertEquals(
+            declaredChildren,
+            new HashSet<>(CHILD_TYPES),
+            "CHILD_TYPES must list exactly the types whose parentRef is " + TYPE_REF
+                + " - the patch recalculates all of them and the ON_EMPTY guard is derived from them"
+        );
     }
 
     @Test
@@ -207,6 +253,26 @@ public class PhoneDigitsFillPatchTest {
         and.put("t", "and");
         and.put("val", conditions);
         return and;
+    }
+
+    /**
+     * Ids of the ON_EMPTY attributes of every type the patch recalculates - the selected type and
+     * the children it reaches through it - in declaration order, without duplicates.
+     */
+    private static List<String> guardedOnEmptyAttributeIds() {
+        List<String> typeIds = new ArrayList<>();
+        typeIds.add(TYPE_ID);
+        typeIds.addAll(CHILD_TYPES);
+
+        List<String> result = new ArrayList<>();
+        for (String typeId : typeIds) {
+            for (String att : onEmptyAttributeIds(ComputedScriptRunner.typeFile(typeId))) {
+                if (!result.contains(att)) {
+                    result.add(att);
+                }
+            }
+        }
+        return result;
     }
 
     /** Ids of the attributes the type declares as {@code computed.storingType: ON_EMPTY}. */
