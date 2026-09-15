@@ -112,7 +112,7 @@ function collectPhoneKeys(raw, target) {
 var result = [];
 var phones = value.load('contacts[].contactPhone');
 if (phones !== null && phones !== undefined) {
-    if (typeof phones === 'string') {
+    if (typeof phones === 'string' || typeof phones === 'number') {
         phones = [phones];
     }
     for (var i = 0; i < phones.length; i++) {
@@ -137,7 +137,7 @@ for (var s = 0; s < sources.length; s++) {
     if (phones === null || phones === undefined) {
         continue;
     }
-    if (typeof phones === 'string') {
+    if (typeof phones === 'string' || typeof phones === 'number') {
         phones = [phones];
     }
     for (var i = 0; i < phones.length; i++) {

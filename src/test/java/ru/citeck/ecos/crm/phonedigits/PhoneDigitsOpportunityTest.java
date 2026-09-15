@@ -221,6 +221,13 @@ public class PhoneDigitsOpportunityTest {
         assertEquals(List.of("9161177716"), phoneDigitsOf("+79161177716"));
     }
 
+    @Test
+    void singleNumericValueReturnedInsteadOfAListIsStillProcessed() {
+        // contacts is free-form JSON, so an integration may write contactPhone as a number;
+        // a scalar number has no length, so without the guard the loop would silently do nothing
+        assertEquals(List.of("9161177716"), phoneDigitsOf(79161177716L));
+    }
+
     // --- helpers ---
 
     private static List<String> phoneDigits(String... contactPhones) {
