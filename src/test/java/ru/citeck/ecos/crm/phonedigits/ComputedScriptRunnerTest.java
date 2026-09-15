@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.Instant;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -22,6 +23,10 @@ public class ComputedScriptRunnerTest {
     private static final Path HARNESS_TYPE =
         Paths.get("src/test/resources/computed-script-runner/harness-type.yml").toAbsolutePath();
 
+    /** A synthetic three-level type hierarchy, so the walk is checked on more than one level. */
+    private static final Path TYPE_TREE =
+        Paths.get("src/test/resources/computed-script-runner/type-tree").toAbsolutePath();
+
     @Test
     void scriptFromYamlReturningTwoStringsReachesTheRunner() {
 
@@ -30,6 +35,41 @@ public class ComputedScriptRunnerTest {
             .executeToStringList(Map.of());
 
         assertEquals(List.of("first", "second"), result);
+    }
+
+    @Test
+    void descendantTypeIdsWalksTheWholeSubtreeNotOnlyTheDirectChildren() {
+
+        // the group action of an admin-action-records-of-type patch recurses over every descendant
+        // of the selected type, so a guard derived from the direct children only would stay green
+        // while a type nested one level deeper was recalculated unchecked
+        List<String> descendants =
+            ComputedScriptRunner.descendantTypeIds(TYPE_TREE, "emodel/type@harness-root");
+
+        assertEquals(List.of("grandchild", "great-grandchild", "root-child"), descendants);
+    }
+
+    @Test
+    void descendantTypeIdsOfATypeWithoutChildrenIsEmpty() {
+
+        assertEquals(
+            List.of(),
+            ComputedScriptRunner.descendantTypeIds(TYPE_TREE, "emodel/type@great-grandchild")
+        );
+    }
+
+    @Test
+    void aDateReturnedByAScriptBecomesAnInstantJustLikeInProduction() {
+
+        // opportunity.dateReceived is `return new Date();`, so the harness must mirror the
+        // isInstant branch of ScriptUtils.convertToJava. A js Date has members and no array
+        // elements: without that branch it falls through to hasMembers and the harness reports an
+        // empty map, which would silently validate a date attribute against the wrong semantics.
+        Object result = ComputedScriptRunner
+            .ofScript("return new Date(86400000);")
+            .execute(Map.of());
+
+        assertEquals(Instant.ofEpochMilli(86400000L), result);
     }
 
     @Test

@@ -37,7 +37,7 @@ public class PhoneDigitsFillPatchTest {
     /** Local id of TYPE_REF - the type file the guard below is checked against. */
     private static final String TYPE_ID = "opportunity";
 
-    /** The types that inherit phoneDigits from TYPE_REF and are recalculated through it. */
+    /** Every type that descends from TYPE_REF at any depth and is recalculated through it. */
     private static final List<String> CHILD_TYPES = List.of("deal", "lead");
 
     @Test
@@ -165,16 +165,15 @@ public class PhoneDigitsFillPatchTest {
     @Test
     @DisplayName("the recalculated types inherit the attribute from the type the patch selects")
     void childTypesInheritFromTheSelectedTypeTest() {
-        // the patch selects records of opportunity, and reaches lead and deal only because they are
-        // its children. Re-parenting either of them makes the patch silently skip its records and
-        // leaves them unsearchable by phone.
-        String parentRef = TYPE_REF;
+        // the patch selects records of opportunity, and reaches lead and deal only because they
+        // descend from it. Re-parenting either of them out of the subtree makes the patch silently
+        // skip its records and leaves them unsearchable by phone.
+        Set<String> reachable = new HashSet<>(ComputedScriptRunner.descendantTypeIds(TYPE_REF));
         for (String typeId : CHILD_TYPES) {
-            assertEquals(
-                parentRef,
-                PhoneDigitsHistoryExclusionTest.loadYaml(ComputedScriptRunner.typeFile(typeId))
-                    .get("parentRef"),
-                typeId + ".yml must stay a child of " + parentRef + ", the patch reaches it through the parent"
+            assertTrue(
+                reachable.contains(typeId),
+                typeId + ".yml must stay inside the " + TYPE_REF
+                    + " subtree, the patch reaches it through the parent"
             );
         }
     }
@@ -183,15 +182,17 @@ public class PhoneDigitsFillPatchTest {
     @DisplayName("CHILD_TYPES lists every type the patch recalculates through the parent")
     void childTypesListIsCompleteTest() {
         // the ON_EMPTY guard above is only as complete as this list: the group action recurses into
-        // every child of the selected type, so a third child added to the project without being
-        // added here would be recalculated with a guard that never looked at its model.
-        Set<String> declaredChildren = new HashSet<>(ComputedScriptRunner.childTypeIds(TYPE_REF));
+        // the whole subtree of the selected type, not just its direct children, so a type added
+        // under deal or lead without being added here would be recalculated with a guard that
+        // never looked at its model.
+        Set<String> declaredChildren = new HashSet<>(ComputedScriptRunner.descendantTypeIds(TYPE_REF));
 
         assertEquals(
             declaredChildren,
             new HashSet<>(CHILD_TYPES),
-            "CHILD_TYPES must list exactly the types whose parentRef is " + TYPE_REF
-                + " - the patch recalculates all of them and the ON_EMPTY guard is derived from them"
+            "CHILD_TYPES must list exactly the types that descend from " + TYPE_REF
+                + " at any depth - the patch recalculates all of them and the ON_EMPTY guard is"
+                + " derived from them"
         );
     }
 

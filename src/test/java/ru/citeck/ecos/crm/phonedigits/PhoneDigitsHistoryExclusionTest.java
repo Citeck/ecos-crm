@@ -119,7 +119,7 @@ public class PhoneDigitsHistoryExclusionTest {
         // with the aspect now declared on opportunity too, a child that stopped setting
         // inheritConfig: false would merge the parent config in and silently lose its own
         // exclusions - deal would stop excluding crm-bitrix24:bitrixSyncDate
-        for (String typeId : ComputedScriptRunner.childTypeIds(PARENT_TYPE_REF)) {
+        for (String typeId : ComputedScriptRunner.descendantTypeIds(PARENT_TYPE_REF)) {
             assertEquals(
                 Boolean.FALSE,
                 historyAspect(ComputedScriptRunner.typeFile(typeId)).get("inheritConfig"),
@@ -130,12 +130,12 @@ public class PhoneDigitsHistoryExclusionTest {
 
     /**
      * Types whose records carry phoneDigits and therefore need the exclusion: the type declaring
-     * the attribute plus every child of it found in the project.
+     * the attribute plus every type of the project that descends from it, at any depth.
      */
     private static List<String> typesThatHoldRecords() {
         List<String> types = new ArrayList<>();
         types.add(PARENT_TYPE);
-        types.addAll(ComputedScriptRunner.childTypeIds(PARENT_TYPE_REF));
+        types.addAll(ComputedScriptRunner.descendantTypeIds(PARENT_TYPE_REF));
         return types;
     }
 

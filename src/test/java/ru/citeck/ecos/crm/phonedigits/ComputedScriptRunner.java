@@ -47,23 +47,51 @@ public final class ComputedScriptRunner {
     }
 
     /**
-     * Type ids of this project whose {@code parentRef} is the given ref, in alphabetical order.
+     * Type ids of this project that descend from the given ref, at any depth, in alphabetical
+     * order.
      *
      * <p>Derived from the type directory rather than listed by hand: a child added to the project
      * is picked up by every check built on this list instead of being silently left out of it.
+     *
+     * <p>The whole subtree, not only the direct children: everything that reaches a type through
+     * the type hierarchy - the group action of an {@code admin-action-records-of-type} patch, the
+     * inheritance of a computed attribute - recurses all the way down, so a check that stopped at
+     * the first level would stay green while a grandchild went unguarded.
      */
-    public static List<String> childTypeIds(String parentRef) {
-        List<String> ids = new ArrayList<>();
-        try (java.util.stream.Stream<Path> typeFiles = Files.list(Paths.get(TYPES_DIR))) {
+    public static List<String> descendantTypeIds(String rootRef) {
+        return descendantTypeIds(Paths.get(TYPES_DIR), rootRef);
+    }
+
+    /** Same walk over an arbitrary directory of type files - lets the walk itself be tested. */
+    static List<String> descendantTypeIds(Path typesDir, String rootRef) {
+        Map<String, List<String>> childrenByParentRef = new LinkedHashMap<>();
+        try (java.util.stream.Stream<Path> typeFiles = Files.list(typesDir)) {
             typeFiles.filter(file -> file.getFileName().toString().endsWith(".yml"))
                 .forEach(file -> {
-                    if (parentRef.equals(loadYaml(file.toAbsolutePath()).get("parentRef"))) {
+                    Object parentRef = loadYaml(file.toAbsolutePath()).get("parentRef");
+                    if (parentRef instanceof String) {
                         String fileName = file.getFileName().toString();
-                        ids.add(fileName.substring(0, fileName.length() - ".yml".length()));
+                        childrenByParentRef
+                            .computeIfAbsent((String) parentRef, key -> new ArrayList<>())
+                            .add(fileName.substring(0, fileName.length() - ".yml".length()));
                     }
                 });
         } catch (java.io.IOException e) {
-            throw new IllegalArgumentException("Can't list type files in " + TYPES_DIR, e);
+            throw new IllegalArgumentException("Can't list type files in " + typesDir, e);
+        }
+        String refPrefix = rootRef.substring(0, rootRef.lastIndexOf('@') + 1);
+        List<String> ids = new ArrayList<>();
+        List<String> queue = new ArrayList<>(
+            childrenByParentRef.getOrDefault(rootRef, List.of())
+        );
+        while (!queue.isEmpty()) {
+            String typeId = queue.remove(0);
+            // a cycle in parentRef is a broken model, but it must not hang the build
+            if (ids.contains(typeId)) {
+                continue;
+            }
+            ids.add(typeId);
+            queue.addAll(childrenByParentRef.getOrDefault(refPrefix + typeId, List.of()));
         }
         java.util.Collections.sort(ids);
         return ids;
@@ -249,6 +277,11 @@ public final class ComputedScriptRunner {
         }
         if (polyglot.isNumber()) {
             return polyglot.as(Number.class);
+        }
+        // must stay ahead of hasMembers: a js Date has members and no array elements, so without
+        // this branch it would be converted to an empty map instead of the Instant production gets
+        if (polyglot.isInstant()) {
+            return polyglot.asInstant();
         }
         if (polyglot.hasArrayElements()) {
             List<Object> result = new ArrayList<>();

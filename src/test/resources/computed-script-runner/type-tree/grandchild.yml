@@ -1,0 +1,2 @@
+id: grandchild
+parentRef: emodel/type@root-child
