@@ -99,19 +99,48 @@ columns:
       ru: E-mail
     type: TEXT
     attribute: contacts.contactEmail
-  - id: phone
+  - id: phoneDigits
     name:
-      ru: Телефон
-      en: Phone
+      ru: Номера тел.
+      en: Phone digits
     type: TEXT
-    # the cell is displayed from the JSON contacts - loading a path inside a JSON attribute works,
-    # but a predicate over the same path is cut to alwaysFalse in ecos-data and the filter silently
-    # returns nothing. So filtering is redirected to the indexed computed attribute (ECOSCRM-106).
-    # The value to type is the E.164 key (79161177716): a predicate over a multiple column is an array
-    # overlap (&& ARRAY[?]), that is an exact match of one element, not a substring search.
-    attribute: contacts.contactPhone
-    searchConfig:
-      searchAttribute: phoneDigits
+    multiple: true
+    # The only phone column: the old "Телефон" (contacts.contactPhone) is gone, because it could
+    # neither be filtered (a predicate over a path inside JSON is cut to alwaysFalse) nor show more
+    # than the first contact (uiserv rejects contacts[].contactPhone as a column attribute).
+    # Filtering here is an exact match of one array element (&& ARRAY[?]), not a substring search,
+    # so the value to type is the whole E.164 key - 79161177716 for +7 916 117-77-16. Shown by
+    # default on purpose: a column hidden with visible: false is dropped from the quick "find" box
+    # as well, so the number would be searchable nowhere until the user switched the column on.
+    attribute: phoneDigits
+    visible: true
+    searchable: true
+    searchableByText: true
+    formatter:
+      type: script
+      config:
+        # The stored value is an E.164 key - digits only, country code included - so the column
+        # would otherwise be a wall of digits. Grouping is by LENGTH, not by a table of country
+        # codes: eleven digits behind a 7 is the Russian and Kazakh shape, twelve digits is a
+        # three-digit country code plus nine national ones, which covers every CIS country that
+        # has one. This is display only, so a country whose real grouping differs just looks
+        # slightly off - unlike the normalization itself, which must stay free of country tables
+        # because it is copied into other repositories and any divergence makes lookups miss.
+        # Filtering this column still expects the whole key: 79161177716.
+        fn: |
+          var d = String(cell || '').replace(/[^0-9]/g, '');
+          if (!d) {
+              return cell;
+          }
+          if (d.length === 11 && d.charAt(0) === '7') {
+              return '+7 (' + d.substr(1, 3) + ') ' + d.substr(4, 3)
+                  + '-' + d.substr(7, 2) + '-' + d.substr(9, 2);
+          }
+          if (d.length === 12) {
+              return '+' + d.substr(0, 3) + ' ' + d.substr(3, 2) + ' ' + d.substr(5, 3)
+                  + '-' + d.substr(8, 2) + '-' + d.substr(10, 2);
+          }
+          return '+' + d;
   - id: e_message
     name:
       ru: Письмо

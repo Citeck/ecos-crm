@@ -21,7 +21,7 @@
 
 | Тип | Файл | Источники номеров |
 |---|---|---|
-| `opportunity` (наследуют `lead` и `deal`) | `ecos-crm/src/main/resources/app/artifacts/model/type/opportunity.yml` | `phone` (депрекированное, есть только у `deal`), `contacts[].contactPhone` |
+| `opportunity` (наследуют `lead` и `deal`) | `ecos-crm/src/main/resources/app/artifacts/model/type/opportunity.yml` | `contacts[].contactPhone` |
 | `ecos-counterparty` | `ecos-datalist/src/main/resources/app/artifacts/model/type/ecos-counterparty.yml` | `phone`, `cellPhone`, `contacts[].contactPhone` |
 
 Параметры атрибута в обоих типах одинаковы: `type: TEXT`, `multiple: true`,
@@ -154,13 +154,14 @@ function collectPhoneKeys(raw, target) {
 }
 
 var result = [];
-// deal keeps a deprecated scalar `phone` beside `contacts`. It was left out at first
-// because a sample of forty deals had it mirrored into contacts[0].contactPhone, but
-// on the stand the deals that fill `phone` turned out to have an empty `contacts`:
-// the number is there and no key is produced, so an incoming call never finds them.
-// lead does not declare `phone` - value.load yields null there and the loop skips it.
+// Contacts are the only source. deal also carries a scalar `phone`, but it is marked
+// #Deprecated in deal.yml and every one of the 1213 production deals that fill it
+// repeat the very same string in contacts[].contactPhone - checked on two samples,
+// 45 records, not one divergence. Reading it would add no key on production while
+// tying this attribute to a field that is meant to disappear. It was briefly a source
+// (commit ca14fd6) after deals with an empty `contacts` turned up on the stand; those
+// turned out to be stand-only junk, not the production shape.
 var sources = [
-    value.load('phone'),
     value.load('contacts[].contactPhone')
 ];
 for (var s = 0; s < sources.length; s++) {
@@ -180,7 +181,8 @@ return result;
 
 Функция `collectPhoneKeys` — это и есть переносимая часть контракта: в скрипте контрагента она
 лежит посимвольно такой же, различается только пролог: у контрагента он читает три
-источника вместо двух, остальное совпадает:
+источника (`phone`, `cellPhone`, `contacts[].contactPhone` — ни один из них не помечен
+устаревшим), а у `opportunity` один, остальное совпадает:
 
 ```js
 var result = [];
@@ -272,24 +274,45 @@ JSON-атрибута (`contacts.contactPhone`), который действит
 - **Предикат по `phoneDigits` — это пересечение массивов, а не поиск подстроки.** Для multiple-
   колонки `ecos-data` строит `"phoneDigits" && ARRAY[?]`, и это верно для `contains`, `eq` и `in`
   одинаково. Значит искать можно только по целому ключу в E.164: `79162042100` находит
-  запись, а `+7 916 204-21-00` и десятизначное `9162042100` — нет. Это же ограничение видит пользователь в фильтре «Телефон»
-  журналов лидов и сделок (колонка отображает человекочитаемый номер, а фильтрует по
-  `searchConfig.searchAttribute: phoneDigits`). Подсказки об этом в интерфейсе пока нет —
-  вопрос вынесен в раздел Post-Completion плана.
-- **В расширенном фильтре по колонке «Телефон» годятся только условия «содержит», «равно» и
+  запись, а `+7 916 204-21-00` и десятизначное `9162042100` — нет. Это же ограничение видит
+  пользователь в колонке «Номера тел.» журналов лидов и сделок. Подсказки об этом в интерфейсе
+  пока нет — вопрос вынесен в раздел Post-Completion плана.
+- **В журналах лидов и сделок одна колонка телефона — «Номера тел.» по атрибуту `phoneDigits`.**
+  Прежняя колонка «Телефон» по пути `contacts.contactPhone` удалена 15.09.2026, потому что не
+  годилась ни для чего из двух:
+  - **фильтровать её нельзя** — предикат по пути внутрь JSON срезается в `alwaysFalse` и молча
+    возвращает ноль записей. Какое-то время фильтр незаметно перенаправляли на `phoneDigits` через
+    `searchConfig.searchAttribute`; так делать нельзя — пользователь видел в ячейке
+    `+375 (44) 036 50 65`, вводил его в фильтр и получал «Нет данных», потому что искать надо было
+    `375440365065`, а это значение не показывалось нигде;
+  - **она показывала только первый контакт.** Схема `contacts.contactPhone` отдаёт один элемент,
+    `contacts.contactPhone[]` — тоже один, и лишь `contacts[].contactPhone` отдаёт все. Но эту
+    форму нельзя поставить атрибутом колонки: `JournalServiceImpl` проверяет атрибут по шаблону
+    `^([a-zA-Z_][$.\da-zA-Z:_-]*(\(.+\))?|\(.+\))$`, скобок в нём нет, и выкладка журнала
+    падает с `Journal column attribute is invalid`. На стенде больше одного контакта у 639 сделок
+    из 4326, то есть каждая седьмая показывала часть своих номеров.
+
+  Оставшаяся колонка `visible: true`, `searchable: true`, `searchableByText: true` и рендерится
+  через `formatter: { type: script }`: хранится ключ E.164, а показывается `+7 (495) 123-45-67`
+  для одиннадцати цифр за семёркой и `+375 29 123-45-67` для двенадцати. Группировка идёт **по
+  длине, а не по таблице кодов стран**: двенадцать цифр это трёхзначный код страны и девять
+  национальных, что покрывает все страны СНГ с таким кодом. Это только отображение, поэтому страна
+  с другой разбивкой будет выглядеть чуть иначе — в отличие от самой нормализации, которая обязана
+  оставаться без таблиц, потому что копируется в другие репозитории.
+  ⚠️ **Скрывать колонку нельзя:** при `visible: false` она выпадает и из быстрого поиска «Найти»,
+  то есть искать по номеру стало бы негде.
+  ⚠️ **Формат в ячейке и формат для фильтра по-прежнему разные:** видно `+7 (495) 123-45-67`,
+  вводить надо `74951234567`. Настоящее лечение — нормализация вводимого значения на стороне
+  `ecos-ui`, см. Post-Completion плана.
+- **В расширенном фильтре по колонке «Номера тел.» годятся только условия «содержит», «равно» и
   «один из».** Для multiple-колонки `DbEntityRepoPg` умеет строить SQL только для `eq`, `contains`
   и `in`; на любом другом условии («начинается с», «заканчивается на», сравнения) метод возвращает
   `false`, и это условие **молча выбрасывается из запроса** — вместо ошибки или пустого результата
   пользователь получает весь список записей, как будто фильтр совпал со всеми. Условия
   `empty`/`not-empty` работают: они превращаются в проверку `array_length(col, 1) IS NULL`.
-- **Сортировка и группировка по колонке «Телефон» идут по исходному пути, а не по `phoneDigits`:**
-  подмену делает только `searchConfigProcessed`, а сортировка передаёт `column.attribute` как есть.
-- **Фильтр по телефону работает в табличных журналах, но не на канбан-досках.** Подмену атрибута
-  предиката по `searchConfig.searchAttribute` делает `JournalsConverter.searchConfigProcessed`,
-  и вызывается она только из `journalsDataLoader`. Доски (`deal-board.yml`, `lead-board.yml`
-  ссылаются на те же журналы) строят предикат в `sagas/kanban.js` без этой подмены, поэтому там
-  по-прежнему уходит `contacts.contactPhone` и фильтр молча не находит ничего. Чинится это на
-  стороне `ecos-ui`, отдельной задачей.
+- **Фильтр по телефону на канбан-досках не работает.** Доски (`deal-board.yml`, `lead-board.yml`
+  ссылаются на те же журналы) строят предикат в `sagas/kanban.js` своим путём. Чинится на стороне
+  `ecos-ui`, отдельной задачей.
 - **Третий журнал с такой же настройкой живёт в другом репозитории:**
   `ecos-crm-citeck/src/main/resources/app/artifacts/ui/journal/deals-community-journal.yml`.
   Выкладывать его можно только после выпуска `ecos-crm` с `phoneDigits`: без родительского типа
@@ -303,16 +326,18 @@ JSON-атрибута (`contacts.contactPhone`), который действит
 - **Скрипт на `opportunity` не читает `counterparty.phoneDigits`.** Иначе значение устаревало бы
   при изменении телефона контрагента без пересохранения сделки. Связь с телефоном контрагента
   даёт именно двухшаговый поиск, а не общий массив.
-- **Депрекированное поле `deal.phone` тоже источник.** Сначала его решили не читать: в
-  выборке из сорока записей `phone` дословно совпадал с `contacts[0].contactPhone`, то есть выглядел
-  уже зеркалированным. На стенде эта посылка не подтвердилась: у сделок с заполненным `phone`
-  список `contacts` оказался пустым — номер есть, а ключа нет вовсе, и звонок такую сделку не
-  находил. Поэтому `phone` добавлен в пролог скрипта `opportunity`; сама `collectPhoneKeys` при этом не
-  изменилась, так что требование симметрии трёх копий не затронуто. Атрибут объявлен только у
-  `deal`; у лида его нет, и `value.load('phone')` там возвращает null, который цикл пропускает.
-  Побочный эффект, который надо учитывать: если в `phone` лежит устаревший номер, а в `contacts` —
-  актуальный, запись получит оба ключа и найдётся по обоим. Для поиска по входящему звонку это
-  лучше пропуска: COREDEV-510 в любом случае обязан уметь разбирать несколько совпадений.
+- **Депрекированное поле `deal.phone` источником НЕ является** (решено 15.09.2026). Оно помечено
+  `#Deprecated` в `deal.yml` и какое-то время читалось скриптом: источник добавили коммитом
+  `ca14fd6`, когда на стенде нашлись сделки с заполненным `phone` и пустым `contacts`. Замер на
+  продуктиве это опроверг — у **всех** 1213 сделок с заполненным `phone` то же самое значение
+  дословно лежит в `contacts[].contactPhone` (две выборки, 45 записей, ни одного расхождения),
+  так что чтение `phone` не давало там ни одного дополнительного ключа. Пустые `contacts`
+  оказались особенностью данных стенда, а не продуктива. Источник убран: незачем привязывать новый
+  механизм к полю, которое собираются удалить, — при его удалении ключи молча пропали бы.
+  ⚠️ **Остаточный риск:** выборка 45 из 1213, а не сплошная проверка; сплошную предикатом не
+  сделать, потому что сравнить два атрибута между собой в предикате нельзя. Если такая сделка
+  всё же найдётся, она не будет находиться по звонку — ровно как и до ECOSCRM-106. Правильное
+  лечение в этом случае — перенести номер в `contacts`, а не возвращать источник.
 - **Контакт с нестандартными ключами не виден скрипту.** Модель описывает контакт полями
   `contactPhone`, `contactEmail`, `contactFio`; записи, созданные в обход модели с ключами
   `phone`/`email`/`fullName`, дадут «телефон в записи вижу, ключа нет». Это вопрос к данным, а не
@@ -490,7 +515,7 @@ predicate:
 | `ecos-crm` | `PhoneDigitsOpportunityTest` | таблицу примеров и краевые случаи на `opportunity` |
 | `ecos-crm` | `PhoneDigitsHistoryExclusionTest` | исключение `phoneDigits` из истории `deal` и `lead` |
 | `ecos-crm` | `PhoneDigitsFillPatchTest` | структуру патча заполнения |
-| `ecos-crm` | `PhoneDigitsJournalColumnTest` | `searchConfig.searchAttribute` у колонки «Телефон» |
+| `ecos-crm` | `PhoneDigitsJournalColumnTest` | что «Телефон» и «Телефон (цифры)» остаются разными колонками |
 | `ecos-crm` | `PhoneDigitsContractDocTest` | что этот файл не разошёлся с YAML |
 | `ecos-crm`, `ecos-datalist` | `ComputedScriptRunnerTest` | допущения о поведении GraalJS |
 | `ecos-datalist` | `PhoneDigitsCounterpartyTest` | ту же таблицу примеров по каждому из трёх источников |

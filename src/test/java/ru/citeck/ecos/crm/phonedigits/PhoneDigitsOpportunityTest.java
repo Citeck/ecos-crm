@@ -273,23 +273,19 @@ public class PhoneDigitsOpportunityTest {
     }
 
     @Test
-    @DisplayName("a deal whose number lives only in the deprecated phone still gets a key")
-    void deprecatedDealPhoneIsASourceTest() {
-        // deal keeps a deprecated scalar `phone` beside `contacts`. It was left out at first
-        // because a sample of forty deals had it mirrored into contacts[0].contactPhone, but on the
-        // stand the deals that fill `phone` turned out to have an empty `contacts`: without this
-        // source their number produces no key and an incoming call never finds them.
-        assertEquals(
-            List.of("74951234567"),
-            phoneDigitsOf("+7 (495) 123-45-67", List.of())
-        );
+    @DisplayName("the deprecated deal phone is not a source")
+    void deprecatedDealPhoneIsNotASourceTest() {
+        // `phone` is marked #Deprecated in deal.yml. It was a source for a while (commit ca14fd6),
+        // added after deals with an empty `contacts` turned up on the stand - stand-only junk, as
+        // it turned out. On production all 1213 deals that fill `phone` repeat the very same string
+        // in contacts[].contactPhone (two samples, 45 records, no divergence), so reading it adds
+        // no key there while tying phoneDigits to a field that is meant to disappear.
+        assertEquals(List.of(), phoneDigitsOf("+7 (495) 123-45-67", List.of()));
     }
 
     @Test
-    @DisplayName("the same number in both sources is stored once")
-    void deprecatedPhoneMirroredIntoContactsIsDeduplicatedTest() {
-        // the case the original assumption was based on: both sources carry the same number, and
-        // the dedup of collectPhoneKeys must keep a single key rather than a duplicated pair
+    @DisplayName("the production shape - phone mirrored into contacts - gives exactly one key")
+    void phoneMirroredIntoContactsGivesOneKeyTest() {
         assertEquals(
             List.of("74951234567"),
             phoneDigitsOf("+7 (495) 123-45-67", List.of("+7 495 123-45-67"))
@@ -297,19 +293,19 @@ public class PhoneDigitsOpportunityTest {
     }
 
     @Test
-    @DisplayName("sources carrying different numbers both produce keys, deprecated one first")
-    void bothSourcesContributeKeysTest() {
+    @DisplayName("a deprecated phone holding another number adds nothing")
+    void deprecatedPhoneWithAnotherNumberAddsNoKeyTest() {
+        // it used to contribute a second key here, which is what made a journal row show a number
+        // whose origin was nowhere on the row
         assertEquals(
-            List.of("74951234567", "79161177716"),
+            List.of("79161177716"),
             phoneDigitsOf("+7 (495) 123-45-67", List.of("+7 916 117-77-16"))
         );
     }
 
     @Test
-    @DisplayName("a deprecated phone too short for a key does not break the contacts source")
+    @DisplayName("an unusable deprecated phone does not break the contacts source either")
     void unusableDeprecatedPhoneIsSkippedTest() {
-        // a local seven-digit number has no key of its own; it must be dropped silently instead of
-        // shadowing the number that is actually usable
         assertEquals(
             List.of("79161177716"),
             phoneDigitsOf("630-20-10", List.of("+7 916 117-77-16"))
@@ -333,8 +329,9 @@ public class PhoneDigitsOpportunityTest {
     }
 
     /**
-     * lead does not declare the deprecated scalar {@code phone} at all, so null here is the
-     * ordinary case: the script must produce the same keys as before it gained the second source.
+     * The fixture still declares the deprecated {@code phone} so the tests above can show that the
+     * script ignores it whatever it holds. lead does not declare the attribute at all, which is why
+     * null is the ordinary case here.
      */
     private static List<String> phoneDigitsOf(Object deprecatedPhone, Object contactPhones) {
         Map<String, Object> atts = new HashMap<>();

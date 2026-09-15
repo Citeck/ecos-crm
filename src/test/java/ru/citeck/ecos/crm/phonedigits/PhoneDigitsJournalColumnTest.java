@@ -3,6 +3,7 @@ package ru.citeck.ecos.crm.phonedigits;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.nio.file.Path;
@@ -32,34 +33,68 @@ public class PhoneDigitsJournalColumnTest {
     private static final List<String> JOURNALS = List.of("deals-journal", "leads-journal");
 
     @Test
-    @DisplayName("both journals filter the phone column by phoneDigits")
-    void phoneColumnSearchesByPhoneDigitsTest() {
+    @DisplayName("both journals carry a separate searchable phoneDigits column")
+    void separateDigitsColumnIsSearchableTest() {
+        // The phone column and the search by number are deliberately two different columns. Until
+        // 15.09.2026 they were one: the phone column displayed the formatted number while its
+        // filter was silently redirected to phoneDigits, so the user saw one value and had to type
+        // another - typing the number shown in the cell returned nothing. See ECOSCRM-106 Task 13.
         for (String journalId : JOURNALS) {
-            Map<?, ?> column = phoneColumn(journalId);
-            Object searchConfig = column.get("searchConfig");
-            assertNotNull(searchConfig, journalId + ".yml: the phone column has no searchConfig");
+            Map<?, ?> column = digitsColumn(journalId);
             assertEquals(
                 PHONE_DIGITS,
-                ((Map<?, ?>) searchConfig).get("searchAttribute"),
-                journalId + ".yml: the phone column must be filtered by " + PHONE_DIGITS
+                column.get("attribute"),
+                journalId + ".yml: the digits column must read " + PHONE_DIGITS
             );
-        }
-    }
-
-    @Test
-    @DisplayName("the display attribute stays the human readable number, not the digit keys")
-    void phoneColumnDisplaysContactPhoneTest() {
-        for (String journalId : JOURNALS) {
             assertEquals(
-                CONTACTS_PHONE_PATH,
-                phoneColumn(journalId).get("attribute"),
-                journalId + ".yml: the cell must keep showing the number as it is typed by the user"
+                Boolean.TRUE,
+                column.get("searchable"),
+                journalId + ".yml: the digits column is the searchable half of the pair"
+            );
+            assertEquals(
+                Boolean.TRUE,
+                column.get("visible"),
+                journalId + ".yml: hiding it would drop it from the quick find box too"
             );
         }
     }
 
     @Test
-    @DisplayName("the searched attribute is the one declared by opportunity")
+    @DisplayName("the old contacts.contactPhone column is gone")
+    void oldPhoneColumnIsRemovedTest() {
+        // It could neither be filtered - a predicate over a path inside a JSON attribute is cut to
+        // alwaysFalse - nor show more than the first contact, because uiserv rejects the only path
+        // shape that reads them all (contacts[].contactPhone) as a column attribute. Keeping it
+        // beside the digits column meant showing the same number twice, one of the copies partial.
+        for (String journalId : JOURNALS) {
+            for (Map<?, ?> column : columns(journalId)) {
+                assertNotEquals(
+                    CONTACTS_PHONE_PATH,
+                    column.get("attribute"),
+                    journalId + ".yml: " + CONTACTS_PHONE_PATH + " must not be a column any more"
+                );
+            }
+        }
+    }
+
+    @Test
+    @DisplayName("the digits column renders through a formatter, not as raw digits")
+    void digitsColumnHasAFormatterTest() {
+        for (String journalId : JOURNALS) {
+            Map<?, ?> formatter = (Map<?, ?>) digitsColumn(journalId).get("formatter");
+            assertNotNull(formatter, journalId + ".yml: the digits column has no formatter");
+            assertEquals("script", formatter.get("type"), journalId + ".yml: expected a script formatter");
+            Object fn = ((Map<?, ?>) formatter.get("config")).get("fn");
+            assertNotNull(fn, journalId + ".yml: the formatter has no fn");
+            assertTrue(
+                String.valueOf(fn).contains("'+7 ('"),
+                journalId + ".yml: the formatter must render the russian shape readably"
+            );
+        }
+    }
+
+    @Test
+    @DisplayName("the searched attribute is the one declared by the type")
     void searchAttributeIsDeclaredByTheTypeTest() {
         // a typo here would be silent: the journal deploys fine and the filter finds nothing,
         // which is exactly the defect being fixed
@@ -116,36 +151,29 @@ public class PhoneDigitsJournalColumnTest {
     }
 
     @Test
-    @DisplayName("the phone column is not turned into a separate visible digits column")
-    void noDigitsColumnAddedTest() {
-        // the keys are an internal lookup format - showing them to the user was deliberately
-        // rejected, the column keeps the formatted number
+    @DisplayName("exactly one phone column is left")
+    void exactlyOnePhoneColumnTest() {
         for (String journalId : JOURNALS) {
-            for (Map<?, ?> column : columns(journalId)) {
-                assertNotEquals(
-                    PHONE_DIGITS,
-                    column.get("attribute"),
-                    journalId + ".yml: " + PHONE_DIGITS + " must not be shown as a column"
-                );
-            }
+            long phoneColumns = columns(journalId).stream()
+                .filter(c -> String.valueOf(c.get("id")).toLowerCase().contains("phone"))
+                .count();
+            assertEquals(
+                1L,
+                phoneColumns,
+                journalId + ".yml: the displayed and the searchable column were merged into one"
+            );
         }
     }
 
-    @Test
-    @DisplayName("filtering of the phone column is not disabled")
-    void phoneColumnStaysSearchableTest() {
-        for (String journalId : JOURNALS) {
-            Object searchable = phoneColumn(journalId).get("searchable");
-            // null means the platform default, which is "searchable"; only an explicit false hides
-            // the filter input and would make the redirect pointless
-            if (searchable != null) {
-                assertEquals(
-                    Boolean.TRUE,
-                    searchable,
-                    journalId + ".yml: the phone column must stay searchable"
-                );
+    private static Map<?, ?> digitsColumn(String journalId) {
+        for (Map<?, ?> column : columns(journalId)) {
+            if (PHONE_DIGITS.equals(String.valueOf(column.get("id")))) {
+                return column;
             }
         }
+        throw new IllegalArgumentException(
+            "Journal " + journalId + " has no '" + PHONE_DIGITS + "' column"
+        );
     }
 
     private static Map<?, ?> phoneColumn(String journalId) {

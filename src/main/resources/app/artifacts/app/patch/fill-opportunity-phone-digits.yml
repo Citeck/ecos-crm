@@ -4,8 +4,10 @@ id: fill-opportunity-phone-digits
 # resets it to PENDING on a newer date). Stands that applied an earlier version of this patch would
 # otherwise keep the old result forever and nothing would report it. Raised twice so far:
 #   12:00 - the predicate below was added, and `phone` became a source of the script;
-#   19:00 - the key moved from ten digits to E.164, so every stored key has to be recomputed.
-date: 2026-09-15T19:00:00Z
+#   19:00 - the key moved from ten digits to E.164, so every stored key has to be recomputed;
+#   21:00 - the deprecated `phone` stopped being a source, so deals that filled only it lose
+#           their key and deals that filled it with another number lose one of two.
+date: 2026-09-15T21:00:00Z
 type: mutate
 targetApp: emodel
 config:

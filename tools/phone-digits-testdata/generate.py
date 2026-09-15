@@ -280,9 +280,13 @@ def build_scenarios(rnd):
     both_b = render("+7 495 {s0}-{s1}-{s2}", synthetic_number(rnd))
 
     sc(
+        # `phone` is #Deprecated in deal.yml and is NOT a source of phoneDigits: on production it
+        # always repeats the number already present in contacts, so reading it would add nothing
+        # while tying the attribute to a field that is meant to disappear. A deal whose number
+        # lives only there therefore gets no key at all - that is the expectation below.
         "deal-phone-only",
-        deal_record("Сделка: только phone", phone=only_phone, note="phone only"),
-        phone_keys(only_phone),
+        deal_record("Сделка: только phone", phone=only_phone, note="phone only, no key expected"),
+        [],
     )
     sc(
         "deal-contacts-only",
@@ -295,9 +299,9 @@ def build_scenarios(rnd):
             "Сделка: phone и contacts расходятся",
             phone=both_a,
             contact_phones=[both_b],
-            note="both sources, different numbers",
+            note="phone ignored, only the contact gives a key",
         ),
-        phone_keys(both_a, both_b),
+        phone_keys(both_b),
     )
     sc(
         "deal-both-sources-mirrored",
@@ -305,7 +309,7 @@ def build_scenarios(rnd):
             "Сделка: phone продублирован в contacts",
             phone=both_a,
             contact_phones=[both_a],
-            note="both sources, same number - must deduplicate",
+            note="the production shape: phone mirrored into contacts",
         ),
         phone_keys(both_a),
     )
@@ -535,21 +539,28 @@ def build_bulk(rnd, n_deals, n_leads, n_counterparties):
     for i in range(n_deals):
         kwargs = {}
         roll = rnd.random()
-        if roll < 0.28:
-            kwargs["phone"] = render(rnd.choice(FORMATS_WITH_KEY), synthetic_number(rnd))
         if roll < 0.83:
             count = 1 if rnd.random() < 0.8 else rnd.randint(2, 4)
             kwargs["contact_phones"] = [
                 render(rnd.choice(FORMATS_WITH_KEY), synthetic_number(rnd))
                 for _ in range(count)
             ]
+        if roll < 0.28:
+            # the production shape, and the reason `phone` is not a source: every deal that fills
+            # the deprecated field repeats the number already present in contacts. Filling it with
+            # an independent number here would invent a case production does not have.
+            kwargs["phone"] = kwargs["contact_phones"][0]
         records.append(deal_record(f"Сделка «Массив {i:05d}»", note="bulk", **kwargs))
 
     for i in range(n_leads):
         kwargs = {}
         if rnd.random() < 0.65:
+            # a lead can carry several contacts just like a deal; generating exactly one left the
+            # multi-contact branch untested on lead at volume
+            count = 1 if rnd.random() < 0.8 else rnd.randint(2, 3)
             kwargs["contact_phones"] = [
                 render(rnd.choice(FORMATS_WITH_KEY), synthetic_number(rnd))
+                for _ in range(count)
             ]
         records.append(lead_record(f"Лид «Массив {i:05d}»", note="bulk", **kwargs))
 
