@@ -455,8 +455,13 @@ public class PhoneDigitsContractDocTest {
         if (!Files.isDirectory(artifacts)) {
             return false;
         }
+        // only the artifact yamls: the tree of a neighbouring clone may hold binaries and files this
+        // build has no business decoding, and an unreadable one there must not fail the build here
         try (Stream<Path> files = Files.walk(artifacts)) {
-            return files.filter(Files::isRegularFile).anyMatch(file -> read(file).contains("phoneDigits"));
+            return files
+                .filter(Files::isRegularFile)
+                .filter(file -> file.getFileName().toString().endsWith(".yml"))
+                .anyMatch(file -> readQuietly(file).contains("phoneDigits"));
         } catch (IOException e) {
             throw new UncheckedIOException("Can't scan " + artifacts, e);
         }
@@ -487,6 +492,15 @@ public class PhoneDigitsContractDocTest {
             return new String(Files.readAllBytes(file), StandardCharsets.UTF_8);
         } catch (IOException e) {
             throw new UncheckedIOException("Can't read " + file, e);
+        }
+    }
+
+    /** Same as {@link #read(Path)}, for files of another clone where a read error is not our bug. */
+    private static String readQuietly(Path file) {
+        try {
+            return new String(Files.readAllBytes(file), StandardCharsets.UTF_8);
+        } catch (IOException e) {
+            return "";
         }
     }
 }

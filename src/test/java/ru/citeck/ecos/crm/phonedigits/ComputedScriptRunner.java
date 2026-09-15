@@ -23,8 +23,8 @@ import org.yaml.snakeyaml.Yaml;
  * and {@code AttValueScriptCtxImpl} of the platform:
  * <ul>
  *     <li>the same host access configuration and no engine options besides the platform ones,</li>
- *     <li>the same {@code (function(){...})()} wrapping rule, applied only when the script
- *         contains the substring {@code "return "},</li>
+ *     <li>the same {@code (function(){...})()} wrapping rule, applied whenever the script
+ *         contains the substring {@code "return"},</li>
  *     <li>{@code value.load(...)} returns plain java collections, wrapped by GraalJS the same way
  *         as in production - see ComputedScriptRunnerTest for what a script may rely on.</li>
  * </ul>
@@ -41,9 +41,37 @@ public final class ComputedScriptRunner {
         this.source = source;
     }
 
-    /** Type YAML of this project by type id, e.g. {@code typeFile("opportunity")}. */
+    /**
+     * Type YAML of this project by type id, e.g. {@code typeFile("opportunity")}.
+     *
+     * <p>Nothing obliges a type file to be named after the id it declares, so the id declared
+     * inside the file wins and the name-based path is only the fallback.
+     */
     public static Path typeFile(String typeId) {
-        return Paths.get(TYPES_DIR, typeId + ".yml").toAbsolutePath();
+        Path byName = Paths.get(TYPES_DIR, typeId + ".yml").toAbsolutePath();
+        if (Files.isRegularFile(byName) && typeId.equals(typeIdOf(byName, loadYaml(byName)))) {
+            return byName;
+        }
+        try (java.util.stream.Stream<Path> typeFiles = Files.list(Paths.get(TYPES_DIR))) {
+            return typeFiles
+                .filter(file -> file.getFileName().toString().endsWith(".yml"))
+                .map(Path::toAbsolutePath)
+                .filter(file -> typeId.equals(typeIdOf(file, loadYaml(file))))
+                .findFirst()
+                .orElse(byName);
+        } catch (java.io.IOException e) {
+            throw new IllegalArgumentException("Can't list type files in " + TYPES_DIR, e);
+        }
+    }
+
+    /** Type id declared by the file, falling back to the file name when the file declares none. */
+    private static String typeIdOf(Path file, Map<String, Object> yaml) {
+        Object id = yaml.get("id");
+        if (id instanceof String && !((String) id).isBlank()) {
+            return (String) id;
+        }
+        String fileName = file.getFileName().toString();
+        return fileName.substring(0, fileName.length() - ".yml".length());
     }
 
     /**
@@ -68,12 +96,12 @@ public final class ComputedScriptRunner {
         try (java.util.stream.Stream<Path> typeFiles = Files.list(typesDir)) {
             typeFiles.filter(file -> file.getFileName().toString().endsWith(".yml"))
                 .forEach(file -> {
-                    Object parentRef = loadYaml(file.toAbsolutePath()).get("parentRef");
+                    Map<String, Object> yaml = loadYaml(file.toAbsolutePath());
+                    Object parentRef = yaml.get("parentRef");
                     if (parentRef instanceof String) {
-                        String fileName = file.getFileName().toString();
                         childrenByParentRef
                             .computeIfAbsent((String) parentRef, key -> new ArrayList<>())
-                            .add(fileName.substring(0, fileName.length() - ".yml".length()));
+                            .add(typeIdOf(file, yaml));
                     }
                 });
         } catch (java.io.IOException e) {
@@ -224,9 +252,14 @@ public final class ComputedScriptRunner {
             .build();
     }
 
-    /** Copy of ScriptExecutorImpl.prepareScript: the wrapper needs "return " - with a space. */
+    /**
+     * Copy of ScriptExecutorImpl.prepareScript: a plain substring check for "return", without a
+     * trailing space. The check is deliberately dumb in the platform too - "return['a']" and even
+     * the word "return" inside a comment are enough to wrap the script - and the harness must
+     * reproduce that, otherwise a script broken in production looks green here.
+     */
     private static String prepareScript(String script) {
-        return script.contains("return ") ? "(function(){" + script + "})()" : script;
+        return script.contains("return") ? "(function(){" + script + "})()" : script;
     }
 
     @SuppressWarnings("unchecked")
