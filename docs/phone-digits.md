@@ -21,7 +21,7 @@
 
 | Тип | Файл | Источники номеров |
 |---|---|---|
-| `opportunity` (наследуют `lead` и `deal`) | `ecos-crm/src/main/resources/app/artifacts/model/type/opportunity.yml` | `contacts[].contactPhone` |
+| `opportunity` (наследуют `lead` и `deal`) | `ecos-crm/src/main/resources/app/artifacts/model/type/opportunity.yml` | `phone` (депрекированное, есть только у `deal`), `contacts[].contactPhone` |
 | `ecos-counterparty` | `ecos-datalist/src/main/resources/app/artifacts/model/type/ecos-counterparty.yml` | `phone`, `cellPhone`, `contacts[].contactPhone` |
 
 Параметры атрибута в обоих типах одинаковы: `type: TEXT`, `multiple: true`,
@@ -110,8 +110,20 @@ function collectPhoneKeys(raw, target) {
 }
 
 var result = [];
-var phones = value.load('contacts[].contactPhone');
-if (phones !== null && phones !== undefined) {
+// deal keeps a deprecated scalar `phone` beside `contacts`. It was left out at first
+// because a sample of forty deals had it mirrored into contacts[0].contactPhone, but
+// on the stand the deals that fill `phone` turned out to have an empty `contacts`:
+// the number is there and no key is produced, so an incoming call never finds them.
+// lead does not declare `phone` - value.load yields null there and the loop skips it.
+var sources = [
+    value.load('phone'),
+    value.load('contacts[].contactPhone')
+];
+for (var s = 0; s < sources.length; s++) {
+    var phones = sources[s];
+    if (phones === null || phones === undefined) {
+        continue;
+    }
     if (typeof phones === 'string' || typeof phones === 'number') {
         phones = [phones];
     }
@@ -123,7 +135,8 @@ return result;
 ```
 
 Функция `collectPhoneKeys` — это и есть переносимая часть контракта: в скрипте контрагента она
-лежит посимвольно такой же, различается только пролог, читающий три источника вместо одного:
+лежит посимвольно такой же, различается только пролог: у контрагента он читает три
+источника вместо двух, остальное совпадает:
 
 ```js
 var result = [];
@@ -237,13 +250,16 @@ JSON-атрибута (`contacts.contactPhone`), который действит
 - **Скрипт на `opportunity` не читает `counterparty.phoneDigits`.** Иначе значение устаревало бы
   при изменении телефона контрагента без пересохранения сделки. Связь с телефоном контрагента
   даёт именно двухшаговый поиск, а не общий массив.
-- **Депрекированное поле `deal.phone` источником не является.** Решение принималось по выборке из
-  сорока записей, где `phone` дословно совпадал с `contacts[0].contactPhone`. На стенде эта
-  посылка не подтверждается: у сделок с заполненным `phone` список `contacts` оказался пустым, то
-  есть номер есть, а ключа нет. **Следствие: сделку, у которой номер лежит только в `phone`,
-  звонок не найдёт.** Долю таких записей надо померить на промышленных данных и либо добавить
-  `phone` в пролог скрипта `opportunity` (сама функция `collectPhoneKeys` при этом не меняется),
-  либо сознательно принять потерю.
+- **Депрекированное поле `deal.phone` тоже источник.** Сначала его решили не читать: в
+  выборке из сорока записей `phone` дословно совпадал с `contacts[0].contactPhone`, то есть выглядел
+  уже зеркалированным. На стенде эта посылка не подтвердилась: у сделок с заполненным `phone`
+  список `contacts` оказался пустым — номер есть, а ключа нет вовсе, и звонок такую сделку не
+  находил. Поэтому `phone` добавлен в пролог скрипта `opportunity`; сама `collectPhoneKeys` при этом не
+  изменилась, так что требование симметрии трёх копий не затронуто. Атрибут объявлен только у
+  `deal`; у лида его нет, и `value.load('phone')` там возвращает null, который цикл пропускает.
+  Побочный эффект, который надо учитывать: если в `phone` лежит устаревший номер, а в `contacts` —
+  актуальный, запись получит оба ключа и найдётся по обоим. Для поиска по входящему звонку это
+  лучше пропуска: COREDEV-510 в любом случае обязан уметь разбирать несколько совпадений.
 - **Контакт с нестандартными ключами не виден скрипту.** Модель описывает контакт полями
   `contactPhone`, `contactEmail`, `contactFio`; записи, созданные в обход модели с ключами
   `phone`/`email`/`fullName`, дадут «телефон в записи вижу, ключа нет». Это вопрос к данным, а не
@@ -289,17 +305,39 @@ JSON-атрибута (`contacts.contactPhone`), который действит
 `update-calculated-atts` — то же самое, что действие «Обновить вычисляемые атрибуты» в интерфейсе
 администратора («Инструменты разработки» → «Модули разработки»).
 
-**Патч пересчитывает не только `phoneDigits`.** Исполнение `update-calculated-atts` доходит до
-`ComputedAttsService.computeAttsToStore`, а тот вычисляет **все** атрибуты типа, у которых
-`computed.storingType` не равен `NONE`. Атрибуты с `ON_CREATE` и счётчики для уже существующих
-записей пропускаются, а `ON_EMPTY` вычисляется всякий раз, когда текущее значение пустое. У
-`opportunity` такой атрибут есть — `dateReceived` («Дата создания», `SCRIPT { return new Date() }`,
-`storingType: ON_EMPTY`), и он наследуется лидом и сделкой. Значит запись с пустым `dateReceived`
-получит датой создания момент прогона патча. На стенде это не проявилось: там нет ни одной такой
-записи (`empty dateReceived` даёт `totalCount: 0` и по сделкам, и по лидам), а на промышленных
-данных патч затрагивает около пяти тысяч записей. **Перед прогоном на продуктиве надо посчитать
-записи с пустым `dateReceived`; если их не ноль — сначала заполнить `dateReceived` из `_created`,
-иначе даты создания будут переписаны без возможности восстановления.**
+**Патч пересчитывает не только `phoneDigits`, поэтому выборка ограничена предикатом.**
+Исполнение `update-calculated-atts` доходит до `ComputedAttsService.computeAttsToStore`, а тот
+вычисляет **все** атрибуты типа, у которых `computed.storingType` не равен `NONE`. Атрибуты с
+`ON_CREATE` и счётчики для уже существующих записей пропускаются, а `ON_EMPTY` вычисляется всякий раз,
+когда текущее значение пустое. У `opportunity` такой атрибут есть — `dateReceived` («Дата создания»,
+`SCRIPT { return new Date() }`, `storingType: ON_EMPTY`), и он наследуется лидом и сделкой. Запись с
+пустым `dateReceived` получила бы датой создания момент прогона патча — необратимо и
+автоматически на каждом стенде, куда патч доедет.
+
+Поэтому выборка `admin-action-records-of-type` несёт предикат, исключающий ровно те записи,
+которым пересчёт навредил бы:
+
+```yaml
+predicate:
+  t: not
+  val:
+    t: empty
+    att: dateReceived
+```
+
+Такая запись остаётся с пустым `phoneDigits` вместо того, чтобы потерять дату создания:
+пустой `phoneDigits` чинится повторным прогоном, перезаписанная дата — ничем. Граница выбрана
+в сторону восстановимого ущерба. На стенде предикат ничего не отсекает: записей с пустым
+`dateReceived` там нет ни одной (`empty dateReceived` даёт `totalCount: 0` и по сделкам, и по лидам).
+На промышленных данных патч затрагивает около пяти тысяч записей, и там такие записи могут
+быть. **Чтобы охватить и их: посчитать записи с пустым `dateReceived`, заполнить им `dateReceived`
+из `_created`, затем перезапустить патч поднятием `date`.** Без этого шага теряется только
+поиск по телефону для этих записей, данные целы.
+
+Связка «предикат закрывает каждый `ON_EMPTY`-атрибут типа» проверяется тестом
+`PhoneDigitsFillPatchTest.selectionSkipsRecordsWithAnEmptyOnEmptyAttributeTest`: он читает
+`storingType` из самого `opportunity.yml`, поэтому новый `ON_EMPTY`-атрибут, добавленный позже без
+правки патча, уронит сборку, а не пройдёт незамеченным.
 
 Повторный прогон патча безопасен и делается увеличением `date` либо кнопкой «Применить» в журнале
 «Патчи». Порядок патча относительно выкладки самого типа платформой не гарантирован: если патч

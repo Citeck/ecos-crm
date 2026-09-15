@@ -29,6 +29,8 @@ public class PhoneDigitsOpportunityTest {
 
     private static final Path OPPORTUNITY = ComputedScriptRunner.typeFile("opportunity");
     private static final String CONTACT_PHONES = "contacts[].contactPhone";
+    /** Deprecated scalar phone of deal - the second source of the prologue. */
+    private static final String DEPRECATED_PHONE = "phone";
 
     /** All 15 rows of the example table of ECOSCRM-106, in the order they are listed there. */
     static Stream<Arguments> exampleTable() {
@@ -228,6 +230,56 @@ public class PhoneDigitsOpportunityTest {
         assertEquals(List.of("9161177716"), phoneDigitsOf(79161177716L));
     }
 
+    @Test
+    @DisplayName("a deal whose number lives only in the deprecated phone still gets a key")
+    void deprecatedDealPhoneIsASourceTest() {
+        // deal keeps a deprecated scalar `phone` beside `contacts`. It was left out at first
+        // because a sample of forty deals had it mirrored into contacts[0].contactPhone, but on the
+        // stand the deals that fill `phone` turned out to have an empty `contacts`: without this
+        // source their number produces no key and an incoming call never finds them.
+        assertEquals(
+            List.of("4951234567"),
+            phoneDigitsOf("+7 (495) 123-45-67", List.of())
+        );
+    }
+
+    @Test
+    @DisplayName("the same number in both sources is stored once")
+    void deprecatedPhoneMirroredIntoContactsIsDeduplicatedTest() {
+        // the case the original assumption was based on: both sources carry the same number, and
+        // the dedup of collectPhoneKeys must keep a single key rather than a duplicated pair
+        assertEquals(
+            List.of("4951234567"),
+            phoneDigitsOf("+7 (495) 123-45-67", List.of("+7 495 123-45-67"))
+        );
+    }
+
+    @Test
+    @DisplayName("sources carrying different numbers both produce keys, deprecated one first")
+    void bothSourcesContributeKeysTest() {
+        assertEquals(
+            List.of("4951234567", "9161177716"),
+            phoneDigitsOf("+7 (495) 123-45-67", List.of("+7 916 117-77-16"))
+        );
+    }
+
+    @Test
+    @DisplayName("a deprecated phone too short for a key does not break the contacts source")
+    void unusableDeprecatedPhoneIsSkippedTest() {
+        // a local seven-digit number has no key of its own; it must be dropped silently instead of
+        // shadowing the number that is actually usable
+        assertEquals(
+            List.of("9161177716"),
+            phoneDigitsOf("630-20-10", List.of("+7 916 117-77-16"))
+        );
+    }
+
+    @Test
+    @DisplayName("a lead, which declares no deprecated phone, is unaffected by the second source")
+    void missingDeprecatedPhoneIsSkippedTest() {
+        assertEquals(List.of("9161177716"), phoneDigitsOf(null, List.of("+7 916 117-77-16")));
+    }
+
     // --- helpers ---
 
     private static List<String> phoneDigits(String... contactPhones) {
@@ -235,7 +287,16 @@ public class PhoneDigitsOpportunityTest {
     }
 
     private static List<String> phoneDigitsOf(Object contactPhones) {
+        return phoneDigitsOf(null, contactPhones);
+    }
+
+    /**
+     * lead does not declare the deprecated scalar {@code phone} at all, so null here is the
+     * ordinary case: the script must produce the same keys as before it gained the second source.
+     */
+    private static List<String> phoneDigitsOf(Object deprecatedPhone, Object contactPhones) {
         Map<String, Object> atts = new HashMap<>();
+        atts.put(DEPRECATED_PHONE, deprecatedPhone);
         atts.put(CONTACT_PHONES, contactPhones);
         return ComputedScriptRunner
             .ofTypeAttribute(OPPORTUNITY, "phoneDigits")

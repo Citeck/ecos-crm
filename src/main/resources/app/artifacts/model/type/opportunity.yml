@@ -198,8 +198,20 @@ model:
             }
 
             var result = [];
-            var phones = value.load('contacts[].contactPhone');
-            if (phones !== null && phones !== undefined) {
+            // deal keeps a deprecated scalar `phone` beside `contacts`. It was left out at first
+            // because a sample of forty deals had it mirrored into contacts[0].contactPhone, but
+            // on the stand the deals that fill `phone` turned out to have an empty `contacts`:
+            // the number is there and no key is produced, so an incoming call never finds them.
+            // lead does not declare `phone` - value.load yields null there and the loop skips it.
+            var sources = [
+                value.load('phone'),
+                value.load('contacts[].contactPhone')
+            ];
+            for (var s = 0; s < sources.length; s++) {
+                var phones = sources[s];
+                if (phones === null || phones === undefined) {
+                    continue;
+                }
                 if (typeof phones === 'string' || typeof phones === 'number') {
                     phones = [phones];
                 }

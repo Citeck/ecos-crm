@@ -7,7 +7,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -31,6 +33,9 @@ public class PhoneDigitsFillPatchTest {
     private static final String PATCH_ID = "fill-opportunity-phone-digits";
     /** The type the attribute is declared on; lead and deal are picked up as its children. */
     private static final String TYPE_REF = "emodel/type@opportunity";
+
+    /** Local id of TYPE_REF - the type file the guard below is checked against. */
+    private static final String TYPE_ID = "opportunity";
 
     /** The types that inherit phoneDigits from TYPE_REF and are recalculated through it. */
     private static final List<String> CHILD_TYPES = List.of("deal", "lead");
@@ -96,6 +101,49 @@ public class PhoneDigitsFillPatchTest {
     }
 
     @Test
+    @DisplayName("the selection excludes records the recalculation would damage")
+    void selectionSkipsRecordsWithAnEmptyOnEmptyAttributeTest() {
+        // "update-calculated-atts" recomputes every computed attribute of the type, not only
+        // phoneDigits. ON_CREATE atts and counters are skipped for an existing record, but an
+        // ON_EMPTY one is evaluated whenever its current value is empty - and opportunity declares
+        // dateReceived as ON_EMPTY `return new Date()`. Without a guard the patch would overwrite
+        // the creation date of every such record with its own run time, irreversibly and
+        // automatically on every stand it reaches. The selector must therefore leave those records
+        // out; they keep an empty phoneDigits, which is recoverable, instead of losing a date,
+        // which is not.
+        List<String> onEmptyAtts = onEmptyAttributeIds(ComputedScriptRunner.typeFile(TYPE_ID));
+        assertFalse(
+            onEmptyAtts.isEmpty(),
+            "opportunity is expected to declare at least one ON_EMPTY attribute (dateReceived); "
+                + "if that is no longer true, the guard predicate below can be dropped deliberately"
+        );
+
+        Object predicate = section(
+            section(groupActionAttributes(patchFile(PATCH_ID)), "values"),
+            "config"
+        ).get("predicate");
+
+        assertEquals(
+            expectedGuard(onEmptyAtts),
+            predicate,
+            "every ON_EMPTY attribute of " + TYPE_ID + " must be guarded by a not-empty condition "
+                + "in the patch selector, otherwise the recalculation rewrites it with a fresh value"
+        );
+    }
+
+    @Test
+    @DisplayName("the guarded attribute really is the ON_EMPTY one the guard names")
+    void guardedAttributeIsDeclaredOnEmptyTest() {
+        // the guard is written against dateReceived by name; renaming the attribute or changing its
+        // storingType without touching the patch would leave a predicate that filters on nothing
+        assertTrue(
+            onEmptyAttributeIds(ComputedScriptRunner.typeFile(TYPE_ID)).contains("dateReceived"),
+            "dateReceived must stay an ON_EMPTY computed attribute of " + TYPE_ID
+                + " - the patch selector excludes records where it is empty"
+        );
+    }
+
+    @Test
     @DisplayName("the recalculated types inherit the attribute from the type the patch selects")
     void childTypesInheritFromTheSelectedTypeTest() {
         // the patch selects records of opportunity, which has no table of its own: it reaches lead
@@ -138,6 +186,54 @@ public class PhoneDigitsFillPatchTest {
             "the patch must create a new group action, hence an id without a local id"
         );
         return section(record, "attributes");
+    }
+
+    /** {@code not(empty(att))} for one attribute, an {@code and} of those for several. */
+    private static Map<String, Object> expectedGuard(List<String> atts) {
+        List<Map<String, Object>> conditions = new ArrayList<>();
+        for (String att : atts) {
+            Map<String, Object> empty = new LinkedHashMap<>();
+            empty.put("t", "empty");
+            empty.put("att", att);
+            Map<String, Object> notEmpty = new LinkedHashMap<>();
+            notEmpty.put("t", "not");
+            notEmpty.put("val", empty);
+            conditions.add(notEmpty);
+        }
+        if (conditions.size() == 1) {
+            return conditions.get(0);
+        }
+        Map<String, Object> and = new LinkedHashMap<>();
+        and.put("t", "and");
+        and.put("val", conditions);
+        return and;
+    }
+
+    /** Ids of the attributes the type declares as {@code computed.storingType: ON_EMPTY}. */
+    private static List<String> onEmptyAttributeIds(Path typeFile) {
+        List<String> result = new ArrayList<>();
+        Map<String, Object> type = PhoneDigitsHistoryExclusionTest.loadYaml(typeFile);
+        Object model = type.get("model");
+        if (!(model instanceof Map)) {
+            return result;
+        }
+        Object attributes = ((Map<?, ?>) model).get("attributes");
+        if (!(attributes instanceof List)) {
+            return result;
+        }
+        for (Object attribute : (List<?>) attributes) {
+            if (!(attribute instanceof Map)) {
+                continue;
+            }
+            Object computed = ((Map<?, ?>) attribute).get("computed");
+            if (!(computed instanceof Map)) {
+                continue;
+            }
+            if ("ON_EMPTY".equals(((Map<?, ?>) computed).get("storingType"))) {
+                result.add(String.valueOf(((Map<?, ?>) attribute).get("id")));
+            }
+        }
+        return result;
     }
 
     private static Map<?, ?> section(Map<?, ?> parent, String key) {

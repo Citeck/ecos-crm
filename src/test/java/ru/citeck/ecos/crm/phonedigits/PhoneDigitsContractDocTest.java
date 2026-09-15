@@ -474,6 +474,10 @@ public class PhoneDigitsContractDocTest {
 
     private static Map<String, Object> contacts(String phone) {
         Map<String, Object> atts = new HashMap<>();
+        // the opportunity prologue reads the deprecated scalar phone of deal as well; the example
+        // table describes contacts, so the second source is declared empty rather than omitted -
+        // the runner rejects an attribute the script loads and the fixture does not declare
+        atts.put("phone", null);
         atts.put(CONTACT_PHONES, List.of(phone));
         return atts;
     }
