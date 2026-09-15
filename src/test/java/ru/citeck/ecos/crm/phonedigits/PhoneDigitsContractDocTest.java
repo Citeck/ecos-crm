@@ -48,6 +48,11 @@ public class PhoneDigitsContractDocTest {
     /** The input cell of the empty-value row: an empty inline code span renders as two backticks. */
     private static final String EMPTY_INPUT = "(пустая строка)";
 
+    /** First segment of a path of this repository, as the document spells it. */
+    private static final List<String> IN_REPO_PREFIXES = List.of("ecos-crm", "docs", "src");
+    /** Repositories the contract points at, cloned next to this one. */
+    private static final List<String> SIBLING_REPOS = List.of("ecos-datalist", "ecos-crm-citeck");
+
     @Test
     @DisplayName("the contract document exists")
     void contractDocumentExists() {
@@ -132,7 +137,7 @@ public class PhoneDigitsContractDocTest {
     @Test
     @DisplayName("the example table of the document is not empty and lists every documented rule")
     void exampleTableOfTheDocumentIsNotEmpty() {
-        assertEquals(15, exampleTable().count(), "The example table lost or gained a row");
+        assertEquals(17, exampleTable().count(), "The example table lost or gained a row");
     }
 
     @ParameterizedTest(name = "[{index}] \"{0}\" -> {1}")
@@ -147,30 +152,56 @@ public class PhoneDigitsContractDocTest {
     }
 
     @Test
-    @DisplayName("every file the document points to exists in this repository")
-    void everyFileTheDocumentPointsToExistsInThisRepository() {
+    @DisplayName("every file the document points to exists, in this repository and in the siblings")
+    void everyFileTheDocumentPointsToExists() {
 
-        // both spellings the document uses for a file of this repository: prefixed with the
-        // project name, as the cross-repository references are, and repo relative
-        Pattern path = Pattern.compile("`((?:ecos-crm/|docs/|src/)[\\w./-]+\\.(?:yml|md))`");
+        // a path of this repository is spelled either prefixed with the project name, as the
+        // cross-repository references are, or relative to the project root; a path of another
+        // repository always starts with that repository name, and the clones are siblings on disk
+        Pattern path = Pattern.compile("`([\\w.-]+(?:/[\\w.-]+)+\\.(?:yml|md))`");
         Matcher matcher = path.matcher(read(DOC));
 
         List<String> missing = new ArrayList<>();
-        int checked = 0;
+        List<String> unknownRepo = new ArrayList<>();
+        int inThisRepo = 0;
+        int inSiblings = 0;
         while (matcher.find()) {
-            checked++;
             String matched = matcher.group(1);
-            String relative = matched.startsWith("ecos-crm/")
-                ? matched.substring("ecos-crm/".length())
-                : matched;
-            if (!Files.isRegularFile(Paths.get(relative))) {
+            String repo = matched.substring(0, matched.indexOf('/'));
+            if (IN_REPO_PREFIXES.contains(repo)) {
+                inThisRepo++;
+                String relative = "ecos-crm".equals(repo)
+                    ? matched.substring("ecos-crm/".length())
+                    : matched;
+                if (!Files.isRegularFile(Paths.get(relative))) {
+                    missing.add(matched);
+                }
+                continue;
+            }
+            inSiblings++;
+            // the name is checked even when the clone is absent: a typo in it sends the reader of
+            // the contract to a repository that does not exist, and that must not pass silently
+            if (!SIBLING_REPOS.contains(repo)) {
+                unknownRepo.add(matched);
+                continue;
+            }
+            Path sibling = Paths.get("..", repo);
+            // only this repository is guaranteed to be checked out - a missing sibling clone is
+            // not a defect of the document, so its files are verified when the clone is there
+            if (Files.isDirectory(sibling) && !Files.isRegularFile(sibling.resolve(matched.substring(repo.length() + 1)))) {
                 missing.add(matched);
             }
         }
+
+        assertEquals(List.of(), unknownRepo, "The document points at repositories that do not exist");
         assertEquals(List.of(), missing, "The document refers to files that do not exist");
-        // without this the test is a no-op as soon as the paths of the document are reformatted:
+        // without these the test is a no-op as soon as the paths of the document are reformatted:
         // no match means an empty list, which equals the expectation
-        assertTrue(checked >= 3, "The document must keep pointing at the artifacts it describes");
+        assertTrue(inThisRepo >= 3, "The document must keep pointing at the artifacts it describes");
+        assertTrue(
+            inSiblings >= 3,
+            "The document must keep pointing at the counterparty type, its patch and the community journal"
+        );
     }
 
     /** Rows of the example table of the document: the input and the keys it must produce. */
