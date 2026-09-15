@@ -169,5 +169,6 @@ aspects:
       disableHistory: false
       excludedAtts:
         - crm-bitrix24:bitrixSyncDate
+        - phoneDigits
       onCreationHistoricalAtts: []
     inheritConfig: false

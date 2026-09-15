@@ -200,3 +200,16 @@ model:
         ru: Текст лида
         en: Lead text
       type: TEXT
+aspects:
+  # phoneDigits is recalculated on every mutation of the lead, so without this exclusion
+  # every save would add a "phoneDigits changed" line to the event history widget.
+  # Unlike deal.yml, lead has no history-config aspect of its own, and the parent type
+  # (opportunity) declares no aspects either - but history is recorded by default,
+  # so the aspect has to be declared here to exclude the attribute.
+  - ref: emodel/aspect@history-config
+    config:
+      disableHistory: false
+      excludedAtts:
+        - phoneDigits
+      onCreationHistoricalAtts: [ ]
+    inheritConfig: false
