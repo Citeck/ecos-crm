@@ -12,4 +12,10 @@ config:
           config:
             typeRef: emodel/type@opportunity
         execution:
+          # Recomputes EVERY computed attribute of the type, not only phoneDigits: ON_CREATE atts
+          # and counters are skipped for existing records, but ON_EMPTY ones are evaluated whenever
+          # the current value is empty. opportunity declares dateReceived as ON_EMPTY `new Date()`,
+          # so a record with an empty dateReceived is stamped with the run time of this patch as its
+          # creation date. Count such records before running this on production - see the
+          # "Заполнение существующих записей" section of ecos-crm/docs/phone-digits.md.
           type: update-calculated-atts

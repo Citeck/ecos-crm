@@ -116,7 +116,7 @@ public class PhoneDigitsContractDocTest {
         // types produce different keys for the same number and every lookup misses without an error.
         // Until now only a reviewer could notice that; the sibling clone is not guaranteed to be
         // checked out, so the comparison runs whenever it is - the policy the path check below uses
-        assumeSiblingCloneIsPresent();
+        assumeSiblingCarriesPhoneDigits("ecos-datalist");
 
         String expected = sharedFunctionOf(ComputedScriptRunner.readAttributeScript(OPPORTUNITY, "phoneDigits"));
         String actual = sharedFunctionOf(ComputedScriptRunner.readAttributeScript(COUNTERPARTY, "phoneDigits"));
@@ -138,7 +138,7 @@ public class PhoneDigitsContractDocTest {
         // the test above this one can only see what the document claims about the counterparty;
         // this one compares that claim with the artifact, so a prologue changed in ecos-datalist
         // alone can not leave the contract describing sources the type no longer reads
-        assumeSiblingCloneIsPresent();
+        assumeSiblingCarriesPhoneDigits("ecos-datalist");
 
         String expected = prologueOf(ComputedScriptRunner.readAttributeScript(COUNTERPARTY, "phoneDigits"))
             .stripTrailing();
@@ -237,10 +237,14 @@ public class PhoneDigitsContractDocTest {
                 unknownRepo.add(matched);
                 continue;
             }
+            // only this repository is guaranteed to be checked out, and a clone sitting on a
+            // revision that predates phoneDigits is not a defect of the document either - so the
+            // files of a sibling are verified once that clone is known to carry the feature. The
+            // marker is the feature anywhere in the repository, not the referenced file itself,
+            // so a misspelled path is still caught rather than skipped along with it
             Path sibling = Paths.get("..", repo);
-            // only this repository is guaranteed to be checked out - a missing sibling clone is
-            // not a defect of the document, so its files are verified when the clone is there
-            if (Files.isDirectory(sibling) && !Files.isRegularFile(sibling.resolve(matched.substring(repo.length() + 1)))) {
+            if (siblingCarriesPhoneDigits(repo)
+                && !Files.isRegularFile(sibling.resolve(matched.substring(repo.length() + 1)))) {
                 missing.add(matched);
             }
         }
@@ -341,11 +345,35 @@ public class PhoneDigitsContractDocTest {
         return prologue;
     }
 
-    private static void assumeSiblingCloneIsPresent() {
+    /**
+     * Skips a cross-repository check unless the sibling clone is both checked out and on a
+     * revision that already carries phoneDigits.
+     *
+     * <p>Presence of the file alone is not enough, and assuming it was the bug this replaces:
+     * ecos-counterparty.yml exists on every revision of ecos-datalist, the attribute does not. A
+     * clone left on master therefore turned these checks into errors and failures rather than
+     * skips, so the build of this repository depended on which branch an unrelated neighbouring
+     * clone happened to be on, and reported it as a defect of this one.
+     */
+    private static void assumeSiblingCarriesPhoneDigits(String repo) {
         assumeTrue(
-            Files.isRegularFile(COUNTERPARTY),
-            "ecos-datalist is not checked out next to this repository, nothing to compare with: " + COUNTERPARTY
+            siblingCarriesPhoneDigits(repo),
+            repo + " is not checked out next to this repository, or is on a revision that predates "
+                + "phoneDigits - there is nothing to compare with"
         );
+    }
+
+    /** Whether a sibling clone is present and already carries the feature the contract describes. */
+    private static boolean siblingCarriesPhoneDigits(String repo) {
+        Path artifacts = Paths.get("..", repo, "src", "main", "resources", "app", "artifacts");
+        if (!Files.isDirectory(artifacts)) {
+            return false;
+        }
+        try (Stream<Path> files = Files.walk(artifacts)) {
+            return files.filter(Files::isRegularFile).anyMatch(file -> read(file).contains("phoneDigits"));
+        } catch (IOException e) {
+            throw new UncheckedIOException("Can't scan " + artifacts, e);
+        }
     }
 
     private static List<String> jsBlocks() {
