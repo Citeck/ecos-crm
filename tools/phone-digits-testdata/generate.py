@@ -57,9 +57,19 @@ def phone_keys(*raw_values):
             continue
         for part in SPLIT_RE.split(str(raw)):
             digits = re.sub(r"[^0-9]", "", part)
-            if len(digits) < 10:
+            # E.164 bounds: under ten digits is not a number, over fifteen is past the
+            # standard maximum (that upper bound is also what discards two numbers glued
+            # together by a space)
+            if len(digits) < 10 or len(digits) > 15:
                 continue
-            key = digits[-10:]
+            # the key is the number in E.164, country code included - no country table is
+            # needed, only the Russian trunk prefix is unfolded and a bare ten-digit number
+            # defaults to +7
+            key = digits
+            if len(digits) == 10:
+                key = "7" + digits
+            elif len(digits) == 11 and digits[0] == "8":
+                key = "7" + digits[1:]
             if key not in keys:
                 keys.append(key)
     return keys

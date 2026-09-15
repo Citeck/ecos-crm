@@ -167,7 +167,7 @@ model:
         storingType: ON_MUTATE
         config:
           fn: |
-            // Normalized 10-digit lookup keys of every phone of the record, see ECOSCRM-106.
+            // Normalized E.164 lookup keys of every phone of the record, see ECOSCRM-106.
             // The collectPhoneKeys function below must stay character-identical to its copies in
             // ecos-datalist/src/main/resources/app/artifacts/model/type/ecos-counterparty.yml and
             // in the Mango route of COREDEV-510: a divergence in any step makes the keys differ
@@ -181,10 +181,26 @@ model:
                 var parts = ('' + raw).split(/[,;#\/\r\n]|доб|доп|вн\.?|ext/i);
                 for (var p = 0; p < parts.length; p++) {
                     var digits = parts[p].replace(/[^0-9]/g, '');
-                    if (digits.length < 10) {
+                    // E.164 bounds: fewer than ten digits is not a number at all, and more than
+                    // fifteen is past the standard maximum. The upper bound is also what discards
+                    // two numbers glued together by a space, which used to be cut to ten digits
+                    // and produce a key belonging to nobody.
+                    if (digits.length < 10 || digits.length > 15) {
                         continue;
                     }
-                    var key = digits.substring(digits.length - 10);
+                    // The key is the number in E.164, country code included. No country table is
+                    // needed: only the Russian trunk prefix is unfolded, and a bare ten-digit
+                    // number defaults to +7. Everything else keeps every digit it came with, so a
+                    // CIS number stays itself instead of being cut to ten digits and colliding
+                    // with a Russian one - +998 12 XXX XX XX and +7 812 XXX-XX-XX would both have
+                    // given 812XXXXXXX. Deciding "this number is Russian" by length is not
+                    // possible: +38050215956 is eleven digits and Ukrainian.
+                    var key = digits;
+                    if (digits.length === 10) {
+                        key = '7' + digits;
+                    } else if (digits.length === 11 && digits.charAt(0) === '8') {
+                        key = '7' + digits.substring(1);
+                    }
                     var known = false;
                     for (var k = 0; k < target.length; k++) {
                         if (target[k] === key) {

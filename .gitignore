@@ -151,3 +151,6 @@ Desktop.ini
 
 # Playwright MCP run artifacts (snapshots, console logs)
 .playwright-mcp/
+
+# Python bytecode from tools/phone-digits-testdata
+__pycache__/

@@ -197,9 +197,9 @@ public class PhoneDigitsContractDocTest {
     /** Every source of the counterparty prologue, each carrying the same number in turn. */
     static Stream<Arguments> counterpartySources() {
         return Stream.of(
-            Arguments.of("phone", "+7 (917) 582-92-99", List.of("9175829299")),
-            Arguments.of("cellPhone", "+7 (917) 582-92-99", List.of("9175829299")),
-            Arguments.of(CONTACT_PHONES, "+7 (917) 582-92-99", List.of("9175829299")),
+            Arguments.of("phone", "+7 (917) 582-92-99", List.of("79175829299")),
+            Arguments.of("cellPhone", "+7 (917) 582-92-99", List.of("79175829299")),
+            Arguments.of(CONTACT_PHONES, "+7 (917) 582-92-99", List.of("79175829299")),
             Arguments.of("phone", "630-20-10", List.of()),
             Arguments.of("cellPhone", "", List.of())
         );
@@ -208,7 +208,7 @@ public class PhoneDigitsContractDocTest {
     @Test
     @DisplayName("the example table of the document is not empty and lists every documented rule")
     void exampleTableOfTheDocumentIsNotEmpty() {
-        assertEquals(17, exampleTable().count(), "The example table lost or gained a row");
+        assertEquals(22, exampleTable().count(), "The example table lost or gained a row");
     }
 
     @ParameterizedTest(name = "[{index}] \"{0}\" -> {1}")

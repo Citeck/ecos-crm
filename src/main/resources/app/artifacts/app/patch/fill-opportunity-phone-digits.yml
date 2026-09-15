@@ -1,10 +1,11 @@
 ---
 id: fill-opportunity-phone-digits
-# Raised together with the predicate below and with the `phone` source added to the script:
-# a patch re-runs only when the deployed date is after the one already stored (EcosPatchConfig
-# resets it to PENDING on a newer date). Stands that applied the first version of this patch would
-# otherwise keep the old result forever and nothing would report it.
-date: 2026-09-15T12:00:00Z
+# A patch re-runs only when the deployed date is after the one already stored (EcosPatchConfig
+# resets it to PENDING on a newer date). Stands that applied an earlier version of this patch would
+# otherwise keep the old result forever and nothing would report it. Raised twice so far:
+#   12:00 - the predicate below was added, and `phone` became a source of the script;
+#   19:00 - the key moved from ten digits to E.164, so every stored key has to be recomputed.
+date: 2026-09-15T19:00:00Z
 type: mutate
 targetApp: emodel
 config:
