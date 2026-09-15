@@ -1,7 +1,6 @@
 package ru.citeck.ecos.crm.phonedigits;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
@@ -19,14 +18,20 @@ import org.yaml.snakeyaml.Yaml;
  * phoneDigits is recalculated on every mutation, so every save would otherwise add a
  * "phoneDigits changed" line to the event history widget of the record.
  *
- * <p>The exclusion is declared by the history-config aspect of the concrete types: deal has such an
- * aspect already, lead had none and got one here. Checked empirically on the stand before writing
- * the aspect: history is recorded by default, leads without the aspect do have node.updated events
- * (19 of them in citeck_history), so an omitted aspect would mean an unfiltered history.
+ * <p>The exclusion is declared by the history-config aspect of every type that can hold a record:
+ * deal had such an aspect already, lead and opportunity got one here. opportunity is not one of the
+ * platform's abstract types (EModelTypeUtils.ABSTRACT_TYPES is base, user-base, case, data-list,
+ * authority), it has its own source id and defaultCreateVariant: true, so a record of the type
+ * itself can exist and would record history like any other. Checked empirically on the stand before
+ * writing the aspect: history is recorded by default, leads without the aspect do have node.updated
+ * events (19 of them in citeck_history), so an omitted aspect would mean an unfiltered history.
  */
 public class PhoneDigitsHistoryExclusionTest {
 
     private static final String PHONE_DIGITS = "phoneDigits";
+    /** The type phoneDigits is declared on; every record of it and of its children carries it. */
+    private static final String PARENT_TYPE = "opportunity";
+    private static final String PARENT_TYPE_REF = "emodel/type@" + PARENT_TYPE;
     private static final String HISTORY_ASPECT = "emodel/aspect@history-config";
     /** Was already excluded before this change and must stay excluded. */
     private static final String BITRIX_SYNC_DATE = "crm-bitrix24:bitrixSyncDate";
@@ -62,7 +67,7 @@ public class PhoneDigitsHistoryExclusionTest {
     @Test
     @DisplayName("the history stays enabled for both types - only one attribute is filtered out")
     void historyStaysEnabledTest() {
-        for (String typeId : List.of("deal", "lead")) {
+        for (String typeId : typesThatHoldRecords()) {
             Map<?, ?> config = historyConfig(ComputedScriptRunner.typeFile(typeId));
             assertEquals(
                 Boolean.FALSE,
@@ -78,10 +83,10 @@ public class PhoneDigitsHistoryExclusionTest {
         // the attribute is declared on the parent type, both children exclude it by the same id -
         // a typo here would be silent: history would simply keep recording the attribute
         assertTrue(
-            attributeIds(ComputedScriptRunner.typeFile("opportunity")).contains(PHONE_DIGITS),
+            attributeIds(ComputedScriptRunner.typeFile(PARENT_TYPE)).contains(PHONE_DIGITS),
             "opportunity.yml must declare the phoneDigits attribute the exclusions refer to"
         );
-        for (String typeId : List.of("deal", "lead")) {
+        for (String typeId : typesThatHoldRecords()) {
             assertTrue(
                 excludedAtts(ComputedScriptRunner.typeFile(typeId)).contains(PHONE_DIGITS),
                 typeId + " must exclude exactly the id declared by opportunity.yml"
@@ -90,16 +95,48 @@ public class PhoneDigitsHistoryExclusionTest {
     }
 
     @Test
-    @DisplayName("lead declares the aspect explicitly - it inherits none from opportunity")
-    void leadDeclaresAspectItselfTest() {
-        assertFalse(
-            aspectRefs(ComputedScriptRunner.typeFile("opportunity")).contains(HISTORY_ASPECT),
-            "opportunity declares no history-config aspect, so lead can't inherit the exclusion"
-        );
-        assertTrue(
-            aspectRefs(ComputedScriptRunner.typeFile("lead")).contains(HISTORY_ASPECT),
-            "lead must declare the history-config aspect itself"
-        );
+    @DisplayName("every type that can hold a record declares the aspect itself")
+    void everyRecordHoldingTypeDeclaresTheAspectTest() {
+        // deal and lead declare the aspect with inheritConfig: false, so nothing reaches them from
+        // the parent and each needs its own exclusion. opportunity needs one for its own records:
+        // it is not an abstract type, so it has its own table and a create variant of its own.
+        for (String typeId : typesThatHoldRecords()) {
+            assertTrue(
+                aspectRefs(ComputedScriptRunner.typeFile(typeId)).contains(HISTORY_ASPECT),
+                typeId + " must declare the history-config aspect itself: children override the "
+                    + "config with inheritConfig: false, so an exclusion is never inherited"
+            );
+            assertTrue(
+                excludedAtts(ComputedScriptRunner.typeFile(typeId)).contains(PHONE_DIGITS),
+                typeId + " must exclude phoneDigits in its own history-config aspect"
+            );
+        }
+    }
+
+    @Test
+    @DisplayName("the children still override the inherited history config deliberately")
+    void childrenOverrideTheInheritedConfigTest() {
+        // with the aspect now declared on opportunity too, a child that stopped setting
+        // inheritConfig: false would merge the parent config in and silently lose its own
+        // exclusions - deal would stop excluding crm-bitrix24:bitrixSyncDate
+        for (String typeId : ComputedScriptRunner.childTypeIds(PARENT_TYPE_REF)) {
+            assertEquals(
+                Boolean.FALSE,
+                historyAspect(ComputedScriptRunner.typeFile(typeId)).get("inheritConfig"),
+                typeId + " must keep inheritConfig: false on its history-config aspect"
+            );
+        }
+    }
+
+    /**
+     * Types whose records carry phoneDigits and therefore need the exclusion: the type declaring
+     * the attribute plus every child of it found in the project.
+     */
+    private static List<String> typesThatHoldRecords() {
+        List<String> types = new ArrayList<>();
+        types.add(PARENT_TYPE);
+        types.addAll(ComputedScriptRunner.childTypeIds(PARENT_TYPE_REF));
+        return types;
     }
 
     static List<String> excludedAtts(Path typeFile) {
@@ -117,18 +154,21 @@ public class PhoneDigitsHistoryExclusionTest {
     }
 
     static Map<?, ?> historyConfig(Path typeFile) {
+        Object config = historyAspect(typeFile).get("config");
+        if (!(config instanceof Map)) {
+            throw new IllegalArgumentException(
+                "history-config aspect of " + typeFile + " has no 'config' section"
+            );
+        }
+        return (Map<?, ?>) config;
+    }
+
+    static Map<?, ?> historyAspect(Path typeFile) {
         for (Object aspect : aspects(typeFile)) {
             Map<?, ?> aspectMap = (Map<?, ?>) aspect;
-            if (!HISTORY_ASPECT.equals(String.valueOf(aspectMap.get("ref")))) {
-                continue;
+            if (HISTORY_ASPECT.equals(String.valueOf(aspectMap.get("ref")))) {
+                return aspectMap;
             }
-            Object config = aspectMap.get("config");
-            if (!(config instanceof Map)) {
-                throw new IllegalArgumentException(
-                    "history-config aspect of " + typeFile + " has no 'config' section"
-                );
-            }
-            return (Map<?, ?>) config;
         }
         throw new IllegalArgumentException("Type " + typeFile + " has no history-config aspect");
     }
@@ -156,7 +196,7 @@ public class PhoneDigitsHistoryExclusionTest {
         return ids;
     }
 
-    /** A type without an 'aspects' section simply declares no aspects - opportunity is one. */
+    /** A type without an 'aspects' section simply declares no aspects. */
     private static List<?> aspects(Path typeFile) {
         Object aspects = loadYaml(typeFile).get("aspects");
         if (aspects == null) {

@@ -169,8 +169,9 @@ model:
           fn: |
             // Normalized 10-digit lookup keys of every phone of the record, see ECOSCRM-106.
             // The collectPhoneKeys function below must stay character-identical to its copies in
-            // ecos-datalist/model/type/ecos-counterparty.yml and in the Mango route of COREDEV-510:
-            // a divergence in any step makes the keys differ and the lookup silently miss.
+            // ecos-datalist/src/main/resources/app/artifacts/model/type/ecos-counterparty.yml and
+            // in the Mango route of COREDEV-510: a divergence in any step makes the keys differ
+            // and the lookup silently miss.
             function collectPhoneKeys(raw, target) {
                 if (raw === null || raw === undefined) {
                     return;
@@ -220,3 +221,17 @@ model:
                 }
             }
             return result;
+aspects:
+  # opportunity is not one of the platform's abstract types (base, user-base, case, data-list,
+  # authority - EModelTypeUtils.ABSTRACT_TYPES), so it gets its own source id and its own table,
+  # and defaultCreateVariant: true lets a record of the type itself be created. Such a record
+  # records history like any other, so without this aspect every save of it would add a
+  # "phoneDigits changed" line to the event history widget. deal and lead declare the aspect
+  # themselves with inheritConfig: false and repeat the exclusion in their own config, so this
+  # declaration changes nothing for them.
+  - ref: emodel/aspect@history-config
+    config:
+      disableHistory: false
+      excludedAtts:
+        - phoneDigits
+      onCreationHistoricalAtts: []

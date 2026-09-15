@@ -46,6 +46,29 @@ public final class ComputedScriptRunner {
         return Paths.get(TYPES_DIR, typeId + ".yml").toAbsolutePath();
     }
 
+    /**
+     * Type ids of this project whose {@code parentRef} is the given ref, in alphabetical order.
+     *
+     * <p>Derived from the type directory rather than listed by hand: a child added to the project
+     * is picked up by every check built on this list instead of being silently left out of it.
+     */
+    public static List<String> childTypeIds(String parentRef) {
+        List<String> ids = new ArrayList<>();
+        try (java.util.stream.Stream<Path> typeFiles = Files.list(Paths.get(TYPES_DIR))) {
+            typeFiles.filter(file -> file.getFileName().toString().endsWith(".yml"))
+                .forEach(file -> {
+                    if (parentRef.equals(loadYaml(file.toAbsolutePath()).get("parentRef"))) {
+                        String fileName = file.getFileName().toString();
+                        ids.add(fileName.substring(0, fileName.length() - ".yml".length()));
+                    }
+                });
+        } catch (java.io.IOException e) {
+            throw new IllegalArgumentException("Can't list type files in " + TYPES_DIR, e);
+        }
+        java.util.Collections.sort(ids);
+        return ids;
+    }
+
     /** Runner over the {@code computed.config.fn} of the given attribute of the given type file. */
     public static ComputedScriptRunner ofTypeAttribute(Path typeFile, String attId) {
         return new ComputedScriptRunner(readAttributeScript(typeFile, attId), typeFile + "#" + attId);

@@ -27,8 +27,11 @@
 Параметры атрибута в обоих типах одинаковы: `type: TEXT`, `multiple: true`,
 `computed: { type: SCRIPT, storingType: ON_MUTATE }`, `index: { enabled: true }`.
 
-Собственной таблицы у `opportunity` нет — записи лежат в таблицах наследников, поэтому колонок
-и GIN-индексов три, а не два (схема `ecos_data` базы `citeck_emodel`):
+`opportunity` **не** входит в список абстрактных типов платформы (`base`, `user-base`, `case`,
+`data-list`, `authority` — `EModelTypeUtils.ABSTRACT_TYPES`), поэтому таблица у него своя и
+создаётся при первой записи этого типа. Записей самого `opportunity` на стендах нет — все данные
+лежат в таблицах наследников, — поэтому колонок и GIN-индексов сейчас три (схема `ecos_data` базы
+`citeck_emodel`):
 
 ```
 ecos_data.t_lead                "phoneDigits" varchar[]   t_lead_phoneDigits_idx                USING gin ("phoneDigits")
@@ -81,8 +84,9 @@ ecos_data.t_ecos_counterparty   "phoneDigits" varchar[]   t_ecos_counterparty_ph
 ```js
 // Normalized 10-digit lookup keys of every phone of the record, see ECOSCRM-106.
 // The collectPhoneKeys function below must stay character-identical to its copies in
-// ecos-datalist/model/type/ecos-counterparty.yml and in the Mango route of COREDEV-510:
-// a divergence in any step makes the keys differ and the lookup silently miss.
+// ecos-datalist/src/main/resources/app/artifacts/model/type/ecos-counterparty.yml and
+// in the Mango route of COREDEV-510: a divergence in any step makes the keys differ
+// and the lookup silently miss.
 function collectPhoneKeys(raw, target) {
     if (raw === null || raw === undefined) {
         return;
@@ -245,8 +249,11 @@ JSON-атрибута (`contacts.contactPhone`), который действит
   Выкладывать его можно только после выпуска `ecos-crm` с `phoneDigits`: без родительского типа
   атрибута в предикате не существует.
 - **Значение пересчитывается при каждом сохранении записи** (`storingType: ON_MUTATE`). Поэтому
-  `phoneDigits` добавлен в `excludedAtts` аспекта `history-config` у `deal`, `lead` и
-  `ecos-counterparty` — иначе история событий засорялась бы техническими записями.
+  `phoneDigits` добавлен в `excludedAtts` аспекта `history-config` у `opportunity`, `deal`, `lead`
+  и `ecos-counterparty` — иначе история событий засорялась бы техническими записями. У `deal` и
+  `lead` аспект объявлен со своим `inheritConfig: false`, то есть от родителя они ничего не
+  наследуют; у `opportunity` аспект нужен для записей самого типа — он не абстрактный и у него
+  есть своя карточка создания.
 - **Скрипт на `opportunity` не читает `counterparty.phoneDigits`.** Иначе значение устаревало бы
   при изменении телефона контрагента без пересохранения сделки. Связь с телефоном контрагента
   даёт именно двухшаговый поиск, а не общий массив.
@@ -337,11 +344,17 @@ predicate:
 Связка «предикат закрывает каждый `ON_EMPTY`-атрибут» проверяется тестом
 `PhoneDigitsFillPatchTest.selectionSkipsRecordsWithAnEmptyOnEmptyAttributeTest`: он читает
 `storingType` не только из `opportunity.yml`, но и из `deal.yml` и `lead.yml`. Это существенно:
-у `opportunity` нет своей таблицы, групповое действие доходит до лида и сделки рекурсией по детям
-выбранного типа и пересчитывает каждого по его **собственной** модели, поэтому `ON_EMPTY`-атрибут,
-объявленный у ребёнка, подставлен под перезапись ровно так же, как родительский. Новый
-`ON_EMPTY`-атрибут в любом из трёх файлов, добавленный без правки патча, уронит сборку, а не
-пройдёт незамеченным. Полноту списка детей сторожит отдельный тест
+групповое действие доходит до лида и сделки рекурсией по детям выбранного типа и пересчитывает
+каждого по его **собственной** модели, поэтому `ON_EMPTY`-атрибут, объявленный у ребёнка,
+подставлен под перезапись ровно так же, как родительский. Новый `ON_EMPTY`-атрибут в любом из трёх
+файлов, добавленный без правки патча, уронит сборку, а не пройдёт незамеченным.
+
+⚠️ **Граница проверки уже, чем то, что видит пересчёт.** Тест читает только секции
+`model.attributes` трёх файлов этого проекта. Платформа же пересчитывает **разрешённую** модель: в
+неё входят атрибуты, добавленные аспектами, унаследованные от предков (`case` → `user-base` →
+`base` в ecos-model) и объявленные у ребёнка `opportunity` из другого репозитория
+(`ecos-crm-citeck`). На момент ревью `ON_EMPTY`-атрибутов там нет, но появившийся в этих местах
+атрибут будет перезаписан патчем, и сборка об этом не сообщит. Полноту списка детей сторожит отдельный тест
 `childTypesListIsCompleteTest`: он сам находит все типы проекта с `parentRef: emodel/type@opportunity`
 и требует, чтобы список в тесте совпадал с ними, иначе третий ребёнок пересчитывался бы с гуардом,
 который в его модель не заглядывал.

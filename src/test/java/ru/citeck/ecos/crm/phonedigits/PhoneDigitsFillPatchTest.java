@@ -5,9 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.io.IOException;
-import java.io.UncheckedIOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -16,7 +13,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -33,8 +29,6 @@ import org.junit.jupiter.api.Test;
 public class PhoneDigitsFillPatchTest {
 
     private static final String PATCHES_DIR = "src/main/resources/app/artifacts/app/patch";
-
-    private static final String TYPES_DIR = "src/main/resources/app/artifacts/model/type";
 
     private static final String PATCH_ID = "fill-opportunity-phone-digits";
     /** The type the attribute is declared on; lead and deal are picked up as its children. */
@@ -118,11 +112,19 @@ public class PhoneDigitsFillPatchTest {
         // out; they keep an empty phoneDigits, which is recoverable, instead of losing a date,
         // which is not.
         //
-        // The scan covers the children too: opportunity has no table of its own, the group action
-        // reaches lead and deal by recursing into the children of the selected type and
-        // recalculates each of them with its OWN model. An ON_EMPTY attribute declared on deal.yml
-        // or lead.yml is therefore just as exposed as one on the parent, and looking only at
-        // opportunity.yml would leave two of the three recalculated types unguarded.
+        // The scan covers the children too: the group action reaches lead and deal by recursing
+        // into the children of the selected type and recalculates each of them with its OWN model.
+        // An ON_EMPTY attribute declared on deal.yml or lead.yml is therefore just as exposed as
+        // one on the parent, and looking only at opportunity.yml would leave two of the three
+        // recalculated types unguarded.
+        //
+        // Scope of the guard, deliberately narrower than what the recalculation sees: only the
+        // 'model.attributes' sections of the type files of THIS project are read. The platform
+        // recalculates the RESOLVED model, which also carries attributes contributed by aspects
+        // and inherited from the ancestors (case -> user-base -> base in ecos-model), and a child
+        // of opportunity declared in another repository (ecos-crm-citeck) is reached as well.
+        // None of those declare an ON_EMPTY attribute today - checked in review - but an ON_EMPTY
+        // attribute added there would be rewritten by the patch without failing this test.
         List<String> onEmptyAtts = guardedOnEmptyAttributeIds();
         assertFalse(
             onEmptyAtts.isEmpty(),
@@ -163,9 +165,9 @@ public class PhoneDigitsFillPatchTest {
     @Test
     @DisplayName("the recalculated types inherit the attribute from the type the patch selects")
     void childTypesInheritFromTheSelectedTypeTest() {
-        // the patch selects records of opportunity, which has no table of its own: it reaches lead
-        // and deal only because they are its children. Re-parenting either of them makes the patch
-        // silently skip its records and leaves them unsearchable by phone.
+        // the patch selects records of opportunity, and reaches lead and deal only because they are
+        // its children. Re-parenting either of them makes the patch silently skip its records and
+        // leaves them unsearchable by phone.
         String parentRef = TYPE_REF;
         for (String typeId : CHILD_TYPES) {
             assertEquals(
@@ -183,20 +185,7 @@ public class PhoneDigitsFillPatchTest {
         // the ON_EMPTY guard above is only as complete as this list: the group action recurses into
         // every child of the selected type, so a third child added to the project without being
         // added here would be recalculated with a guard that never looked at its model.
-        Set<String> declaredChildren = new HashSet<>();
-        try (Stream<Path> typeFiles = Files.list(Paths.get(TYPES_DIR))) {
-            typeFiles.filter(file -> file.getFileName().toString().endsWith(".yml"))
-                .forEach(file -> {
-                    Object parentRef = PhoneDigitsHistoryExclusionTest.loadYaml(file.toAbsolutePath())
-                        .get("parentRef");
-                    if (TYPE_REF.equals(parentRef)) {
-                        String fileName = file.getFileName().toString();
-                        declaredChildren.add(fileName.substring(0, fileName.length() - ".yml".length()));
-                    }
-                });
-        } catch (IOException e) {
-            throw new UncheckedIOException("Can't list type files in " + TYPES_DIR, e);
-        }
+        Set<String> declaredChildren = new HashSet<>(ComputedScriptRunner.childTypeIds(TYPE_REF));
 
         assertEquals(
             declaredChildren,

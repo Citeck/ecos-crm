@@ -1,6 +1,10 @@
 ---
 id: fill-opportunity-phone-digits
-date: 2026-09-15T00:00:00Z
+# Raised together with the predicate below and with the `phone` source added to the script:
+# a patch re-runs only when the deployed date is after the one already stored (EcosPatchConfig
+# resets it to PENDING on a newer date). Stands that applied the first version of this patch would
+# otherwise keep the old result forever and nothing would report it.
+date: 2026-09-15T12:00:00Z
 type: mutate
 targetApp: emodel
 config:

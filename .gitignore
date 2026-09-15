@@ -145,3 +145,6 @@ Desktop.ini
 # ESLint
 ######################
 .eslintcache
+
+# local tooling state (Serena MCP indexes)
+.serena/
