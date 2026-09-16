@@ -2,7 +2,8 @@
   "id": "deal-contact-form",
   "formKey": "",
   "title": {
-    "en": "Контакты"
+    "ru": "Контакты",
+    "en": "Contacts"
   },
   "description": {},
   "customModule": "",
@@ -17,7 +18,7 @@
         "refreshOn": [
           "counterpartyContacts"
         ],
-        "calculateValue": "const contacts = _.get(data, 'contacts', []);\n\nlet legacyContactsExists = false;\n\nconst contactIsNotEmpty = (contact) => {\n    return !!contact.contactFio ||\n        !!contact.contactDepartment ||\n        !!contact.contactEmail ||\n        !!contact.contactPhone ||\n        !!contact.contactPosition ||\n        !!contact.contactComment;\n}\n\nfor (const contact of contacts) {\n    if (contactIsNotEmpty(contact)) {\n        legacyContactsExists = true;\n        break;\n    }\n}\n\nvalue = legacyContactsExists;\n\nconst placeholderElement = document.querySelector('.citeck-contacts-widget_placeholder');\nif (placeholderElement) {\n  const htmlPlaceholder = placeholderElement.parentElement;\n  \n  if (htmlPlaceholder) {\n    if (!contacts.length && !_.get(data, 'counterpartyContacts.length')) {\n      htmlPlaceholder.removeAttribute('hidden');\n      htmlPlaceholder.removeAttribute('style');\n    } else {\n      htmlPlaceholder.setAttribute('hidden', true);\n    }\n  }\n}\n\nconst firstPanel = document.querySelectorAll('.citeck-widget-contacts__not-collapsed .panel-body')[0];\nif (firstPanel) {\n  firstPanel.removeAttribute('hidden');\n  firstPanel.removeAttribute('style');\n  \n  const parentElement = firstPanel.parentElement;\n  if (parentElement) {\n    const iconElement = parentElement.querySelector('.citeck-panel-icon-chevron');\n  \n    if (iconElement) {\n      iconElement.className = \"citeck-panel-icon-chevron down\";\n    }\n  }\n}",
+        "calculateValue": "// A contact list that was rendered once keeps a blank row in the data, so its length says\n// nothing about whether the record has contacts - look at what the rows contain.\nconst contacts = _.get(data, 'contacts', []);\n\nconst contactIsNotEmpty = (contact) => {\n    return !!contact && (!!contact.contactFio ||\n        !!contact.contactDepartment ||\n        !!contact.contactEmail ||\n        !!contact.contactPhone ||\n        !!contact.contactPosition ||\n        !!contact.contactComment);\n};\n\nconst hasOwnContacts = contacts.some(contactIsNotEmpty);\n\nvalue = hasOwnContacts;\n\n// Scope the lookup to this form: the dialog and the dashlet are separate instances. A form that\n// has been replaced keeps its markup in a detached tree, and working on that tree changes\n// nothing the user sees, so such an instance falls back to the live document.\nconst isViewMode = !!_.get(instance, 'root.options.viewAsHtml');\nconst rootElement = _.get(instance, 'root.element');\nconst formRoot = (rootElement && document.contains(rootElement)) ? rootElement : document;\n\n// The counterparty contacts arrive asynchronously. Until that request resolves the form knows\n// nothing about them, so the placeholder has to stay hidden - otherwise every deal whose\n// contacts live on the counterparty claims \"there are no contacts\" for the first seconds.\nconst counterpartyLoaded = !_.isUndefined(_.get(data, 'asyncCounterparty'));\nconst noContactsAtAll = !hasOwnContacts && !_.get(data, 'asyncCounterparty.contacts.length');\n\nconst placeholderElement = formRoot.querySelector('.citeck-contacts-widget_placeholder');\nif (placeholderElement) {\n  const htmlPlaceholder = placeholderElement.parentElement;\n\n  if (htmlPlaceholder) {\n    if (counterpartyLoaded && noContactsAtAll) {\n      htmlPlaceholder.removeAttribute('hidden');\n      htmlPlaceholder.removeAttribute('style');\n    } else {\n      htmlPlaceholder.setAttribute('hidden', true);\n    }\n  }\n}\n\n// Deferred by a tick: the conditions that decide which lists are shown are applied after this\n// script runs, so looking at the markup right away finds the lists still hidden. Each list\n// marks its first card as the one to open, and several lists can be on screen at once.\nsetTimeout(function () {\n  const contactGrids = formRoot.querySelectorAll('.citeck-widget-contacts .formio-component-datagrid');\n\n  for (let g = 0; g < contactGrids.length; g++) {\n    const grid = contactGrids[g];\n\n    if (grid.hasAttribute('hidden') || grid.closest('[hidden]')) {\n      continue;\n    }\n\n    const cards = grid.querySelectorAll('.citeck-widget-contacts__not-collapsed');\n    for (let i = 0; i < cards.length; i++) {\n      const card = cards[i];\n\n      if (card.closest('[hidden]')) {\n        continue;\n      }\n\n      // An empty list still renders one blank row. While reading the record that row is a\n      // column of dashes, so it stays shut; in the dialog it is the form for the first contact\n      // and has to be open.\n      const cardTitle = card.querySelector('.card-title');\n      if (isViewMode && (!cardTitle || !cardTitle.textContent.trim())) {\n        continue;\n      }\n\n      const cardBody = card.querySelector('.panel-body');\n      if (!cardBody) {\n        continue;\n      }\n\n      cardBody.removeAttribute('hidden');\n      cardBody.removeAttribute('style');\n\n      const iconElement = card.querySelector('.citeck-panel-icon-chevron');\n      if (iconElement) {\n        iconElement.className = \"citeck-panel-icon-chevron down\";\n      }\n\n      break;\n    }\n  }\n}, 0);",
         "optionalWhenDisabled": false,
         "type": "hidden",
         "input": true,
@@ -44,7 +45,9 @@
               "record": {
                 "id": "{{recordId}}",
                 "attributes": {
-                  "contacts": "counterparty.contacts[]?json"
+                  "contacts": "counterparty.contacts[]?json",
+                  "ref": "counterparty?id",
+                  "name": "counterparty?disp"
                 }
               },
               "forceLoad": false
@@ -67,8 +70,8 @@
             "hidden": true,
             "className": "",
             "content": {
-              "ru": "text\n\n<style>\n    .citeck-widget-contacts .table-bordered {\n        border: none;\n    }\n    .citeck-widget-contacts .table-bordered th, .table-bordered td {\n        border: none;\n    }\n    \n    .citeck-widget-contacts .table th, .table td {\n        padding: 0;\n    }\n    \n    .citeck-widget-contacts .form-group {\n        margin: 0;\n    }\n    \n    .citeck-widget-contacts .card-body .panel-body {\n        padding: 0 28px !important;\n        margin-bottom: 12px;\n    }\n    \n    .citeck-widget-contacts-comment_view-mode,\n    .citeck-widget-contacts-columns dl {\n        border-bottom: none !important;\n        padding: 5px 0 !important;\n    }\n    \n    .citeck-widget-contacts-comment_view-mode dd,\n    .citeck-widget-contacts-columns dd {\n        color: #444444;\n        font-weight: 600;\n    }\n    \n    .citeck-widget-contacts-comment_view-mode dt,\n    .citeck-widget-contacts-columns dt {\n        color: #B7B7B7;\n    }\n    .citeck-widget-contacts-comment_view-mode dt:after,\n    .citeck-widget-contacts-columns dt:after {\n        content: \":\";\n    }\n    \n    .citeck-widget-contacts .card .card-title {\n        padding: 0;\n        margin-top: 2px;\n        margin-bottom: 12px !important;\n        margin-left: 0;\n        font-size: 14px !important;\n        \n        display: flex;\n        gap: 3px;\n        align-items: center;\n    }\n</style>",
-              "en": "text\n\n<style>\n    .citeck-widget-contacts .table-bordered {\n        border: none;\n    }\n    .citeck-widget-contacts .table-bordered th, .table-bordered td {\n        border: none;\n    }\n    \n    .citeck-widget-contacts .table th, .table td {\n        padding: 0;\n    }\n    \n    .citeck-widget-contacts .form-group {\n        margin: 0;\n    }\n    \n    .citeck-widget-contacts .card-body .panel-body {\n        padding: 0 28px !important;\n        margin-bottom: 12px;\n    }\n    \n    .citeck-widget-contacts-comment_view-mode,\n    .citeck-widget-contacts-columns dl {\n        border-bottom: none !important;\n        padding: 5px 0 !important;\n    }\n    \n    .citeck-widget-contacts-comment_view-mode dd,\n    .citeck-widget-contacts-columns dd {\n        color: #444444;\n        font-weight: 600;\n    }\n    \n    .citeck-widget-contacts-comment_view-mode dt,\n    .citeck-widget-contacts-columns dt {\n        color: #B7B7B7;\n    }\n    .citeck-widget-contacts-comment_view-mode dt:after,\n    .citeck-widget-contacts-columns dt:after {\n        content: \":\";\n    }\n    \n    .citeck-widget-contacts .card .card-title {\n        padding: 0;\n        margin-top: 2px;\n        margin-bottom: 12px !important;\n        margin-left: 0;\n        font-size: 14px !important;\n        \n        display: flex;\n        gap: 3px;\n        align-items: center;\n    }\n</style>"
+              "ru": "text\n\n<style>\n    .citeck-widget-contacts .form-group {\n        margin: 0;\n    }\n\n    /* The platform sets a border and 0.65rem/0.5rem padding on every datagrid cell. Here each\n       cell holds a whole contact card, so the cell must not add any frame of its own. The\n       selector has to stay inside .citeck-widget-contacts and outrank\n       `.formio-component-datagrid table.table-bordered td`, otherwise it either leaks onto\n       every table of the page or loses and does nothing. */\n    .citeck-widget-contacts .formio-component-datagrid table.table-bordered th,\n    .citeck-widget-contacts .formio-component-datagrid table.table-bordered td {\n        padding: 0 0 16px;\n        border: none;\n        height: auto;\n    }\n\n    /* The gap belongs between the cards, not after the last one - otherwise a widget of\n       collapsed cards ends with an empty strip as tall as a card. */\n    .citeck-widget-contacts .formio-component-datagrid table.table-bordered tr:last-child > td {\n        padding-bottom: 0;\n    }\n\n    /* The step below the title belongs to the body, not to the title: a collapsed body is\n       display:none, so its margin disappears with it and collapsed cards do not reserve room\n       for content they are not showing. */\n    .citeck-widget-contacts .card > .card-header {\n        padding-bottom: 0;\n    }\n\n    /* Direct child, not descendant: a contact card sits inside a wrapper panel, so a descendant\n       selector applied this inset twice and squeezed the content into the middle of the widget.\n       The card adds no inset of its own - the same as on the counterparty form, where the\n       fields simply sit in the padded content area around the grid. */\n    .citeck-widget-contacts .card > .card-body.panel-body {\n        padding: 0 !important;\n        margin-top: 11px;\n        margin-bottom: 0;\n        /* the rows carry their own 5px above and below; the platform puts a 1rem flex gap on a\n           datagrid panel body, which pushed the comment 16px away while the fields sat 10px\n           apart - !important because that rule outranks this one */\n        gap: 0 !important;\n    }\n\n    /* Only the read-only rows. While a field is being edited inline, the very same dl becomes\n       the editor and carries `formio-component`; squeezing its sides to zero and dropping its\n       bottom border left the label against the frame and the frame unfinished. */\n    .citeck-widget-contacts-comment_view-mode,\n    .citeck-widget-contacts-columns dl:not(.formio-component) {\n        border-bottom: none !important;\n        padding: 5px 0 !important;\n    }\n\n    .citeck-widget-contacts-comment_view-mode dd,\n    .citeck-widget-contacts-columns dd {\n        color: #444444;\n        font-weight: 600;\n    }\n\n    .citeck-widget-contacts-comment_view-mode dt,\n    .citeck-widget-contacts-columns dt {\n        color: #B7B7B7;\n    }\n    .citeck-widget-contacts-comment_view-mode dt:after,\n    .citeck-widget-contacts-columns dt:after {\n        content: \":\";\n    }\n\n    /* Keep the platform's title chip (`.formio-form .card .card-title`) - with several contacts\n       in one widget it is the only thing separating one card from the next. Only the vertical\n       rhythm and the icon alignment are adjusted here. */\n    .citeck-widget-contacts .card .card-title {\n        margin-top: 2px;\n        margin-bottom: 0 !important;\n        margin-left: 0;\n        font-size: 14px !important;\n\n        display: flex;\n        gap: 3px;\n        align-items: center;\n    }\n\n    /* The platform sizes the row-removal button to the height of a form input (40px) so that it\n       lines up with the fields of a normal data grid. Here it stands next to the 30px title\n       chip, so it has to match the chip instead. The platform selector is repeated with the\n       widget class in front of it, otherwise its four classes and three elements win. */\n    .citeck-widget-contacts .formio-component-datagrid table.table-bordered\n    td.formio-remove-column button.formio-button-remove-row {\n        width: 32px;\n        height: 30px;\n        padding: 0;\n        margin-top: 2px;\n    }\n\n    /* 8px of inset, the 32px button and 8px more on the other side: at 40px the button ended\n       up flush against the right edge of the grid frame. */\n    .citeck-widget-contacts .formio-remove-column {\n        width: 48px;\n        padding-left: 8px !important;\n        padding-right: 8px !important;\n    }\n\n    /* --- the dialog ---------------------------------------------------------------------- */\n\n    /* The contacts editor on the counterparty form is the reference: the grid sits straight in\n       the padded content area of the dialog, with no frame of its own. Our widget is a panel,\n       and its frame turned the dialog into a box inside a box. */\n    .formio-form:not(.formio-form_view-mode) .citeck-widget-contacts,\n    .formio-form:not(.formio-form_view-mode) .citeck-widget-contacts > .card-body.panel-body {\n        border: none !important;\n        background: transparent !important;\n    }\n\n    /* The frame around the contacts in the dialog is drawn by the data grid itself, as a 1px\n       spread box-shadow on the table. Zeroing the cell padding - which the read-only layout\n       needs - left the heading, the fields and the removal button pressed against that frame,\n       and moving the whole table only changed the distance to the dialog, not to the frame.\n       The reference form keeps the cell padding, so its contents sit 8px inside the frame. */\n    .formio-form:not(.formio-form_view-mode) .citeck-widget-contacts > .card-body.panel-body {\n        padding-left: 20px !important;\n        padding-right: 20px !important;\n    }\n\n    .formio-form:not(.formio-form_view-mode) .citeck-widget-contacts .formio-component-datagrid\n    table.table-bordered td {\n        padding: 10px 8px 16px;\n    }\n\n    .formio-form:not(.formio-form_view-mode) .citeck-widget-contacts .formio-component-datagrid\n    table.table-bordered tr:last-child > td {\n        padding-bottom: 10px;\n    }\n\n    /* `.form-group { margin: 0 }` above is right for the read-only rows, but in the dialog it\n       leaves 3px between a field and the label of the next one. 16px is what the counterparty\n       form uses. */\n    .formio-form:not(.formio-form_view-mode) .citeck-widget-contacts .form-group {\n        margin-bottom: 16px;\n    }\n\n    /* The checkbox is the only control here without a label above it, so it started where the\n       labels of the neighbouring fields start and floated half a row above them. The offset is\n       the height of a label plus the gap under it, which puts the box on the same line as the\n       field beside it. The box itself is drawn by the span, not by the input - the input has no\n       size - so nothing here may shift the label horizontally. */\n    .formio-form:not(.formio-form_view-mode) .citeck-widget-contacts .formio-component-contactMain {\n        /* padding, not margin: a top margin here collapses with the bottom margin of the field\n           above and only a few of the pixels survive. 22px is the label block the checkbox does\n           not have, 11px centres its 18px box against the 40px field beside it. */\n        padding-top: 33px;\n    }\n</style>",
+              "en": "text\n\n<style>\n    .citeck-widget-contacts .form-group {\n        margin: 0;\n    }\n\n    /* The platform sets a border and 0.65rem/0.5rem padding on every datagrid cell. Here each\n       cell holds a whole contact card, so the cell must not add any frame of its own. The\n       selector has to stay inside .citeck-widget-contacts and outrank\n       `.formio-component-datagrid table.table-bordered td`, otherwise it either leaks onto\n       every table of the page or loses and does nothing. */\n    .citeck-widget-contacts .formio-component-datagrid table.table-bordered th,\n    .citeck-widget-contacts .formio-component-datagrid table.table-bordered td {\n        padding: 0 0 16px;\n        border: none;\n        height: auto;\n    }\n\n    /* The gap belongs between the cards, not after the last one - otherwise a widget of\n       collapsed cards ends with an empty strip as tall as a card. */\n    .citeck-widget-contacts .formio-component-datagrid table.table-bordered tr:last-child > td {\n        padding-bottom: 0;\n    }\n\n    /* The step below the title belongs to the body, not to the title: a collapsed body is\n       display:none, so its margin disappears with it and collapsed cards do not reserve room\n       for content they are not showing. */\n    .citeck-widget-contacts .card > .card-header {\n        padding-bottom: 0;\n    }\n\n    /* Direct child, not descendant: a contact card sits inside a wrapper panel, so a descendant\n       selector applied this inset twice and squeezed the content into the middle of the widget.\n       The card adds no inset of its own - the same as on the counterparty form, where the\n       fields simply sit in the padded content area around the grid. */\n    .citeck-widget-contacts .card > .card-body.panel-body {\n        padding: 0 !important;\n        margin-top: 11px;\n        margin-bottom: 0;\n        /* the rows carry their own 5px above and below; the platform puts a 1rem flex gap on a\n           datagrid panel body, which pushed the comment 16px away while the fields sat 10px\n           apart - !important because that rule outranks this one */\n        gap: 0 !important;\n    }\n\n    /* Only the read-only rows. While a field is being edited inline, the very same dl becomes\n       the editor and carries `formio-component`; squeezing its sides to zero and dropping its\n       bottom border left the label against the frame and the frame unfinished. */\n    .citeck-widget-contacts-comment_view-mode,\n    .citeck-widget-contacts-columns dl:not(.formio-component) {\n        border-bottom: none !important;\n        padding: 5px 0 !important;\n    }\n\n    .citeck-widget-contacts-comment_view-mode dd,\n    .citeck-widget-contacts-columns dd {\n        color: #444444;\n        font-weight: 600;\n    }\n\n    .citeck-widget-contacts-comment_view-mode dt,\n    .citeck-widget-contacts-columns dt {\n        color: #B7B7B7;\n    }\n    .citeck-widget-contacts-comment_view-mode dt:after,\n    .citeck-widget-contacts-columns dt:after {\n        content: \":\";\n    }\n\n    /* Keep the platform's title chip (`.formio-form .card .card-title`) - with several contacts\n       in one widget it is the only thing separating one card from the next. Only the vertical\n       rhythm and the icon alignment are adjusted here. */\n    .citeck-widget-contacts .card .card-title {\n        margin-top: 2px;\n        margin-bottom: 0 !important;\n        margin-left: 0;\n        font-size: 14px !important;\n\n        display: flex;\n        gap: 3px;\n        align-items: center;\n    }\n\n    /* The platform sizes the row-removal button to the height of a form input (40px) so that it\n       lines up with the fields of a normal data grid. Here it stands next to the 30px title\n       chip, so it has to match the chip instead. The platform selector is repeated with the\n       widget class in front of it, otherwise its four classes and three elements win. */\n    .citeck-widget-contacts .formio-component-datagrid table.table-bordered\n    td.formio-remove-column button.formio-button-remove-row {\n        width: 32px;\n        height: 30px;\n        padding: 0;\n        margin-top: 2px;\n    }\n\n    /* 8px of inset, the 32px button and 8px more on the other side: at 40px the button ended\n       up flush against the right edge of the grid frame. */\n    .citeck-widget-contacts .formio-remove-column {\n        width: 48px;\n        padding-left: 8px !important;\n        padding-right: 8px !important;\n    }\n\n    /* --- the dialog ---------------------------------------------------------------------- */\n\n    /* The contacts editor on the counterparty form is the reference: the grid sits straight in\n       the padded content area of the dialog, with no frame of its own. Our widget is a panel,\n       and its frame turned the dialog into a box inside a box. */\n    .formio-form:not(.formio-form_view-mode) .citeck-widget-contacts,\n    .formio-form:not(.formio-form_view-mode) .citeck-widget-contacts > .card-body.panel-body {\n        border: none !important;\n        background: transparent !important;\n    }\n\n    /* The frame around the contacts in the dialog is drawn by the data grid itself, as a 1px\n       spread box-shadow on the table. Zeroing the cell padding - which the read-only layout\n       needs - left the heading, the fields and the removal button pressed against that frame,\n       and moving the whole table only changed the distance to the dialog, not to the frame.\n       The reference form keeps the cell padding, so its contents sit 8px inside the frame. */\n    .formio-form:not(.formio-form_view-mode) .citeck-widget-contacts > .card-body.panel-body {\n        padding-left: 20px !important;\n        padding-right: 20px !important;\n    }\n\n    .formio-form:not(.formio-form_view-mode) .citeck-widget-contacts .formio-component-datagrid\n    table.table-bordered td {\n        padding: 10px 8px 16px;\n    }\n\n    .formio-form:not(.formio-form_view-mode) .citeck-widget-contacts .formio-component-datagrid\n    table.table-bordered tr:last-child > td {\n        padding-bottom: 10px;\n    }\n\n    /* `.form-group { margin: 0 }` above is right for the read-only rows, but in the dialog it\n       leaves 3px between a field and the label of the next one. 16px is what the counterparty\n       form uses. */\n    .formio-form:not(.formio-form_view-mode) .citeck-widget-contacts .form-group {\n        margin-bottom: 16px;\n    }\n\n    /* The checkbox is the only control here without a label above it, so it started where the\n       labels of the neighbouring fields start and floated half a row above them. The offset is\n       the height of a label plus the gap under it, which puts the box on the same line as the\n       field beside it. The box itself is drawn by the span, not by the input - the input has no\n       size - so nothing here may shift the label horizontally. */\n    .formio-form:not(.formio-form_view-mode) .citeck-widget-contacts .formio-component-contactMain {\n        /* padding, not margin: a top margin here collapses with the bottom margin of the field\n           above and only a few of the pixels survive. 22px is the label block the checkbox does\n           not have, 11px centres its 18px box against the 40px field beside it. */\n        padding-top: 33px;\n    }\n</style>"
             },
             "refreshOnChange": false,
             "refreshOn": [],
@@ -152,11 +155,6 @@
             ],
             "calculateValue": "const counterpartyContacts = _.get(data, \"asyncCounterparty.contacts\", []);\nvalue = counterpartyContacts;",
             "optionalWhenDisabled": false,
-            "conditional": {
-              "show": "true",
-              "when": "is_legacy_contacts",
-              "eq": "false"
-            },
             "type": "datagrid",
             "input": true,
             "options": {
@@ -171,9 +169,8 @@
                 "key": "panel5",
                 "title": {
                   "ru": "${contactFio}",
-                  "en": "Contact: ${contactFio}"
+                  "en": "${contactFio}"
                 },
-                "theme": "transparent",
                 "customClass": "citeck-widget-contacts__not-collapsed",
                 "collapsible": true,
                 "collapsed": true,
@@ -190,6 +187,22 @@
                     "columns": [
                       {
                         "components": [
+                          {
+                            "label": {
+                              "ru": "ФИО",
+                              "en": "Full name"
+                            },
+                            "key": "contactFio",
+                            "defaultValue": "",
+                            "refreshOn": [],
+                            "optionalWhenDisabled": false,
+                            "type": "textfield",
+                            "input": true,
+                            "inputMasks": [
+                              {}
+                            ],
+                            "disabled": true
+                          },
                           {
                             "label": {
                               "ru": "Должность",
@@ -210,53 +223,6 @@
                           },
                           {
                             "label": {
-                              "ru": "Основной",
-                              "en": "Main"
-                            },
-                            "key": "contactMain",
-                            "disabled": true,
-                            "refreshOn": [],
-                            "optionalWhenDisabled": false,
-                            "logic": [
-                              {
-                                "name": "Disable checkbox",
-                                "trigger": {
-                                  "type": "javascript",
-                                  "javascript": "let trigger = false\n\nif (!value) {\n    let contracts = _.get(data, 'counterparty.contacts', []);\n    for (const contact of contracts) {\n        if (contact.contactMain) {\n            result = true;\n            break;\n        }\n    }\n}\n\nresult = trigger"
-                                },
-                                "actions": [
-                                  {
-                                    "name": "Disable checkbox",
-                                    "type": "property",
-                                    "property": {
-                                      "label": "Disabled",
-                                      "value": "disabled",
-                                      "type": "boolean"
-                                    },
-                                    "state": "true"
-                                  }
-                                ]
-                              }
-                            ],
-                            "type": "checkbox",
-                            "input": true,
-                            "reorder": false,
-                            "dataGridLabel": false
-                          }
-                        ],
-                        "type": "column",
-                        "input": false,
-                        "key": "column",
-                        "index": 0
-                      },
-                      {
-                        "index": 1,
-                        "type": "column",
-                        "input": false,
-                        "key": "column",
-                        "components": [
-                          {
-                            "label": {
                               "ru": "Департамент",
                               "en": "Department"
                             },
@@ -272,7 +238,19 @@
                             ],
                             "reorder": false,
                             "dataSrc": ""
-                          },
+                          }
+                        ],
+                        "type": "column",
+                        "input": false,
+                        "key": "column",
+                        "index": 0
+                      },
+                      {
+                        "index": 1,
+                        "type": "column",
+                        "input": false,
+                        "key": "column",
+                        "components": [
                           {
                             "label": {
                               "ru": "Телефон",
@@ -308,6 +286,41 @@
                             ],
                             "reorder": false,
                             "dataSrc": ""
+                          },
+                          {
+                            "label": {
+                              "ru": "Основной",
+                              "en": "Main"
+                            },
+                            "key": "contactMain",
+                            "disabled": true,
+                            "refreshOn": [],
+                            "optionalWhenDisabled": false,
+                            "logic": [
+                              {
+                                "name": "Disable checkbox",
+                                "trigger": {
+                                  "type": "javascript",
+                                  "javascript": "result = false;\n\nif (!value) {\n    const contacts = _.get(data, 'asyncCounterparty.contacts', []);\n    for (const contact of contacts) {\n        if (contact.contactMain) {\n            result = true;\n            break;\n        }\n    }\n}"
+                                },
+                                "actions": [
+                                  {
+                                    "name": "Disable checkbox",
+                                    "type": "property",
+                                    "property": {
+                                      "label": "Disabled",
+                                      "value": "disabled",
+                                      "type": "boolean"
+                                    },
+                                    "state": "true"
+                                  }
+                                ]
+                              }
+                            ],
+                            "type": "checkbox",
+                            "input": true,
+                            "reorder": false,
+                            "dataGridLabel": false
                           }
                         ]
                       }
@@ -344,7 +357,29 @@
             "rowGroups": [
               {}
             ],
-            "groupToggle": false
+            "groupToggle": false,
+            "customConditional": "const isViewMode = !!_.get(instance, 'root.options.viewAsHtml');\nshow = isViewMode && _.get(data, 'asyncCounterparty.contacts.length', 0) > 0;"
+          },
+          {
+            "label": {
+              "ru": "HTML",
+              "en": "HTML"
+            },
+            "key": "counterpartyContactsHint",
+            "className": "",
+            "content": {
+              "ru": "<div style=\"padding: 10px 12px; margin-bottom: 12px; border-radius: 6px; background-color: #f4f6f8; color: #444444; font-size: 13px;\">Контакты контрагента <b>{{ data.asyncCounterparty.name }}</b> хранятся в его карточке и здесь не редактируются — <a href=\"/v2/dashboard?recordRef={{ data.asyncCounterparty.ref }}\" target=\"_blank\" rel=\"noopener\">открыть карточку контрагента</a>.</div>",
+              "en": "<div style=\"padding: 10px 12px; margin-bottom: 12px; border-radius: 6px; background-color: #f4f6f8; color: #444444; font-size: 13px;\">The contacts of <b>{{ data.asyncCounterparty.name }}</b> are kept on the counterparty card and cannot be edited here — <a href=\"/v2/dashboard?recordRef={{ data.asyncCounterparty.ref }}\" target=\"_blank\" rel=\"noopener\">open the counterparty</a>.</div>"
+            },
+            "refreshOnChange": true,
+            "refreshOn": [
+              "asyncCounterparty"
+            ],
+            "optionalWhenDisabled": false,
+            "type": "htmlelement",
+            "input": false,
+            "reorder": false,
+            "customConditional": "const isViewMode = !!_.get(instance, 'root.options.viewAsHtml');\nshow = !isViewMode && _.get(data, 'asyncCounterparty.contacts.length', 0) > 0;"
           },
           {
             "label": {
@@ -365,7 +400,7 @@
                 },
                 "key": "syncContacts",
                 "refreshOn": [],
-                "calculateValue": "let checkMainContact = false;\r\nfor (const contact of data.contacts) {\r\n  if (contact.contactMain) {\r\n    checkMainContact = true;\r\n    break;\r\n  }\r\n}\r\n\r\nif (checkMainContact && !data.contacts[0].contactMain) {\r\n  const sortedContacts = data.contacts;\r\n  sortedContacts.sort((a, b) => b.contactMain - a.contactMain);\r\n  var dataGridInst = util.searchComponents(instance.parent.components, \"contacts\");\r\n  dataGridInst[0].setValue(sortedContacts);\r\n}\r\n\r\nconst placeholderElement = document.querySelector('.citeck-contacts-widget_placeholder');\r\nif (placeholderElement) {\r\n  const htmlPlaceholder = placeholderElement.parentElement;\r\n  \r\n  if (htmlPlaceholder) {\r\n    if (!_.get(data, 'asyncCounterparty.contacts.length') && !_.get(data, 'counterpartyContacts.length')) {\r\n      htmlPlaceholder.removeAttribute('hidden');\r\n      htmlPlaceholder.removeAttribute('style');\r\n    } else {\r\n      htmlPlaceholder.setAttribute('hidden', true);\r\n    }\r\n  }\r\n}\r\n\r\nconst firstPanel = document.querySelectorAll('.citeck-widget-contacts__not-collapsed .panel-body')[0];\r\nif (firstPanel) {\r\n  firstPanel.removeAttribute('hidden');\r\n  firstPanel.removeAttribute('style');\r\n  \r\n  const parentElement = firstPanel.parentElement;\r\n  if (parentElement) {\r\n    const iconElement = parentElement.querySelector('.citeck-panel-icon-chevron');\r\n  \r\n    if (iconElement) {\r\n      iconElement.className = \"citeck-panel-icon-chevron down\";\r\n    }\r\n  }\r\n}",
+                "calculateValue": "let checkMainContact = false;\n\n// A contact list that was rendered once keeps a blank row in the data, so its length says\n// nothing about whether the record has contacts - look at what the rows contain.\nconst contacts = _.get(data, 'contacts', []);\n\nconst contactIsNotEmpty = (contact) => {\n    return !!contact && (!!contact.contactFio ||\n        !!contact.contactDepartment ||\n        !!contact.contactEmail ||\n        !!contact.contactPhone ||\n        !!contact.contactPosition ||\n        !!contact.contactComment);\n};\n\nconst hasOwnContacts = contacts.some(contactIsNotEmpty);\n\nfor (const contact of contacts) {\n  if (contact.contactMain) {\n    checkMainContact = true;\n    break;\n  }\n}\n\nif (checkMainContact && contacts.length && !contacts[0].contactMain) {\n  const sortedContacts = contacts;\n  sortedContacts.sort((a, b) => b.contactMain - a.contactMain);\n  var dataGridInst = util.searchComponents(instance.parent.components, \"contacts\");\n  dataGridInst[0].setValue(sortedContacts);\n}\n\n// Scope the lookup to this form: the dialog and the dashlet are separate instances. A form that\n// has been replaced keeps its markup in a detached tree, and working on that tree changes\n// nothing the user sees, so such an instance falls back to the live document.\nconst isViewMode = !!_.get(instance, 'root.options.viewAsHtml');\nconst rootElement = _.get(instance, 'root.element');\nconst formRoot = (rootElement && document.contains(rootElement)) ? rootElement : document;\n\n// The counterparty contacts arrive asynchronously. Until that request resolves the form knows\n// nothing about them, so the placeholder has to stay hidden - otherwise every deal whose\n// contacts live on the counterparty claims \"there are no contacts\" for the first seconds.\nconst counterpartyLoaded = !_.isUndefined(_.get(data, 'asyncCounterparty'));\nconst noContactsAtAll = !hasOwnContacts && !_.get(data, 'asyncCounterparty.contacts.length');\n\nconst placeholderElement = formRoot.querySelector('.citeck-contacts-widget_placeholder');\nif (placeholderElement) {\n  const htmlPlaceholder = placeholderElement.parentElement;\n\n  if (htmlPlaceholder) {\n    if (counterpartyLoaded && noContactsAtAll) {\n      htmlPlaceholder.removeAttribute('hidden');\n      htmlPlaceholder.removeAttribute('style');\n    } else {\n      htmlPlaceholder.setAttribute('hidden', true);\n    }\n  }\n}\n\n// Deferred by a tick: the conditions that decide which lists are shown are applied after this\n// script runs, so looking at the markup right away finds the lists still hidden. Each list\n// marks its first card as the one to open, and several lists can be on screen at once.\nsetTimeout(function () {\n  const contactGrids = formRoot.querySelectorAll('.citeck-widget-contacts .formio-component-datagrid');\n\n  for (let g = 0; g < contactGrids.length; g++) {\n    const grid = contactGrids[g];\n\n    if (grid.hasAttribute('hidden') || grid.closest('[hidden]')) {\n      continue;\n    }\n\n    const cards = grid.querySelectorAll('.citeck-widget-contacts__not-collapsed');\n    for (let i = 0; i < cards.length; i++) {\n      const card = cards[i];\n\n      if (card.closest('[hidden]')) {\n        continue;\n      }\n\n      // An empty list still renders one blank row. While reading the record that row is a\n      // column of dashes, so it stays shut; in the dialog it is the form for the first contact\n      // and has to be open.\n      const cardTitle = card.querySelector('.card-title');\n      if (isViewMode && (!cardTitle || !cardTitle.textContent.trim())) {\n        continue;\n      }\n\n      const cardBody = card.querySelector('.panel-body');\n      if (!cardBody) {\n        continue;\n      }\n\n      cardBody.removeAttribute('hidden');\n      cardBody.removeAttribute('style');\n\n      const iconElement = card.querySelector('.citeck-panel-icon-chevron');\n      if (iconElement) {\n        iconElement.className = \"citeck-panel-icon-chevron down\";\n      }\n\n      break;\n    }\n  }\n}, 0);",
                 "optionalWhenDisabled": false,
                 "type": "hidden",
                 "input": true,
@@ -396,11 +431,6 @@
                 "reorder": false,
                 "refreshOn": [],
                 "optionalWhenDisabled": false,
-                "conditional": {
-                  "show": "true",
-                  "when": "is_legacy_contacts",
-                  "eq": "true"
-                },
                 "type": "datagrid",
                 "input": true,
                 "options": {
@@ -417,7 +447,6 @@
                       "ru": "${contactFio}",
                       "en": "${contactFio}"
                     },
-                    "theme": "transparent",
                     "collapsible": true,
                     "collapsed": true,
                     "refreshOn": [],
@@ -435,6 +464,22 @@
                             "components": [
                               {
                                 "label": {
+                                  "ru": "ФИО",
+                                  "en": "Full name"
+                                },
+                                "key": "contactFio",
+                                "defaultValue": "",
+                                "refreshOn": [],
+                                "optionalWhenDisabled": false,
+                                "type": "textfield",
+                                "input": true,
+                                "inputMasks": [
+                                  {}
+                                ],
+                                "disabled": false
+                              },
+                              {
+                                "label": {
                                   "ru": "Должность",
                                   "en": "Position"
                                 },
@@ -450,35 +495,18 @@
                               },
                               {
                                 "label": {
-                                  "ru": "Основной",
-                                  "en": "Main"
+                                  "ru": "Департамент",
+                                  "en": "Department"
                                 },
-                                "key": "contactMain",
+                                "key": "contactDepartment",
+                                "defaultValue": "",
                                 "refreshOn": [],
                                 "optionalWhenDisabled": false,
-                                "logic": [
-                                  {
-                                    "name": "Disable checkbox",
-                                    "trigger": {
-                                      "type": "javascript",
-                                      "javascript": "result = false;\r\nif (!value) {\r\n  for (const contact of data.contacts) {\r\n  if (contact.contactMain) {\r\n    result = true;\r\n    break;\r\n  }\r\n}\r\n}"
-                                    },
-                                    "actions": [
-                                      {
-                                        "name": "Disable checkbox",
-                                        "type": "property",
-                                        "property": {
-                                          "label": "Disabled",
-                                          "value": "disabled",
-                                          "type": "boolean"
-                                        },
-                                        "state": "true"
-                                      }
-                                    ]
-                                  }
-                                ],
-                                "type": "checkbox",
-                                "input": true
+                                "type": "textfield",
+                                "input": true,
+                                "inputMasks": [
+                                  {}
+                                ]
                               }
                             ],
                             "type": "column",
@@ -492,21 +520,6 @@
                             "input": false,
                             "key": "column",
                             "components": [
-                              {
-                                "label": {
-                                  "ru": "Департамент",
-                                  "en": "Department"
-                                },
-                                "key": "contactDepartment",
-                                "defaultValue": "",
-                                "refreshOn": [],
-                                "optionalWhenDisabled": false,
-                                "type": "textfield",
-                                "input": true,
-                                "inputMasks": [
-                                  {}
-                                ]
-                              },
                               {
                                 "label": {
                                   "ru": "Телефон",
@@ -536,6 +549,38 @@
                                 "inputMasks": [
                                   {}
                                 ]
+                              },
+                              {
+                                "label": {
+                                  "ru": "Основной",
+                                  "en": "Main"
+                                },
+                                "key": "contactMain",
+                                "refreshOn": [],
+                                "optionalWhenDisabled": false,
+                                "logic": [
+                                  {
+                                    "name": "Disable checkbox",
+                                    "trigger": {
+                                      "type": "javascript",
+                                      "javascript": "result = false;\n\nif (!value) {\n    const contacts = _.get(data, 'contacts', []);\n    for (const contact of contacts) {\n        if (contact.contactMain) {\n            result = true;\n            break;\n        }\n    }\n}"
+                                    },
+                                    "actions": [
+                                      {
+                                        "name": "Disable checkbox",
+                                        "type": "property",
+                                        "property": {
+                                          "label": "Disabled",
+                                          "value": "disabled",
+                                          "type": "boolean"
+                                        },
+                                        "state": "true"
+                                      }
+                                    ]
+                                  }
+                                ],
+                                "type": "checkbox",
+                                "input": true
                               }
                             ]
                           }
@@ -565,14 +610,16 @@
                         "reorder": false
                       }
                     ],
-                    "row": "0-0"
+                    "row": "0-0",
+                    "customClass": "citeck-widget-contacts__not-collapsed"
                   }
                 ],
                 "rowGroups": [
                   {}
                 ],
                 "groupToggle": false,
-                "defaultValue": []
+                "defaultValue": [],
+                "customConditional": "const isViewMode = !!_.get(instance, 'root.options.viewAsHtml');\nshow = !isViewMode || !!_.get(data, 'is_legacy_contacts');"
               }
             ],
             "collapsed": false,
