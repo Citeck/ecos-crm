@@ -116,8 +116,8 @@
                 },
                 "key": "panel5",
                 "title": {
-                  "ru": "${contactFio}",
-                  "en": "${contactFio}"
+                  "ru": "${_contactTitle}",
+                  "en": "${_contactTitle}"
                 },
                 "collapsible": true,
                 "collapsed": true,
@@ -126,6 +126,13 @@
                 "type": "panel",
                 "input": false,
                 "components": [
+                  {
+                    "key": "_contactTitle",
+                    "type": "hidden",
+                    "input": true,
+                    "persistent": false,
+                    "calculateValue": "value = [row.contactFio, row.contactPhone, row.contactEmail].map(v => String(v || '').trim()).find(v => v) || '';"
+                  },
                   {
                     "label": {
                       "ru": "Columns"
