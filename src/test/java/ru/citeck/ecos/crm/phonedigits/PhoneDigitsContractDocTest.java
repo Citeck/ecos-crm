@@ -208,7 +208,7 @@ public class PhoneDigitsContractDocTest {
     @Test
     @DisplayName("the example table of the document is not empty and lists every documented rule")
     void exampleTableOfTheDocumentIsNotEmpty() {
-        assertEquals(22, exampleTable().count(), "The example table lost or gained a row");
+        assertEquals(23, exampleTable().count(), "The example table lost or gained a row");
     }
 
     @ParameterizedTest(name = "[{index}] \"{0}\" -> {1}")
